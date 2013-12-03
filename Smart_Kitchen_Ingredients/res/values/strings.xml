@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ingredients</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="addIngredientsButton">Zutat hinzufügen</string>
+    <string name="addToShoppingList">Zur Einkaufliste hinzufügen</string>
+    <string name="title_activity_main_menu">Hauptmenü</string>
+    <string name="allocateIngredients">Zutaten erfassen</string>
+    <string name="shopping">Einkauf</string>
+    <string name="wantToDeleteIngretientsList">Wollen Sie die Zutatenliste wirklich verwerfen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="title_activity_shopping">Einkaufsliste</string>
+    <string name="codeScannerMenu">Barcode scannen</string>
+    <string name="shoppingListScannerMenu">Einkaufsliste Einscannen</string>
+
+</resources>
