@@ -1,5 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients;
 
+import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 import android.app.Application;
 import android.util.Log;
 

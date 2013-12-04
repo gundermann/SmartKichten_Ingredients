@@ -1,5 +1,8 @@
-package de.nordakademie.smart_kitchen_ingredients;
+package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
+import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.R.id;
+import de.nordakademie.smart_kitchen_ingredients.R.layout;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;

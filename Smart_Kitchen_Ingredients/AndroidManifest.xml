@@ -24,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="de.nordakademie.smart_kitchen_ingredients.ErfassungActivity"
+            android:name="de.nordakademie.smart_kitchen_ingredients.capture.ErfassungActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="de.nordakademie.smart_kitchen_ingredients.ShoppingActivity"
+            android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity"
             android:label="@string/title_activity_shopping" >
         </activity>
     </application>
