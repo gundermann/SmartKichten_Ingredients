@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
 import de.nordakademie.smart_kitchen_ingredients.R.layout;
@@ -14,7 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
 
-public class ShoppingActivity extends Activity implements CheckableList {
+public class ShoppingActivity extends Activity implements ModifyableList {
 
 	private ListView shoppingListView;
 	private IngredientsApplication app;

@@ -2,10 +2,10 @@ package de.nordakademie.smart_kitchen_ingredients.capture;
 
 import java.util.List;
 
+import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
 import de.nordakademie.smart_kitchen_ingredients.R.layout;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.CheckableList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +18,9 @@ import android.widget.TextView;
 public class DeletableArrayAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final List<String> values;
-	private final CheckableList list;
+	private final ModifyableList list;
 
-	public DeletableArrayAdapter(Context context, CheckableList list) {
+	public DeletableArrayAdapter(Context context, ModifyableList list) {
 		super(context, R.layout.rowlayout, R.id.labelOfDeletableList, list
 				.getValues());
 		this.context = context;

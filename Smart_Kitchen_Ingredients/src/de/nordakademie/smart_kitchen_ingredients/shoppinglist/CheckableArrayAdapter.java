@@ -1,5 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
+import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
 import de.nordakademie.smart_kitchen_ingredients.R.layout;
@@ -16,9 +17,9 @@ import android.widget.TextView;
 
 public class CheckableArrayAdapter extends ArrayAdapter<String> {
 	private final Context context;
-	private final CheckableList list;
+	private final ModifyableList list;
 
-	public CheckableArrayAdapter(Context context, CheckableList list) {
+	public CheckableArrayAdapter(Context context, ModifyableList list) {
 		super(context, R.layout.checkable_rowlayout, R.id.labelOfCheckableList,
 				list.getValues());
 		this.context = context;
