@@ -3,16 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.ingredientManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
-import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.R.id;
-import de.nordakademie.smart_kitchen_ingredients.R.layout;
-import de.nordakademie.smart_kitchen_ingredients.R.menu;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingItem;
-import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +12,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
+import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingItem;
 
 public class ErfassungActivity extends Activity implements ModifyableList {
 
@@ -91,13 +86,7 @@ public class ErfassungActivity extends Activity implements ModifyableList {
 	}
 
 	private void addToShoppingList() {
-		ContentValues valuesForDatabase = new ContentValues();
-		for (String ingredient : ingredientsList) {
-			valuesForDatabase.put(ShoppingData.COLUMN_INGREDIENT, ingredient);
-			valuesForDatabase.put(ShoppingData.COLUMN_BUYED,
-					String.valueOf(false));
-		}
-		app.getDbHelper().insertOrIgnore(valuesForDatabase);
+		app.getDbHelper().insertOrIgnore(ingredientsList);
 		Log.i(TAG, "added to shoppinglist");
 		onBackPressed();
 	}

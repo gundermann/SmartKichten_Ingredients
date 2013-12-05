@@ -1,8 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients;
 
-import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 import android.app.Application;
 import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingDataImpl;
 
 public class IngredientsApplication extends Application {
 
@@ -13,7 +14,7 @@ public class IngredientsApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
-		shoppingDbHelper = new ShoppingData(getApplicationContext());
+		shoppingDbHelper = new ShoppingDataImpl(getApplicationContext());
 
 		Log.i(TAG, "Application started");
 	}
