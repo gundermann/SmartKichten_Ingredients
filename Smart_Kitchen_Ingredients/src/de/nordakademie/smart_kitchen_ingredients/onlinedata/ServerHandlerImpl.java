@@ -7,7 +7,9 @@ import java.util.TreeSet;
 import com.google.gson.Gson;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Recipe;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeImpl;
 
 public class ServerHandlerImpl implements ServerHandler {
 
@@ -23,7 +25,7 @@ public class ServerHandlerImpl implements ServerHandler {
 
 		for (String json : jsonFromResponse) {
 			Ingredient ingredient = jsonParser.fromJson(json,
-					ServerIngredient.class);
+					IngredientImpl.class);
 			ingredientList.add(ingredient);
 		}
 		return ingredientList;
@@ -66,7 +68,7 @@ public class ServerHandlerImpl implements ServerHandler {
 		List<String> jsonFromResponse = filterJsonFromResponse(response);
 
 		for (String json : jsonFromResponse) {
-			Recipe recipe = jsonParser.fromJson(json, ServerRecipe.class);
+			Recipe recipe = jsonParser.fromJson(json, RecipeImpl.class);
 			recipetList.add(recipe);
 		}
 		return recipetList;

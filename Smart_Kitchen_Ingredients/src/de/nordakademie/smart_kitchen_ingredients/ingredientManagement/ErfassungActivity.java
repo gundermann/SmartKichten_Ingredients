@@ -68,7 +68,6 @@ public class ErfassungActivity extends Activity implements ModifyableList {
 		return true;
 	}
 
-	// TODO als Receiver implementieren???
 	private void updateList() {
 		final DeletableArrayAdapter adapter = new DeletableArrayAdapter(
 				this.getApplicationContext(), this);
