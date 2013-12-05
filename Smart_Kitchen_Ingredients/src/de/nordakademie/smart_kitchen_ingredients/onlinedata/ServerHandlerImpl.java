@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Recipe;
 
-public class IngredientFilterImpl implements IngredientFilter {
+public class ServerHandlerImpl implements ServerHandler {
 
 	private Gson jsonParser = new Gson();
 
@@ -29,16 +29,19 @@ public class IngredientFilterImpl implements IngredientFilter {
 		return ingredientList;
 	}
 
-	private List<String> filterJsonFromResponse(String response) {
+	public List<String> filterJsonFromResponse(String response) {
 		List<String> filteredResponse = new ArrayList<String>();
 		int firstIndex = 0;
 		int secondIndex = 1;
-		int counter = 0;
+		int counter = -1;
 
 		while (firstIndex < response.length()) {
 			String currentChar = response.substring(secondIndex - 1,
 					secondIndex);
 			if (currentChar.equals("{")) {
+				if (counter == -1) {
+					counter++;
+				}
 				counter++;
 			}
 			if (currentChar.equals("}")) {
@@ -48,6 +51,7 @@ public class IngredientFilterImpl implements IngredientFilter {
 				filteredResponse.add(response
 						.substring(firstIndex, secondIndex));
 				firstIndex = secondIndex;
+				counter = -1;
 			}
 			secondIndex++;
 		}

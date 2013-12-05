@@ -5,7 +5,7 @@ import java.util.TreeSet;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Recipe;
 
-public interface IngredientFilter {
+public interface ServerHandler {
 
 	TreeSet<Ingredient> getIngredientListFromServer();
 
