@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="de.nordakademie.smart_kitchen_ingredients.capture.ErfassungActivity"
+            android:name="de.nordakademie.smart_kitchen_ingredients.ingredientManagement.ErfassungActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
