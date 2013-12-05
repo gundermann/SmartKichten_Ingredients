@@ -6,9 +6,9 @@
 
     <uses-sdk
         android:minSdkVersion="9"
-        android:targetSdkVersion="9" />
+        android:targetSdkVersion="18" />
     <instrumentation 
-        android:targetPackage="de.nordakademie.smart_kitchen_ingredients.test" 
+        android:targetPackage="de.nordakademie.smart_kitchen_ingredients" 
         android:name="android.test.InstrumentationTestRunner" />
 
     <application
