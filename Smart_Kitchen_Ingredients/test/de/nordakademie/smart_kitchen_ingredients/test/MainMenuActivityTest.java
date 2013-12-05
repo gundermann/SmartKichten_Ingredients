@@ -25,6 +25,10 @@ public class MainMenuActivityTest extends
 		activity = getActivity();
 	}
 
+	public void TestCase() {
+
+	}
+
 	public void testLayout() {
 		buttonNewIngredientsId = de.nordakademie.smart_kitchen_ingredients.R.id.buttonForNewIngredients;
 		assertNotNull(activity.findViewById(buttonNewIngredientsId));
