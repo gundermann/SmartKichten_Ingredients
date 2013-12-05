@@ -9,7 +9,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
 import de.nordakademie.smart_kitchen_ingredients.R.layout;
 import de.nordakademie.smart_kitchen_ingredients.R.menu;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemImpl;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -115,7 +115,7 @@ public class ErfassungActivity extends Activity implements ModifyableList {
 	}
 
 	@Override
-	public List<ShoppingItem> getShoppingItems() {
+	public List<ShoppingListItemImpl> getShoppingItems() {
 		// TODO Auto-generated method stub
 		return null;
 	}

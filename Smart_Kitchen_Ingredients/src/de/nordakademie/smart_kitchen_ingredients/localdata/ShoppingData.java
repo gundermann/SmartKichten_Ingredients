@@ -3,7 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.localdata;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemImpl;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -88,11 +88,11 @@ public class ShoppingData extends SQLiteOpenHelper {
 		}
 	}
 
-	public List<ShoppingItem> getAllShoppingItems() {
+	public List<ShoppingListItemImpl> getAllShoppingItems() {
 		SQLiteDatabase db = getReadableDatabase();
 		try {
 
-			List<ShoppingItem> values = new ArrayList<ShoppingItem>();
+			List<ShoppingListItemImpl> values = new ArrayList<ShoppingListItemImpl>();
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] { COLUMN_ID,
 					COLUMN_INGREDIENT, COLUMN_BUYED }, null, null, null, null,
 					null);
@@ -109,14 +109,14 @@ public class ShoppingData extends SQLiteOpenHelper {
 		}
 	}
 
-	private ShoppingItem getShoppingItem(Cursor cursor) {
+	private ShoppingListItemImpl getShoppingItem(Cursor cursor) {
 		double id = cursor.getDouble(0);
 		String title = cursor.getString(1);
 		boolean buyed = Boolean.valueOf(cursor.getString(2));
-		return new ShoppingItem(id, title, buyed);
+		return new ShoppingListItemImpl(id, title, buyed);
 	}
 
-	public void updateShoppingItem(ShoppingItem item) {
+	public void updateShoppingItem(ShoppingListItemImpl item) {
 		ContentValues value = new ContentValues();
 		value.put(COLUMN_BUYED, String.valueOf(item.isBuyed()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
