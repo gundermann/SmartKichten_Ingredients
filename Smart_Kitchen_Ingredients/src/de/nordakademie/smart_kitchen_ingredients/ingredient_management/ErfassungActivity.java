@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.ingredientManagement;
+package de.nordakademie.smart_kitchen_ingredients.ingredient_management;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
 
 public class ErfassungActivity extends Activity implements ModifyableList {
 
@@ -103,7 +103,7 @@ public class ErfassungActivity extends Activity implements ModifyableList {
 	}
 
 	@Override
-	public List<ShoppingItem> getShoppingItems() {
+	public List<ShoppingListItem> getShoppingItems() {
 		// TODO Auto-generated method stub
 		return null;
 	}

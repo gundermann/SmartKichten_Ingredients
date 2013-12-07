@@ -1,23 +1,17 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public class IngredientImpl implements Ingredient {
+public class IngredientImpl extends ServeringredientImpl implements Ingredient {
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	private int amount;
+
+	public IngredientImpl(String title, int amount, Unit unit) {
+		super(title, unit);
+		this.amount = amount;
 	}
 
 	@Override
-	public double getAmount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Unit getUnit() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getAmount() {
+		return amount;
 	}
 
 }

@@ -3,17 +3,14 @@ package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
-import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.R.id;
-import de.nordakademie.smart_kitchen_ingredients.R.layout;
-import de.nordakademie.smart_kitchen_ingredients.R.menu;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemImpl;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
+import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
 
 public class ShoppingActivity extends Activity implements ModifyableList {
 
@@ -47,7 +44,7 @@ public class ShoppingActivity extends Activity implements ModifyableList {
 	@Override
 	public List<String> getValues() {
 		List<String> values = new ArrayList<String>();
-		for (ShoppingListItemImpl item : app.getDbHelper().getAllShoppingItems()) {
+		for (ShoppingListItem item : app.getDbHelper().getAllShoppingItems()) {
 			values.add(item.getTitle());
 		}
 		return values;
@@ -55,15 +52,15 @@ public class ShoppingActivity extends Activity implements ModifyableList {
 
 	@Override
 	public void deleteAndUpdateValueAtPosition(int position) {
-		ShoppingListItemImpl item = app.getDbHelper().getAllShoppingItems()
+		ShoppingListItem item = app.getDbHelper().getAllShoppingItems()
 				.get(position);
-		item.setBuyed(true);
+		item.setBought(true);
 		app.getDbHelper().updateShoppingItem(item);
 		updateShoppingList();
 	}
 
 	@Override
-	public List<ShoppingListItemImpl> getShoppingItems() {
+	public List<ShoppingListItem> getShoppingItems() {
 		return app.getDbHelper().getAllShoppingItems();
 	}
 

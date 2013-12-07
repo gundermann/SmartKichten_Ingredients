@@ -1,11 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-import java.util.List;
-
-public interface Recipe {
+public interface Serveringredient {
 
 	String getTitle();
 
-	List<Ingredient> getIngredients();
+	Unit getUnit();
 
 }

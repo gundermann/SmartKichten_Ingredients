@@ -44,7 +44,7 @@ public class CheckableArrayAdapter extends ArrayAdapter<String> {
 			}
 		});
 
-		if (list.getShoppingItems().get(position).isBuyed()) {
+		if (list.getShoppingItems().get(position).isBought()) {
 			textView.setPaintFlags(textView.getPaintFlags()
 					| Paint.STRIKE_THRU_TEXT_FLAG);
 			checkBox.setChecked(true);

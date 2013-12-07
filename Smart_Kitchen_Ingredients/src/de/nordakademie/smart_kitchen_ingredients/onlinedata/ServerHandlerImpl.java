@@ -7,9 +7,13 @@ import java.util.TreeSet;
 import com.google.gson.Gson;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Recipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeImpl;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Serveringredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class ServerHandlerImpl implements ServerHandler {
 
@@ -76,9 +80,12 @@ public class ServerHandlerImpl implements ServerHandler {
 
 	@Override
 	public void postIngredientToServer(Ingredient ingredient) {
-		ServerIngredient ingredientToPost = (ServerIngredient) ingredient;
+		String title = ingredient.getTitle();
+		Unit unit = ingredient.getUnit();
+		IngredientFactory factory = new IngredientFactoryImpl();
+		Serveringredient ingredientToPost = factory.createIngredientForServer(
+				title, unit);
 		String jsonToPost = jsonParser.toJson(ingredientToPost);
 		Connector.postIngredientToServer(jsonToPost);
 	}
-
 }

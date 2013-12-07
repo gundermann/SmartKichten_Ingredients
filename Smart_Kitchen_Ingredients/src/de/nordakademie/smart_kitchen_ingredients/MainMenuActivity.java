@@ -1,11 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients;
 
-import de.nordakademie.smart_kitchen_ingredients.capture.ErfassungActivity;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import de.nordakademie.smart_kitchen_ingredients.ingredient_management.ErfassungActivity;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity;
 
 public class MainMenuActivity extends Activity {
 

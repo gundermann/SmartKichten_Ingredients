@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.ingredientManagement;
+package de.nordakademie.smart_kitchen_ingredients.ingredient_management;
 
 import java.util.List;
 

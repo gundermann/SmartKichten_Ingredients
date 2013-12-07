@@ -27,6 +27,10 @@ public class ServerHandlerImplTest {
 		List<String> stringList = serverHandler.filterJsonFromResponse(json);
 
 		assertTrue(json.length() == stringList.get(0).length() - 2);
+	}
+
+	@Test
+	public void testGettingIngredient() {
 
 	}
 }

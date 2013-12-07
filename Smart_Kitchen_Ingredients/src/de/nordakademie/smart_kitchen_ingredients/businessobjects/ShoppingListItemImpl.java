@@ -1,20 +1,23 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public class ShoppingListItemImpl extends IngredientImpl {
+public class ShoppingListItemImpl extends IngredientImpl implements
+		ShoppingListItem {
 
-	private boolean buyed;
+	private boolean bought;
 
-	public ShoppingListItemImpl(boolean buyed) {
-		super(id, title, unit);
-		this.buyed = buyed;
+	public ShoppingListItemImpl(String title, int amount, Unit unit,
+			boolean bought) {
+		super(title, amount, unit);
+		this.bought = bought;
 	}
 
-	public boolean isBuyed() {
-		return buyed;
+	@Override
+	public boolean isBought() {
+		return bought;
 	}
 
-	public void setBuyed(boolean buyed) {
-		this.buyed = buyed;
+	public void setBought(boolean bought) {
+		this.bought = bought;
 	}
 
 }

@@ -1,10 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public interface Ingredient {
+public interface Ingredient extends Serveringredient {
 
-	String getName();
+	int getAmount();
 
-	double getAmount();
-
-	Unit getUnit();
 }

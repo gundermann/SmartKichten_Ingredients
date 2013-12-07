@@ -9,23 +9,29 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactoryImpl;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 
 	private static final String TAG = ShoppingDataImpl.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	private static final String DATABASE_NAME = "shoppingDB";
 
 	public static final String TABLE_SHOPPING = "shopping_table";
 	public static final String COLUMN_ID = "id";
 	public static final String COLUMN_INGREDIENT = "ingredient";
-	public static final String COLUMN_BUYED = "buyed";
+	public static final String COLUMN_AMOUNT = "amount";
+	public static final String COLUMN_UNIT = "unit";
+	public static final String COLUMN_BUYED = "bourght";
 
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_SHOPPING + " (" + COLUMN_ID
 			+ " integer primary key autoincrement, " + COLUMN_INGREDIENT
+			+ " text, " + COLUMN_AMOUNT + " interger, " + COLUMN_UNIT
 			+ " text, " + COLUMN_BUYED + " text)";
 
 	public ShoppingDataImpl(Context context) {
@@ -98,11 +104,11 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 	}
 
 	@Override
-	public List<ShoppingItem> getAllShoppingItems() {
+	public List<ShoppingListItem> getAllShoppingItems() {
 		SQLiteDatabase db = getReadableDatabase();
 		try {
 
-			List<ShoppingItem> values = new ArrayList<ShoppingItem>();
+			List<ShoppingListItem> values = new ArrayList<ShoppingListItem>();
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] { COLUMN_ID,
 					COLUMN_INGREDIENT, COLUMN_BUYED }, null, null, null, null,
 					null);
@@ -119,20 +125,22 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 		}
 	}
 
-	private ShoppingItem getShoppingItem(Cursor cursor) {
-		double id = cursor.getDouble(0);
+	private ShoppingListItem getShoppingItem(Cursor cursor) {
 		String title = cursor.getString(1);
-		boolean buyed = Boolean.valueOf(cursor.getString(2));
-		return new ShoppingItem(id, title, buyed);
+		int amount = cursor.getInt(2);
+		Unit unit = Unit.valueOf(cursor.getString(3));
+		boolean bought = Boolean.valueOf(cursor.getString(4));
+		ShoppingListItemFactory factory = new ShoppingListItemFactoryImpl();
+		return factory.createShoppingListItem(title, amount, unit, bought);
 	}
 
 	@Override
-	public void updateShoppingItem(ShoppingItem item) {
+	public void updateShoppingItem(ShoppingListItem item) {
 		ContentValues value = new ContentValues();
-		value.put(COLUMN_BUYED, String.valueOf(item.isBuyed()));
+		value.put(COLUMN_BUYED, String.valueOf(item.isBought()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
-		writableDatabase.update(TABLE_SHOPPING, value,
-				COLUMN_ID + " = " + item.getId(), null);
+		writableDatabase.update(TABLE_SHOPPING, value, COLUMN_INGREDIENT
+				+ " = " + item.getTitle(), null);
 		writableDatabase.close();
 		Log.i(TAG, "database updated");
 	}
