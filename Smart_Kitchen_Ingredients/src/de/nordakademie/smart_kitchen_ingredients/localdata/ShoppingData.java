@@ -16,4 +16,6 @@ public interface ShoppingData {
 	List<ShoppingListItem> getAllShoppingItems();
 
 	void updateShoppingItem(ShoppingListItem item);
+
+	void cleanShoppingIngredients();
 }

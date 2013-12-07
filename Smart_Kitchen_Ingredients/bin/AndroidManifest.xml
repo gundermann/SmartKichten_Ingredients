@@ -3,6 +3,18 @@
     package="de.nordakademie.smart_kitchen_ingredients"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission 
+        android:name="de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING" />
+
+    <permission
+        android:name="de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING"
+        android:description="@string/changeShoppingDataPermissionDescription"
+        android:label="@string/changeShoppingDataPermissionLabel"
+        android:permissionGroup="android.permission-group.PERSONAL_INFO"
+        android:protectionLevel="normal" >
+    </permission>
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -17,6 +29,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+        <service android:name="de.nordakademie.smart_kitchen_ingredients.ShoppingDataCleanUpService"></service>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity"
             android:label="@string/title_activity_shopping" >
