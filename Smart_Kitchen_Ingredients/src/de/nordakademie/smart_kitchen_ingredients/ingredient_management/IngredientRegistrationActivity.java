@@ -15,16 +15,22 @@ import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
-public class ErfassungActivity extends Activity implements ModifyableList {
+public class IngredientRegistrationActivity extends Activity implements
+		ModifyableList {
 
-	private static String TAG = ErfassungActivity.class.getSimpleName();
+	private static String TAG = IngredientRegistrationActivity.class
+			.getSimpleName();
 	private Button addIngredientsButton;
 	private Button addToShoppinglistButton;
 	private ListView ingredientsListView;
 	private TextView ingredientTitle;
-	private List<String> ingredientsList;
+	private List<Ingredient> ingredientsList;
 	private IngredientsApplication app;
 
 	@Override
@@ -34,7 +40,7 @@ public class ErfassungActivity extends Activity implements ModifyableList {
 
 		app = (IngredientsApplication) getApplication();
 
-		ingredientsList = new ArrayList<String>();
+		ingredientsList = new ArrayList<Ingredient>();
 
 		ingredientsListView = (ListView) findViewById(R.id.ingredientsList);
 		ingredientTitle = (TextView) findViewById(R.id.titleIngedients);
@@ -77,7 +83,9 @@ public class ErfassungActivity extends Activity implements ModifyableList {
 	}
 
 	private void addIngredientToList() {
-		String newIngredient = ingredientTitle.getText().toString();
+		String title = ingredientTitle.getText().toString();
+		IngredientFactory factory = new IngredientFactoryImpl();
+		Ingredient newIngredient = factory.createIngredient(title, 0, Unit.stk);
 		ingredientsList.add(newIngredient);
 
 		updateList();
@@ -92,7 +100,12 @@ public class ErfassungActivity extends Activity implements ModifyableList {
 
 	@Override
 	public List<String> getValues() {
-		return ingredientsList;
+		List<String> ingredientStrings = new ArrayList<String>();
+		for (Ingredient ingredient : ingredientsList) {
+			ingredientStrings.add(ingredient.getTitle());
+		}
+
+		return ingredientStrings;
 	}
 
 	@Override

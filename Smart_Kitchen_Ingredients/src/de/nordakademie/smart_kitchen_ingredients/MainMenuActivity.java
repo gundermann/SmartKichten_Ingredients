@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import de.nordakademie.smart_kitchen_ingredients.ingredient_management.ErfassungActivity;
+import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity;
 
 public class MainMenuActivity extends Activity {
@@ -17,7 +17,7 @@ public class MainMenuActivity extends Activity {
 
 	public void openIngredientsAllocation(View view) {
 		startActivity(new Intent(getApplicationContext(),
-				ErfassungActivity.class));
+				IngredientRegistrationActivity.class));
 	}
 
 	public void openShoppingActivity(View view) {

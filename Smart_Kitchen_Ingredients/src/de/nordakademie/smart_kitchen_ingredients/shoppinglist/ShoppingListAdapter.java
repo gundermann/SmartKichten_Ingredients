@@ -1,9 +1,5 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
-import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
-import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.R.id;
-import de.nordakademie.smart_kitchen_ingredients.R.layout;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -14,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
+import de.nordakademie.smart_kitchen_ingredients.R;
 
 public class ShoppingListAdapter extends ArrayAdapter<String> {
 	private final Context context;

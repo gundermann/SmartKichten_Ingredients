@@ -3,7 +3,6 @@
 
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="addIngredientsButton">Zutat hinzufügen</string>
     <string name="addToShoppingList">Zur Einkaufliste hinzufügen</string>
     <string name="title_activity_main_menu">Hauptmenü</string>
@@ -16,4 +15,6 @@
     <string name="codeScannerMenu">Barcode scannen</string>
     <string name="shoppingListScannerMenu">Einkaufsliste Einscannen</string>
 	<string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
+	<string name="setupShoppingDate">Termin für Einkauf festlegen</string>
+
 </resources>

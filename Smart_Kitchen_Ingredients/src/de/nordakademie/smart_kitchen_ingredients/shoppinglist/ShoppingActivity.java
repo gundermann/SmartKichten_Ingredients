@@ -16,7 +16,7 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.ingredient_management.ErfassungActivity;
+import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity;
 
 public class ShoppingActivity extends Activity implements ModifyableList,
 		OnClickListener {
@@ -85,7 +85,7 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 	@Override
 	public void onClick(View view) {
 		Intent intent = new Intent(getApplicationContext(),
-				ErfassungActivity.class);
+				IngredientRegistrationActivity.class);
 		startActivity(intent);
 	}
 

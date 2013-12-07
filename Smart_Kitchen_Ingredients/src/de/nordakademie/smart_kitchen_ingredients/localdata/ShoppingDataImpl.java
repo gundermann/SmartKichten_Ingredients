@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactoryImpl;
@@ -18,7 +19,7 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 
 	private static final String TAG = ShoppingDataImpl.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 	private static final String DATABASE_NAME = "shoppingDB";
 
 	public static final String TABLE_SHOPPING = "shopping_table";
@@ -52,10 +53,12 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 	}
 
 	@Override
-	public void insertOrIgnore(List<String> ingredientList) {
+	public void insertOrIgnore(List<Ingredient> ingredientList) {
 		ContentValues values = new ContentValues();
-		for (String ingredient : ingredientList) {
-			values.put(COLUMN_INGREDIENT, ingredient);
+		for (Ingredient ingredient : ingredientList) {
+			values.put(COLUMN_INGREDIENT, ingredient.getTitle());
+			values.put(COLUMN_AMOUNT, ingredient.getAmount());
+			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
 			values.put(COLUMN_BUYED, String.valueOf(false));
 		}
 
@@ -109,9 +112,10 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 		try {
 
 			List<ShoppingListItem> values = new ArrayList<ShoppingListItem>();
-			Cursor cursor = db.query(TABLE_SHOPPING, new String[] { COLUMN_ID,
-					COLUMN_INGREDIENT, COLUMN_BUYED }, null, null, null, null,
-					null);
+			Cursor cursor = db.query(TABLE_SHOPPING,
+					new String[] { COLUMN_INGREDIENT, COLUMN_AMOUNT,
+							COLUMN_UNIT, COLUMN_BUYED }, null, null, null,
+					null, null);
 			try {
 				while (cursor.moveToNext()) {
 					values.add(getShoppingItem(cursor));
@@ -126,10 +130,10 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 	}
 
 	private ShoppingListItem getShoppingItem(Cursor cursor) {
-		String title = cursor.getString(1);
-		int amount = cursor.getInt(2);
-		Unit unit = Unit.valueOf(cursor.getString(3));
-		boolean bought = Boolean.valueOf(cursor.getString(4));
+		String title = cursor.getString(0);
+		int amount = cursor.getInt(1);
+		Unit unit = Unit.valueOf(cursor.getString(2));
+		boolean bought = Boolean.valueOf(cursor.getString(3));
 		ShoppingListItemFactory factory = new ShoppingListItemFactoryImpl();
 		return factory.createShoppingListItem(title, amount, unit, bought);
 	}
