@@ -8,4 +8,8 @@ public class IngredientFactoryImpl implements IngredientFactory {
 		return ingredient;
 	}
 
+	public ServerIngredient createIngredientForServer() {
+
+	}
+
 }

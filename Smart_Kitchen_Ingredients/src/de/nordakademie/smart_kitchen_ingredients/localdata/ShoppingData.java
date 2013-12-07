@@ -118,7 +118,7 @@ public class ShoppingData extends SQLiteOpenHelper {
 
 	public void updateShoppingItem(ShoppingListItemImpl item) {
 		ContentValues value = new ContentValues();
-		value.put(COLUMN_BUYED, String.valueOf(item.isBuyed()));
+		value.put(COLUMN_BUYED, String.valueOf(item.isBought()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
 		writableDatabase.update(TABLE_SHOPPING, value,
 				COLUMN_ID + " = " + item.getId(), null);
