@@ -15,11 +15,11 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
-public class CheckableArrayAdapter extends ArrayAdapter<String> {
+public class ShoppingListAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final ModifyableList list;
 
-	public CheckableArrayAdapter(Context context, ModifyableList list) {
+	public ShoppingListAdapter(Context context, ModifyableList list) {
 		super(context, R.layout.checkable_rowlayout, R.id.labelOfCheckableList,
 				list.getValues());
 		this.context = context;

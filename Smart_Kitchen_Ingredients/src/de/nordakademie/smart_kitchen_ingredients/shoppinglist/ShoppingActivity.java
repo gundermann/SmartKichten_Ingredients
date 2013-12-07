@@ -29,7 +29,7 @@ public class ShoppingActivity extends Activity implements ModifyableList {
 	}
 
 	private void updateShoppingList() {
-		CheckableArrayAdapter adapter = new CheckableArrayAdapter(
+		ShoppingListAdapter adapter = new ShoppingListAdapter(
 				getApplicationContext(), this);
 		shoppingListView.setAdapter(adapter);
 
