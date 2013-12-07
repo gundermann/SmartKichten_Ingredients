@@ -6,7 +6,8 @@ public class ShoppingListItemImpl extends IngredientImpl implements
 	private boolean bought;
 
 	public ShoppingListItemImpl(boolean bought, Ingredient ingredient) {
-		super(ingredient.getId(), ingredient.getTitle(), ingredient.getUnit());
+		super(ingredient.getAmount(), ingredient.getTitle(), ingredient
+				.getUnit());
 		this.bought = bought;
 	}
 

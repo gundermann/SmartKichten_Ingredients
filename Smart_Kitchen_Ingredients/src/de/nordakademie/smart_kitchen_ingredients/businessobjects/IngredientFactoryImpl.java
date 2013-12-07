@@ -3,12 +3,16 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 public class IngredientFactoryImpl implements IngredientFactory {
 
 	@Override
-	public Ingredient createIngredient(double id, String title, Unit unit) {
-		IngredientImpl ingredient = new IngredientImpl(id, title, unit);
+	public Ingredient createIngredient(int amount, String title, Unit unit) {
+		IngredientImpl ingredient = new IngredientImpl(amount, title, unit);
 		return ingredient;
 	}
 
-	public ServerIngredient createIngredientForServer() {
+	@Override
+	public Serveringredient createIngredientForServer(String title, Unit unit) {
+		ServeringredientImpl serveringredient = new ServeringredientImpl(title,
+				unit);
+		return serveringredient;
 
 	}
 

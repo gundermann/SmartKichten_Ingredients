@@ -1,30 +1,17 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public class IngredientImpl implements Ingredient {
+public class IngredientImpl extends ServeringredientImpl implements Ingredient {
 
-	protected static double id;
-	protected static String title;
-	static Unit unit;
+	protected static int amount;
 
-	public IngredientImpl(double id, String title, Unit unit) {
-		this.id = id;
-		this.title = title;
-		this.unit = unit;
+	public IngredientImpl(int amount, String title, Unit unit) {
+		super(title, unit);
+		this.amount = amount;
 	}
 
 	@Override
-	public double getId() {
-		return id;
-	}
-
-	@Override
-	public String getTitle() {
-		return title;
-	}
-
-	@Override
-	public Unit getUnit() {
-		return unit;
+	public int getAmount() {
+		return amount;
 	}
 
 }

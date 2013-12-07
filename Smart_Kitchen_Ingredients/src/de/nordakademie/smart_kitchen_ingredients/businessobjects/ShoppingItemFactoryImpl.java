@@ -2,6 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
 public class ShoppingItemFactoryImpl implements ShoppingListFactory {
 
+	@Override
 	public ShoppingListItem createShoppingListItem(boolean bought,
 			Ingredient ingredient) {
 		ShoppingListItemImpl item = new ShoppingListItemImpl(bought, ingredient);
