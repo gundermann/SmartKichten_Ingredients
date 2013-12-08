@@ -4,10 +4,14 @@ import java.util.TreeSet;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Recipe;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ServerIngredient;
 
+/**
+ * @author Niels Gundermann
+ */
 public interface ServerHandler {
 
-	TreeSet<Ingredient> getIngredientListFromServer();
+	TreeSet<ServerIngredient> getIngredientListFromServer();
 
 	TreeSet<Recipe> getRecipeListFromServer();
 
