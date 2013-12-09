@@ -16,8 +16,8 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ModifyableList;
 
@@ -85,7 +85,8 @@ public class IngredientRegistrationActivity extends Activity implements
 	private void addIngredientToList() {
 		String title = ingredientTitle.getText().toString();
 		IIngredientFactory factory = new IngredientFactory();
-		IIngredient newIngredient = factory.createIngredient(title, 0, Unit.stk);
+		IIngredient newIngredient = factory
+				.createIngredient(title, 0, Unit.stk);
 		ingredientsList.add(newIngredient);
 
 		updateList();
@@ -109,10 +110,10 @@ public class IngredientRegistrationActivity extends Activity implements
 	}
 
 	@Override
-	public void deleteAndUpdateValueAtPosition(int position) {
-		ingredientsList.remove(position);
-		Log.i(TAG, "ingredient deleted");
-		updateList();
+	public void deleteAndUpdateValueAtPosition(String title) {
+		// ingredientsList.remove(position);
+		// Log.i(TAG, "ingredient deleted");
+		// updateList();
 	}
 
 	@Override

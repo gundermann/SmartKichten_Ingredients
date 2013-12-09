@@ -35,7 +35,8 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
 
 			@Override
 			public void onClick(View view) {
-				list.deleteAndUpdateValueAtPosition(position);
+				String titleOfChangedItem = list.getValues().get(position);
+				list.deleteAndUpdateValueAtPosition(titleOfChangedItem);
 			}
 		});
 

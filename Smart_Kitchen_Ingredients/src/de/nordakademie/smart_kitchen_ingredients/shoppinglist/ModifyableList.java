@@ -10,5 +10,5 @@ public interface ModifyableList {
 
 	List<IShoppingListItem> getShoppingItems();
 
-	void deleteAndUpdateValueAtPosition(int position);
+	void deleteAndUpdateValueAtPosition(String title);
 }

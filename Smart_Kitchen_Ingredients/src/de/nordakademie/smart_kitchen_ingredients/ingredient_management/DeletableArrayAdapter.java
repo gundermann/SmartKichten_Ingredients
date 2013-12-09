@@ -2,10 +2,6 @@ package de.nordakademie.smart_kitchen_ingredients.ingredient_management;
 
 import java.util.List;
 
-import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.R.id;
-import de.nordakademie.smart_kitchen_ingredients.R.layout;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ModifyableList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ModifyableList;
 
 public class DeletableArrayAdapter extends ArrayAdapter<String> {
 	private final Context context;
@@ -41,7 +39,8 @@ public class DeletableArrayAdapter extends ArrayAdapter<String> {
 
 			@Override
 			public void onClick(View view) {
-				list.deleteAndUpdateValueAtPosition(position);
+				String titleOfChangedItem = values.get(position);
+				list.deleteAndUpdateValueAtPosition(titleOfChangedItem);
 			}
 
 		});

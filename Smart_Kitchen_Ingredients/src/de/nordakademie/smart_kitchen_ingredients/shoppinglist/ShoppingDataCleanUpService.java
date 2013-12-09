@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 
 public class ShoppingDataCleanUpService extends Service {
 
@@ -17,7 +17,7 @@ public class ShoppingDataCleanUpService extends Service {
 		super.onCreate();
 		Log.i(TAG, "created");
 		IngredientsApplication app = (IngredientsApplication) getApplication();
-		ShoppingData db = app.getDbHelper();
+		IShoppingData db = app.getDbHelper();
 		db.cleanShoppingIngredients();
 		Log.i(TAG, "db cleaned");
 

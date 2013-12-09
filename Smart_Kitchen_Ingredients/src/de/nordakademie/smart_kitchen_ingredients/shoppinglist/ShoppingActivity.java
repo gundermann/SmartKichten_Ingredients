@@ -2,6 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -102,16 +103,15 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 	@Override
 	public List<String> getValues() {
 		List<String> values = new ArrayList<String>();
-		for (IShoppingListItem item : app.getDbHelper().getAllShoppingItems()) {
+		for (IShoppingListItem item : getShoppingItems()) {
 			values.add(item.getTitle());
 		}
 		return values;
 	}
 
 	@Override
-	public void deleteAndUpdateValueAtPosition(int position) {
-		IShoppingListItem item = app.getDbHelper().getAllShoppingItems()
-				.get(position);
+	public void deleteAndUpdateValueAtPosition(String title) {
+		IShoppingListItem item = app.getDbHelper().getShoppingItem(title);
 		if (!item.isBought()) {
 			item.setBought(true);
 		} else {
@@ -123,7 +123,13 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 
 	@Override
 	public List<IShoppingListItem> getShoppingItems() {
-		return app.getDbHelper().getAllShoppingItems();
+		List<IShoppingListItem> shoppingItems = new ArrayList<IShoppingListItem>();
+		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
+		ingredients.addAll(app.getDbHelper().getAllShoppingItems());
+		for (IShoppingListItem item : ingredients) {
+			shoppingItems.add(item);
+		}
+		return shoppingItems;
 	}
 
 	@Override
