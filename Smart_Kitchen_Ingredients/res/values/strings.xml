@@ -14,11 +14,14 @@
     <string name="title_activity_shopping">Einkaufsliste</string>
     <string name="codeScannerMenu">Barcode scannen</string>
     <string name="shoppingListScannerMenu">Einkaufsliste Einscannen</string>
-	<string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
-	<string name="setupShoppingDate">Termin für Einkauf festlegen</string>
-	<string name="deleteShoppingList">Einkaufliste löschen</string>
-	<string name="cleanShoppingList">Einkaufliste aufräumen</string>
-	<string name="changeShoppingDataPermissionDescription">Berechtigung zum Zugriff auf die Shopping-Daten</string>
-	<string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
-	
+    <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
+    <string name="setupShoppingDate">Termin für Einkauf festlegen</string>
+    <string name="deleteShoppingList">Einkaufliste löschen</string>
+    <string name="cleanShoppingList">Einkaufliste aufräumen</string>
+    <string name="changeShoppingDataPermissionDescription">Berechtigung zum Zugriff auf die Shopping-Daten</string>
+    <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
+    <string name="ingredientHintText">Ingredient name</string>
+    <string name="newIngredientButtonText">Add ingredient</string>
+    <string name="showRecipesButtonText">Show recipes</string>
+
 </resources>
