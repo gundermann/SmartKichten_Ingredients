@@ -6,6 +6,6 @@ public interface Recipe extends Comparable<Recipe> {
 
 	String getTitle();
 
-	List<Ingredient> getIngredients();
+	List<IIngredient> getIngredients();
 
 }

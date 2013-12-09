@@ -15,7 +15,7 @@ import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
@@ -30,7 +30,7 @@ public class IngredientRegistrationActivity extends Activity implements
 	private Button addToShoppinglistButton;
 	private ListView ingredientsListView;
 	private TextView ingredientTitle;
-	private List<Ingredient> ingredientsList;
+	private List<IIngredient> ingredientsList;
 	private IngredientsApplication app;
 
 	@Override
@@ -40,7 +40,7 @@ public class IngredientRegistrationActivity extends Activity implements
 
 		app = (IngredientsApplication) getApplication();
 
-		ingredientsList = new ArrayList<Ingredient>();
+		ingredientsList = new ArrayList<IIngredient>();
 
 		ingredientsListView = (ListView) findViewById(R.id.ingredientsList);
 		ingredientTitle = (TextView) findViewById(R.id.titleIngedients);
@@ -85,7 +85,7 @@ public class IngredientRegistrationActivity extends Activity implements
 	private void addIngredientToList() {
 		String title = ingredientTitle.getText().toString();
 		IngredientFactory factory = new IngredientFactoryImpl();
-		Ingredient newIngredient = factory.createIngredient(title, 0, Unit.stk);
+		IIngredient newIngredient = factory.createIngredient(title, 0, Unit.stk);
 		ingredientsList.add(newIngredient);
 
 		updateList();
@@ -101,7 +101,7 @@ public class IngredientRegistrationActivity extends Activity implements
 	@Override
 	public List<String> getValues() {
 		List<String> ingredientStrings = new ArrayList<String>();
-		for (Ingredient ingredient : ingredientsList) {
+		for (IIngredient ingredient : ingredientsList) {
 			ingredientStrings.add(ingredient.getTitle());
 		}
 

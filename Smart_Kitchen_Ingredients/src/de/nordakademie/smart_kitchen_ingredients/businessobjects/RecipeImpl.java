@@ -6,13 +6,13 @@ import java.util.List;
 public class RecipeImpl implements Recipe {
 
 	private String title;
-	private List<Ingredient> ingredients;
+	private List<IIngredient> ingredients;
 
 	public RecipeImpl() {
-		ingredients = new ArrayList<Ingredient>();
+		ingredients = new ArrayList<IIngredient>();
 	}
 
-	public RecipeImpl(String title, List<Ingredient> ingredients) {
+	public RecipeImpl(String title, List<IIngredient> ingredients) {
 		this.ingredients = ingredients;
 		this.title = title;
 	}
@@ -21,7 +21,7 @@ public class RecipeImpl implements Recipe {
 		this.title = title;
 	}
 
-	public void setIngredients(List<Ingredient> ingredients) {
+	public void setIngredients(List<IIngredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 
@@ -31,7 +31,7 @@ public class RecipeImpl implements Recipe {
 	}
 
 	@Override
-	public List<Ingredient> getIngredients() {
+	public List<IIngredient> getIngredients() {
 		return ingredients;
 	}
 

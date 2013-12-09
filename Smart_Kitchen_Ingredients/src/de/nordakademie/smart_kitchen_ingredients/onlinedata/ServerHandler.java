@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ServerIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
 
 /**
  * @author Niels Gundermann
@@ -135,7 +135,7 @@ public class ServerHandler implements IServerHandler {
 	}
 
 	@Override
-	public void postIngredientToServer(ServerIngredient ingredient) {
+	public void postIngredientToServer(IServerIngredient ingredient) {
 		String jsonToPost = jsonParser.toJson(ingredient);
 		connector.postIngredientToServer(jsonToPost);
 	}

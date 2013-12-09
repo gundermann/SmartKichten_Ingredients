@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactoryImpl;
@@ -53,9 +53,9 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 	}
 
 	@Override
-	public void insertOrIgnore(List<Ingredient> ingredientList) {
+	public void insertOrIgnore(List<IIngredient> ingredientList) {
 		ContentValues values = new ContentValues();
-		for (Ingredient ingredient : ingredientList) {
+		for (IIngredient ingredient : ingredientList) {
 			values.put(COLUMN_INGREDIENT, ingredient.getTitle());
 			values.put(COLUMN_AMOUNT, ingredient.getAmount());
 			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
