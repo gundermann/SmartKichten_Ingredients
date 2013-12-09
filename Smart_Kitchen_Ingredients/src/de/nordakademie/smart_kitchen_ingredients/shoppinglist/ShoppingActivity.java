@@ -20,13 +20,13 @@ import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.ShoppingDataCleanUpService;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity;
 
 public class ShoppingActivity extends Activity implements ModifyableList,
 		OnClickListener {
 
+	private static String TAG = ShoppingActivity.class.getSimpleName();
 	private ListView shoppingListView;
 	private ImageButton btAddNewShoppingItem;
 	private IngredientsApplication app;
@@ -46,6 +46,7 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 		emptyView.setText(R.string.emptyShoppingList);
 		shoppingListView.setEmptyView(findViewById(android.R.id.empty));
 
+		Log.i(TAG, "created");
 	}
 
 	@Override
@@ -59,11 +60,18 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 				Log.d(this.getClass().getSimpleName(), "onReceive");
 			}
 		};
-		registerReceiver(
-				notifyShoppingdataChange,
-				new IntentFilter(IngredientsApplication.CHANGING),
-				"de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING",
-				null);
+
+		IntentFilter broadcastIntentFilter = new IntentFilter(
+				IngredientsApplication.CHANGING);
+		registerReceiver(notifyShoppingdataChange, broadcastIntentFilter,
+				IngredientsApplication.PERMISSION, null);
+		Log.i(TAG, "broadcastreceiver registed");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(notifyShoppingdataChange);
 	}
 
 	private void updateShoppingList() {

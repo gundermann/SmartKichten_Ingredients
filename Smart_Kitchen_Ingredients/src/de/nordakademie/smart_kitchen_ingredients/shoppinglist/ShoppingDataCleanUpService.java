@@ -1,9 +1,10 @@
-package de.nordakademie.smart_kitchen_ingredients;
+package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 
 public class ShoppingDataCleanUpService extends Service {
@@ -24,6 +25,7 @@ public class ShoppingDataCleanUpService extends Service {
 				.sendBroadcast(new Intent(IngredientsApplication.CHANGING),
 						"de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING");
 		Log.i(TAG, "broadcast send");
+		stopSelf();
 	}
 
 	@Override
