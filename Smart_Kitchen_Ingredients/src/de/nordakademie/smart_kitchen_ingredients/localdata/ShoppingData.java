@@ -3,7 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.localdata;
 import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 
 public interface ShoppingData {
 
@@ -13,9 +13,9 @@ public interface ShoppingData {
 
 	boolean getBuyedById(long id);
 
-	List<ShoppingListItem> getAllShoppingItems();
+	List<IShoppingListItem> getAllShoppingItems();
 
-	void updateShoppingItem(ShoppingListItem item);
+	void updateShoppingItem(IShoppingListItem item);
 
 	void cleanShoppingIngredients();
 }

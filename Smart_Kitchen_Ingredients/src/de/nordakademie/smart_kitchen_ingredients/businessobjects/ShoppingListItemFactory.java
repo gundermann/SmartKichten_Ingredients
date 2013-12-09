@@ -1,8 +1,14 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public interface ShoppingListItemFactory {
+public class ShoppingListItemFactory implements IShoppingListItemFactory {
 
-	ShoppingListItem createShoppingListItem(String title, int amount,
-			Unit unit, boolean bought);
+	@Override
+	public IShoppingListItem createShoppingListItem(String title, int amount,
+			Unit unit, boolean bought) {
+		IShoppingListItem item = new ShoppingListItem(title, amount, unit,
+				bought);
+		return item;
+
+	}
 
 }

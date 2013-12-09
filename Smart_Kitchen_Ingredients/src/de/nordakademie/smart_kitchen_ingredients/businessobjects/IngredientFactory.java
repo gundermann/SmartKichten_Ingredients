@@ -1,7 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public interface IngredientFactory {
+public class IngredientFactory implements IIngredientFactory {
 
-	IIngredient createIngredient(String title, int amount, Unit unit);
+	@Override
+	public IIngredient createIngredient(String title, int amount, Unit unit) {
+		Ingredient ingredient = new Ingredient(title, amount, unit);
+		return ingredient;
+	}
 
 }

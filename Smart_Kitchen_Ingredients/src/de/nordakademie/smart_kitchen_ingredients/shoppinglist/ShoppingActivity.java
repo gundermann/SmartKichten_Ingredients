@@ -20,7 +20,7 @@ import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity;
 
 public class ShoppingActivity extends Activity implements ModifyableList,
@@ -103,7 +103,7 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 	@Override
 	public List<String> getValues() {
 		List<String> values = new ArrayList<String>();
-		for (ShoppingListItem item : app.getDbHelper().getAllShoppingItems()) {
+		for (IShoppingListItem item : app.getDbHelper().getAllShoppingItems()) {
 			values.add(item.getTitle());
 		}
 		return values;
@@ -111,7 +111,7 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 
 	@Override
 	public void deleteAndUpdateValueAtPosition(int position) {
-		ShoppingListItem item = app.getDbHelper().getAllShoppingItems()
+		IShoppingListItem item = app.getDbHelper().getAllShoppingItems()
 				.get(position);
 		item.setBought(true);
 		app.getDbHelper().updateShoppingItem(item);
@@ -119,7 +119,7 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 	}
 
 	@Override
-	public List<ShoppingListItem> getShoppingItems() {
+	public List<IShoppingListItem> getShoppingItems() {
 		return app.getDbHelper().getAllShoppingItems();
 	}
 

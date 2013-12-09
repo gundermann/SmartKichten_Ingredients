@@ -10,9 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
@@ -107,11 +107,11 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 	}
 
 	@Override
-	public List<ShoppingListItem> getAllShoppingItems() {
+	public List<IShoppingListItem> getAllShoppingItems() {
 		SQLiteDatabase db = getReadableDatabase();
 		try {
 
-			List<ShoppingListItem> values = new ArrayList<ShoppingListItem>();
+			List<IShoppingListItem> values = new ArrayList<IShoppingListItem>();
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
 					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT,
 					COLUMN_BOUGHT }, null, null, null, null, null);
@@ -128,17 +128,17 @@ public class ShoppingDataImpl extends SQLiteOpenHelper implements ShoppingData {
 		}
 	}
 
-	private ShoppingListItem getShoppingItem(Cursor cursor) {
+	private IShoppingListItem getShoppingItem(Cursor cursor) {
 		String title = cursor.getString(0);
 		int amount = cursor.getInt(1);
 		Unit unit = Unit.valueOf(cursor.getString(2));
 		boolean bought = Boolean.valueOf(cursor.getString(3));
-		ShoppingListItemFactory factory = new ShoppingListItemFactoryImpl();
+		IShoppingListItemFactory factory = new ShoppingListItemFactory();
 		return factory.createShoppingListItem(title, amount, unit, bought);
 	}
 
 	@Override
-	public void updateShoppingItem(ShoppingListItem item) {
+	public void updateShoppingItem(IShoppingListItem item) {
 		ContentValues value = new ContentValues();
 		value.put(COLUMN_BOUGHT, String.valueOf(item.isBought()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();

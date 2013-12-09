@@ -16,9 +16,9 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactoryImpl;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class IngredientRegistrationActivity extends Activity implements
@@ -84,7 +84,7 @@ public class IngredientRegistrationActivity extends Activity implements
 
 	private void addIngredientToList() {
 		String title = ingredientTitle.getText().toString();
-		IngredientFactory factory = new IngredientFactoryImpl();
+		IIngredientFactory factory = new IngredientFactory();
 		IIngredient newIngredient = factory.createIngredient(title, 0, Unit.stk);
 		ingredientsList.add(newIngredient);
 
@@ -116,7 +116,7 @@ public class IngredientRegistrationActivity extends Activity implements
 	}
 
 	@Override
-	public List<ShoppingListItem> getShoppingItems() {
+	public List<IShoppingListItem> getShoppingItems() {
 		// TODO Auto-generated method stub
 		return null;
 	}
