@@ -70,43 +70,6 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 	}
 
 	@Override
-	public String getIngredientById(long id) {
-		SQLiteDatabase db = getReadableDatabase();
-		try {
-
-			Cursor cursor = db.query(TABLE_SHOPPING,
-					new String[] { COLUMN_INGREDIENT }, COLUMN_ID + "=" + id,
-					null, null, null, null);
-			try {
-				return cursor.moveToNext() ? cursor.getString(0) : null;
-			} finally {
-				cursor.close();
-			}
-		} finally {
-			db.close();
-		}
-	}
-
-	@Override
-	public boolean getBuyedById(long id) {
-		SQLiteDatabase db = getReadableDatabase();
-		try {
-
-			Cursor cursor = db.query(TABLE_SHOPPING,
-					new String[] { COLUMN_BOUGHT }, COLUMN_ID + "=" + id, null,
-					null, null, null);
-			try {
-				return cursor.moveToNext() ? Boolean.valueOf(cursor
-						.getString(0)) : null;
-			} finally {
-				cursor.close();
-			}
-		} finally {
-			db.close();
-		}
-	}
-
-	@Override
 	public List<IShoppingListItem> getAllShoppingItems() {
 		SQLiteDatabase db = getReadableDatabase();
 		try {

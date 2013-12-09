@@ -7,6 +7,8 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
 
 /**
+ * Stellt die Verbindung zum Server her.
+ * 
  * @author Niels Gundermann
  */
 public class Connector {

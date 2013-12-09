@@ -7,6 +7,13 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
+/**
+ * Der Receiver wirft eine Notification je nachdem, wann die App an den Einkauf
+ * erinnern soll.
+ * 
+ * @author Niels Gundermann
+ * 
+ */
 public class ShoppingDateAlarmReceiver extends BroadcastReceiver {
 
 	@Override

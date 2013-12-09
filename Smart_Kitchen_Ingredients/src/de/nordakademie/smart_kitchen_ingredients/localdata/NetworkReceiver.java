@@ -6,6 +6,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
+/**
+ * Startet den UpdateService für den Cache, wenn eine Internetverbindung
+ * vorliegt.
+ * 
+ * @author Niels Gundermann
+ * 
+ */
 public class NetworkReceiver extends BroadcastReceiver {
 
 	private static final String TAG = NetworkReceiver.class.getSimpleName();

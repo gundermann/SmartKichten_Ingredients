@@ -11,14 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ModifyableList;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.IModifyableList;
 
 public class DeletableArrayAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final List<String> values;
-	private final ModifyableList list;
+	private final IModifyableList list;
 
-	public DeletableArrayAdapter(Context context, ModifyableList list) {
+	public DeletableArrayAdapter(Context context, IModifyableList list) {
 		super(context, R.layout.rowlayout, R.id.labelOfDeletableList, list
 				.getValues());
 		this.context = context;
@@ -40,7 +40,7 @@ public class DeletableArrayAdapter extends ArrayAdapter<String> {
 			@Override
 			public void onClick(View view) {
 				String titleOfChangedItem = values.get(position);
-				list.deleteAndUpdateValueAtPosition(titleOfChangedItem);
+				list.checkAndUpdateValueAtPosition(titleOfChangedItem);
 			}
 
 		});

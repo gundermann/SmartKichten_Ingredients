@@ -11,11 +11,17 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
+/**
+ * Der Adapter realisiert die abhackbare Liste.
+ * 
+ * @author Niels Gundermann
+ * 
+ */
 public class ShoppingListAdapter extends ArrayAdapter<String> {
 	private final Context context;
-	private final ModifyableList list;
+	private final IModifyableList list;
 
-	public ShoppingListAdapter(Context context, ModifyableList list) {
+	public ShoppingListAdapter(Context context, IModifyableList list) {
 		super(context, R.layout.checkable_rowlayout, R.id.labelOfCheckableList,
 				list.getValues());
 		this.context = context;
@@ -36,7 +42,7 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
 			@Override
 			public void onClick(View view) {
 				String titleOfChangedItem = list.getValues().get(position);
-				list.deleteAndUpdateValueAtPosition(titleOfChangedItem);
+				list.checkAndUpdateValueAtPosition(titleOfChangedItem);
 			}
 		});
 

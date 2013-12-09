@@ -18,12 +18,22 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity;
 
-public class ShoppingActivity extends Activity implements ModifyableList,
+/**
+ * 
+ * @author Niels Gundermann
+ * 
+ */
+public class ShoppingActivity extends Activity implements IModifyableList,
 		OnClickListener {
 
 	private static String TAG = ShoppingActivity.class.getSimpleName();
@@ -78,6 +88,7 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 		ShoppingListAdapter adapter = new ShoppingListAdapter(
 				getApplicationContext(), this);
 		shoppingListView.setAdapter(adapter);
+		Log.i(TAG, "shoppinglist updated");
 	}
 
 	@Override
@@ -93,7 +104,10 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 			Intent intent = new Intent(this, ShoppingDataCleanUpService.class);
 			startService(intent);
 			break;
-
+		case R.id.menu_qrscan:
+			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+			scanIntegrator.initiateScan();
+			break;
 		default:
 			break;
 		}
@@ -106,11 +120,12 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 		for (IShoppingListItem item : getShoppingItems()) {
 			values.add(item.getTitle());
 		}
+		Log.i(TAG, "title of shoppingitems collected");
 		return values;
 	}
 
 	@Override
-	public void deleteAndUpdateValueAtPosition(String title) {
+	public void checkAndUpdateValueAtPosition(String title) {
 		IShoppingListItem item = app.getDbHelper().getShoppingItem(title);
 		if (!item.isBought()) {
 			item.setBought(true);
@@ -118,6 +133,7 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 			item.setBought(false);
 		}
 		app.getDbHelper().updateShoppingItem(item);
+		Log.i(TAG, "ingredient bought");
 		updateShoppingList();
 	}
 
@@ -129,6 +145,8 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 		for (IShoppingListItem item : ingredients) {
 			shoppingItems.add(item);
 		}
+		Log.i(TAG, "sort ingredients from database");
+
 		return shoppingItems;
 	}
 
@@ -137,6 +155,30 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 		Intent intent = new Intent(getApplicationContext(),
 				IngredientRegistrationActivity.class);
 		startActivity(intent);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
+				requestCode, resultCode, intent);
+		if (scanningResult != null) {
+			String scanContent = scanningResult.getContents();
+			for (IShoppingListItem shoppingItem : getShoppingItems()) {
+				if (scanContent.contains(shoppingItem.getTitle())) {
+					checkAndUpdateValueAtPosition(shoppingItem.getTitle());
+					Toast toast = Toast.makeText(getApplicationContext(),
+							getText(R.string.scansuccess), Toast.LENGTH_SHORT);
+					toast.show();
+					Log.i(TAG, "ingredients matches");
+					break;
+				}
+			}
+		} else {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					getText(R.string.scanerror), Toast.LENGTH_SHORT);
+			toast.show();
+			Log.i(TAG, "scan finished with errors");
+		}
 	}
 
 }

@@ -19,10 +19,10 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFact
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ModifyableList;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.IModifyableList;
 
 public class IngredientRegistrationActivity extends Activity implements
-		ModifyableList {
+		IModifyableList {
 
 	private static String TAG = IngredientRegistrationActivity.class
 			.getSimpleName();
@@ -110,7 +110,7 @@ public class IngredientRegistrationActivity extends Activity implements
 	}
 
 	@Override
-	public void deleteAndUpdateValueAtPosition(String title) {
+	public void checkAndUpdateValueAtPosition(String title) {
 		// ingredientsList.remove(position);
 		// Log.i(TAG, "ingredient deleted");
 		// updateList();

@@ -7,6 +7,12 @@ import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 
+/**
+ * Der Service entfernt gekaufte Artikel aus der Datenbank
+ * 
+ * @author Niels Gundermann
+ * 
+ */
 public class ShoppingDataCleanUpService extends Service {
 
 	private static String TAG = ShoppingDataCleanUpService.class
