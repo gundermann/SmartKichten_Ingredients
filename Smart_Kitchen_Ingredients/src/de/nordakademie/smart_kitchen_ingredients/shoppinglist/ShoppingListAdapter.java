@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 public class ShoppingListAdapter extends ArrayAdapter<String> {

@@ -18,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity;

@@ -13,13 +13,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.ModifyableList;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ModifyableList;
 
 public class IngredientRegistrationActivity extends Activity implements
 		ModifyableList {
