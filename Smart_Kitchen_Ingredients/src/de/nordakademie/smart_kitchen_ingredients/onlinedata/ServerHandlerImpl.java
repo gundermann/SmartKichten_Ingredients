@@ -11,15 +11,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Recipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ServerIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ServerIngredientImpl;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 /**
  * @author Niels Gundermann
@@ -110,13 +107,8 @@ public class ServerHandlerImpl implements ServerHandler {
 	}
 
 	@Override
-	public void postIngredientToServer(Ingredient ingredient) {
-		String title = ingredient.getTitle();
-		Unit unit = ingredient.getUnit();
-		IngredientFactory factory = new IngredientFactoryImpl();
-		ServerIngredient ingredientToPost = factory.createIngredientForServer(
-				title, unit);
-		String jsonToPost = jsonParser.toJson(ingredientToPost);
+	public void postIngredientToServer(ServerIngredient ingredient) {
+		String jsonToPost = jsonParser.toJson(ingredient);
 		connector.postIngredientToServer(jsonToPost);
 	}
 
