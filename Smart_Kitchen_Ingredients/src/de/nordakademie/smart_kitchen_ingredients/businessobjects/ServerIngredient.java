@@ -1,6 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public interface Serveringredient {
+public interface ServerIngredient extends Comparable<ServerIngredient> {
 
 	String getTitle();
 

@@ -1,51 +1,64 @@
 package de.nordakademie.smart_kitchen_ingredients.onlinedata;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Recipe;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeImpl;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Serveringredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactoryImpl;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ServerIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ServerIngredientImpl;
 
+/**
+ * @author Niels Gundermann
+ */
 public class ServerHandlerImpl implements ServerHandler {
 
-	private Gson jsonParser = new Gson();
+	private Gson jsonParser;
+	private Connector connector;
+
+	public ServerHandlerImpl(Connector serverConnector) {
+		connector = serverConnector;
+		jsonParser = new Gson();
+	}
 
 	@Override
-	public TreeSet<Ingredient> getIngredientListFromServer() {
-		TreeSet<Ingredient> ingredientList = new TreeSet<Ingredient>();
+	public TreeSet<ServerIngredient> getIngredientListFromServer() {
+		TreeSet<ServerIngredient> ingredientList = new TreeSet<ServerIngredient>();
 
-		String response = Connector.getAllIngredientsFromServer();
+		String response = connector.getAllIngredientsFromServer();
 
-		List<String> jsonFromResponse = filterJsonFromResponse(response);
+		List<JsonObject> jsonFromResponse = filterJsonFromResponse(response);
 
-		for (String json : jsonFromResponse) {
-			Ingredient ingredient = jsonParser.fromJson(json,
-					IngredientImpl.class);
+		for (JsonObject json : jsonFromResponse) {
+			ServerIngredient ingredient = jsonParser.fromJson(json,
+					ServerIngredientImpl.class);
 			ingredientList.add(ingredient);
 		}
 		return ingredientList;
 	}
 
-	public List<String> filterJsonFromResponse(String response) {
-		List<String> filteredResponse = new ArrayList<String>();
+	public List<JsonObject> filterJsonFromResponse(String response) {
+		List<JsonObject> filteredResponse = new ArrayList<JsonObject>();
 		int firstIndex = 0;
 		int secondIndex = 1;
 		int counter = -1;
 
-		while (firstIndex < response.length()) {
+		while (secondIndex <= response.length()) {
 			String currentChar = response.substring(secondIndex - 1,
 					secondIndex);
 			if (currentChar.equals("{")) {
 				if (counter == -1) {
+					firstIndex = secondIndex - 1;
 					counter++;
 				}
 				counter++;
@@ -54,9 +67,10 @@ public class ServerHandlerImpl implements ServerHandler {
 				counter--;
 			}
 			if (counter == 0) {
-				filteredResponse.add(response
-						.substring(firstIndex, secondIndex));
-				firstIndex = secondIndex;
+				String filteredString = response.substring(firstIndex,
+						secondIndex);
+				filteredResponse.add(new JsonParser().parse(filteredString)
+						.getAsJsonObject());
 				counter = -1;
 			}
 			secondIndex++;
@@ -68,24 +82,34 @@ public class ServerHandlerImpl implements ServerHandler {
 	@Override
 	public TreeSet<Recipe> getRecipeListFromServer() {
 		TreeSet<Recipe> recipetList = new TreeSet<Recipe>();
-		String response = Connector.getAllRecipesFromServer();
-		List<String> jsonFromResponse = filterJsonFromResponse(response);
+		String response = connector.getAllRecipesFromServer();
+		List<JsonObject> jsonFromResponse = filterJsonFromResponse(response);
 
-		for (String json : jsonFromResponse) {
-			Recipe recipe = jsonParser.fromJson(json, RecipeImpl.class);
+		for (JsonObject json : jsonFromResponse) {
+			String recipeTitle = json.get("title").toString();
+			recipeTitle = recipeTitle.substring(1, recipeTitle.length() - 1);
+			Type listType = new TypeToken<List<JsonObject>>() {
+			}.getType();
+			List<JsonObject> jsonIngredientList = jsonParser.fromJson(
+					json.get("ingredients"), listType);
+			List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+
+			for (JsonObject jsonIngred : jsonIngredientList) {
+				ingredientList.add(jsonParser.fromJson(jsonIngred,
+						IngredientImpl.class));
+			}
+
+			RecipeFactory factory = new RecipeFactoryImpl();
+			Recipe recipe = factory.createRecipe(recipeTitle, ingredientList);
 			recipetList.add(recipe);
 		}
 		return recipetList;
 	}
 
 	@Override
-	public void postIngredientToServer(Ingredient ingredient) {
-		String title = ingredient.getTitle();
-		Unit unit = ingredient.getUnit();
-		IngredientFactory factory = new IngredientFactoryImpl();
-		Serveringredient ingredientToPost = factory.createIngredientForServer(
-				title, unit);
-		String jsonToPost = jsonParser.toJson(ingredientToPost);
-		Connector.postIngredientToServer(jsonToPost);
+	public void postIngredientToServer(ServerIngredient ingredient) {
+		String jsonToPost = jsonParser.toJson(ingredient);
+		connector.postIngredientToServer(jsonToPost);
 	}
+
 }
