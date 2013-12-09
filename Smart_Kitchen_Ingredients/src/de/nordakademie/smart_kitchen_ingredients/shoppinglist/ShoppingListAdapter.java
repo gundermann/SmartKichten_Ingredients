@@ -4,11 +4,10 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
@@ -32,11 +31,10 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
 		TextView textView = (TextView) rowView
 				.findViewById(R.id.labelOfCheckableList);
 		CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.buyedCheck);
-		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		checkBox.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
+			public void onClick(View view) {
 				list.deleteAndUpdateValueAtPosition(position);
 			}
 		});
@@ -48,7 +46,6 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
 		}
 
 		textView.setText(list.getValues().get(position));
-
 		return rowView;
 	}
 

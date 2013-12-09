@@ -112,7 +112,11 @@ public class ShoppingActivity extends Activity implements ModifyableList,
 	public void deleteAndUpdateValueAtPosition(int position) {
 		IShoppingListItem item = app.getDbHelper().getAllShoppingItems()
 				.get(position);
-		item.setBought(true);
+		if (!item.isBought()) {
+			item.setBought(true);
+		} else {
+			item.setBought(false);
+		}
 		app.getDbHelper().updateShoppingItem(item);
 		updateShoppingList();
 	}
