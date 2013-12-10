@@ -108,6 +108,10 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 			scanIntegrator.initiateScan();
 			break;
+		case R.id.menu_shoppingdate:
+			Intent dateIntent = new Intent(this, ShoppingDateActivity.class);
+			startActivity(dateIntent);
+			break;
 		default:
 			break;
 		}
