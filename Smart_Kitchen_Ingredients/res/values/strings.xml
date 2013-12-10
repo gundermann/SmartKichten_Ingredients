@@ -13,7 +13,7 @@
     <string name="no">Nein</string>
     <string name="title_activity_shopping">Einkaufsliste</string>
     <string name="codeScannerMenu">Barcode scannen</string>
-    <string name="shoppingListScannerMenu">Einkaufsliste Einscannen</string>
+    <string name="shoppingListScannerMenu">Einkaufsliste einscannen</string>
     <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
     <string name="setupShoppingDate">Termin für Einkauf festlegen</string>
     <string name="deleteShoppingList">Einkaufliste löschen</string>
@@ -25,6 +25,6 @@
     <string name="showRecipesButtonText">Show recipes</string>
     <string name="scanerror">Keine Ergebnisse gefunden</string>
     <string name="scansuccess">Übereinstimmung gefunden</string>
+    <string name="scanfault">keine Übereinstimmung gefunden</string>
     <string name="ingredientCollector">Zutatensammler</string>
-
 </resources>

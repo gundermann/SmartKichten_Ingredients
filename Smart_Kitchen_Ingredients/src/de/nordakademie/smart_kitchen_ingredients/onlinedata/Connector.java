@@ -1,36 +1,30 @@
 package de.nordakademie.smart_kitchen_ingredients.onlinedata;
 
-import javax.ws.rs.core.MediaType;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.WebResource.Builder;
+public abstract class Connector {
 
-/**
- * Stellt die Verbindung zum Server her.
- * 
- * @author Niels Gundermann
- */
-public class Connector {
-	private final static String URL = "http://lx05.nordakademie.de:7002";
+	protected String convertStreamToString(InputStream is) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		StringBuilder sb = new StringBuilder();
 
-	public String getAllIngredientsFromServer() {
-		WebResource res = Client.create().resource(URL);
-		Builder builder = res.path("ingredients").accept(MediaType.TEXT_PLAIN);
-
-		return builder.toString();
-	}
-
-	public String getAllRecipesFromServer() {
-		WebResource res = Client.create().resource(URL);
-		Builder builder = res.path("recepies").accept(MediaType.TEXT_PLAIN);
-
-		return builder.toString();
-	}
-
-	public void postIngredientToServer(String jsonToPost) {
-		WebResource res = Client.create().resource(URL);
-		res.path("ingredients").type("application/json")
-				.post(String.class, jsonToPost);
+		String line = null;
+		try {
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return sb.toString();
 	}
 }
