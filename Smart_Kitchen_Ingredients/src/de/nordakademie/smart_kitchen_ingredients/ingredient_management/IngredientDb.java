@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.nordakademie.smart_kitchen_ingredients.collectors;
+package de.nordakademie.smart_kitchen_ingredients.ingredient_management;
 
 import java.util.ArrayList;
 import java.util.List;
