@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -23,27 +22,26 @@ public class IngredientCollectorActivity extends Activity implements
 		TextWatcher {
 	EditText searchBar;
 	ListView ingredientsList;
-	private ListAdapter adapter;
 	private IIngredientDb ingredientDb;
-
 	private List<IIngredient> ingredientsFromDb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ingredientDb = new IngredientDb();
 		setContentView(R.layout.activity_ingredient_collector);
 		ingredientsList = (ListView) findViewById(R.id.ingredientList);
 		searchBar = (EditText) findViewById(R.id.ingredientNameInput);
 		searchBar.addTextChangedListener(this);
+		ingredientDb = new IngredientDb();
 		ingredientsFromDb = ingredientDb.getIngredients();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		adapter = new ArrayAdapter<IIngredient>(getApplicationContext(),
-				R.layout.list_view_entry, ingredientsFromDb);
+		ListAdapter adapter = new ArrayAdapter<IIngredient>(
+				getApplicationContext(), R.layout.list_view_entry,
+				ingredientsFromDb);
 		ingredientsList.setAdapter(adapter);
 	}
 
@@ -54,7 +52,6 @@ public class IngredientCollectorActivity extends Activity implements
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -62,7 +59,7 @@ public class IngredientCollectorActivity extends Activity implements
 		List<IIngredient> ingredientsInList = new ArrayList<IIngredient>();
 
 		for (IIngredient ingredient : ingredientsFromDb) {
-			if (existIngredient(ingredient)) {
+			if (ingredientNameMatchSearchString(ingredient)) {
 				ingredientsInList.add(ingredient);
 			}
 		}
@@ -72,7 +69,7 @@ public class IngredientCollectorActivity extends Activity implements
 				ingredientsInList));
 	}
 
-	private boolean existIngredient(IIngredient ingredient) {
+	private boolean ingredientNameMatchSearchString(IIngredient ingredient) {
 		String currentSearch = searchBar.getText().toString();
 		return ingredient.getName().toLowerCase()
 				.contains(currentSearch.toLowerCase());
