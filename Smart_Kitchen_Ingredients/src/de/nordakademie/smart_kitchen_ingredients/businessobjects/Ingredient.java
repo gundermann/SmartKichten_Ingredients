@@ -18,7 +18,7 @@ public class Ingredient implements IIngredient {
 	}
 
 	@Override
-	public String getTitle() {
+	public String getName() {
 		return title;
 	}
 

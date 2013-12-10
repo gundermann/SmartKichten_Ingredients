@@ -1,7 +1,10 @@
 /**
  * 
  */
-package de.nordakademie.smart_kitchen_ingredients.ingredient_management;
+package de.nordakademie.smart_kitchen_ingredients.collector;
+
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 /**
  * @author frederic.oppermann
@@ -25,6 +28,16 @@ public class Ingredient implements IIngredient {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	@Override
+	public Unit getUnit() {
+		return Unit.g;
+	}
+
+	@Override
+	public int getAmount() {
+		return 0;
 	}
 
 }

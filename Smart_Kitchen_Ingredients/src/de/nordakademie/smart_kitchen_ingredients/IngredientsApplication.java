@@ -9,9 +9,10 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheRecipes;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.RecipeData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.ServerData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerHandler;
@@ -31,14 +32,14 @@ public class IngredientsApplication extends Application {
 	private RecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-	private ICacheRecipes cacheRecipesHelper;
-	private IRecipeData getRecipesHelper;
+
+	private ServerData serverDataHelper;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
-		cacheRecipesHelper = new RecipeData(this);
+		serverDataHelper = new ServerData(this);
 		shoppingDbHelper = new ShoppingData(this);
 		serverHandler = new SKIServerHandler(new SKIServerConnector());
 		ingredientFactory = new IngredientFactory();
@@ -46,7 +47,6 @@ public class IngredientsApplication extends Application {
 		recipeFactory = new RecipeFactoryImpl();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
-		getRecipesHelper = (IRecipeData) cacheRecipesHelper;
 
 		Log.i(TAG, "Application started");
 	}
@@ -56,11 +56,11 @@ public class IngredientsApplication extends Application {
 	}
 
 	public ICacheRecipes getCacheDbHelper() {
-		return cacheRecipesHelper;
+		return serverDataHelper;
 	}
 
 	public IRecipeData getRecipesFromCacheHelper() {
-		return getRecipesHelper;
+		return serverDataHelper;
 	}
 
 	public ISKIServerHandler getServerHandler() {
@@ -81,6 +81,10 @@ public class IngredientsApplication extends Application {
 
 	public IShoppingListItemFactory getShoppingListItemFactory() {
 		return shoppingListItemFactory;
+	}
+
+	public IIngredientData getIngredientDbHelper() {
+		return serverDataHelper;
 	}
 
 }

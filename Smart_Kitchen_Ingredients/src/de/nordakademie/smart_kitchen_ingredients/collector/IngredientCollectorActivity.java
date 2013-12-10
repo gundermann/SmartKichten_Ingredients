@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.ingredient_management;
+package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.Arrays;
 
@@ -10,7 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 
 /**
  * @author frederic.oppermann
@@ -21,12 +24,14 @@ public class IngredientCollectorActivity extends Activity implements
 		TextWatcher {
 	EditText searchBar;
 	ListView ingredientsList;
-	private IIngredientDb ingredientDb;
+	private IIngredientData ingredientDb;
 	private ListAdapter adapter;
+	private IngredientsApplication app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (IngredientsApplication) getApplication();
 		ingredientDb = new IngredientDb();
 		setContentView(R.layout.activity_ingredient_collector);
 		ingredientsList = (ListView) findViewById(R.id.ingredientList);
@@ -39,7 +44,7 @@ public class IngredientCollectorActivity extends Activity implements
 		super.onResume();
 
 		adapter = new ArrayAdapter<IIngredient>(getApplicationContext(),
-				R.layout.list_view_entry, ingredientDb.getIngredients());
+				R.layout.list_view_entry, ingredientDb.getAllIngredients());
 		ingredientsList.setAdapter(adapter);
 	}
 

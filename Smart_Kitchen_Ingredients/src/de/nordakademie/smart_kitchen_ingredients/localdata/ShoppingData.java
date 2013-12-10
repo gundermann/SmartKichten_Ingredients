@@ -59,7 +59,7 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 	public void insertOrIgnore(List<IIngredient> ingredientList) {
 		ContentValues values = new ContentValues();
 		for (IIngredient ingredient : ingredientList) {
-			values.put(COLUMN_INGREDIENT, ingredient.getTitle());
+			values.put(COLUMN_INGREDIENT, ingredient.getName());
 			values.put(COLUMN_AMOUNT, ingredient.getAmount());
 			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
 			values.put(COLUMN_BOUGHT, String.valueOf(false));
@@ -109,7 +109,7 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 		value.put(COLUMN_BOUGHT, String.valueOf(item.isBought()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
 		writableDatabase.update(TABLE_SHOPPING, value, COLUMN_INGREDIENT
-				+ " = '" + item.getTitle() + "'", null);
+				+ " = '" + item.getName() + "'", null);
 		writableDatabase.close();
 		Log.i(TAG, "database updated");
 	}

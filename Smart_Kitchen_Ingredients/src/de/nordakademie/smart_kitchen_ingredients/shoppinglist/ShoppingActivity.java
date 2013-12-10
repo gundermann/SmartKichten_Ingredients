@@ -26,7 +26,7 @@ import com.google.zxing.integration.android.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
 
 /**
  * 
@@ -119,7 +119,7 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 	public List<String> getValues() {
 		List<String> values = new ArrayList<String>();
 		for (IShoppingListItem item : getShoppingItems()) {
-			values.add(item.getTitle());
+			values.add(item.getName());
 		}
 		Log.i(TAG, "title of shoppingitems collected");
 		return values;
@@ -190,8 +190,8 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 
 	private boolean evaluateBarcodeScan(String content) {
 		for (IShoppingListItem shoppingItem : getShoppingItems()) {
-			if (content.contains(shoppingItem.getTitle())) {
-				checkAndUpdateValueAtPosition(shoppingItem.getTitle());
+			if (content.contains(shoppingItem.getName())) {
+				checkAndUpdateValueAtPosition(shoppingItem.getName());
 				return true;
 			}
 		}
