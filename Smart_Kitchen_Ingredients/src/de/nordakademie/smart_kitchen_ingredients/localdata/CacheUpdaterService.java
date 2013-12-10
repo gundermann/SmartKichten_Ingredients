@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.Connector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.IServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.ServerHandler;
 
 public class CacheUpdaterService extends Service {
 
@@ -15,8 +18,12 @@ public class CacheUpdaterService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "onCreate");
-		// TODO Cacheupdate
-
+		
+		IServerHandler handler = new ServerHandler(new Connector());
+		ICacheRecipes cacher = new RecipeData(getApplicationContext());
+		
+		cacher.cacheAllIngredients(handler.getIngredientListFromServer());
+		cacher.cacheAllRecipes(handler.getRecipeListFromServer());
 	}
 
 	@Override
