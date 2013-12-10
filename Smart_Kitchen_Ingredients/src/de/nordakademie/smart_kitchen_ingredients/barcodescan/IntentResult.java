@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.zxing.integration.android;
+package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 /**
  * <p>

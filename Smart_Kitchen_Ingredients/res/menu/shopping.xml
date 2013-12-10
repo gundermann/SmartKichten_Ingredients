@@ -17,12 +17,13 @@
         android:title="@string/cleanShoppingList"/>
     <item
         android:id="@+id/menu_import_shoppinglist"
-        android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_camera"
         android:title="@string/shoppingListScannerMenu"/>
     <item
         android:id="@+id/menu_delete_shoppinglist"
-        android:showAsAction="ifRoom"
         android:title="@string/deleteShoppingList"/>
+    <item
+        android:id="@+id/menu_edit_stored_items"
+        android:title="@string/insertStoredItems"/>
 
 </menu>

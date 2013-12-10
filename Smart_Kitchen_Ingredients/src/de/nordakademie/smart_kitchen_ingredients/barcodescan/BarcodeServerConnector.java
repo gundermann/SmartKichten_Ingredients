@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.onlinedata;
+package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +10,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import de.nordakademie.smart_kitchen_ingredients.Connector;
 import android.util.Log;
 
 public class BarcodeServerConnector extends Connector implements

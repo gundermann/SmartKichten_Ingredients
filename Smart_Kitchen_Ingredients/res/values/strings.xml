@@ -27,4 +27,5 @@
     <string name="scansuccess">Übereinstimmung gefunden</string>
     <string name="scanfault">keine Übereinstimmung gefunden</string>
     <string name="ingredientCollector">Zutatensammler</string>
+    <string name="insertStoredItems">Verfügbare Zutaten erfassen</string>
 </resources>

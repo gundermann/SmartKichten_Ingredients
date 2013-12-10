@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.onlinedata;
+package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 public interface IBarcodeServerConnector {
 

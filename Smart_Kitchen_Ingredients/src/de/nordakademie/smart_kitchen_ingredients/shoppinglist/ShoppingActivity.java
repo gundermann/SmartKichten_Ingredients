@@ -19,14 +19,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentIntegrator;
+import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDataCleanUpService;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
 
 /**
  * 
@@ -101,8 +102,9 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clean_shoppingList:
-			Intent intent = new Intent(this, ShoppingDataCleanUpService.class);
-			startService(intent);
+			Intent scanIntent = new Intent(this,
+					ShoppingDataCleanUpService.class);
+			startService(scanIntent);
 			break;
 		case R.id.menu_qrscan:
 			// Ist nur mit einer "vernünftigen" Kamera zu empfehlen
@@ -112,6 +114,11 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 		case R.id.menu_shoppingdate:
 			Intent dateIntent = new Intent(this, ShoppingDateActivity.class);
 			startActivity(dateIntent);
+			break;
+		case R.id.menu_edit_stored_items:
+			Intent storedIntent = new Intent(this,
+					StoredIngredientCollectorActivity.class);
+			startActivity(storedIntent);
 			break;
 		default:
 			break;
