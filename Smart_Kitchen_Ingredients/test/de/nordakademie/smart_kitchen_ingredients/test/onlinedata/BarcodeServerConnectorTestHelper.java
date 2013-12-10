@@ -9,14 +9,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.IBarcodeServerConnector;
 
 public class BarcodeServerConnectorTestHelper {
 
 	private static final String pathToDir = "test/de/nordakademie/smart_kitchen_ingredients/test/onlinedata/";
 
-	public static BarcodeServerConnector getBarcodeServerConnector() {
-		BarcodeServerConnector connector = mock(BarcodeServerConnector.class);
+	public static IBarcodeServerConnector getBarcodeServerConnector() {
+		IBarcodeServerConnector connector = mock(IBarcodeServerConnector.class);
 
 		StringBuilder responseStringBuilder = new StringBuilder();
 

@@ -1,10 +1,10 @@
 package de.nordakademie.smart_kitchen_ingredients.onlinedata;
 
-public class BarcodeEvaluator implements IBarcodeEvaluator {
+public class BarcodeServerHandler implements IBarcodeServerHandler {
 
-	private BarcodeServerConnector connector;
+	private IBarcodeServerConnector connector;
 
-	public BarcodeEvaluator(BarcodeServerConnector connector) {
+	public BarcodeServerHandler(IBarcodeServerConnector connector) {
 		this.connector = connector;
 	}
 

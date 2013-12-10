@@ -2,12 +2,12 @@ package de.nordakademie.smart_kitchen_ingredients.test.onlinedata;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISKIServerConnector;
 
 public class SKIConnectorTestHelper {
 
-	public static SKIServerConnector createConnectorMock() {
-		SKIServerConnector connector = mock(SKIServerConnector.class);
+	public static ISKIServerConnector createConnectorMock() {
+		ISKIServerConnector connector = mock(ISKIServerConnector.class);
 
 		String recipeReponse = " {\"title\":\"Spinat mit Ei\",\"ingredients\":["
 				+ "{\"title\":\"Spinat\",\"amount\": 500,\"unit\":\"g\",\"_id\":\"kljsdlfsdi833\"}, "

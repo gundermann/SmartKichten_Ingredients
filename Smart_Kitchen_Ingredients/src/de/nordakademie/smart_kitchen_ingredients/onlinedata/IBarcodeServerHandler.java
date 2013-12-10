@@ -1,6 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.onlinedata;
 
-public interface IBarcodeEvaluator {
+public interface IBarcodeServerHandler {
 
 	String getItemDescription(String barcode);
 

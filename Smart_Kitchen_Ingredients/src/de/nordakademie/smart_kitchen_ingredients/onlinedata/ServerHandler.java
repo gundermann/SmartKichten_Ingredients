@@ -19,9 +19,9 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredie
 public class ServerHandler implements IServerHandler {
 
 	private Gson jsonParser;
-	private SKIServerConnector connector;
+	private ISKIServerConnector connector;
 
-	public ServerHandler(SKIServerConnector serverConnector) {
+	public ServerHandler(ISKIServerConnector serverConnector) {
 		connector = serverConnector;
 		jsonParser = new Gson();
 	}
