@@ -12,15 +12,17 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
-public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
+public class SmartKitchenData extends SQLiteOpenHelper implements
+		IShoppingData, IStoredData {
 
 	private IngredientsApplication app;
 
-	private static final String TAG = ShoppingData.class.getSimpleName();
+	private static final String TAG = SmartKitchenData.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 6;
 	private static final String DATABASE_NAME = "shoppingDB.db";
 
 	public static final String TABLE_SHOPPING = "shopping_table";
@@ -30,13 +32,21 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 	public static final String COLUMN_UNIT = "unit";
 	public static final String COLUMN_BOUGHT = "bourght";
 
-	private static final String DATABASE_CREATE = "create table "
+	public static final String TABLE_STORED = "stored_table";
+
+	private static final String SHOPPING_TABLE_CREATE = "create table "
 			+ TABLE_SHOPPING + " (" + COLUMN_ID
 			+ " integer primary key autoincrement, " + COLUMN_INGREDIENT
 			+ " text, " + COLUMN_AMOUNT + " interger, " + COLUMN_UNIT
 			+ " text, " + COLUMN_BOUGHT + " text)";
 
-	public ShoppingData(IngredientsApplication app) {
+	private static final String STORED_TABLE_CREATE = "create table "
+			+ TABLE_STORED + " (" + COLUMN_ID
+			+ " integer primary key autoincrement, " + COLUMN_INGREDIENT
+			+ " text, " + COLUMN_AMOUNT + " interger, " + COLUMN_UNIT
+			+ " text)";
+
+	public SmartKitchenData(IngredientsApplication app) {
 		super(app.getApplicationContext(), DATABASE_NAME, null,
 				DATABASE_VERSION);
 		this.app = app;
@@ -44,7 +54,9 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		database.execSQL(DATABASE_CREATE);
+		database.execSQL(SHOPPING_TABLE_CREATE);
+		database.execSQL(STORED_TABLE_CREATE);
+		Log.i(TAG, "shoppingDB created");
 	}
 
 	@Override
@@ -69,7 +81,7 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 		writableDatabase.insertWithOnConflict(TABLE_SHOPPING, null, values,
 				SQLiteDatabase.CONFLICT_IGNORE);
 		writableDatabase.close();
-		Log.i(TAG, "database updated");
+		Log.i(TAG, "inserted to shopping_table");
 	}
 
 	@Override
@@ -111,7 +123,7 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 		writableDatabase.update(TABLE_SHOPPING, value, COLUMN_INGREDIENT
 				+ " = '" + item.getName() + "'", null);
 		writableDatabase.close();
-		Log.i(TAG, "database updated");
+		Log.i(TAG, "shopping_table updated");
 	}
 
 	@Override
@@ -141,5 +153,41 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 			db.close();
 		}
 
+	}
+
+	@Override
+	public List<IIngredient> getAllStoredIngredients() {
+		SQLiteDatabase db = getReadableDatabase();
+		try {
+
+			List<IIngredient> values = new ArrayList<IIngredient>();
+			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
+					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT }, null,
+					null, null, null, null);
+			try {
+				while (cursor.moveToNext()) {
+					values.add(getShoppingItem(cursor));
+				}
+				return values;
+			} finally {
+				cursor.close();
+			}
+		} finally {
+			db.close();
+		}
+	}
+
+	@Override
+	public void insertOrUpdateBoughtIngredient(Ingredient boughtIngredient) {
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_INGREDIENT, boughtIngredient.getName());
+		values.put(COLUMN_AMOUNT, boughtIngredient.getAmount());
+		values.put(COLUMN_UNIT, boughtIngredient.getUnit().toString());
+
+		SQLiteDatabase writableDatabase = getWritableDatabase();
+		writableDatabase.insertWithOnConflict(TABLE_STORED, null, values,
+				SQLiteDatabase.CONFLICT_IGNORE);
+		writableDatabase.close();
+		Log.i(TAG, "inserted into stored_table");
 	}
 }

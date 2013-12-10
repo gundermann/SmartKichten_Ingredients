@@ -12,8 +12,8 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheRecipes;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.ServerData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.IBarcodeServerHandler;
@@ -33,14 +33,14 @@ public class IngredientsApplication extends Application {
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
 
-	private ServerData serverDataHelper;
+	private CacheData serverDataHelper;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
-		serverDataHelper = new ServerData(this);
-		shoppingDbHelper = new ShoppingData(this);
+		serverDataHelper = new CacheData(this);
+		shoppingDbHelper = new SmartKitchenData(this);
 		serverHandler = new SKIServerHandler(new SKIServerConnector());
 		ingredientFactory = new IngredientFactory();
 		shoppingListItemFactory = new ShoppingListItemFactory();

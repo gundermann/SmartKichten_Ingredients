@@ -19,10 +19,10 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
-public class ServerData extends SQLiteOpenHelper implements IRecipeData,
+public class CacheData extends SQLiteOpenHelper implements IRecipeData,
 		ICacheRecipes, IIngredientData {
 
-	private static final String TAG = ServerData.class.getSimpleName();
+	private static final String TAG = CacheData.class.getSimpleName();
 
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "recipeDB";
@@ -41,7 +41,7 @@ public class ServerData extends SQLiteOpenHelper implements IRecipeData,
 	public static final String COLUMN_INDIGRENTS = "indigrent_id";
 	public static final String COLUMN_AMOUNT = "amount";
 
-	public ServerData(Context context) {
+	public CacheData(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
