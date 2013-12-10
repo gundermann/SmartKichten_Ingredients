@@ -25,4 +25,5 @@
     <string name="showRecipesButtonText">Show recipes</string>
 	<string name="scanerror">Keine Ergebnisse gefunden</string>
     <string name="scansuccess">Übereinstimmung gefunden</string>
+    <string name="scanfault">keine Übereinstimmung gefunden</string>
 </resources>

@@ -10,8 +10,11 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactoryIm
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.Connector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeEvaluator;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.IBarcodeEvaluator;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.IServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.ServerHandler;
 
 public class IngredientsApplication extends Application {
@@ -24,16 +27,18 @@ public class IngredientsApplication extends Application {
 	private IIngredientFactory ingredientFactory;
 	private RecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
+	private IBarcodeEvaluator barcodeEvaluator;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
 		shoppingDbHelper = new ShoppingData(this);
-		serverHandler = new ServerHandler(new Connector());
+		serverHandler = new ServerHandler(new SKIServerConnector());
 		ingredientFactory = new IngredientFactory();
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactoryImpl();
+		barcodeEvaluator = new BarcodeEvaluator(new BarcodeServerConnector());
 
 		Log.i(TAG, "Application started");
 	}
@@ -52,6 +57,10 @@ public class IngredientsApplication extends Application {
 
 	public RecipeFactory getRecipeFactory() {
 		return recipeFactory;
+	}
+
+	public IBarcodeEvaluator getBarcodeEvaluator() {
+		return barcodeEvaluator;
 	}
 
 	public IShoppingListItemFactory getShoppingListItemFactory() {

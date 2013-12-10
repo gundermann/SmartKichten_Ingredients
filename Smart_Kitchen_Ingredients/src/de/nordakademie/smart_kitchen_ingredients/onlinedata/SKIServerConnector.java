@@ -11,21 +11,21 @@ import com.sun.jersey.api.client.WebResource.Builder;
  * 
  * @author Niels Gundermann
  */
-public class Connector {
+public class SKIServerConnector {
 	private final static String URL = "http://lx05.nordakademie.de:7002";
 
 	public String getAllIngredientsFromServer() {
 		WebResource res = Client.create().resource(URL);
 		Builder builder = res.path("ingredients").accept(MediaType.TEXT_PLAIN);
 
-		return builder.toString();
+		return builder.get(String.class);
 	}
 
 	public String getAllRecipesFromServer() {
 		WebResource res = Client.create().resource(URL);
 		Builder builder = res.path("recepies").accept(MediaType.TEXT_PLAIN);
 
-		return builder.toString();
+		return builder.get(String.class);
 	}
 
 	public void postIngredientToServer(String jsonToPost) {

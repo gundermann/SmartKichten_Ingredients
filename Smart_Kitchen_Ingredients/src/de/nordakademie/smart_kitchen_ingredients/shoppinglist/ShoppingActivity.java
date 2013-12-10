@@ -163,17 +163,22 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
 				requestCode, resultCode, intent);
+		boolean success = false;
 		if (scanningResult != null) {
-			String scanContent = scanningResult.getContents();
-			for (IShoppingListItem shoppingItem : getShoppingItems()) {
-				if (scanContent.contains(shoppingItem.getTitle())) {
-					checkAndUpdateValueAtPosition(shoppingItem.getTitle());
-					Toast toast = Toast.makeText(getApplicationContext(),
-							getText(R.string.scansuccess), Toast.LENGTH_SHORT);
-					toast.show();
-					Log.i(TAG, "ingredients matches");
-					break;
-				}
+			String itemDescription = app.getBarcodeEvaluator()
+					.getItemDescription(scanningResult.getContents());
+			success = evaluateBarcodeScan(itemDescription);
+
+			if (success) {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						getText(R.string.scansuccess), Toast.LENGTH_SHORT);
+				toast.show();
+				Log.i(TAG, "ingredients matches");
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						getText(R.string.scanfault), Toast.LENGTH_SHORT);
+				toast.show();
+				Log.i(TAG, "ingredients doesn't match");
 			}
 		} else {
 			Toast toast = Toast.makeText(getApplicationContext(),
@@ -181,6 +186,16 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 			toast.show();
 			Log.i(TAG, "scan finished with errors");
 		}
+	}
+
+	private boolean evaluateBarcodeScan(String content) {
+		for (IShoppingListItem shoppingItem : getShoppingItems()) {
+			if (content.contains(shoppingItem.getTitle())) {
+				checkAndUpdateValueAtPosition(shoppingItem.getTitle());
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
