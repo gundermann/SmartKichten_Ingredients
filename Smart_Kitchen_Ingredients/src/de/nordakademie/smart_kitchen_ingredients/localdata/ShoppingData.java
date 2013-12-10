@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
+
+	private IngredientsApplication app;
 
 	private static final String TAG = ShoppingData.class.getSimpleName();
 
@@ -35,8 +36,10 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 			+ " text, " + COLUMN_AMOUNT + " interger, " + COLUMN_UNIT
 			+ " text, " + COLUMN_BOUGHT + " text)";
 
-	public ShoppingData(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	public ShoppingData(IngredientsApplication app) {
+		super(app.getApplicationContext(), DATABASE_NAME, null,
+				DATABASE_VERSION);
+		this.app = app;
 	}
 
 	@Override
@@ -96,7 +99,7 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 		int amount = cursor.getInt(1);
 		Unit unit = Unit.valueOf(cursor.getString(2));
 		boolean bought = Boolean.valueOf(cursor.getString(3));
-		IShoppingListItemFactory factory = new ShoppingListItemFactory();
+		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
 		return factory.createShoppingListItem(title, amount, unit, bought);
 	}
 

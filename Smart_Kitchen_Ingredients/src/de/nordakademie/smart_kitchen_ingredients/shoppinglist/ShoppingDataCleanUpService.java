@@ -23,7 +23,7 @@ public class ShoppingDataCleanUpService extends Service {
 		super.onCreate();
 		Log.i(TAG, "created");
 		IngredientsApplication app = (IngredientsApplication) getApplication();
-		IShoppingData db = app.getDbHelper();
+		IShoppingData db = app.getShoppingDbHelper();
 		db.cleanShoppingIngredients();
 		Log.i(TAG, "db cleaned");
 

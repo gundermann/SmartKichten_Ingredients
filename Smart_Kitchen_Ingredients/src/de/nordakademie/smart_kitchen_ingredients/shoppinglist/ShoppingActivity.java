@@ -105,6 +105,7 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 			startService(intent);
 			break;
 		case R.id.menu_qrscan:
+			// Ist nur mit einer "vernünftigen" Kamera zu empfehlen
 			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 			scanIntegrator.initiateScan();
 			break;
@@ -126,13 +127,14 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 
 	@Override
 	public void checkAndUpdateValueAtPosition(String title) {
-		IShoppingListItem item = app.getDbHelper().getShoppingItem(title);
+		IShoppingListItem item = app.getShoppingDbHelper().getShoppingItem(
+				title);
 		if (!item.isBought()) {
 			item.setBought(true);
 		} else {
 			item.setBought(false);
 		}
-		app.getDbHelper().updateShoppingItem(item);
+		app.getShoppingDbHelper().updateShoppingItem(item);
 		Log.i(TAG, "ingredient bought");
 		updateShoppingList();
 	}
@@ -141,7 +143,7 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 	public List<IShoppingListItem> getShoppingItems() {
 		List<IShoppingListItem> shoppingItems = new ArrayList<IShoppingListItem>();
 		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
-		ingredients.addAll(app.getDbHelper().getAllShoppingItems());
+		ingredients.addAll(app.getShoppingDbHelper().getAllShoppingItems());
 		for (IShoppingListItem item : ingredients) {
 			shoppingItems.add(item);
 		}

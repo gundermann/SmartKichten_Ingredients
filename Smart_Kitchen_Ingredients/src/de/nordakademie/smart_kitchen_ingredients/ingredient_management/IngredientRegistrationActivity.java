@@ -94,7 +94,7 @@ public class IngredientRegistrationActivity extends Activity implements
 	}
 
 	private void addToShoppingList() {
-		app.getDbHelper().insertOrIgnore(ingredientsList);
+		app.getShoppingDbHelper().insertOrIgnore(ingredientsList);
 		Log.i(TAG, "added to shoppinglist");
 		onBackPressed();
 	}

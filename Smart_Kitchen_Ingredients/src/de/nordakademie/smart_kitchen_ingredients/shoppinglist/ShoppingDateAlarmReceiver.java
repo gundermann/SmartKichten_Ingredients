@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,13 +23,14 @@ public class ShoppingDateAlarmReceiver extends BroadcastReceiver {
 	}
 
 	public void createNotification(Context context) {
-		// Intent intent = new Intent(context, ShoppingDateActivity.class);
-		// PendingIntent pIntent = PendingIntent
-		// .getActivity(context, 0, intent, 0);
+		Intent intent = new Intent(context, ShoppingActivity.class);
+		PendingIntent pIntent = PendingIntent
+				.getActivity(context, 0, intent, 0);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(
 				context).setSmallIcon(R.drawable.ic_launcher)
 				.setTicker("Einkaufen").setContentTitle("Einkaufen")
-				// .setContentText("Einkaufen").setContentIntent(pIntent)
+				.setContentText("Sie wollten heute einkaufen")
+				.setContentIntent(pIntent)
 				.addAction(R.drawable.ic_launcher, "Action Button", null)
 				.setAutoCancel(true);
 
