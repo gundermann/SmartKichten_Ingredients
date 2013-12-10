@@ -26,7 +26,7 @@ import com.google.zxing.integration.android.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity;
+import de.nordakademie.smart_kitchen_ingredients.collectors.IngredientCollectorActivity;
 
 /**
  * 
@@ -155,7 +155,7 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 	@Override
 	public void onClick(View view) {
 		Intent intent = new Intent(getApplicationContext(),
-				IngredientRegistrationActivity.class);
+				IngredientCollectorActivity.class);
 		startActivity(intent);
 	}
 
