@@ -9,7 +9,7 @@ package de.nordakademie.smart_kitchen_ingredients.collectors;
  * @description
  */
 public class Ingredient implements IIngredient {
-	private static int runningNumber = 0;
+	private static int runningNumber = 100;
 
 	private String name;
 

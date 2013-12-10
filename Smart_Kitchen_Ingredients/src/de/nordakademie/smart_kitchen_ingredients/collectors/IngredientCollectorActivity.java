@@ -1,11 +1,13 @@
 package de.nordakademie.smart_kitchen_ingredients.collectors;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -21,8 +23,10 @@ public class IngredientCollectorActivity extends Activity implements
 		TextWatcher {
 	EditText searchBar;
 	ListView ingredientsList;
-	private IIngredientDb ingredientDb;
 	private ListAdapter adapter;
+	private IIngredientDb ingredientDb;
+
+	private List<IIngredient> ingredientsFromDb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,35 +36,45 @@ public class IngredientCollectorActivity extends Activity implements
 		ingredientsList = (ListView) findViewById(R.id.ingredientList);
 		searchBar = (EditText) findViewById(R.id.ingredientNameInput);
 		searchBar.addTextChangedListener(this);
+		ingredientsFromDb = ingredientDb.getIngredients();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		adapter = new ArrayAdapter<IIngredient>(getApplicationContext(),
-				R.layout.list_view_entry, ingredientDb.getIngredients());
+				R.layout.list_view_entry, ingredientsFromDb);
 		ingredientsList.setAdapter(adapter);
 	}
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		adapter = new ArrayAdapter<Ingredient>(getApplicationContext(),
-				R.layout.list_view_entry, Arrays.asList(new Ingredient()));
+		List<IIngredient> ingredientsInList = new ArrayList<IIngredient>();
 
-		ingredientsList.setAdapter(adapter);
+		for (IIngredient ingredient : ingredientsFromDb) {
+			if (existIngredient(ingredient)) {
+				ingredientsInList.add(ingredient);
+			}
+		}
+
+		ingredientsList.setAdapter((ListAdapter) new ArrayAdapter<IIngredient>(
+				getApplicationContext(), R.layout.list_view_entry,
+				ingredientsInList));
+	}
+
+	private boolean existIngredient(IIngredient ingredient) {
+		String currentSearch = searchBar.getText().toString();
+		return ingredient.getName().toLowerCase()
+				.contains(currentSearch.toLowerCase());
 	}
 }
