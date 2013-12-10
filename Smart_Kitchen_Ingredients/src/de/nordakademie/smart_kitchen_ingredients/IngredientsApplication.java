@@ -8,7 +8,10 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFacto
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactoryImpl;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheRecipes;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.RecipeData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerHandler;
@@ -28,6 +31,8 @@ public class IngredientsApplication extends Application {
 	private RecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
+	private ICacheRecipes cacheRecipesHelper;
+	private IRecipeData getRecipesHelper;
 
 	@Override
 	public void onCreate() {
@@ -40,12 +45,22 @@ public class IngredientsApplication extends Application {
 		recipeFactory = new RecipeFactoryImpl();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
+		cacheRecipesHelper = new RecipeData(getApplicationContext());
+		getRecipesHelper = new RecipeData(getApplicationContext());
 
 		Log.i(TAG, "Application started");
 	}
 
 	public IShoppingData getShoppingDbHelper() {
 		return shoppingDbHelper;
+	}
+
+	public ICacheRecipes getCacheDbHelper() {
+		return cacheRecipesHelper;
+	}
+
+	public IRecipeData getRecipesFromCacheHelper() {
+		return getRecipesHelper;
 	}
 
 	public ISKIServerHandler getServerHandler() {
