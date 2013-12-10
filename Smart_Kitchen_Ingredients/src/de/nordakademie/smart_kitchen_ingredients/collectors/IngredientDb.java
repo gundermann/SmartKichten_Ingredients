@@ -16,7 +16,13 @@ public class IngredientDb implements IIngredientDb {
 	@Override
 	public List<IIngredient> getIngredients() {
 		List<IIngredient> ingredients = new ArrayList<IIngredient>();
-		for (int i = 0; i < 50; i++) {
+
+		for (Long index = 0L; index < 900000; index++) {
+			String string = "";
+			string = string + "";
+		}
+
+		for (int i = 0; i < 1000; i++) {
 			ingredients.add(new Ingredient());
 		}
 		return ingredients;
