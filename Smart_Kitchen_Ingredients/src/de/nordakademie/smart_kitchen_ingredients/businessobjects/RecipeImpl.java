@@ -3,7 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeImpl implements Recipe {
+public class RecipeImpl implements IRecipe {
 
 	private String title;
 	private List<IIngredient> ingredients;
@@ -36,7 +36,7 @@ public class RecipeImpl implements Recipe {
 	}
 
 	@Override
-	public int compareTo(Recipe another) {
+	public int compareTo(IRecipe another) {
 		return title.compareTo(another.getTitle());
 	}
 

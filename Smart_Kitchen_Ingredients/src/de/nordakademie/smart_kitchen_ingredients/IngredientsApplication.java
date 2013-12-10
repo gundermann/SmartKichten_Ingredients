@@ -38,6 +38,7 @@ public class IngredientsApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
+		cacheRecipesHelper = new RecipeData(this);
 		shoppingDbHelper = new ShoppingData(this);
 		serverHandler = new SKIServerHandler(new SKIServerConnector());
 		ingredientFactory = new IngredientFactory();
@@ -45,8 +46,7 @@ public class IngredientsApplication extends Application {
 		recipeFactory = new RecipeFactoryImpl();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
-		cacheRecipesHelper = new RecipeData(getApplicationContext());
-		getRecipesHelper = new RecipeData(getApplicationContext());
+		getRecipesHelper = (IRecipeData) cacheRecipesHelper;
 
 		Log.i(TAG, "Application started");
 	}

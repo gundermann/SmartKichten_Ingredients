@@ -21,7 +21,7 @@ public class ShoppingData extends SQLiteOpenHelper implements IShoppingData {
 	private static final String TAG = ShoppingData.class.getSimpleName();
 
 	private static final int DATABASE_VERSION = 5;
-	private static final String DATABASE_NAME = "shoppingDB";
+	private static final String DATABASE_NAME = "shoppingDB.db";
 
 	public static final String TABLE_SHOPPING = "shopping_table";
 	public static final String COLUMN_ID = "id";
