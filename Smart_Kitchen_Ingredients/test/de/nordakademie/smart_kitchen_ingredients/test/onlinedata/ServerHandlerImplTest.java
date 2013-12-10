@@ -14,17 +14,17 @@ import org.junit.Test;
 import com.google.gson.JsonObject;
 
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISKIServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerHandler;
 
 public class ServerHandlerImplTest {
 
-	ServerHandler serverHandler;
+	SKIServerHandler serverHandler;
 
 	@Before
 	public void setUp() throws Exception {
 		ISKIServerConnector serverConnector = SKIConnectorTestHelper
 				.createConnectorMock();
-		serverHandler = new ServerHandler(serverConnector);
+		serverHandler = new SKIServerHandler(serverConnector);
 	}
 
 	@Test

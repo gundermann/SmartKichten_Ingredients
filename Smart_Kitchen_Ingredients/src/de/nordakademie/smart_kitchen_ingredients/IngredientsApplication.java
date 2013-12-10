@@ -13,9 +13,9 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.ShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.BarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.IBarcodeServerHandler;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.IServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISKIServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerHandler;
 
 public class IngredientsApplication extends Application {
 
@@ -23,7 +23,7 @@ public class IngredientsApplication extends Application {
 	public static final String PERMISSION = "de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING";
 	private final String TAG = IngredientsApplication.class.getSimpleName();
 	private IShoppingData shoppingDbHelper;
-	private IServerHandler serverHandler;
+	private ISKIServerHandler serverHandler;
 	private IIngredientFactory ingredientFactory;
 	private RecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
@@ -34,7 +34,7 @@ public class IngredientsApplication extends Application {
 		super.onCreate();
 
 		shoppingDbHelper = new ShoppingData(this);
-		serverHandler = new ServerHandler(new SKIServerConnector());
+		serverHandler = new SKIServerHandler(new SKIServerConnector());
 		ingredientFactory = new IngredientFactory();
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactoryImpl();
@@ -48,7 +48,7 @@ public class IngredientsApplication extends Application {
 		return shoppingDbHelper;
 	}
 
-	public IServerHandler getServerHandler() {
+	public ISKIServerHandler getServerHandler() {
 		return serverHandler;
 	}
 
