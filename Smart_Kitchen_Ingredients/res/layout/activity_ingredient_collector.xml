@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".IngredientCollectorActivity" >
+
+    <EditText
+        android:id="@+id/ingredientNameInput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/ingredientHintText"
+        android:lines="1"
+        android:scrollHorizontally="true" />
+
+    <LinearLayout
+        android:id="@+id/newIngredientButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <Button
+            android:id="@+id/newIngredientButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/newIngredientButtonText" />
+
+        <Button
+            android:id="@+id/showRecipesButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/showRecipesButtonText" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/ingredientList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/newIngredientButtons"
+        android:layout_below="@id/ingredientNameInput" />
+
+</RelativeLayout>

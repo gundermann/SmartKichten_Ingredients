@@ -44,6 +44,9 @@
             android:name="de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientRegistrationActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity 
+            android:name=""></activity>
+        
         <receiver android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingDateAlarmReceiver"></receiver>
     <uses-library android:name="android.test.runner" />
     </application>
