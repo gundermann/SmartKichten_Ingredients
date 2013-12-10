@@ -18,10 +18,11 @@ public class CacheUpdaterService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "onCreate");
+		
+		app = (IngredientsApplication) getApplication();
 
-		ISKIServerHandler handler = new SKIServerHandler(
-				new SKIServerConnector());
-		ICacheRecipes cacher = new RecipeData(getApplicationContext());
+		ISKIServerHandler handler = app.getServerHandler();
+		ICacheRecipes cacher = app.getCacheDbHelper();
 
 		cacher.cacheAllIngredients(handler.getIngredientListFromServer());
 		cacher.cacheAllRecipes(handler.getRecipeListFromServer());
