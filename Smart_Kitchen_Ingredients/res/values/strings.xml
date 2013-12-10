@@ -23,6 +23,8 @@
     <string name="ingredientHintText">Ingredient name</string>
     <string name="newIngredientButtonText">Add ingredient</string>
     <string name="showRecipesButtonText">Show recipes</string>
-	<string name="scanerror">Keine Ergebnisse gefunden</string>
+    <string name="scanerror">Keine Ergebnisse gefunden</string>
     <string name="scansuccess">Übereinstimmung gefunden</string>
+    <string name="ingredientCollector">Zutatensammler</string>
+
 </resources>
