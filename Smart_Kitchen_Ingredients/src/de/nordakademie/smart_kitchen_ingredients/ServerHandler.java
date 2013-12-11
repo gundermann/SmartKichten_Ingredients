@@ -10,7 +10,7 @@ import java.util.List;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public abstract class Connector implements IServerConnector {
+public abstract class ServerHandler {
 
 	protected String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -33,10 +33,7 @@ public abstract class Connector implements IServerConnector {
 		return sb.toString();
 	}
 
-	@Override
-	public List<JsonObject> getFilteredJsonFromResponse(String input) {
-		String response = getResponseForInput(input);
-
+	public List<JsonObject> filterJsonFromResponse(String response) {
 		List<JsonObject> filteredResponse = new ArrayList<JsonObject>();
 		int firstIndex = 0;
 		int secondIndex = 1;
