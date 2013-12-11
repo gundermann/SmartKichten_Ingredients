@@ -4,11 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public abstract class Connector implements IServerConnector {
 
@@ -33,38 +28,4 @@ public abstract class Connector implements IServerConnector {
 		return sb.toString();
 	}
 
-	@Override
-	public List<JsonObject> getFilteredJsonFromResponse(String input) {
-		String response = getResponseForInput(input);
-
-		List<JsonObject> filteredResponse = new ArrayList<JsonObject>();
-		int firstIndex = 0;
-		int secondIndex = 1;
-		int counter = -1;
-
-		while (secondIndex <= response.length()) {
-			String currentChar = response.substring(secondIndex - 1,
-					secondIndex);
-			if (currentChar.equals("{")) {
-				if (counter == -1) {
-					firstIndex = secondIndex - 1;
-					counter++;
-				}
-				counter++;
-			}
-			if (currentChar.equals("}")) {
-				counter--;
-			}
-			if (counter == 0) {
-				String filteredString = response.substring(firstIndex,
-						secondIndex);
-				filteredResponse.add(new JsonParser().parse(filteredString)
-						.getAsJsonObject());
-				counter = -1;
-			}
-			secondIndex++;
-		}
-
-		return filteredResponse;
-	}
 }

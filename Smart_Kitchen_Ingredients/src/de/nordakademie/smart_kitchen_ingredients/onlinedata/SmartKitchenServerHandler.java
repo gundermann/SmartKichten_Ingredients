@@ -10,12 +10,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import de.nordakademie.smart_kitchen_ingredients.ServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
 
 /**
  * @author Niels Gundermann
  */
-public class SmartKitchenServerHandler implements ISmartKitchenServerHandler {
+public class SmartKitchenServerHandler extends ServerHandler implements
+		ISmartKitchenServerHandler {
 
 	private Gson jsonParser;
 	private ISmartKichtenServerConnector connector;
@@ -30,8 +32,8 @@ public class SmartKitchenServerHandler implements ISmartKitchenServerHandler {
 
 	@Override
 	public List<String[]> getIngredientListFromServer() {
-		List<JsonObject> jsonFromResponse = connector
-				.getFilteredJsonFromResponse(INGREDIENTS);
+		List<JsonObject> jsonFromResponse = filterJsonFromResponse(connector
+				.getResponseForInput(INGREDIENTS));
 
 		List<String[]> ingredientList = getIngredientsFromJsonList(jsonFromResponse);
 
@@ -50,8 +52,8 @@ public class SmartKitchenServerHandler implements ISmartKitchenServerHandler {
 	@Override
 	public Map<String[], List<String[]>> getRecipeListFromServer() {
 		Map<String[], List<String[]>> recipeList = new HashMap<String[], List<String[]>>();
-		List<JsonObject> jsonFromResponse = connector
-				.getFilteredJsonFromResponse(RECIPES);
+		List<JsonObject> jsonFromResponse = filterJsonFromResponse(connector
+				.getResponseForInput(RECIPES));
 
 		for (JsonObject json : jsonFromResponse) {
 			String[] key = getRecipeKey(json);
