@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.IBarcodeServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerConnector;
 
 public class BarcodeServerConnectorTestHelper {
 

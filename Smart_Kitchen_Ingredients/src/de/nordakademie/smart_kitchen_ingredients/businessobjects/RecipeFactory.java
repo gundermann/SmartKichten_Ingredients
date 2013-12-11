@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface RecipeFactory {
 
-	Recipe createRecipe(String titleRecipe, List<IIngredient> ingredients);
+	IRecipe createRecipe(String titleRecipe, List<IIngredient> ingredients);
 
 }

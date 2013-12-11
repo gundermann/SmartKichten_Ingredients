@@ -3,7 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
 public interface IServerIngredient {
 
-	String getTitle();
+	String getName();
 
 	Unit getUnit();
 

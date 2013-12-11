@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
+package de.nordakademie.smart_kitchen_ingredients.scheduling;
 
 import android.app.Service;
 import android.content.Intent;

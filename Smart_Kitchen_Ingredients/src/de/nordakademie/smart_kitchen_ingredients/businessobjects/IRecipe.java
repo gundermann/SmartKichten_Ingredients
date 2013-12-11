@@ -2,7 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
 import java.util.List;
 
-public interface Recipe extends Comparable<Recipe> {
+public interface IRecipe extends Comparable<IRecipe> {
 
 	String getTitle();
 
