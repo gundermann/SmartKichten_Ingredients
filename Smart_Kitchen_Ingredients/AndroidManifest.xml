@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission 
         android:name="de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING" />
-
+	<uses-permission android:name="android.permission.CAMERA" />
     <permission
         android:name="de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING"
         android:description="@string/changeShoppingDataPermissionDescription"

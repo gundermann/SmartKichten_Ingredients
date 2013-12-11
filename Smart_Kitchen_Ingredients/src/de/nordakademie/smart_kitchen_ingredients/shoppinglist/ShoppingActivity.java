@@ -1,5 +1,8 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -9,7 +12,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,10 +43,12 @@ import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity
 public class ShoppingActivity extends Activity implements IModifyableList,
 		OnClickListener {
 
+	private static final int REQUEST_CODE = 1;
 	private static String TAG = ShoppingActivity.class.getSimpleName();
 	private ListView shoppingListView;
 	private ImageButton btAddNewShoppingItem;
 	private IngredientsApplication app;
+	private Bitmap bitmap;
 	private BroadcastReceiver notifyShoppingdataChange;
 
 	@Override
@@ -102,9 +110,9 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clean_shoppingList:
-			Intent scanIntent = new Intent(this,
+			Intent cleanIntent = new Intent(this,
 					ShoppingDataCleanUpService.class);
-			startService(scanIntent);
+			startService(cleanIntent);
 			break;
 		case R.id.menu_qrscan:
 			// Ist nur mit einer "vernünftigen" Kamera zu empfehlen
@@ -120,6 +128,12 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 					StoredIngredientCollectorActivity.class);
 			startActivity(storedIntent);
 			break;
+		case R.id.menu_import_shoppinglist:
+			Intent fotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			fotoIntent.setType("image/*");
+			fotoIntent.setAction(Intent.ACTION_GET_CONTENT);
+			fotoIntent.addCategory(Intent.CATEGORY_OPENABLE);
+			startActivityForResult(fotoIntent, REQUEST_CODE);
 		default:
 			break;
 		}
@@ -174,28 +188,51 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
 				requestCode, resultCode, intent);
-		boolean success = false;
-		if (scanningResult != null) {
-			String itemDescription = app.getBarcodeEvaluator()
-					.getItemDescription(scanningResult.getContents());
-			success = evaluateBarcodeScan(itemDescription);
+		if (requestCode == REQUEST_CODE) {
+			handleFotoResult(resultCode, intent);
+		} else {
+			boolean success = false;
+			if (scanningResult != null) {
+				String itemDescription = app.getBarcodeEvaluator()
+						.getItemDescription(scanningResult.getContents());
+				success = evaluateBarcodeScan(itemDescription);
 
-			if (success) {
-				Toast toast = Toast.makeText(getApplicationContext(),
-						getText(R.string.scansuccess), Toast.LENGTH_SHORT);
-				toast.show();
-				Log.i(TAG, "ingredients matches");
+				if (success) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							getText(R.string.scansuccess), Toast.LENGTH_SHORT);
+					toast.show();
+					Log.i(TAG, "ingredients matches");
+				} else {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							getText(R.string.scanfault), Toast.LENGTH_SHORT);
+					toast.show();
+					Log.i(TAG, "ingredients doesn't match");
+				}
 			} else {
 				Toast toast = Toast.makeText(getApplicationContext(),
-						getText(R.string.scanfault), Toast.LENGTH_SHORT);
+						getText(R.string.scanerror), Toast.LENGTH_SHORT);
 				toast.show();
-				Log.i(TAG, "ingredients doesn't match");
+				Log.i(TAG, "scan finished with errors");
 			}
-		} else {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					getText(R.string.scanerror), Toast.LENGTH_SHORT);
-			toast.show();
-			Log.i(TAG, "scan finished with errors");
+		}
+	}
+
+	private void handleFotoResult(int resultCode, Intent intent) {
+		InputStream stream = null;
+		if (resultCode == Activity.RESULT_OK) {
+			try {
+				if (bitmap != null) {
+					bitmap.recycle();
+				}
+				stream = getContentResolver().openInputStream(intent.getData());
+				bitmap = BitmapFactory.decodeStream(stream);
+				stream.close();
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
