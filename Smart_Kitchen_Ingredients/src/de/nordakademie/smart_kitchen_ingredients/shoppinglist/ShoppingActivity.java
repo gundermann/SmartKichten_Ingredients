@@ -26,7 +26,6 @@ import com.google.zxing.integration.android.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.ingredient_management.IngredientCollectorActivity;
 
 /**
  * 
