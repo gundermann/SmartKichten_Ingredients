@@ -17,9 +17,9 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISKIServerHandler;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerHandler;
 
 public class IngredientsApplication extends Application {
 
@@ -27,7 +27,7 @@ public class IngredientsApplication extends Application {
 	public static final String PERMISSION = "de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING";
 	private final String TAG = IngredientsApplication.class.getSimpleName();
 	private IShoppingData shoppingDbHelper;
-	private ISKIServerHandler serverHandler;
+	private ISmartKitchenServerHandler serverHandler;
 	private IIngredientFactory ingredientFactory;
 	private RecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
@@ -41,7 +41,7 @@ public class IngredientsApplication extends Application {
 
 		serverDataHelper = new CacheData(this);
 		shoppingDbHelper = new SmartKitchenData(this);
-		serverHandler = new SKIServerHandler(new SKIServerConnector());
+		serverHandler = new SmartKitchenServerHandler(new SmartKitchenServerConnector());
 		ingredientFactory = new IngredientFactory();
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactoryImpl();
@@ -63,7 +63,7 @@ public class IngredientsApplication extends Application {
 		return serverDataHelper;
 	}
 
-	public ISKIServerHandler getServerHandler() {
+	public ISmartKitchenServerHandler getServerHandler() {
 		return serverHandler;
 	}
 

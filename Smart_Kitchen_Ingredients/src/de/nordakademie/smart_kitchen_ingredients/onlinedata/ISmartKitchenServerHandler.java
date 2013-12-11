@@ -8,7 +8,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredie
 /**
  * @author Niels Gundermann
  */
-public interface ISKIServerHandler {
+public interface ISmartKitchenServerHandler {
 
 	/**
 	 * Liefert eine Liste von String-Arrays. Inhalt des String-Arrays: 0:

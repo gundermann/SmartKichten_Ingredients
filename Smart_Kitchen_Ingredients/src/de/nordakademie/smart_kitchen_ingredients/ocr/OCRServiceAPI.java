@@ -63,4 +63,9 @@ public class OCRServiceAPI extends Connector {
 		return convertStreamToString(entity.getContent());
 	}
 
+	@Override
+	public String getResponseForInput(String input) {
+		return null;
+	}
+
 }

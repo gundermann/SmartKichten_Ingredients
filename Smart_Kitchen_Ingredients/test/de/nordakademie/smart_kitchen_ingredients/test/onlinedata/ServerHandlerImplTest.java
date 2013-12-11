@@ -13,18 +13,18 @@ import org.junit.Test;
 
 import com.google.gson.JsonObject;
 
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISKIServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKichtenServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerHandler;
 
 public class ServerHandlerImplTest {
 
-	SKIServerHandler serverHandler;
+	SmartKitchenServerHandler serverHandler;
 
 	@Before
 	public void setUp() throws Exception {
-		ISKIServerConnector serverConnector = SKIConnectorTestHelper
+		ISmartKichtenServerConnector serverConnector = SmartKitchenServerConnectorTestHelper
 				.createConnectorMock();
-		serverHandler = new SKIServerHandler(serverConnector);
+		serverHandler = new SmartKitchenServerHandler(serverConnector);
 	}
 
 	@Test

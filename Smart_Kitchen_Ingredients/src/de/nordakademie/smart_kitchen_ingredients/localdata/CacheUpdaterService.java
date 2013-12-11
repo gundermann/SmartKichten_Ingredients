@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISKIServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
 
 public class CacheUpdaterService extends Service {
 
@@ -19,7 +19,7 @@ public class CacheUpdaterService extends Service {
 
 		app = (IngredientsApplication) getApplication();
 
-		ISKIServerHandler handler = app.getServerHandler();
+		ISmartKitchenServerHandler handler = app.getServerHandler();
 		ICacheRecipes cacher = app.getCacheDbHelper();
 
 		cacher.cacheAllIngredients(handler.getIngredientListFromServer());

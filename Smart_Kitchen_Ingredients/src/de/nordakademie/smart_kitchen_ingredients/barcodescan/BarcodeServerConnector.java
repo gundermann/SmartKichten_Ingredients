@@ -1,50 +1,55 @@
 package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import de.nordakademie.smart_kitchen_ingredients.Connector;
-import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.IServerConnector;
 
 public class BarcodeServerConnector extends Connector implements
-		IBarcodeServerConnector {
+		IServerConnector {
 
-	private static final String URL = "http://www.upcdatabase.com/item/";
+	private static final String URL = "http://eandata.com/feed/";
+
+	private final String APIKEY = "E1C9A73C52A822FB";
 
 	@Override
-	public String getResponseForBarcode(String barcode) {
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpGet httpget = new HttpGet(URL + barcode);
-
-		HttpResponse response;
-		String result = "";
+	public String getResponseForInput(String barcode) {
 		try {
-			response = httpclient.execute(httpget);
+			final HttpClient client = new DefaultHttpClient();
 
-			HttpEntity entity = response.getEntity();
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("v", "3"));
+			nameValuePairs.add(new BasicNameValuePair("keycode", APIKEY));
+			nameValuePairs.add(new BasicNameValuePair("mode", "json"));
+			nameValuePairs.add(new BasicNameValuePair("find", barcode));
+			URIBuilder uriBuilder = new URIBuilder(URL);
 
-			if (entity != null) {
+			uriBuilder.addParameters(nameValuePairs);
+			final HttpGet get = new HttpGet(uriBuilder.build());
 
-				InputStream instream = entity.getContent();
-				result = convertStreamToString(instream);
-				Log.i("Praeda", result);
+			HttpResponse response = client.execute(get);
 
-				instream.close();
-			}
-
-		} catch (ClientProtocolException e) {
+			return convertStreamToString(response.getEntity().getContent());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return "";
 	}
 
 }

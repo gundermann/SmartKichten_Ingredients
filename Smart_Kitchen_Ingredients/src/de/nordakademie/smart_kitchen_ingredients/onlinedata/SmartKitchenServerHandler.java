@@ -16,19 +16,21 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredie
 /**
  * @author Niels Gundermann
  */
-public class SKIServerHandler implements ISKIServerHandler {
+public class SmartKitchenServerHandler implements ISmartKitchenServerHandler {
 
 	private Gson jsonParser;
-	private ISKIServerConnector connector;
+	private ISmartKichtenServerConnector connector;
+	private static final String INGREDIENTS = "ingredients";
+	private static final String RECIPES = "recepies";
 
-	public SKIServerHandler(ISKIServerConnector serverConnector) {
+	public SmartKitchenServerHandler(ISmartKichtenServerConnector serverConnector) {
 		connector = serverConnector;
 		jsonParser = new Gson();
 	}
 
 	@Override
 	public List<String[]> getIngredientListFromServer() {
-		String response = connector.getAllIngredientsFromServer();
+		String response = connector.getResponseForInput(INGREDIENTS);
 
 		List<JsonObject> jsonFromResponse = filterJsonFromResponse(response);
 
@@ -82,7 +84,7 @@ public class SKIServerHandler implements ISKIServerHandler {
 	public Map<String[], List<String[]>> getRecipeListFromServer() {
 		Map<String[], List<String[]>> recipeList = new HashMap<String[], List<String[]>>();
 
-		String response = connector.getAllRecipesFromServer();
+		String response = connector.getResponseForInput(RECIPES);
 		List<JsonObject> jsonFromResponse = filterJsonFromResponse(response);
 
 		for (JsonObject json : jsonFromResponse) {
