@@ -17,7 +17,7 @@ public interface IShoppingData {
 	 * 
 	 * @param ingredientsList
 	 */
-	void insertOrIgnore(List<IIngredient> ingredientsList);
+	void insertOrIgnoreShoppingItems(List<IIngredient> ingredientsList);
 
 	/**
 	 * Liefert alle Artikel, die auf der Einkaufsliste stehen, zurück.

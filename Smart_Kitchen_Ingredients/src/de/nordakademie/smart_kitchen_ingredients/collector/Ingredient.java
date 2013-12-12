@@ -21,13 +21,13 @@ public class Ingredient implements IIngredient {
 	}
 
 	@Override
-	public String getName() {
+	public String getTitle() {
 		return name;
 	}
 
 	@Override
 	public String toString() {
-		return getName();
+		return getTitle();
 	}
 
 	@Override

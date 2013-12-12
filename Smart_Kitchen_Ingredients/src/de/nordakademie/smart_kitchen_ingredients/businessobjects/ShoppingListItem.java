@@ -23,7 +23,7 @@ public class ShoppingListItem extends Ingredient implements IShoppingListItem,
 	@Override
 	public int compareTo(IShoppingListItem another) {
 		if (isBought() == another.isBought()) {
-			return getName().compareTo(another.getName());
+			return getTitle().compareTo(another.getTitle());
 		} else if (!another.isBought()) {
 			return 1;
 		} else {

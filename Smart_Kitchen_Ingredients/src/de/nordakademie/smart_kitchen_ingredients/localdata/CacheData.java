@@ -19,8 +19,8 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
-public class CacheData extends SQLiteOpenHelper implements IRecipeData,
-		ICacheRecipes, IIngredientData {
+public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
+		ICacheData, IIngredientCacheData {
 
 	private static final String TAG = CacheData.class.getSimpleName();
 
@@ -147,7 +147,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeData,
 	}
 
 	@Override
-	public void cacheAllRecipes(Map<String[], List<String[]>> recipes) {
+	public void insertOrUpdateAllRecipesFromServer(Map<String[], List<String[]>> recipes) {
 		// KEY: String Array - Value: String Array
 		// rezept zutaten
 		// 0=id 1=titel 0=id 1=titel 2=einheit 3=menge
@@ -193,7 +193,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeData,
 	}
 
 	@Override
-	public void cacheAllIngredients(List<String[]> ingredients) {
+	public void insertOrUpdateAllIngredientsFromServer(List<String[]> ingredients) {
 		for (String[] currentIngredient : ingredients) {
 			writeIngredientToDB(currentIngredient);
 		}

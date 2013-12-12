@@ -12,7 +12,6 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class SmartKitchenData extends SQLiteOpenHelper implements
@@ -68,10 +67,10 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	}
 
 	@Override
-	public void insertOrIgnore(List<IIngredient> ingredientList) {
+	public void insertOrIgnoreShoppingItems(List<IIngredient> ingredientList) {
 		ContentValues values = new ContentValues();
 		for (IIngredient ingredient : ingredientList) {
-			values.put(COLUMN_INGREDIENT, ingredient.getName());
+			values.put(COLUMN_INGREDIENT, ingredient.getTitle());
 			values.put(COLUMN_AMOUNT, ingredient.getAmount());
 			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
 			values.put(COLUMN_BOUGHT, String.valueOf(false));
@@ -121,7 +120,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		value.put(COLUMN_BOUGHT, String.valueOf(item.isBought()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
 		writableDatabase.update(TABLE_SHOPPING, value, COLUMN_INGREDIENT
-				+ " = '" + item.getName() + "'", null);
+				+ " = '" + item.getTitle() + "'", null);
 		writableDatabase.close();
 		Log.i(TAG, "shopping_table updated");
 	}
@@ -178,9 +177,9 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	}
 
 	@Override
-	public void insertOrUpdateBoughtIngredient(Ingredient boughtIngredient) {
+	public void insertOrUpdateIngredient(IIngredient boughtIngredient) {
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_INGREDIENT, boughtIngredient.getName());
+		values.put(COLUMN_INGREDIENT, boughtIngredient.getTitle());
 		values.put(COLUMN_AMOUNT, boughtIngredient.getAmount());
 		values.put(COLUMN_UNIT, boughtIngredient.getUnit().toString());
 

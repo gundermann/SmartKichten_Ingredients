@@ -20,10 +20,10 @@ public class CacheUpdaterService extends Service {
 		app = (IngredientsApplication) getApplication();
 
 		ISmartKitchenServerHandler handler = app.getServerHandler();
-		ICacheRecipes cacher = app.getCacheDbHelper();
+		ICacheData cacher = app.getCacheDbHelper();
 
-		cacher.cacheAllIngredients(handler.getIngredientListFromServer());
-		cacher.cacheAllRecipes(handler.getRecipeListFromServer());
+		cacher.insertOrUpdateAllIngredientsFromServer(handler.getIngredientListFromServer());
+		cacher.insertOrUpdateAllRecipesFromServer(handler.getRecipeListFromServer());
 	}
 
 	@Override
