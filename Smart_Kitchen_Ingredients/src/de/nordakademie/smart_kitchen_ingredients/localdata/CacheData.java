@@ -1,13 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,10 +14,7 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactoryImpl;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
@@ -43,33 +38,46 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 	public static final String COLUMN_RECIPES = "recipe_id";
 	public static final String COLUMN_INGRDIENTS = "indigrent_id";
 	public static final String COLUMN_AMOUNT = "amount";
-	
+
 	IngredientsApplication app;
 
 	public CacheData(IngredientsApplication application) {
-		super(application.getApplicationContext(), DATABASE_NAME, null, DATABASE_VERSION);
+		super(application.getApplicationContext(), DATABASE_NAME, null,
+				DATABASE_VERSION);
 		app = application;
 	}
 
 	private static final String DATABASE_CREATE_RECIPES = "create table "
-			+ TABLE_RECIPES + " (" 
-			+ COLUMN_RECIPE_ID + " text primary key not null, " 
-			+ COLUMN_TITLE + " text)";
+			+ TABLE_RECIPES + " (" + COLUMN_RECIPE_ID
+			+ " text primary key not null, " + COLUMN_TITLE + " text)";
 
 	private static final String DATABASE_CREATE_INDIGRENTS = "create table "
 			+ TABLE_INGRDIENTS + " (" + COLUMN_INGRDIENTS_ID
 			+ " text primary key not null, " + COLUMN_NAME + " text, "
 			+ COLUMN_UNIT + " text)";
 
-	private static final String DATABASE_CREATE_INDIGRENTS_TO_RECIPES = 
-			"create table " + TABLE_INGREDIENTS_TO_RECIPES + " ("
-			+ COLUMN_RECIPES + " text "
-			+ COLUMN_INGRDIENTS + " text "
-			+ COLUMN_AMOUNT + " integer "
-			+ "FOREIGN KEY(" + COLUMN_RECIPES + ") REFERENCES " 
-			+ TABLE_RECIPES + "(" + COLUMN_RECIPE_ID + ")" 
-			+ "FOREIGN KEY(" + COLUMN_INGRDIENTS + ") REFERENCES " 
-			+ TABLE_INGRDIENTS + "(" + COLUMN_INGRDIENTS_ID
+	private static final String DATABASE_CREATE_INDIGRENTS_TO_RECIPES = "create table "
+			+ TABLE_INGREDIENTS_TO_RECIPES
+			+ " ("
+			+ COLUMN_RECIPES
+			+ " text "
+			+ COLUMN_INGRDIENTS
+			+ " text "
+			+ COLUMN_AMOUNT
+			+ " integer "
+			+ "FOREIGN KEY("
+			+ COLUMN_RECIPES
+			+ ") REFERENCES "
+			+ TABLE_RECIPES
+			+ "("
+			+ COLUMN_RECIPE_ID
+			+ ")"
+			+ "FOREIGN KEY("
+			+ COLUMN_INGRDIENTS
+			+ ") REFERENCES "
+			+ TABLE_INGRDIENTS
+			+ "("
+			+ COLUMN_INGRDIENTS_ID
 			+ ") )";
 
 	@Override
@@ -93,41 +101,39 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 	@Override
 	public List<IRecipe> getAllRecipes() {
 		List<IRecipe> recipes = new ArrayList<IRecipe>();
-		 SQLiteDatabase db = getReadableDatabase();
-		 String sql = "SELECT * FROM " + TABLE_RECIPES;
-		 Cursor cursor = db.rawQuery(sql, null);
-		
-		 while (cursor.moveToNext()) { 
-			 RecipeFactory recipeFactory = app.getRecipeFactory();
-			 recipes.add(recipeFactory.createRecipe(cursor.getString(1),
-					 getIngredientsForRecipeID(cursor.getString(0))));
-		 }
+		SQLiteDatabase db = getReadableDatabase();
+		String sql = "SELECT * FROM " + TABLE_RECIPES;
+		Cursor cursor = db.rawQuery(sql, null);
+
+		while (cursor.moveToNext()) {
+			IRecipeFactory recipeFactory = app.getRecipeFactory();
+			recipes.add(recipeFactory.createRecipe(cursor.getString(1),
+					getIngredientsForRecipeID(cursor.getString(0))));
+		}
 		return recipes;
 	}
 
 	private List<IIngredient> getIngredientsForRecipeID(String recipeID) {
 		List<IIngredient> ingredientsList = new ArrayList<IIngredient>();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
-		
+
 		SQLiteDatabase db = getReadableDatabase();
 		String sql = "SELECT * FROM" + TABLE_INGREDIENTS_TO_RECIPES;
 		Cursor cursor = db.rawQuery(sql, null);
-		
-		while(cursor.moveToNext()){
-			ingredientsList.add(ingredientFactory.
-					createIngredient(
-							getIngredientNameByID(cursor.getString(1)), 
-							cursor.getInt(2), 
-							getIngredientUnitByID(cursor.getString(1))));
+
+		while (cursor.moveToNext()) {
+			ingredientsList.add(ingredientFactory.createIngredient(
+					getIngredientNameByID(cursor.getString(1)),
+					cursor.getInt(2),
+					getIngredientUnitByID(cursor.getString(1))));
 		}
 		return ingredientsList;
 	}
 
 	private Unit getIngredientUnitByID(String id) {
 		SQLiteDatabase db = getReadableDatabase();
-		String sql = "SELECT " + COLUMN_UNIT + " FROM "
-				+ TABLE_INGRDIENTS + " WHERE " + COLUMN_INGRDIENTS_ID
-				+ "=" + id ;
+		String sql = "SELECT " + COLUMN_UNIT + " FROM " + TABLE_INGRDIENTS
+				+ " WHERE " + COLUMN_INGRDIENTS_ID + "=" + id;
 		Cursor cursor = db.rawQuery(sql, null);
 		cursor.moveToNext();
 		return Unit.valueOf(cursor.getString(0));
@@ -135,16 +141,16 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 
 	private String getIngredientNameByID(String id) {
 		SQLiteDatabase db = getReadableDatabase();
-		String sql = "SELECT " + COLUMN_NAME + " FROM "
-				+ TABLE_INGRDIENTS + " WHERE " + COLUMN_INGRDIENTS_ID
-				+ "=" + id ;
+		String sql = "SELECT " + COLUMN_NAME + " FROM " + TABLE_INGRDIENTS
+				+ " WHERE " + COLUMN_INGRDIENTS_ID + "=" + id;
 		Cursor cursor = db.rawQuery(sql, null);
 		cursor.moveToNext();
 		return cursor.getString(0);
 	}
 
 	@Override
-	public void insertOrUpdateAllRecipesFromServer(Map<String[], List<String[]>> recipes) {
+	public void insertOrUpdateAllRecipesFromServer(
+			Map<String[], List<String[]>> recipes) {
 		// KEY: String Array - Value: String Array
 		// rezept zutaten
 		// 0=id 1=titel 0=id 1=titel 2=einheit 3=menge
@@ -160,7 +166,8 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 			for (String[] currentIngredient : ingredientList) {
 				writeConectionToRecipeToDB(currentRecipeID, currentIngredient);
 				System.out.println("Tabelle funktioniert");
-				Log.w(TAG, "die Tabelle mit rezeptID, ZutatenID und amount wurde erstellt.");
+				Log.w(TAG,
+						"die Tabelle mit rezeptID, ZutatenID und amount wurde erstellt.");
 			}
 
 		}
@@ -192,7 +199,8 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 	}
 
 	@Override
-	public void insertOrUpdateAllIngredientsFromServer(List<String[]> ingredients) {
+	public void insertOrUpdateAllIngredientsFromServer(
+			List<String[]> ingredients) {
 		for (String[] currentIngredient : ingredients) {
 			writeIngredientToDB(currentIngredient);
 		}
@@ -216,17 +224,16 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 	public List<IIngredient> getAllIngredients() {
 		List<IIngredient> ingredientsList = new ArrayList<IIngredient>();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
-		
+
 		SQLiteDatabase db = getReadableDatabase();
 		String sql = "SELECT * FROM" + TABLE_INGRDIENTS;
 		Cursor cursor = db.rawQuery(sql, null);
-		
-		while(cursor.moveToNext()){
-			ingredientsList.add(
-					ingredientFactory.createIngredient
-					(cursor.getString(1), 0, Unit.valueOf(cursor.getString(2))));
+
+		while (cursor.moveToNext()) {
+			ingredientsList.add(ingredientFactory.createIngredient(
+					cursor.getString(1), 0, Unit.valueOf(cursor.getString(2))));
 		}
-		
+
 		return ingredientsList;
 	}
 
