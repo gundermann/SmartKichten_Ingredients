@@ -8,29 +8,32 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import de.nordakademie.smart_kitchen_ingredients.ServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
 
 /**
  * @author Niels Gundermann
  */
-public class SKIServerHandler implements ISKIServerHandler {
+public class SmartKitchenServerHandler extends ServerHandler implements
+		ISmartKitchenServerHandler {
 
 	private Gson jsonParser;
-	private ISKIServerConnector connector;
+	private ISmartKichtenServerConnector connector;
+	private static final String INGREDIENTS = "ingredients";
+	private static final String RECIPES = "recepies";
 
-	public SKIServerHandler(ISKIServerConnector serverConnector) {
+	public SmartKitchenServerHandler(
+			ISmartKichtenServerConnector serverConnector) {
 		connector = serverConnector;
 		jsonParser = new Gson();
 	}
 
 	@Override
 	public List<String[]> getIngredientListFromServer() {
-		String response = connector.getAllIngredientsFromServer();
-
-		List<JsonObject> jsonFromResponse = filterJsonFromResponse(response);
+		List<JsonObject> jsonFromResponse = filterJsonFromResponse(connector
+				.getResponseForInput(INGREDIENTS));
 
 		List<String[]> ingredientList = getIngredientsFromJsonList(jsonFromResponse);
 
@@ -46,44 +49,11 @@ public class SKIServerHandler implements ISKIServerHandler {
 		return ingredientList;
 	}
 
-	public List<JsonObject> filterJsonFromResponse(String response) {
-		List<JsonObject> filteredResponse = new ArrayList<JsonObject>();
-		int firstIndex = 0;
-		int secondIndex = 1;
-		int counter = -1;
-
-		while (secondIndex <= response.length()) {
-			String currentChar = response.substring(secondIndex - 1,
-					secondIndex);
-			if (currentChar.equals("{")) {
-				if (counter == -1) {
-					firstIndex = secondIndex - 1;
-					counter++;
-				}
-				counter++;
-			}
-			if (currentChar.equals("}")) {
-				counter--;
-			}
-			if (counter == 0) {
-				String filteredString = response.substring(firstIndex,
-						secondIndex);
-				filteredResponse.add(new JsonParser().parse(filteredString)
-						.getAsJsonObject());
-				counter = -1;
-			}
-			secondIndex++;
-		}
-
-		return filteredResponse;
-	}
-
 	@Override
 	public Map<String[], List<String[]>> getRecipeListFromServer() {
 		Map<String[], List<String[]>> recipeList = new HashMap<String[], List<String[]>>();
-
-		String response = connector.getAllRecipesFromServer();
-		List<JsonObject> jsonFromResponse = filterJsonFromResponse(response);
+		List<JsonObject> jsonFromResponse = filterJsonFromResponse(connector
+				.getResponseForInput(RECIPES));
 
 		for (JsonObject json : jsonFromResponse) {
 			String[] key = getRecipeKey(json);

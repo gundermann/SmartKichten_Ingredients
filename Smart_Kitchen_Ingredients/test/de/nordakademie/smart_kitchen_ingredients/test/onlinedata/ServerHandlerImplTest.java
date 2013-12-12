@@ -11,41 +11,18 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gson.JsonObject;
-
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISKIServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SKIServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKichtenServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerHandler;
 
 public class ServerHandlerImplTest {
 
-	SKIServerHandler serverHandler;
+	SmartKitchenServerHandler serverHandler;
 
 	@Before
 	public void setUp() throws Exception {
-		ISKIServerConnector serverConnector = SKIConnectorTestHelper
+		ISmartKichtenServerConnector serverConnector = SmartKitchenServerConnectorTestHelper
 				.createConnectorMock();
-		serverHandler = new SKIServerHandler(serverConnector);
-	}
-
-	@Test
-	public void testFilterJson() {
-		String json = "{\"title\":\"Spinat mit Ei\",\"ingredients\":"
-				+ "[{\"title\":\"Spinat\",\"amount\":500,\"unit\":\"g\"},"
-				+ "{\"title\":\"Ei\",\"amount\":2,\"unit\":\"stk\"}]}";
-
-		String jsonLong = " {\"title\":\"Spinat mit Ei\",\"ingredients\":"
-				+ "[{\"title\":\"Spinat\",\"amount\":500,\"unit\":\"g\"}, "
-				+ "{\"title\":\"Ei\",\"amount\":2,\"unit\":\"stk\"}]}, {\"title\":\"Ei\",\"ingredients\":"
-				+ "[{\"title\":\"Ei\",\"amount\":2,\"unit\":\"stk\"}]} ";
-
-		List<JsonObject> stringList = serverHandler
-				.filterJsonFromResponse(json);
-
-		assertTrue(stringList.size() == 1);
-
-		stringList = serverHandler.filterJsonFromResponse(jsonLong);
-
-		assertTrue(stringList.size() == 2);
+		serverHandler = new SmartKitchenServerHandler(serverConnector);
 	}
 
 	@Test
