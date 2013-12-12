@@ -27,4 +27,8 @@ public class Ingredient implements IIngredient {
 		return unit;
 	}
 
+	@Override
+	public String toString() {
+		return title;
+	}
 }

@@ -94,7 +94,7 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 	private String[] getRecipeKey(JsonObject json) {
 		try {
 			String id = json.get("_id").getAsString();
-			String recipeTitle = json.get("title").getAsString();
+			String recipeTitle = json.get("name").getAsString();
 			String[] key = new String[2];
 			key[0] = id;
 			key[1] = recipeTitle;

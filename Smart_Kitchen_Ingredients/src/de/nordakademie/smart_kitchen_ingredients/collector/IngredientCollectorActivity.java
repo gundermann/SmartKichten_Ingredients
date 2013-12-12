@@ -1,10 +1,10 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +21,8 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.localdata.CacheUpdaterService;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientCacheData;
 
 /**
  * @author frederic.oppermann
@@ -32,7 +34,7 @@ public class IngredientCollectorActivity extends Activity implements
 	EditText searchBar;
 	ListView ingredientsList;
 	Button button;
-	private IngredientDb ingredientDb;
+	private IIngredientCacheData ingredientDb;
 	private ListAdapter adapter;
 	private IngredientsApplication app;
 
@@ -40,7 +42,7 @@ public class IngredientCollectorActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (IngredientsApplication) getApplication();
-		ingredientDb = new IngredientDb();
+		ingredientDb = app.getIngredientDbHelper();
 		setContentView(R.layout.activity_ingredient_collector);
 		ingredientsList = (ListView) findViewById(R.id.ingredientList);
 		ingredientsList.setOnItemClickListener(this);
@@ -53,6 +55,9 @@ public class IngredientCollectorActivity extends Activity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+		startService(new Intent(app.getApplicationContext(),
+				CacheUpdaterService.class));
 
 		adapter = new ArrayAdapter<IIngredient>(getApplicationContext(),
 				R.layout.list_view_entry, ingredientDb.getAllIngredients());
@@ -74,10 +79,26 @@ public class IngredientCollectorActivity extends Activity implements
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		adapter = new ArrayAdapter<Ingredient>(getApplicationContext(),
-				R.layout.list_view_entry, Arrays.asList(new Ingredient()));
+		adapter = new ArrayAdapter<IIngredient>(getApplicationContext(),
+				R.layout.list_view_entry, filterItemsByName(s));
 
 		ingredientsList.setAdapter(adapter);
+	}
+
+	private IIngredient[] filterItemsByName(CharSequence s) {
+		List<IIngredient> filteredItems = new ArrayList<IIngredient>();
+
+		for (IIngredient ingredientFromList : ingredientDb.getAllIngredients()) {
+			if (ingredientFromList.getTitle().contains(s)) {
+				filteredItems.add(ingredientFromList);
+			}
+		}
+		IIngredient[] ingredientArray = new IIngredient[filteredItems.size()];
+
+		for (int i = 0; i < filteredItems.size(); i++) {
+			ingredientArray[i] = filteredItems.get(i);
+		}
+		return ingredientArray;
 	}
 
 	@Override

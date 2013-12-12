@@ -22,7 +22,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 
 	private static final String TAG = CacheData.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	private static final String DATABASE_NAME = "cacheDB.db";
 
 	public static final String TABLE_RECIPES = "recipes_table";
@@ -60,8 +60,8 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 			+ TABLE_INGREDIENTS_TO_RECIPES
 			+ " ("
 			+ COLUMN_RECIPES
-			+ " text "
-			+ COLUMN_INGRDIENTS + " text " + COLUMN_AMOUNT + " Integer)";
+			+ " text, "
+			+ COLUMN_INGRDIENTS + " text, " + COLUMN_AMOUNT + " Integer)";
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
@@ -153,7 +153,6 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 			List<String[]> ingredientList = recipes.get(currentRecipe);
 			for (String[] currentIngredient : ingredientList) {
 				writeConectionToRecipeToDB(currentRecipeID, currentIngredient);
-				System.out.println("Tabelle funktioniert");
 				Log.w(TAG,
 						"die Tabelle mit rezeptID, ZutatenID und amount wurde erstellt.");
 			}
@@ -214,7 +213,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
 
 		SQLiteDatabase db = getReadableDatabase();
-		String sql = "SELECT * FROM" + TABLE_INGRDIENTS;
+		String sql = "SELECT * FROM " + TABLE_INGRDIENTS;
 		Cursor cursor = db.rawQuery(sql, null);
 
 		while (cursor.moveToNext()) {
