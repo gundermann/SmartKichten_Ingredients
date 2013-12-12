@@ -23,7 +23,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 	private static final String TAG = CacheData.class.getSimpleName();
 
 	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "recipeDB";
+	private static final String DATABASE_NAME = "cacheDB.db";
 
 	public static final String TABLE_RECIPES = "recipes_table";
 	public static final String COLUMN_RECIPE_ID = "id";
@@ -110,6 +110,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 			recipes.add(recipeFactory.createRecipe(cursor.getString(1),
 					getIngredientsForRecipeID(cursor.getString(0))));
 		}
+		db.close();
 		return recipes;
 	}
 
@@ -127,6 +128,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 					cursor.getInt(2),
 					getIngredientUnitByID(cursor.getString(1))));
 		}
+		db.close();
 		return ingredientsList;
 	}
 
@@ -145,7 +147,10 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 				+ " WHERE " + COLUMN_INGRDIENTS_ID + "=" + id;
 		Cursor cursor = db.rawQuery(sql, null);
 		cursor.moveToNext();
-		return cursor.getString(0);
+		String ingredientId = cursor.getString(0);
+		cursor.close();
+		db.close();
+		return ingredientId;
 	}
 
 	@Override
@@ -234,6 +239,8 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 					cursor.getString(1), 0, Unit.valueOf(cursor.getString(2))));
 		}
 
+		cursor.close();
+		db.close();
 		return ingredientsList;
 	}
 
