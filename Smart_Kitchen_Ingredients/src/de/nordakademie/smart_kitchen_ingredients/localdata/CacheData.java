@@ -61,24 +61,7 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 			+ " ("
 			+ COLUMN_RECIPES
 			+ " text "
-			+ COLUMN_INGRDIENTS
-			+ " text "
-			+ COLUMN_AMOUNT
-			+ " integer "
-			+ "FOREIGN KEY("
-			+ COLUMN_RECIPES
-			+ ") REFERENCES "
-			+ TABLE_RECIPES
-			+ "("
-			+ COLUMN_RECIPE_ID
-			+ ")"
-			+ "FOREIGN KEY("
-			+ COLUMN_INGRDIENTS
-			+ ") REFERENCES "
-			+ TABLE_INGRDIENTS
-			+ "("
-			+ COLUMN_INGRDIENTS_ID
-			+ ") )";
+			+ COLUMN_INGRDIENTS + " text " + COLUMN_AMOUNT + " Integer)";
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
