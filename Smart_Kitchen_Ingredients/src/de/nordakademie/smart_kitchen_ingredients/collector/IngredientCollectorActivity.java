@@ -7,7 +7,6 @@ import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,7 +25,6 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActivity;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity;
 
 /**
  * @author frederic.oppermann
@@ -140,8 +138,7 @@ public class IngredientCollectorActivity extends Activity implements
 			AsyncTask<Void, Void, List<IIngredient>> {
 		private IngredientsApplication application = (IngredientsApplication) getApplication();
 
-		private IIngredientData ingredientDb = application
-				.getIngredientDbHelper();
+		private IIngredientData ingredientDb = new IngredientDb();
 
 		@Override
 		protected void onPreExecute() {
