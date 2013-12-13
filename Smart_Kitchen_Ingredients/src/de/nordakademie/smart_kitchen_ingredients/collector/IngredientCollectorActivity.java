@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ArrayAdapter;
@@ -18,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
@@ -37,7 +37,7 @@ public class IngredientCollectorActivity extends Activity implements
 	EditText searchBar;
 	ListView ingredientsList;
 	private List<IIngredient> ingredientsFromDb = new ArrayList<IIngredient>();
-	private AsyncTask<Void, Void, List<IIngredient>> myTask = new GetDataFromDbTask();
+	private AsyncTask<Void, Void, List<IIngredient>> fetchDataTask = new FetchDataFromDbAsyncTask();
 	private ProgressBar progressWheel;
 
 	@Override
@@ -60,8 +60,7 @@ public class IngredientCollectorActivity extends Activity implements
 					public void onGlobalLayout() {
 						view.getViewTreeObserver()
 								.removeGlobalOnLayoutListener(this);
-						myTask = myTask.execute();
-						Log.d("nixLos", "ping");
+						fetchDataTask = fetchDataTask.execute();
 					}
 				});
 	}
@@ -96,9 +95,12 @@ public class IngredientCollectorActivity extends Activity implements
 				.contains(currentSearch.toLowerCase(Locale.GERMAN));
 	}
 
-	private class GetDataFromDbTask extends
+	private class FetchDataFromDbAsyncTask extends
 			AsyncTask<Void, Void, List<IIngredient>> {
-		private IIngredientData ingredientDb = new IngredientDb();
+		private IngredientsApplication application = (IngredientsApplication) getApplication();
+
+		private IIngredientData ingredientDb = application
+				.getIngredientDbHelper();
 
 		@Override
 		protected void onPreExecute() {
