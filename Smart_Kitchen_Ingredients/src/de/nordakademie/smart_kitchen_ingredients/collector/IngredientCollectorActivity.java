@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity;
 
 /**
  * @author frederic.oppermann
@@ -45,6 +47,7 @@ public class IngredientCollectorActivity extends Activity implements
 
 	private Button showRecepies;
 	private Button showIngredients;
+	private Button addNewIngredient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class IngredientCollectorActivity extends Activity implements
 
 		showIngredients = (Button) findViewById(R.id.showIngredientsButton);
 		showRecepies = (Button) findViewById(R.id.showRecipesButton);
+		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
 
 		showRecepies.setOnClickListener(new OnClickListener() {
 
@@ -82,13 +86,22 @@ public class IngredientCollectorActivity extends Activity implements
 				showIngredients.setVisibility(View.VISIBLE);
 			}
 		});
-		
+
 		showIngredients.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				showIngredients.setVisibility(View.GONE);
 				showRecepies.setVisibility(View.VISIBLE);
+			}
+		});
+
+		addNewIngredient.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getApplicationContext(),
+						ShoppingActivity.class));
 			}
 		});
 	}
