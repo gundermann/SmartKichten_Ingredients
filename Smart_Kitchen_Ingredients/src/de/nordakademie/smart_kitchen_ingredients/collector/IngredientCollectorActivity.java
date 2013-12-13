@@ -12,8 +12,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -34,11 +36,14 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 
 public class IngredientCollectorActivity extends Activity implements
 		TextWatcher {
-	EditText searchBar;
-	ListView ingredientsList;
+	private EditText searchBar;
+	private ListView ingredientsList;
 	private List<IIngredient> ingredientsFromDb = new ArrayList<IIngredient>();
 	private AsyncTask<Void, Void, List<IIngredient>> myTask = new GetDataFromDbTask();
 	private ProgressBar progressWheel;
+
+	private Button showRecepies;
+	private Button showIngredients;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,17 @@ public class IngredientCollectorActivity extends Activity implements
 						Log.d("nixLos", "ping");
 					}
 				});
+
+		showIngredients = (Button) findViewById(R.id.showIngredientsButton);
+		showRecepies = (Button) findViewById(R.id.showRecipesButton);
+
+		showRecepies.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
 	}
 
 	@Override

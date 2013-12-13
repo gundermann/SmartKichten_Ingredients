@@ -28,4 +28,5 @@
     <string name="scanfault">keine Übereinstimmung gefunden</string>
     <string name="ingredientCollector">Zutatensammler</string>
     <string name="insertStoredItems">Verfügbare Zutaten erfassen</string>
+    <string name="showIngredientsButtonText">Show ingredients</string>
 </resources>
