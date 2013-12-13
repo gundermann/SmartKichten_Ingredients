@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -77,7 +78,17 @@ public class IngredientCollectorActivity extends Activity implements
 
 			@Override
 			public void onClick(View v) {
-				
+				showRecepies.setVisibility(View.GONE);
+				showIngredients.setVisibility(View.VISIBLE);
+			}
+		});
+		
+		showIngredients.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showIngredients.setVisibility(View.GONE);
+				showRecepies.setVisibility(View.VISIBLE);
 			}
 		});
 	}
