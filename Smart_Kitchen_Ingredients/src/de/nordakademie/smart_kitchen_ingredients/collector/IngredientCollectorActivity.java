@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActivity;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity;
 
 /**
@@ -101,7 +102,7 @@ public class IngredientCollectorActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(getApplicationContext(),
-						ShoppingActivity.class));
+						AddIngredientActivity.class));
 			}
 		});
 	}
