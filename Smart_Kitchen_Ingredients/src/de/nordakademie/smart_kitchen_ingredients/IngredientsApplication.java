@@ -16,6 +16,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerConnector;
@@ -32,7 +33,8 @@ public class IngredientsApplication extends Application {
 	private RecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-
+	private IIngredientData cachedIngredientsHelper;
+	private IRecipeData cachedRecipesHelper;
 	private CacheData serverDataHelper;
 
 	@Override
@@ -47,10 +49,18 @@ public class IngredientsApplication extends Application {
 		recipeFactory = new RecipeFactoryImpl();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
+		cachedIngredientsHelper = new CacheData(this);
+		cachedRecipesHelper = new CacheData(this);
 
 		Log.i(TAG, "Application started");
 	}
 
+	public IIngredientData getcachedIngredientsHelper() {
+		return cachedIngredientsHelper;
+	}
+	public IRecipeData getcachedRecipesHelper() {
+		return cachedRecipesHelper;
+	}
 	public IShoppingData getShoppingDbHelper() {
 		return shoppingDbHelper;
 	}

@@ -3,11 +3,11 @@
     package="de.nordakademie.smart_kitchen_ingredients"
     android:versionCode="1"
     android:versionName="1.0" >
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission 
-        android:name="de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING" />
-	<uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <permission
         android:name="de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING"
         android:description="@string/changeShoppingDataPermissionDescription"
@@ -19,9 +19,10 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="18" />
-    <instrumentation 
-        android:targetPackage="de.nordakademie.smart_kitchen_ingredients" 
-        android:name="android.test.InstrumentationTestRunner" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="de.nordakademie.smart_kitchen_ingredients" />
 
     <application
         android:name="de.nordakademie.smart_kitchen_ingredients.IngredientsApplication"
@@ -29,38 +30,45 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
-        <service android:name="de.nordakademie.smart_kitchen_ingredients.localdata.CacheUpdaterService"></service>
-        <service android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDataCleanUpService"></service>
+        <service android:name="de.nordakademie.smart_kitchen_ingredients.localdata.CacheUpdaterService" >
+        </service>
+        <service android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDataCleanUpService" >
+        </service>
+
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity"
-            android:label="@string/title_activity_shopping" ><intent-filter>
+            android:label="@string/title_activity_shopping" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.IngredientRegistrationActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity 
+        <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity"
-            android:label="@string/ingredientCollector">
+            android:label="@string/ingredientCollector" >
         </activity>
-		<activity 
-		    android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity">
-		</activity>
-        
-        <receiver android:name="de.nordakademie.smart_kitchen_ingredients.localdata.NetworkReceiver">
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity" >
+        </activity>
+
+        <receiver android:name="de.nordakademie.smart_kitchen_ingredients.localdata.NetworkReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateAlarmReceiver"></receiver>
-    <uses-library android:name="android.test.runner" />
+        <receiver android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateAlarmReceiver" >
+        </receiver>
+
+        <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActivity"
+            android:label="@string/title_activity_add_ingredient" >
+        </activity>
     </application>
-    
 
 </manifest>
