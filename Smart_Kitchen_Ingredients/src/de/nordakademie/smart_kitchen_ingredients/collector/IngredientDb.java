@@ -18,6 +18,11 @@ public class IngredientDb implements IIngredientData {
 
 	@Override
 	public List<IIngredient> getAllIngredients() {
+		for (Long i = 0L; i < 900000; i++) {
+			String nix = "";
+			nix = nix + "";
+		}
+
 		List<IIngredient> ingredients = new ArrayList<IIngredient>();
 		for (int i = 0; i < 50; i++) {
 			ingredients.add(new Ingredient());
