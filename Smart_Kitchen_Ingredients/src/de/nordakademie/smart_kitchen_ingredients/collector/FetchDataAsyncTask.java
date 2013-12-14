@@ -8,7 +8,6 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 
 /**
@@ -20,10 +19,10 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	private ProgressBar progressWheel;
 	private IIngredientData databseAccessHelper;
-	private IAsyncTaskObserver observer;
+	private IAsyncTaskObserver<T> observer;
 
 	public FetchDataAsyncTask(ProgressBar progressWheel,
-			IIngredientData databseAccessHelper, IAsyncTaskObserver observer) {
+			IIngredientData databseAccessHelper, IAsyncTaskObserver<T> observer) {
 		this.progressWheel = progressWheel;
 		this.databseAccessHelper = databseAccessHelper;
 		this.observer = observer;
@@ -34,6 +33,7 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 		progressWheel.setVisibility(View.VISIBLE);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected List<T> doInBackground(Void... params) {
 		return (List<T>) databseAccessHelper.getAllIngredients();
@@ -42,6 +42,6 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 	@Override
 	protected void onPostExecute(List<T> result) {
 		progressWheel.setVisibility(View.GONE);
-//		observer.update(this);
+		observer.update(this);
 	}
 }

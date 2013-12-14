@@ -2,10 +2,6 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,10 +18,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActivity;
 
 /**
@@ -39,10 +32,10 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActiv
 // TODO show msg if no recipes / ingredients available in general
 
 public abstract class AbstractCollectorActivity<T> extends Activity implements
-		TextWatcher, IAsyncTaskObserver {
+		TextWatcher, IAsyncTaskObserver<T> {
 	private EditText searchBar;
-	private ListView ingredientsList;
-	private List<T> elementsFromDb = new ArrayList<T>();
+	private ListView elementsListView;
+	private List<T> allElements = new ArrayList<T>();
 	private ProgressBar progressWheel;
 
 	private Button showIngredients;
@@ -53,7 +46,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ingredient_collector);
 
-		ingredientsList = (ListView) findViewById(R.id.ingredientList);
+		elementsListView = (ListView) findViewById(R.id.ingredientList);
 		searchBar = (EditText) findViewById(R.id.ingredientNameInput);
 		searchBar.addTextChangedListener(this);
 		final View view = findViewById(R.id.activity_ingredient_collector);
@@ -106,13 +99,13 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	public void afterTextChanged(Editable s) {
 		List<T> ingredientsInList = new ArrayList<T>();
 
-		for (T ingredient : elementsFromDb) {
+		for (T ingredient : getAllElements()) {
 			if (ingredientNameMatchSearchString(ingredient)) {
 				ingredientsInList.add(ingredient);
 			}
 		}
 
-		ingredientsList.setAdapter((ListAdapter) new ArrayAdapter<T>(
+		elementsListView.setAdapter((ListAdapter) new ArrayAdapter<T>(
 				getApplicationContext(), R.layout.list_view_entry,
 				ingredientsInList));
 	}
@@ -134,17 +127,16 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		return true;
 	}
 
-	@Override
-	public void update() {
-
-		setNewAdapter();
+	private void setNewAdapter(ListAdapter adapter) {
+		elementsListView.setAdapter(adapter);
+		afterTextChanged(searchBar.getText());
 	}
 
-	private void setNewAdapter() {
-		ListAdapter adapter = new ArrayAdapter<T>(getApplicationContext(),
-				R.layout.list_view_entry, elementsFromDb);
+	public List<T> getAllElements() {
+		return allElements;
+	}
 
-		ingredientsList.setAdapter(adapter);
-		afterTextChanged(searchBar.getText());
+	public void setAllElements(List<T> allElements) {
+		this.allElements = allElements;
 	}
 }
