@@ -14,7 +14,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
  * @date 07.12.2013
  * @description
  */
-public class IngredientDb implements IIngredientData {
+public class IngredientDbMock implements IIngredientData {
 
 	@Override
 	public List<IIngredient> getAllIngredients() {

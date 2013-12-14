@@ -43,7 +43,8 @@ public class IngredientsApplication extends Application {
 
 		serverDataHelper = new CacheData(this);
 		shoppingDbHelper = new SmartKitchenData(this);
-		serverHandler = new SmartKitchenServerHandler(new SmartKitchenServerConnector());
+		serverHandler = new SmartKitchenServerHandler(
+				new SmartKitchenServerConnector());
 		ingredientFactory = new IngredientFactory();
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactoryImpl();
@@ -55,12 +56,14 @@ public class IngredientsApplication extends Application {
 		Log.i(TAG, "Application started");
 	}
 
-	public IIngredientData getcachedIngredientsHelper() {
+	public IIngredientData getCachedIngredientsHelper() {
 		return cachedIngredientsHelper;
 	}
-	public IRecipeData getcachedRecipesHelper() {
+
+	public IRecipeData getCachedRecipesHelper() {
 		return cachedRecipesHelper;
 	}
+
 	public IShoppingData getShoppingDbHelper() {
 		return shoppingDbHelper;
 	}

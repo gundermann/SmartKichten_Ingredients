@@ -3,6 +3,8 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
@@ -37,11 +39,11 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActiv
 // TODO show msg if no recipes / ingredients available in general
 
 public class IngredientCollectorActivity extends Activity implements
-		TextWatcher {
+		TextWatcher, IAsyncTaskObserver {
 	private EditText searchBar;
 	private ListView ingredientsList;
 	private List<IIngredient> ingredientsFromDb = new ArrayList<IIngredient>();
-	private AsyncTask<Void, Void, List<IIngredient>> fetchDataTask = new FetchDataFromDbAsyncTask();
+	private AsyncTask<Void, Void, List<IIngredient>> fetchDataTask;
 	private ProgressBar progressWheel;
 
 	private Button showRecepies;
@@ -102,6 +104,9 @@ public class IngredientCollectorActivity extends Activity implements
 						AddIngredientActivity.class));
 			}
 		});
+
+		fetchDataTask = new FetchDataAsyncTask(this.progressWheel,
+				new IngredientDbMock(), this);
 	}
 
 	@Override
@@ -134,40 +139,23 @@ public class IngredientCollectorActivity extends Activity implements
 				.contains(currentSearch.toLowerCase(Locale.GERMAN));
 	}
 
-	private class FetchDataFromDbAsyncTask extends
-			AsyncTask<Void, Void, List<IIngredient>> {
-		private IngredientsApplication application = (IngredientsApplication) getApplication();
-
-		private IIngredientData ingredientDb = new IngredientDb();
-
-		@Override
-		protected void onPreExecute() {
-			progressWheel.setVisibility(View.VISIBLE);
+	@Override
+	public void update(AsyncTask<Void, Void, List<IIngredient>> asyncTask) {
+		try {
+			ingredientsFromDb = asyncTask.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		progressWheel.setVisibility(View.GONE);
+		ListAdapter adapter = new ArrayAdapter<IIngredient>(
+				getApplicationContext(), R.layout.list_view_entry,
+				ingredientsFromDb);
 
-		@Override
-		protected List<IIngredient> doInBackground(Void... params) {
-			return ingredientDb.getAllIngredients();
-		}
-
-		@Override
-		protected void onPostExecute(List<IIngredient> result) {
-			try {
-				ingredientsFromDb = this.get();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			progressWheel.setVisibility(View.GONE);
-			ListAdapter adapter = new ArrayAdapter<IIngredient>(
-					getApplicationContext(), R.layout.list_view_entry,
-					ingredientsFromDb);
-			ingredientsList.setAdapter(adapter);
-			afterTextChanged(searchBar.getText());
-		}
-
+		ingredientsList.setAdapter(adapter);
+		afterTextChanged(searchBar.getText());
 	}
 }
