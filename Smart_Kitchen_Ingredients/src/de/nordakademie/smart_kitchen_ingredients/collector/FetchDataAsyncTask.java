@@ -4,7 +4,6 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.List;
-import java.util.Observer;
 
 import android.os.AsyncTask;
 import android.view.View;
@@ -17,8 +16,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
  * @date 14.12.2013
  * @description
  */
-public class FetchDataAsyncTask extends
-		AsyncTask<Void, Void, List<IIngredient>> {
+public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	private ProgressBar progressWheel;
 	private IIngredientData databseAccessHelper;
@@ -37,13 +35,13 @@ public class FetchDataAsyncTask extends
 	}
 
 	@Override
-	protected List<IIngredient> doInBackground(Void... params) {
-		return databseAccessHelper.getAllIngredients();
+	protected List<T> doInBackground(Void... params) {
+		return (List<T>) databseAccessHelper.getAllIngredients();
 	}
 
 	@Override
-	protected void onPostExecute(List<IIngredient> result) {
+	protected void onPostExecute(List<T> result) {
 		progressWheel.setVisibility(View.GONE);
-		observer.update(this);
+//		observer.update(this);
 	}
 }
