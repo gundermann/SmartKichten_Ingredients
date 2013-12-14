@@ -42,7 +42,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		TextWatcher, IAsyncTaskObserver {
 	private EditText searchBar;
 	private ListView ingredientsList;
-	private List<IIngredient> elementsFromDb = new ArrayList<IIngredient>();
+	private List<T> elementsFromDb = new ArrayList<T>();
 	private ProgressBar progressWheel;
 
 	private Button showIngredients;
@@ -92,28 +92,27 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 						AddIngredientActivity.class));
 			}
 		});
-
-		fetchDataFromDb(new FetchDataAsyncTask(this.progressWheel,
-				new IngredientDbMock(), this));
 	}
 
-	private void fetchDataFromDb(
-			AsyncTask<Void, Void, List<IIngredient>> fetchDataTask) {
-
+	protected void fetchDataFromDb(AsyncTask<Void, Void, List<T>> fetchDataTask) {
 		fetchDataTask.execute();
+	}
+
+	public ProgressBar getProgressWheel() {
+		return progressWheel;
 	}
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		List<IIngredient> ingredientsInList = new ArrayList<IIngredient>();
+		List<T> ingredientsInList = new ArrayList<T>();
 
-		for (IIngredient ingredient : elementsFromDb) {
+		for (T ingredient : elementsFromDb) {
 			if (ingredientNameMatchSearchString(ingredient)) {
 				ingredientsInList.add(ingredient);
 			}
 		}
 
-		ingredientsList.setAdapter((ListAdapter) new ArrayAdapter<IIngredient>(
+		ingredientsList.setAdapter((ListAdapter) new ArrayAdapter<T>(
 				getApplicationContext(), R.layout.list_view_entry,
 				ingredientsInList));
 	}
@@ -127,10 +126,12 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 	}
 
-	private boolean ingredientNameMatchSearchString(IIngredient ingredient) {
-		String searchString = searchBar.getText().toString();
-		return ingredient.getName().toLowerCase(Locale.GERMAN)
-				.contains(searchString.toLowerCase(Locale.GERMAN));
+	private boolean ingredientNameMatchSearchString(T ingredient) {
+		// String searchString = searchBar.getText().toString();
+		// return ingredient.getName().toLowerCase(Locale.GERMAN)
+		// .contains(searchString.toLowerCase(Locale.GERMAN));
+
+		return true;
 	}
 
 	@Override
@@ -140,9 +141,8 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	}
 
 	private void setNewAdapter() {
-		ListAdapter adapter = new ArrayAdapter<IIngredient>(
-				getApplicationContext(), R.layout.list_view_entry,
-				elementsFromDb);
+		ListAdapter adapter = new ArrayAdapter<T>(getApplicationContext(),
+				R.layout.list_view_entry, elementsFromDb);
 
 		ingredientsList.setAdapter(adapter);
 		afterTextChanged(searchBar.getText());

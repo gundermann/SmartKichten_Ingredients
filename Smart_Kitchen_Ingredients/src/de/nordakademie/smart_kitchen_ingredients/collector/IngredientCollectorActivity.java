@@ -14,5 +14,8 @@ public class IngredientCollectorActivity extends
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		showRecepies = (Button) findViewById(R.id.showRecipesButton);
+
+		super.fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(
+				getProgressWheel(), new IngredientDbMock(), this));
 	}
 }
