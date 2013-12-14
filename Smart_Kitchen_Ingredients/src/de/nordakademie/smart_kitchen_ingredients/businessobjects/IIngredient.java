@@ -12,6 +12,8 @@ public interface IIngredient extends IServerIngredient {
 	 * 
 	 * @return int
 	 */
-	int getAmount();
+	int getQuantity();
+
+	String getName();
 
 }

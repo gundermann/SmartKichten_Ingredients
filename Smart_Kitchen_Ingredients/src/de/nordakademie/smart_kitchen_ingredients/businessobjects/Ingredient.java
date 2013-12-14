@@ -13,7 +13,7 @@ public class Ingredient implements IIngredient {
 	}
 
 	@Override
-	public int getAmount() {
+	public int getQuantity() {
 		return amount;
 	}
 

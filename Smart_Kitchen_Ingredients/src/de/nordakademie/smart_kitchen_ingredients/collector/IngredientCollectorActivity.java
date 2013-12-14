@@ -42,8 +42,7 @@ public class IngredientCollectorActivity extends Activity implements
 		TextWatcher, IAsyncTaskObserver {
 	private EditText searchBar;
 	private ListView ingredientsList;
-	private List<IIngredient> ingredientsFromDb = new ArrayList<IIngredient>();
-	private AsyncTask<Void, Void, List<IIngredient>> fetchDataTask;
+	private List<IIngredient> elementsFromDb = new ArrayList<IIngredient>();
 	private ProgressBar progressWheel;
 
 	private Button showRecepies;
@@ -70,7 +69,7 @@ public class IngredientCollectorActivity extends Activity implements
 					public void onGlobalLayout() {
 						view.getViewTreeObserver()
 								.removeGlobalOnLayoutListener(this);
-						fetchDataTask = fetchDataTask.execute();
+
 					}
 				});
 
@@ -105,15 +104,21 @@ public class IngredientCollectorActivity extends Activity implements
 			}
 		});
 
-		fetchDataTask = new FetchDataAsyncTask(this.progressWheel,
-				new IngredientDbMock(), this);
+		fetchDataFromDb(new FetchDataAsyncTask(this.progressWheel,
+				new IngredientDbMock(), this));
+	}
+
+	private void fetchDataFromDb(
+			AsyncTask<Void, Void, List<IIngredient>> fetchDataTask) {
+
+		fetchDataTask.execute();
 	}
 
 	@Override
 	public void afterTextChanged(Editable s) {
 		List<IIngredient> ingredientsInList = new ArrayList<IIngredient>();
 
-		for (IIngredient ingredient : ingredientsFromDb) {
+		for (IIngredient ingredient : elementsFromDb) {
 			if (ingredientNameMatchSearchString(ingredient)) {
 				ingredientsInList.add(ingredient);
 			}
@@ -134,15 +139,15 @@ public class IngredientCollectorActivity extends Activity implements
 	}
 
 	private boolean ingredientNameMatchSearchString(IIngredient ingredient) {
-		String currentSearch = searchBar.getText().toString();
+		String searchString = searchBar.getText().toString();
 		return ingredient.getName().toLowerCase(Locale.GERMAN)
-				.contains(currentSearch.toLowerCase(Locale.GERMAN));
+				.contains(searchString.toLowerCase(Locale.GERMAN));
 	}
 
 	@Override
 	public void update(AsyncTask<Void, Void, List<IIngredient>> asyncTask) {
 		try {
-			ingredientsFromDb = asyncTask.get();
+			elementsFromDb = asyncTask.get();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,10 +155,13 @@ public class IngredientCollectorActivity extends Activity implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		progressWheel.setVisibility(View.GONE);
+		setNewAdapter();
+	}
+
+	private void setNewAdapter() {
 		ListAdapter adapter = new ArrayAdapter<IIngredient>(
 				getApplicationContext(), R.layout.list_view_entry,
-				ingredientsFromDb);
+				elementsFromDb);
 
 		ingredientsList.setAdapter(adapter);
 		afterTextChanged(searchBar.getText());

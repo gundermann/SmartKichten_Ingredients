@@ -72,7 +72,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		ContentValues values = new ContentValues();
 		for (IIngredient ingredient : ingredientList) {
 			values.put(COLUMN_INGREDIENT, ingredient.getName());
-			values.put(COLUMN_AMOUNT, ingredient.getAmount());
+			values.put(COLUMN_AMOUNT, ingredient.getQuantity());
 			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
 			values.put(COLUMN_BOUGHT, String.valueOf(false));
 		}
@@ -181,7 +181,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	public void insertOrUpdateBoughtIngredient(Ingredient boughtIngredient) {
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_INGREDIENT, boughtIngredient.getName());
-		values.put(COLUMN_AMOUNT, boughtIngredient.getAmount());
+		values.put(COLUMN_AMOUNT, boughtIngredient.getQuantity());
 		values.put(COLUMN_UNIT, boughtIngredient.getUnit().toString());
 
 		SQLiteDatabase writableDatabase = getWritableDatabase();
