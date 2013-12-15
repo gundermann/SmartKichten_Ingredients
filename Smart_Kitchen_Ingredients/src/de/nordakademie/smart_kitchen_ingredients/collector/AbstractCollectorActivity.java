@@ -33,12 +33,12 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActiv
 
 public abstract class AbstractCollectorActivity<T> extends Activity implements
 		TextWatcher, IAsyncTaskObserver<T> {
+
 	private EditText searchBar;
 	private ListView elementsListView;
 	private List<T> allElements = new ArrayList<T>();
 	private ProgressBar progressWheel;
 
-	private Button showIngredients;
 	private Button addNewIngredient;
 
 	@Override
@@ -47,12 +47,15 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		setContentView(R.layout.activity_ingredient_collector);
 
 		elementsListView = (ListView) findViewById(R.id.ingredientList);
+
 		searchBar = (EditText) findViewById(R.id.ingredientNameInput);
 		searchBar.addTextChangedListener(this);
+
 		final View view = findViewById(R.id.activity_ingredient_collector);
 
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
+		
 		view.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
 
@@ -65,18 +68,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 					}
 				});
 
-		showIngredients = (Button) findViewById(R.id.showIngredientsButton);
-
 		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
-
-		showIngredients.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				showIngredients.setVisibility(View.GONE);
-			}
-		});
-
 		addNewIngredient.setOnClickListener(new OnClickListener() {
 
 			@Override
