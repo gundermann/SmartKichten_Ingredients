@@ -14,6 +14,9 @@ import de.nordakademie.smart_kitchen_ingredients.ServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
 
 /**
+ * Verarbeitung der Requests und Responses an und von dem zur Verfügung
+ * gestellten Server.
+ * 
  * @author Niels Gundermann
  */
 public class SmartKitchenServerHandler extends ServerHandler implements
@@ -94,7 +97,7 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 	private String[] getRecipeKey(JsonObject json) {
 		try {
 			String id = json.get("_id").getAsString();
-			String recipeTitle = json.get("name").getAsString();
+			String recipeTitle = json.get("title").getAsString();
 			String[] key = new String[2];
 			key[0] = id;
 			key[1] = recipeTitle;

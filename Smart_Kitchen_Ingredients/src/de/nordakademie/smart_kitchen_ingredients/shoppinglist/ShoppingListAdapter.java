@@ -12,7 +12,7 @@ import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
- * Der Adapter realisiert die abhackbare Liste.
+ * Der Adapter realisiert die abhakbare Liste.
  * 
  * @author Niels Gundermann
  * 

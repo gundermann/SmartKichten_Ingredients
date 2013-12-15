@@ -7,6 +7,11 @@ import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
 
+/**
+ * 
+ * @author niels
+ * 
+ */
 public class CacheUpdaterService extends Service {
 
 	private static final String TAG = CacheUpdaterService.class.getSimpleName();
@@ -22,8 +27,10 @@ public class CacheUpdaterService extends Service {
 		ISmartKitchenServerHandler handler = app.getServerHandler();
 		ICacheData cacher = app.getCacheDbHelper();
 
-		cacher.insertOrUpdateAllIngredientsFromServer(handler.getIngredientListFromServer());
-		cacher.insertOrUpdateAllRecipesFromServer(handler.getRecipeListFromServer());
+		cacher.insertOrUpdateAllIngredientsFromServer(handler
+				.getIngredientListFromServer());
+		cacher.insertOrUpdateAllRecipesFromServer(handler
+				.getRecipeListFromServer());
 	}
 
 	@Override

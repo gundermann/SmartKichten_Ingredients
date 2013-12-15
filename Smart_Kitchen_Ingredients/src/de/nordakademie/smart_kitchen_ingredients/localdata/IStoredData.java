@@ -4,9 +4,24 @@ import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
+/**
+ * 
+ * @author niels
+ * 
+ */
 public interface IStoredData {
 
+	/**
+	 * Liefert eine Liste aller Bestands-Zutaten.
+	 * 
+	 * @return
+	 */
 	List<IIngredient> getAllStoredIngredients();
 
+	/**
+	 * Fügt eine im Haushalt bestehende Zutata hinzu.
+	 * 
+	 * @param boughtIngredient
+	 */
 	void insertOrUpdateIngredient(IIngredient boughtIngredient);
 }

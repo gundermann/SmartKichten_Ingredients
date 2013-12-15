@@ -14,6 +14,13 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
+/**
+ * Verarbeitung der Datenbankanfragen bzgl. der Einkaufsliste und der
+ * Bestehenden Zutaten.
+ * 
+ * @author niels
+ * 
+ */
 public class SmartKitchenData extends SQLiteOpenHelper implements
 		IShoppingData, IStoredData {
 

@@ -39,11 +39,11 @@ import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity
  * @author Niels Gundermann
  * 
  */
-public class ShoppingActivity extends Activity implements IModifyableList,
+public class ShoppingListActivity extends Activity implements IModifyableList,
 		OnClickListener {
 
 	private static final int REQUEST_CODE = 1;
-	private static String TAG = ShoppingActivity.class.getSimpleName();
+	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
 	private ImageButton btAddNewShoppingItem;
 	private IngredientsApplication app;

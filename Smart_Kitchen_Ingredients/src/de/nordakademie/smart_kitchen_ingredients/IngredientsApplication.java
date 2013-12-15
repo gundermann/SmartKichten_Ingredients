@@ -21,6 +21,12 @@ import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerH
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerHandler;
 
+/**
+ * Die allgemeine Application, die alle Factories und Datenbankhelper enthällt.
+ * 
+ * @author niels
+ * 
+ */
 public class IngredientsApplication extends Application {
 
 	public static final String CHANGING = "de.nordakademie.smart_kitchen_ingredient.CHANGING";

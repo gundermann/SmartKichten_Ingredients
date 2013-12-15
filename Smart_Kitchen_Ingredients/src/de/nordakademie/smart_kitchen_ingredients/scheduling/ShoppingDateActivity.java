@@ -13,6 +13,11 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
+/**
+ * 
+ * @author Frauke Trautmann
+ * 
+ */
 public class ShoppingDateActivity extends Activity {
 
 	private TextView tvDisplayDate;
@@ -88,6 +93,7 @@ public class ShoppingDateActivity extends Activity {
 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
 		// when dialog box is closed, below method will be called.
+		@Override
 		public void onDateSet(DatePicker view, int selectedYear,
 				int selectedMonth, int selectedDay) {
 			year = selectedYear;

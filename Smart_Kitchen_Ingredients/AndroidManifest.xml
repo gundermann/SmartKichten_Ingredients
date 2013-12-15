@@ -36,7 +36,7 @@
         </service>
 
         <activity
-            android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingActivity"
+            android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListActivity"
             android:label="@string/title_activity_shopping" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
