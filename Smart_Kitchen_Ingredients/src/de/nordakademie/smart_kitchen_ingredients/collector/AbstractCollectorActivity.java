@@ -3,6 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,12 +14,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActivity;
 
 /**
@@ -127,5 +130,21 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 
 	public void setAllElements(List<T> allElements) {
 		this.allElements = allElements;
+	}
+	
+	@Override
+	public void update(AsyncTask<Void, Void, List<T>> task) {
+		try {
+			setAllElements(task.get());
+			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
+					.getText());
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

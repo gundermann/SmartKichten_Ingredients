@@ -40,20 +40,9 @@ public class IngredientCollectorActivity extends
 
 	@Override
 	public void update(AsyncTask<Void, Void, List<IIngredient>> task) {
-		try {
-			setAllElements(task.get());
-			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
-					.getText());
-			setNewAdapter(new ArrayAdapter<IIngredient>(
-					getApplicationContext(), R.layout.list_view_entry,
-					getElementsToShow()));
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super.update(task);
+		setNewAdapter(new ArrayAdapter<IIngredient>(getApplicationContext(),
+				R.layout.list_view_entry, getElementsToShow()));
 	}
 
 	@Override
