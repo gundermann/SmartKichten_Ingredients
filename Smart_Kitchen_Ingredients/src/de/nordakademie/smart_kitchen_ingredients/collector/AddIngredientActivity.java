@@ -37,7 +37,7 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 
 		app = (IngredientsApplication) getApplication();
 
-		addIngredientButton = (Button) findViewById(R.id.addNewIngredientButton);
+		addIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
 		ingredientAmountTV = (TextView) findViewById(R.id.ingredientAmountEdit);
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
