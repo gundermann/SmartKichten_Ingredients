@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -31,8 +31,8 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActiv
  * @description
  */
 
-public abstract class AbstractCollectorActivity<T> extends Activity implements
-		TextWatcher, IAsyncTaskObserver<T> {
+public abstract class AbstractCollectorActivity<T> extends FragmentActivity
+		implements TextWatcher, IAsyncTaskObserver<T> {
 	private static String TAG;
 
 	private EditText searchBar;
@@ -61,8 +61,8 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				
-
+				DialogFragment quantityDialog = new QuantityDialog();
+				quantityDialog.show(getSupportFragmentManager(), TAG);
 			}
 		});
 	}
