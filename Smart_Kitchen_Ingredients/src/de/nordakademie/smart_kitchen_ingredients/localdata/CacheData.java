@@ -19,6 +19,11 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
 		ICacheData, IIngredientCacheData {
+	/**
+	 * 
+	 * @author Kathrin Kurtz
+	 * 
+	 */
 
 	private static final String TAG = CacheData.class.getSimpleName();
 

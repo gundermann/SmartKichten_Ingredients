@@ -28,4 +28,19 @@
     <string name="scanfault">keine Übereinstimmung gefunden</string>
     <string name="ingredientCollector">Zutatensammler</string>
     <string name="insertStoredItems">Verfügbare Zutaten erfassen</string>
+    <string name="showIngredientsButtonText">Show ingredients</string>
+    <string name="title_activity_add_ingredient">AddIngredientActivity</string>
+    <string name="ingredientName">Bezeichnung: </string>
+    <string name="ingredientUnit">Einheit: </string>
+    <string name="addIngredients">Neue Zutat erstellen</string>
+    <string name="ingredientAmount">"Menge: "</string>
+    <string name="interrupt">Abbrechen</string>
+    <string name="okButton">Zutat hinzufügen</string>
+    <string name="chooseUnit">Einheit auswählen</string>
+    
+    <string-array name="unit_array">
+        <item>g</item>
+        <item>stk</item>
+        <item>ml</item>
+    </string-array>
 </resources>

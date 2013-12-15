@@ -6,16 +6,16 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerConnec
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientCacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeCacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerConnector;
@@ -32,7 +32,8 @@ public class IngredientsApplication extends Application {
 	private IRecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-
+	private IIngredientCacheData cachedIngredientsHelper;
+	private IRecipeCacheData cachedRecipesHelper;
 	private CacheData serverDataHelper;
 
 	@Override
@@ -41,14 +42,25 @@ public class IngredientsApplication extends Application {
 
 		serverDataHelper = new CacheData(this);
 		shoppingDbHelper = new SmartKitchenData(this);
-		serverHandler = new SmartKitchenServerHandler(new SmartKitchenServerConnector());
+		serverHandler = new SmartKitchenServerHandler(
+				new SmartKitchenServerConnector());
 		ingredientFactory = new IngredientFactory();
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactory();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
+		cachedIngredientsHelper = new CacheData(this);
+		cachedRecipesHelper = new CacheData(this);
 
 		Log.i(TAG, "Application started");
+	}
+
+	public IIngredientCacheData getcachedIngredientsHelper() {
+		return cachedIngredientsHelper;
+	}
+
+	public IRecipeCacheData getcachedRecipesHelper() {
+		return cachedRecipesHelper;
 	}
 
 	public IShoppingData getShoppingDbHelper() {
