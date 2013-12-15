@@ -1,7 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 

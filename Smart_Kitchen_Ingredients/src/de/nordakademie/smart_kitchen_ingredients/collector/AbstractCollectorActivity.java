@@ -14,14 +14,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActivity;
 
 /**
@@ -53,17 +51,22 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ingredient_collector);
+		initiateAllViews();
+		addLayoutChangeListener();
 
-		elementsListView = (ListView) findViewById(R.id.elementsList);
+		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
+		addNewIngredient.setOnClickListener(new OnClickListener() {
 
-		searchBar = (EditText) findViewById(R.id.searchBarInput);
-		searchBar.addTextChangedListener(this);
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getApplicationContext(),
+						AddIngredientActivity.class));
+			}
+		});
+	}
 
+	private void addLayoutChangeListener() {
 		final View view = findViewById(R.id.activity_ingredient_collector);
-
-		progressWheel = (ProgressBar) this
-				.findViewById(R.id.collectorProgressBar);
-
 		view.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
 
@@ -75,16 +78,14 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 
 					}
 				});
+	}
 
-		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
-		addNewIngredient.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(getApplicationContext(),
-						AddIngredientActivity.class));
-			}
-		});
+	private void initiateAllViews() {
+		elementsListView = (ListView) findViewById(R.id.elementsList);
+		searchBar = (EditText) findViewById(R.id.searchBarInput);
+		searchBar.addTextChangedListener(this);
+		progressWheel = (ProgressBar) this
+				.findViewById(R.id.collectorProgressBar);
 	}
 
 	protected void fetchDataFromDb(AsyncTask<Void, Void, List<T>> fetchDataTask) {
@@ -131,14 +132,13 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	public void setAllElements(List<T> allElements) {
 		this.allElements = allElements;
 	}
-	
+
 	@Override
 	public void update(AsyncTask<Void, Void, List<T>> task) {
 		try {
 			setAllElements(task.get());
 			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
 					.getText());
-
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
