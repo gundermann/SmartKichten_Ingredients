@@ -54,8 +54,11 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
-
+		makeListEntriesClickable();
 		setNextActivityOnClick(addNewIngredient, AddIngredientActivity.class);
+	}
+
+	private void makeListEntriesClickable() {
 		elementsListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
