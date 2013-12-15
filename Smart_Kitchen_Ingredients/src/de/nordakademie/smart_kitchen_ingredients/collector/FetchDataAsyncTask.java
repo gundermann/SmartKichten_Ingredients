@@ -18,11 +18,12 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
 public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	private ProgressBar progressWheel;
-	private IIngredientData databseAccessHelper;
+	private IDatabaseHelper<T> databseAccessHelper;
 	private IAsyncTaskObserver<T> observer;
 
 	public FetchDataAsyncTask(ProgressBar progressWheel,
-			IIngredientData databseAccessHelper, IAsyncTaskObserver<T> observer) {
+			IDatabaseHelper<T> databseAccessHelper,
+			IAsyncTaskObserver<T> observer) {
 		this.progressWheel = progressWheel;
 		this.databseAccessHelper = databseAccessHelper;
 		this.observer = observer;
@@ -33,10 +34,9 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 		progressWheel.setVisibility(View.VISIBLE);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected List<T> doInBackground(Void... params) {
-		return (List<T>) databseAccessHelper.getAllIngredients();
+		return databseAccessHelper.getDatabaseEntries();
 	}
 
 	@Override

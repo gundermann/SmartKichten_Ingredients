@@ -17,7 +17,7 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		super.fetchDataFromDb(new FetchDataAsyncTask<IRecipe>(
-				getProgressWheel(), new IngredientDbMock(), this));
+				getProgressWheel(), new RecipeDbMock(), this));
 		initiateButtons();
 	}
 
