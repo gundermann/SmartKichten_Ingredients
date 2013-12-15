@@ -11,7 +11,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
  * @date 07.12.2013
  * @description
  */
-public class Ingredient implements IIngredient {
+public class Ingredient implements IIngredient, IListElement {
 	private static int runningNumber = 0;
 
 	private String name;

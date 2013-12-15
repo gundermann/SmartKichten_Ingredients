@@ -2,6 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +13,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -37,16 +37,21 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	private EditText searchBar;
 	private ListView elementsListView;
 	private List<T> allElements = new ArrayList<T>();
+	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
 
 	private Button addNewIngredient;
+
+	public List<T> getElementsToShow() {
+		return elementsToShow;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ingredient_collector);
 
-		elementsListView = (ListView) findViewById(R.id.ingredientList);
+		elementsListView = (ListView) findViewById(R.id.elementsList);
 
 		searchBar = (EditText) findViewById(R.id.ingredientNameInput);
 		searchBar.addTextChangedListener(this);
@@ -55,7 +60,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
-		
+
 		view.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
 
@@ -87,19 +92,18 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		return progressWheel;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void afterTextChanged(Editable s) {
-		List<T> ingredientsInList = new ArrayList<T>();
+		List<IListElement> elementsInList = new ArrayList<IListElement>();
 
-		for (T ingredient : getAllElements()) {
-			if (ingredientNameMatchSearchString(ingredient)) {
-				ingredientsInList.add(ingredient);
+		for (IListElement element : (List<IListElement>) getAllElements()) {
+			if (ingredientNameMatchSearchString(element)) {
+				elementsInList.add(element);
 			}
 		}
 
-		elementsListView.setAdapter((ListAdapter) new ArrayAdapter<T>(
-				getApplicationContext(), R.layout.list_view_entry,
-				ingredientsInList));
+		elementsToShow = (List<T>) elementsInList;
 	}
 
 	@Override
@@ -111,15 +115,13 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 	}
 
-	private boolean ingredientNameMatchSearchString(T ingredient) {
-		// String searchString = searchBar.getText().toString();
-		// return ingredient.getName().toLowerCase(Locale.GERMAN)
-		// .contains(searchString.toLowerCase(Locale.GERMAN));
-
-		return true;
+	private boolean ingredientNameMatchSearchString(IListElement listElement) {
+		String searchString = searchBar.getText().toString();
+		return listElement.getName().toLowerCase(Locale.GERMAN)
+				.contains(searchString.toLowerCase(Locale.GERMAN));
 	}
 
-	private void setNewAdapter(ListAdapter adapter) {
+	public void setNewAdapter(ListAdapter adapter) {
 		elementsListView.setAdapter(adapter);
 		afterTextChanged(searchBar.getText());
 	}
@@ -130,5 +132,6 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 
 	public void setAllElements(List<T> allElements) {
 		this.allElements = allElements;
+		elementsToShow = new ArrayList<T>(allElements);
 	}
 }

@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/ingredientList"
+        android:id="@+id/elementsList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/newIngredientButtons"

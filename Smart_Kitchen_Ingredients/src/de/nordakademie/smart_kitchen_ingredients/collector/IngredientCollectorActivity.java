@@ -6,18 +6,17 @@ import java.util.concurrent.ExecutionException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
-
-	private static String TAG = "lookingFor";
-
 	private Button showRecepiesButton;
 
 	@Override
@@ -25,8 +24,6 @@ public class IngredientCollectorActivity extends
 		super.onCreate(savedInstanceState);
 		super.fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(
 				getProgressWheel(), new IngredientDbMock(), this));
-
-		Log.d(TAG, "onCreate() IngredientActivity");
 
 		showRecepiesButton = (Button) findViewById(R.id.showRecipesButton);
 		showRecepiesButton.setVisibility(View.VISIBLE);
@@ -41,16 +38,12 @@ public class IngredientCollectorActivity extends
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.d(TAG, "onResume() IngredientActivity");
-	}
-
-	@Override
 	public void update(AsyncTask<Void, Void, List<IIngredient>> task) {
 		try {
 			setAllElements(task.get());
-			Log.d("IngredientCollectionActivity", "works.");
+			super.setNewAdapter(new ArrayAdapter<IIngredient>(
+					getApplicationContext(), R.layout.list_view_entry,
+					getElementsToShow()));
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,6 +51,14 @@ public class IngredientCollectorActivity extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		super.afterTextChanged(s);
+		super.setNewAdapter(new ArrayAdapter<IIngredient>(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElementsToShow()));
 	}
 
 }

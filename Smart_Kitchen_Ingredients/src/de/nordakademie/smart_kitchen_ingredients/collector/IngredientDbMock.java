@@ -18,7 +18,7 @@ public class IngredientDbMock implements IIngredientData {
 
 	@Override
 	public List<IIngredient> getAllIngredients() {
-		for (Long i = 0L; i < 900000; i++) {
+		for (Long i = 0L; i < 90000; i++) {
 			String nix = "";
 			nix = nix + "";
 		}
