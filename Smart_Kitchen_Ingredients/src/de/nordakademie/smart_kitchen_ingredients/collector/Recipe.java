@@ -38,5 +38,4 @@ public class Recipe implements IRecipe, IListElement {
 	public String toString() {
 		return getTitle();
 	}
-
 }

@@ -14,6 +14,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
 	private Button showRecepiesButton;
+	private IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,7 @@ public class IngredientCollectorActivity extends
 	@Override
 	public void afterTextChanged(Editable s) {
 		super.afterTextChanged(s);
-		setNewAdapter(new ArrayAdapter<IIngredient>(getApplicationContext(),
+		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
 				R.layout.list_view_entry, getElementsToShow()));
 	}
-
 }
