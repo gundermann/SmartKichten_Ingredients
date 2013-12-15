@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
@@ -24,7 +23,7 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	}
 
 	private void initiateButtons() {
-		showIngredientsButton = (Button) findViewById(R.id.showRecipesButton);
+		showIngredientsButton = (Button) findViewById(R.id.showIngredientsButton);
 		showIngredientsButton.setVisibility(View.VISIBLE);
 		setNextActivityOnClick(showIngredientsButton,
 				IngredientCollectorActivity.class);
