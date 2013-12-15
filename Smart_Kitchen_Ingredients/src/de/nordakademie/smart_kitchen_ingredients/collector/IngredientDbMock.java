@@ -23,7 +23,7 @@ public class IngredientDbMock implements IDatabaseHelper<IIngredient> {
 		}
 
 		List<IIngredient> ingredients = new ArrayList<IIngredient>();
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < 0; i++) {
 			ingredients.add(new Ingredient());
 		}
 		return ingredients;

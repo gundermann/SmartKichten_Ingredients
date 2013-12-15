@@ -102,6 +102,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public void afterTextChanged(Editable s) {
+		findViewById(R.id.noResultsFoundView).setVisibility(View.GONE);
 		List<IListElement> elementsInList = new ArrayList<IListElement>();
 
 		for (IListElement element : (List<IListElement>) allElements) {
@@ -110,6 +111,9 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 			}
 		}
 
+		if (elementsInList.isEmpty()) {
+			findViewById(R.id.noResultsFoundView).setVisibility(View.VISIBLE);
+		}
 		elementsToShow = (List<T>) elementsInList;
 	}
 

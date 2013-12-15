@@ -18,6 +18,14 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/noResultsFoundView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No results found"
+        android:visibility="gone" />
+
     <EditText
         android:id="@+id/searchBarInput"
         android:layout_width="fill_parent"
