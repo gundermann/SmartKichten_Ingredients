@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
@@ -41,7 +42,9 @@ public class IngredientCollectorActivity extends
 	public void update(AsyncTask<Void, Void, List<IIngredient>> task) {
 		try {
 			setAllElements(task.get());
-			super.setNewAdapter(new ArrayAdapter<IIngredient>(
+			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
+					.getText());
+			setNewAdapter(new ArrayAdapter<IIngredient>(
 					getApplicationContext(), R.layout.list_view_entry,
 					getElementsToShow()));
 		} catch (InterruptedException e) {
@@ -56,9 +59,8 @@ public class IngredientCollectorActivity extends
 	@Override
 	public void afterTextChanged(Editable s) {
 		super.afterTextChanged(s);
-		super.setNewAdapter(new ArrayAdapter<IIngredient>(
-				getApplicationContext(), R.layout.list_view_entry,
-				getElementsToShow()));
+		setNewAdapter(new ArrayAdapter<IIngredient>(getApplicationContext(),
+				R.layout.list_view_entry, getElementsToShow()));
 	}
 
 }

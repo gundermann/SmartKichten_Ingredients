@@ -19,7 +19,7 @@
         android:visibility="gone" />
 
     <EditText
-        android:id="@+id/ingredientNameInput"
+        android:id="@+id/searchBarInput"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/searchBarHint"
@@ -61,6 +61,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/newIngredientButtons"
-        android:layout_below="@id/ingredientNameInput" />
+        android:layout_below="@id/searchBarInput" />
 
 </RelativeLayout>

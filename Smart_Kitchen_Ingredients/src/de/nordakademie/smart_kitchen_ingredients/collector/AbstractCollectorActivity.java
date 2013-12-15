@@ -53,7 +53,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 
 		elementsListView = (ListView) findViewById(R.id.elementsList);
 
-		searchBar = (EditText) findViewById(R.id.ingredientNameInput);
+		searchBar = (EditText) findViewById(R.id.searchBarInput);
 		searchBar.addTextChangedListener(this);
 
 		final View view = findViewById(R.id.activity_ingredient_collector);
@@ -97,7 +97,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	public void afterTextChanged(Editable s) {
 		List<IListElement> elementsInList = new ArrayList<IListElement>();
 
-		for (IListElement element : (List<IListElement>) getAllElements()) {
+		for (IListElement element : (List<IListElement>) allElements) {
 			if (ingredientNameMatchSearchString(element)) {
 				elementsInList.add(element);
 			}
@@ -123,15 +123,9 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 
 	public void setNewAdapter(ListAdapter adapter) {
 		elementsListView.setAdapter(adapter);
-//		afterTextChanged(searchBar.getText());
-	}
-
-	public List<T> getAllElements() {
-		return allElements;
 	}
 
 	public void setAllElements(List<T> allElements) {
 		this.allElements = allElements;
-		elementsToShow = new ArrayList<T>(allElements);
 	}
 }
