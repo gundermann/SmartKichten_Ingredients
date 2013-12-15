@@ -31,8 +31,8 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentIntegrator;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
-import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
+import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
  * 
@@ -124,7 +124,7 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 			break;
 		case R.id.menu_edit_stored_items:
 			Intent storedIntent = new Intent(this,
-					StoredIngredientCollectorActivity.class);
+					StoredIngredientActivity.class);
 			startActivity(storedIntent);
 			break;
 		case R.id.menu_import_shoppinglist:

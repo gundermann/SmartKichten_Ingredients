@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
@@ -167,12 +168,12 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		try {
 
 			List<IIngredient> values = new ArrayList<IIngredient>();
-			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
+			Cursor cursor = db.query(TABLE_STORED, new String[] {
 					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT }, null,
 					null, null, null, null);
 			try {
 				while (cursor.moveToNext()) {
-					values.add(getShoppingItem(cursor));
+					values.add(getStoredItem(cursor));
 				}
 				return values;
 			} finally {
@@ -181,6 +182,14 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		} finally {
 			db.close();
 		}
+	}
+
+	private IIngredient getStoredItem(Cursor cursor) {
+		String title = cursor.getString(0);
+		int amount = cursor.getInt(1);
+		Unit unit = Unit.valueOf(cursor.getString(2));
+		IIngredientFactory factory = app.getIngredientFactory();
+		return factory.createIngredient(title, amount, unit);
 	}
 
 	@Override
@@ -195,5 +204,24 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 				SQLiteDatabase.CONFLICT_IGNORE);
 		writableDatabase.close();
 		Log.i(TAG, "inserted into stored_table");
+	}
+
+	@Override
+	public IIngredient getStoredIngredient(String title) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(STORED_TABLE_CREATE, new String[] {
+				COLUMN_AMOUNT, COLUMN_UNIT }, COLUMN_INGREDIENT + "=" + "'"
+				+ title + "'", null, null, null, null);
+
+		cursor.moveToNext();
+		int amount = cursor.getInt(0);
+		Unit unit = Unit.valueOf(cursor.getString(1));
+		IIngredient ingredient = app.getIngredientFactory().createIngredient(
+				title, amount, unit);
+		cursor.close();
+		db.close();
+
+		return ingredient;
+
 	}
 }

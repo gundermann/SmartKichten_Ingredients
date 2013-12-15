@@ -16,6 +16,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientCacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeCacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerConnector;
@@ -41,6 +42,7 @@ public class IngredientsApplication extends Application {
 	private IIngredientCacheData cachedIngredientsHelper;
 	private IRecipeCacheData cachedRecipesHelper;
 	private CacheData serverDataHelper;
+	private IStoredData stockDbHelper;
 
 	@Override
 	public void onCreate() {
@@ -57,6 +59,7 @@ public class IngredientsApplication extends Application {
 				new BarcodeServerConnector());
 		cachedIngredientsHelper = new CacheData(this);
 		cachedRecipesHelper = new CacheData(this);
+		stockDbHelper = new SmartKitchenData(this);
 
 		Log.i(TAG, "Application started");
 	}
@@ -103,6 +106,10 @@ public class IngredientsApplication extends Application {
 
 	public IIngredientCacheData getIngredientDbHelper() {
 		return serverDataHelper;
+	}
+
+	public IStoredData getStoredDbHelper() {
+		return stockDbHelper;
 	}
 
 }

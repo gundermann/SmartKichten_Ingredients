@@ -24,4 +24,11 @@ public interface IStoredData {
 	 * @param boughtIngredient
 	 */
 	void insertOrUpdateIngredient(IIngredient boughtIngredient);
+
+	/**
+	 * Liefert eine Zutat mit dem übergebenen Titel zurück.
+	 * 
+	 * @param ingredientTitle
+	 */
+	IIngredient getStoredIngredient(String title);
 }
