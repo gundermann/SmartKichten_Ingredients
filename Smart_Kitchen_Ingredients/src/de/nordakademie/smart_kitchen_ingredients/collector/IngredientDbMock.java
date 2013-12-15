@@ -17,13 +17,13 @@ public class IngredientDbMock implements IDatabaseHelper<IIngredient> {
 
 	@Override
 	public List<IIngredient> getDatabaseEntries() {
-		for (Long i = 0L; i < 900000; i++) {
+		for (Long i = 0L; i < 90000; i++) {
 			String nix = "";
 			nix = nix + "";
 		}
 
 		List<IIngredient> ingredients = new ArrayList<IIngredient>();
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 1000; i++) {
 			ingredients.add(new Ingredient());
 		}
 		return ingredients;

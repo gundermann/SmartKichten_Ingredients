@@ -9,11 +9,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -30,6 +33,7 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActiv
 
 public abstract class AbstractCollectorActivity<T> extends Activity implements
 		TextWatcher, IAsyncTaskObserver<T> {
+	private static String TAG;
 
 	private EditText searchBar;
 	private ListView elementsListView;
@@ -46,11 +50,21 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		TAG = this.getClass().getSimpleName();
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
 
 		setNextActivityOnClick(addNewIngredient, AddIngredientActivity.class);
+		elementsListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				
+
+			}
+		});
 	}
 
 	protected void setNextActivityOnClick(View view,

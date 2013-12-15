@@ -20,7 +20,7 @@
     <string name="cleanShoppingList">Einkaufliste aufräumen</string>
     <string name="changeShoppingDataPermissionDescription">Berechtigung zum Zugriff auf die Shopping-Daten</string>
     <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
-    <string name="searchBarHint">Suche...</string>
+    <string name="searchBarHint">Suche&#8230;</string>
     <string name="newIngredientButtonText">Add ingredient</string>
     <string name="showRecipesButtonText">Show recipes</string>
     <string name="scanerror">Keine Ergebnisse gefunden</string>
@@ -37,6 +37,7 @@
     <string name="interrupt">Abbrechen</string>
     <string name="okButton">Zutat hinzufügen</string>
     <string name="chooseUnit">Einheit auswählen</string>
+    <string name="quantityDialogTitle">How many?</string>
 
     <string-array name="unit_array">
         <item>g</item>
