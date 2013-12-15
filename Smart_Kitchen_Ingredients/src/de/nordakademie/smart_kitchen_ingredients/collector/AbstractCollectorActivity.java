@@ -41,6 +41,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
 	private Button addNewIngredient;
+	private View noResultsFound;
 
 	public List<T> getElementsToShow() {
 		return elementsToShow;
@@ -89,6 +90,8 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
 		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
+		noResultsFound = findViewById(R.id.noResultsFoundView);
+
 	}
 
 	protected void fetchDataFromDb(AsyncTask<Void, Void, List<T>> fetchDataTask) {
@@ -102,7 +105,8 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public void afterTextChanged(Editable s) {
-		findViewById(R.id.noResultsFoundView).setVisibility(View.GONE);
+		noResultsFound.setVisibility(View.GONE);
+
 		List<IListElement> elementsInList = new ArrayList<IListElement>();
 
 		for (IListElement element : (List<IListElement>) allElements) {
@@ -110,11 +114,15 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 				elementsInList.add(element);
 			}
 		}
+		informUserWhenNoResults(elementsInList);
 
-		if (elementsInList.isEmpty()) {
-			findViewById(R.id.noResultsFoundView).setVisibility(View.VISIBLE);
-		}
 		elementsToShow = (List<T>) elementsInList;
+	}
+
+	private void informUserWhenNoResults(List<IListElement> elementsInList) {
+		if (elementsInList.isEmpty()) {
+			noResultsFound.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
