@@ -123,7 +123,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 
 	public void setNewAdapter(ListAdapter adapter) {
 		elementsListView.setAdapter(adapter);
-		afterTextChanged(searchBar.getText());
+//		afterTextChanged(searchBar.getText());
 	}
 
 	public List<T> getAllElements() {
