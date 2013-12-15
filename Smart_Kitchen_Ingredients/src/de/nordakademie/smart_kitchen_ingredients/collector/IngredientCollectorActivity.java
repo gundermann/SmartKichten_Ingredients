@@ -29,6 +29,7 @@ public class IngredientCollectorActivity extends
 		Log.d(TAG, "onCreate() IngredientActivity");
 
 		showRecepiesButton = (Button) findViewById(R.id.showRecipesButton);
+		showRecepiesButton.setVisibility(View.VISIBLE);
 		showRecepiesButton.setOnClickListener(new OnClickListener() {
 
 			@Override

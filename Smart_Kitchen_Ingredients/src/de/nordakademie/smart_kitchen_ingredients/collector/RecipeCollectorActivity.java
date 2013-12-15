@@ -25,12 +25,14 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 				getProgressWheel(), new IngredientDbMock(), this));
 
 		showIngredientsButton = (Button) findViewById(R.id.showIngredientsButton);
+		showIngredientsButton.setVisibility(View.VISIBLE);
 		showIngredientsButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(getApplicationContext(),
 						IngredientCollectorActivity.class));
+				Log.d(TAG, "onClick() RecipeActivity");
 			}
 		});
 
