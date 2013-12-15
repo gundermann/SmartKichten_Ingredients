@@ -28,10 +28,6 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AddIngredientActiv
  * @description
  */
 
-// TODO handle recipe / ingredient views
-// TODO show msg if no recipes / ingredients available by search
-// TODO show msg if no recipes / ingredients available in general
-
 public abstract class AbstractCollectorActivity<T> extends Activity implements
 		TextWatcher, IAsyncTaskObserver<T> {
 
@@ -53,12 +49,13 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
+
 		setNextActivityOnClick(addNewIngredient, AddIngredientActivity.class);
 	}
 
-	protected void setNextActivityOnClick(Button button,
+	protected void setNextActivityOnClick(View view,
 			final Class<?> nextActivityClass) {
-		button.setOnClickListener(new OnClickListener() {
+		view.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
