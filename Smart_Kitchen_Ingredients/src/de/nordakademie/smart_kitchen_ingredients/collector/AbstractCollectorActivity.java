@@ -40,7 +40,6 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 	private List<T> allElements = new ArrayList<T>();
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
-
 	private Button addNewIngredient;
 
 	public List<T> getElementsToShow() {
@@ -53,14 +52,17 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
+		setNextActivityOnClick(addNewIngredient, AddIngredientActivity.class);
+	}
 
-		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
-		addNewIngredient.setOnClickListener(new OnClickListener() {
+	protected void setNextActivityOnClick(Button button,
+			final Class<?> nextActivityClass) {
+		button.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(getApplicationContext(),
-						AddIngredientActivity.class));
+						nextActivityClass));
 			}
 		});
 	}
@@ -86,6 +88,7 @@ public abstract class AbstractCollectorActivity<T> extends Activity implements
 		searchBar.addTextChangedListener(this);
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
+		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
 	}
 
 	protected void fetchDataFromDb(AsyncTask<Void, Void, List<T>> fetchDataTask) {

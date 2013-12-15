@@ -2,12 +2,10 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.R;
@@ -22,17 +20,14 @@ public class IngredientCollectorActivity extends
 		super.onCreate(savedInstanceState);
 		super.fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(
 				getProgressWheel(), new IngredientDbMock(), this));
+		initiateButtons();
+	}
 
+	private void initiateButtons() {
 		showRecepiesButton = (Button) findViewById(R.id.showRecipesButton);
 		showRecepiesButton.setVisibility(View.VISIBLE);
-		showRecepiesButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(getApplicationContext(),
-						RecipeCollectorActivity.class));
-			}
-		});
+		setNextActivityOnClick(showRecepiesButton,
+				RecipeCollectorActivity.class);
 	}
 
 	@Override
