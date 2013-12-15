@@ -33,7 +33,7 @@ public class ShoppingDateActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.shopping_data);
+		setContentView(R.layout.shopping_date);
 
 		setCurrentDateOnView();
 		addListenerOnButton();
