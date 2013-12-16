@@ -37,10 +37,18 @@
     <string name="interrupt">Abbrechen</string>
     <string name="okButton">Zutat hinzufügen</string>
     <string name="chooseUnit">Einheit auswählen</string>
+    <string name="setupStock">Bestand Einstellungen</string>
     
     <string-array name="unit_array">
         <item>g</item>
         <item>stk</item>
         <item>ml</item>
     </string-array>
+    
+    <string name="minAmount">Ab wann soll die Einheit "stk" als knapp angezeigt werden?</string>
+    <string name="summaryMinAmount">Knappheit für Einheit "stk"</string>
+    <string name="summaryMinMass">Knappheit für Einheit "g"</string>
+    <string name="minMass">Ab wann soll die Einheit "g" als knapp angezeigt werden?</string>
+    <string name="minVolume">Ab wann soll die Einheit "ml" als knapp angezeigt werden?</string>
+    <string name="summaryMinVolume">Knappheit für Einheit "g"</string>
 </resources>

@@ -20,6 +20,8 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 public class ShoppingListAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final IModifyableList list;
+	private CheckBox checkBox;
+	private TextView textView;
 
 	public ShoppingListAdapter(Context context, IModifyableList list) {
 		super(context, R.layout.checkable_rowlayout, R.id.labelOfCheckableList,
@@ -34,9 +36,8 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.checkable_rowlayout, parent,
 				false);
-		TextView textView = (TextView) rowView
-				.findViewById(R.id.labelOfCheckableList);
-		CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.buyedCheck);
+		textView = (TextView) rowView.findViewById(R.id.labelOfCheckableList);
+		checkBox = (CheckBox) rowView.findViewById(R.id.buyedCheck);
 		checkBox.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -46,14 +47,17 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
 			}
 		});
 
-		if (list.getShoppingItems().get(position).isBought()) {
+		updateLayout(list.getShoppingItems().get(position).isBought());
+		textView.setText(list.getValues().get(position));
+		return rowView;
+	}
+
+	private void updateLayout(boolean bought) {
+		if (bought) {
 			textView.setPaintFlags(textView.getPaintFlags()
 					| Paint.STRIKE_THRU_TEXT_FLAG);
 			checkBox.setChecked(true);
 		}
-
-		textView.setText(list.getValues().get(position));
-		return rowView;
 	}
 
 }
