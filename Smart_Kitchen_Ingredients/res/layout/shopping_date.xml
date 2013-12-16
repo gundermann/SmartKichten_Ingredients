@@ -3,20 +3,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
- 
-    <Button
-        android:id="@+id/btnChangeDate"
+
+    <TextView
+        android:id="@+id/changeDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Date" />
- 
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/changeDate"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+   
     <TextView
         android:id="@+id/lblDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current Date (M-D-YYYY): "
+        android:text="@string/currentDate"
         android:textAppearance="?android:attr/textAppearanceLarge" />
- 
+    
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
@@ -28,10 +31,21 @@
         android:id="@+id/dpResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    
+    <TextView
+        android:id="@+id/changeTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/changeTime"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TimePicker
         android:id="@+id/timePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
- 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
 </LinearLayout>
