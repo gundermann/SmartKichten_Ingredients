@@ -13,7 +13,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import de.nordakademie.smart_kitchen_ingredients.Connector;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.Connector;
 
 public class OCRServiceAPI extends Connector {
 	public final String SERVICE_URL = "http://api.ocrapiservice.com/1.0/rest/ocr";

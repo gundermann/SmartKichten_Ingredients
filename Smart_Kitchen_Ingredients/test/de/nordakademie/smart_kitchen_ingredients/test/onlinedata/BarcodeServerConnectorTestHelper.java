@@ -2,7 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.test.onlinedata;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import de.nordakademie.smart_kitchen_ingredients.IServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.IServerConnector;
 
 public class BarcodeServerConnectorTestHelper {
 

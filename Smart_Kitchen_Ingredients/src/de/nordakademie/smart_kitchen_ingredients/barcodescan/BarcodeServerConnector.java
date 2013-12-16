@@ -14,7 +14,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import de.nordakademie.smart_kitchen_ingredients.Connector;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.Connector;
 
 /**
  * Stellt die Verbindung zu einem Server her, der eine API für Barcodes

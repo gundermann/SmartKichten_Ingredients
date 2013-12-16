@@ -18,9 +18,9 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeCacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKitchenServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerHandler;
 
 /**
  * Die allgemeine Application, die alle Factories und Datenbankhelper enthällt.

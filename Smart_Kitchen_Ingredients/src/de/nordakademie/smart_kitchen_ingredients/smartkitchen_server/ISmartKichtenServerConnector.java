@@ -1,6 +1,6 @@
-package de.nordakademie.smart_kitchen_ingredients.onlinedata;
+package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
-import de.nordakademie.smart_kitchen_ingredients.IServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.IServerConnector;
 
 /**
  * 

@@ -2,8 +2,8 @@ package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 import com.google.gson.JsonObject;
 
-import de.nordakademie.smart_kitchen_ingredients.IServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.ServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.IServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
 /**
  * Verarbeitung der Requests und Responses an und vom Server für die
