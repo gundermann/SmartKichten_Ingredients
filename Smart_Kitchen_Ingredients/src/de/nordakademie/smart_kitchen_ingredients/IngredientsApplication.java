@@ -37,6 +37,7 @@ public class IngredientsApplication extends Application {
 
 	public static final String CHANGING = "de.nordakademie.smart_kitchen_ingredient.CHANGING";
 	public static final String PERMISSION = "de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING";
+	private static final long ONE_DAY = 24 * 60 * 60 * 1000;
 	private final String TAG = IngredientsApplication.class.getSimpleName();
 	private IShoppingData shoppingDbHelper;
 	private ISmartKitchenServerHandler serverHandler;
@@ -49,6 +50,7 @@ public class IngredientsApplication extends Application {
 	private IDatabaseHelper<IIngredient> ingredientDbHelper;
 	private IDatabaseHelper<IRecipe> recipeDbHelper;
 	private IDateFactory dateFactory;
+	private long lastUpdate = 0;
 
 	@Override
 	public void onCreate() {
@@ -113,6 +115,14 @@ public class IngredientsApplication extends Application {
 
 	public IDateFactory getDateFactory() {
 		return dateFactory;
+	}
+
+	public boolean updateNeeded() {
+		if (System.currentTimeMillis() - lastUpdate > ONE_DAY) {
+			lastUpdate = System.currentTimeMillis();
+			return true;
+		}
+		return false;
 	}
 
 }

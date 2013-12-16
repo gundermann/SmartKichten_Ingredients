@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -63,6 +64,7 @@ public class ShoppingDateActivity extends Activity {
 		});
 
 		setCurrentDateOnView();
+		Log.i(TAG, "created");
 
 	}
 
