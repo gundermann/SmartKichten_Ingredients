@@ -39,4 +39,9 @@ public class Ingredient implements IIngredient, IListElement,
 	public String getName() {
 		return title;
 	}
+
+	@Override
+	public String getElementUnit() {
+		return null;
+	}
 }

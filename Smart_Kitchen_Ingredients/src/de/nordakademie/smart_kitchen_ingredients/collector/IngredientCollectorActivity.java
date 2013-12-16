@@ -11,6 +11,11 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
+/**
+* @author frederic.oppermann
+* @date 16.12.2013
+* @description
+*/
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
 	private Button showRecepiesButton;

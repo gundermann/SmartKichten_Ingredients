@@ -42,4 +42,9 @@ public class Recipe implements IRecipe, IListElement {
 		return name.compareTo(another.getName());
 	}
 
+	@Override
+	public String getElementUnit() {
+		return null;
+	}
+
 }

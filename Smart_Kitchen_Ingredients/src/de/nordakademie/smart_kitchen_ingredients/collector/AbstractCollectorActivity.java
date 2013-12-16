@@ -61,9 +61,13 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		elementsListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				DialogFragment quantityDialog = new QuantityDialog();
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int position, long arg3) {
+				IListElement element = (IListElement) adapterView.getAdapter()
+						.getItem(position);
+
+				DialogFragment quantityDialog = QuantityDialog
+						.newInstance(element);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
 			}
 		});
