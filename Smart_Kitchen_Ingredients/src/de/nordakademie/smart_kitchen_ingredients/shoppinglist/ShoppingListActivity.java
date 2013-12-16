@@ -25,6 +25,7 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentIntegrator;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
@@ -33,8 +34,7 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  * @author Niels Gundermann
  * 
  */
-public class ShoppingListActivity extends Activity implements IModifyableList,
-		OnClickListener {
+public class ShoppingListActivity extends Activity implements OnClickListener {
 
 	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
@@ -85,8 +85,7 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	}
 
 	private void updateShoppingList() {
-		ShoppingListAdapter adapter = new ShoppingListAdapter(
-				getApplicationContext(), this);
+		ShoppingListAdapter adapter = new ShoppingListAdapter(app);
 		shoppingListView.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
 	}
@@ -101,9 +100,9 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clean_shoppingList:
-			Intent cleanIntent = new Intent(this,
-					ShoppingDataCleanUpService.class);
-			startService(cleanIntent);
+			IShoppingData db = app.getShoppingDbHelper();
+			db.cleanShoppingIngredients();
+			updateShoppingList();
 			break;
 		case R.id.menu_qrscan:
 			// Ist nur mit einer "vernünftigen" Kamera zu empfehlen
@@ -125,31 +124,6 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 		return true;
 	}
 
-	@Override
-	public List<String> getValues() {
-		List<String> values = new ArrayList<String>();
-		for (IShoppingListItem item : getShoppingItems()) {
-			values.add(item.getName());
-		}
-		Log.i(TAG, "title of shoppingitems collected");
-		return values;
-	}
-
-	@Override
-	public void checkAndUpdateValueAtPosition(String title) {
-		IShoppingListItem item = app.getShoppingDbHelper().getShoppingItem(
-				title);
-		if (!item.isBought()) {
-			item.setBought(true);
-		} else {
-			item.setBought(false);
-		}
-		app.getShoppingDbHelper().updateShoppingItem(item);
-		Log.i(TAG, "ingredient bought");
-		updateShoppingList();
-	}
-
-	@Override
 	public List<IShoppingListItem> getShoppingItems() {
 		List<IShoppingListItem> shoppingItems = new ArrayList<IShoppingListItem>();
 		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
@@ -195,7 +169,9 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	private boolean evaluateBarcodeScan(String content) {
 		for (IShoppingListItem shoppingItem : getShoppingItems()) {
 			if (content.contains(shoppingItem.getName())) {
-				checkAndUpdateValueAtPosition(shoppingItem.getName());
+				app.getShoppingDbHelper()
+						.getShoppingItem(shoppingItem.getName())
+						.setBought(true);
 				return true;
 			}
 		}

@@ -1,6 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
+import java.util.TreeSet;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 
 /**
  * Der Adapter realisiert die abhakbare Liste.
@@ -17,23 +22,29 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @author Niels Gundermann
  * 
  */
-public class ShoppingListAdapter extends ArrayAdapter<String> {
-	private final Context context;
-	// TODO raus; app rein
-	private final IModifyableList list;
+public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem> {
+	private IngredientsApplication app;
 	private CheckBox checkBox;
 	private TextView textView;
 
-	public ShoppingListAdapter(Context context, IModifyableList list) {
-		super(context, R.layout.checkable_rowlayout, R.id.labelOfCheckableList,
-				list.getValues());
-		this.context = context;
-		this.list = list;
+	public ShoppingListAdapter(IngredientsApplication application) {
+		super(application.getApplicationContext(),
+				R.layout.checkable_rowlayout, R.id.labelOfCheckableList);
+		app = application;
+		setupShoppingItems();
+	}
+
+	public void setupShoppingItems() {
+		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
+		ingredients.addAll(app.getShoppingDbHelper().getAllShoppingItems());
+		for (IShoppingListItem item : ingredients) {
+			add(item);
+		}
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
+		LayoutInflater inflater = (LayoutInflater) app.getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.checkable_rowlayout, parent,
 				false);
@@ -43,13 +54,20 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
 
 			@Override
 			public void onClick(View view) {
-				String titleOfChangedItem = list.getValues().get(position);
-				list.checkAndUpdateValueAtPosition(titleOfChangedItem);
+				IShoppingListItem item = getItem(position);
+				if (!item.isBought()) {
+					item.setBought(true);
+				} else {
+					item.setBought(false);
+				}
+				app.getShoppingDbHelper().updateShoppingItem(item);
+				app.sendBroadcast(new Intent(IngredientsApplication.CHANGING),
+						"de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING");
 			}
 		});
 
-		updateLayout(list.getShoppingItems().get(position).isBought());
-		textView.setText(list.getValues().get(position));
+		updateLayout(getItem(position).isBought());
+		textView.setText(getItem(position).getName());
 		return rowView;
 	}
 
