@@ -1,8 +1,12 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.service.dreams.DreamService;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +25,28 @@ public class QuantityDialog extends DialogFragment {
 	TextView previousNumber;
 	TextView currentNumber;
 	TextView nextNumber;
+
+	private List<TextView> getAllNumberViews() {
+		List<TextView> views = new ArrayList<TextView>();
+		views.add(nextNumber);
+		views.add(currentNumber);
+		views.add(previousNumber);
+		return views;
+	}
+
+	void setNewValue(TextView view, int newValue) {
+		view.setText(String.valueOf(newValue));
+	}
+
+	void increase(TextView view) {
+		int value = getValueOf(view) + 1;
+		setNewValue(view, value);
+	}
+
+	void decrease(TextView view) {
+		int value = getValueOf(view) - 1;
+		setNewValue(view, value);
+	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -44,17 +70,9 @@ public class QuantityDialog extends DialogFragment {
 
 			@Override
 			public void onClick(View v) {
-				int nextVal = getValueOf(nextNumber);
-				int currentVal = getValueOf(currentNumber);
-				int previousVal = getValueOf(previousNumber);
-
-				nextVal++;
-				currentVal++;
-				previousVal++;
-
-				nextNumber.setText(String.valueOf(nextVal));
-				currentNumber.setText(String.valueOf(currentVal));
-				previousNumber.setText(String.valueOf(previousVal));
+				for (TextView view : getAllNumberViews()) {
+					increase(view);
+				}
 			}
 
 		});
@@ -63,21 +81,11 @@ public class QuantityDialog extends DialogFragment {
 
 			@Override
 			public void onClick(View v) {
-				int previousVal = getValueOf(previousNumber);
-				int currentVal = getValueOf(currentNumber);
-				int nextVal = getValueOf(nextNumber);
-
-				if (previousVal > 0) {
-
-					previousVal--;
-					currentVal--;
-					nextVal--;
+				if (getValueOf(previousNumber) > 0) {
+					for (TextView view : getAllNumberViews()) {
+						decrease(view);
+					}
 				}
-
-				previousNumber.setText(String.valueOf(previousVal));
-				currentNumber.setText(String.valueOf(currentVal));
-				nextNumber.setText(String.valueOf(nextVal));
-
 			}
 		});
 
