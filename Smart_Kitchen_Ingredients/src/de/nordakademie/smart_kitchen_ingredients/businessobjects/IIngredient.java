@@ -8,12 +8,9 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 public interface IIngredient extends IServerIngredient {
 
 	/**
-	 * Liefert die Menge die von einer Zutat benÃ¶tigt wird.
+	 * Liefert die Menge die von einer Zutat benötigt wird.
 	 * 
 	 * @return int
 	 */
 	int getQuantity();
-
-	String getName();
-
 }

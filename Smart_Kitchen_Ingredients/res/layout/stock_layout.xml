@@ -18,7 +18,7 @@
         >
         
     <ListView
-        android:id="@+id/shoppingList"
+        android:id="@+id/stockList"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
     />
@@ -30,7 +30,7 @@
     </LinearLayout>
     
     <ImageButton
-        android:id="@+id/addNewShoppingItem"
+        android:id="@+id/addNewStoredItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_add"/>

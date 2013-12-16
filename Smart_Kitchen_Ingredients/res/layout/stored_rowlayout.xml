@@ -4,20 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
     
-<CheckBox
-        android:id="@+id/buyedCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
- >
-    </CheckBox>
-
-
     <TextView
-        android:id="@+id/labelOfCheckableList"
+        android:id="@+id/labelOfStockList"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="#000000"
+    >
+    </TextView>
+    <TextView
+        android:id="@+id/labelOfAmountFromList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
     >
 
     </TextView>

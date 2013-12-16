@@ -1,7 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public class ShoppingListItem extends Ingredient implements IShoppingListItem,
-		Comparable<IShoppingListItem> {
+public class ShoppingListItem extends Ingredient implements IShoppingListItem {
 
 	private boolean bought;
 
@@ -21,10 +20,11 @@ public class ShoppingListItem extends Ingredient implements IShoppingListItem,
 	}
 
 	@Override
-	public int compareTo(IShoppingListItem another) {
-		if (isBought() == another.isBought()) {
+	public int compareTo(IIngredient another) {
+		IShoppingListItem anotherShoppingListItem = (IShoppingListItem) another;
+		if (isBought() == anotherShoppingListItem.isBought()) {
 			return getName().compareTo(another.getName());
-		} else if (!another.isBought()) {
+		} else if (!anotherShoppingListItem.isBought()) {
 			return 1;
 		} else {
 			return -1;

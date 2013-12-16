@@ -31,20 +31,19 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentIntegrator;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
-import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDataCleanUpService;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
+import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
  * 
  * @author Niels Gundermann
  * 
  */
-public class ShoppingActivity extends Activity implements IModifyableList,
+public class ShoppingListActivity extends Activity implements IModifyableList,
 		OnClickListener {
 
 	private static final int REQUEST_CODE = 1;
-	private static String TAG = ShoppingActivity.class.getSimpleName();
+	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
 	private ImageButton btAddNewShoppingItem;
 	private IngredientsApplication app;
@@ -125,7 +124,7 @@ public class ShoppingActivity extends Activity implements IModifyableList,
 			break;
 		case R.id.menu_edit_stored_items:
 			Intent storedIntent = new Intent(this,
-					StoredIngredientCollectorActivity.class);
+					StoredIngredientActivity.class);
 			startActivity(storedIntent);
 			break;
 		case R.id.menu_import_shoppinglist:

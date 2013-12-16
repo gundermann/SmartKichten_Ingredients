@@ -18,7 +18,6 @@
     <string name="setupShoppingDate">Termin für Einkauf festlegen</string>
     <string name="deleteShoppingList">Einkaufliste löschen</string>
     <string name="cleanShoppingList">Einkaufliste aufräumen</string>
-    <string name="changeShoppingDataPermissionDescription">Berechtigung zum Zugriff auf die Shopping-Daten</string>
     <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
     <string name="searchBarHint">Suche&#8230;</string>
     <string name="newIngredientButtonText">Add ingredient</string>
@@ -41,6 +40,10 @@
     <string name="quantityPreviousDefaultNumber">0</string>
     <string name="quantityCurrentDefaultNumber">1</string>
     <string name="quantityNextDefaultNumber">2</string>
+    <string name="currentDate">Datum: </string>
+    <string name="changeShoppingDataPermissionDescription">Text</string>
+    <string name="changeDate">Wählen Sie ein Datum</string>
+    <string name="changeTime">Wählen Sie eine Uhrzeit</string>
 
     <string-array name="unit_array">
         <item>g</item>
