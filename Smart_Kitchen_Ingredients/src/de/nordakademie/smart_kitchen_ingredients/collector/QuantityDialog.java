@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.service.dreams.DreamService;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,10 +49,26 @@ public class QuantityDialog extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		View view = getCurrentView();
+		instantiaveViews(view);
+		setOnClickListener();
+		return buildDialog(view);
+	}
 
+	private Dialog buildDialog(View view) {
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+				getActivity());
+		dialogBuilder.setTitle(R.string.quantityDialogTitle).setView(view);
+		return dialogBuilder.create();
+	}
+
+	private View getCurrentView() {
 		View view = getActivity().getLayoutInflater().inflate(
 				R.layout.number_picker_layout, null);
+		return view;
+	}
 
+	private void instantiaveViews(View view) {
 		increaseButton = (ImageButton) view
 				.findViewById(R.id.quantityPickerIncreaseButton);
 		decreaseButton = (ImageButton) view
@@ -65,7 +80,9 @@ public class QuantityDialog extends DialogFragment {
 				.findViewById(R.id.quantityPickerCurrentNumber);
 		nextNumber = (TextView) view
 				.findViewById(R.id.quantityPickerNextNumber);
+	}
 
+	private void setOnClickListener() {
 		increaseButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -88,11 +105,6 @@ public class QuantityDialog extends DialogFragment {
 				}
 			}
 		});
-
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
-				getActivity());
-		dialogBuilder.setTitle(R.string.quantityDialogTitle).setView(view);
-		return dialogBuilder.create();
 	}
 
 	private int getValueOf(TextView view) {
