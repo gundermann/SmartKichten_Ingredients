@@ -17,8 +17,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
-public class CacheData extends SQLiteOpenHelper implements IRecipeData,
-		ICacheData, IIngredientData {
+public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	/**
 	 * 
 	 * @author Kathrin Kurtz
@@ -86,7 +85,6 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeData,
 		onCreate(db);
 	}
 
-	@Override
 	public List<IRecipe> getAllRecipes() {
 		List<IRecipe> recipes = new ArrayList<IRecipe>();
 		SQLiteDatabase db = getReadableDatabase();
@@ -107,8 +105,9 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeData,
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
 
 		SQLiteDatabase db = getReadableDatabase();
-		String sql = "SELECT * FROM" + TABLE_INGREDIENTS_TO_RECIPES;
-		Cursor cursor = db.rawQuery(sql, null);
+		Cursor cursor = db.query(TABLE_INGREDIENTS_TO_RECIPES, new String[] {
+				COLUMN_RECIPES, COLUMN_INGRDIENTS, COLUMN_AMOUNT }, null, null,
+				null, null, null);
 
 		while (cursor.moveToNext()) {
 			ingredientsList.add(ingredientFactory.createIngredient(
@@ -212,7 +211,6 @@ public class CacheData extends SQLiteOpenHelper implements IRecipeData,
 		Log.i(TAG, "database of Indigrents updated");
 	}
 
-	@Override
 	public List<IIngredient> getAllIngredients() {
 		List<IIngredient> ingredientsList = new ArrayList<IIngredient>();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();

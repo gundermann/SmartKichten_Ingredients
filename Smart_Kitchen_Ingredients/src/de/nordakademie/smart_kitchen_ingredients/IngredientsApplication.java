@@ -5,7 +5,9 @@ import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
@@ -13,10 +15,11 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IngredientDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.RecipeDatabaseHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKitchenServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerConnector;
@@ -39,10 +42,10 @@ public class IngredientsApplication extends Application {
 	private IRecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-	private IIngredientData cachedIngredientsHelper;
-	private IRecipeData cachedRecipesHelper;
 	private CacheData serverDataHelper;
 	private IStoredData stockDbHelper;
+	private IDatabaseHelper<IIngredient> ingredientDbHelper;
+	private IDatabaseHelper<IRecipe> recipeDbHelper;
 
 	@Override
 	public void onCreate() {
@@ -53,25 +56,15 @@ public class IngredientsApplication extends Application {
 		serverHandler = new SmartKitchenServerHandler(
 				new SmartKitchenServerConnector());
 		ingredientFactory = new IngredientFactory();
+		ingredientDbHelper = new IngredientDatabaseHelper(this);
+		recipeDbHelper = new RecipeDatabaseHelper(this);
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactory();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
-		cachedIngredientsHelper = new CacheData(this);
-		cachedRecipesHelper = new CacheData(this);
 		stockDbHelper = new SmartKitchenData(this);
 
 		Log.i(TAG, "Application started");
-	}
-
-	public IIngredientData getCachedIngredientsHelper() {
-
-		return cachedIngredientsHelper;
-	}
-
-
-	public IRecipeData getCachedRecipesHelper() {
-		return cachedRecipesHelper;
 	}
 
 	public IShoppingData getShoppingDbHelper() {
@@ -79,10 +72,6 @@ public class IngredientsApplication extends Application {
 	}
 
 	public ICacheData getCacheDbHelper() {
-		return serverDataHelper;
-	}
-
-	public IRecipeData getRecipesFromCacheHelper() {
 		return serverDataHelper;
 	}
 
@@ -106,12 +95,16 @@ public class IngredientsApplication extends Application {
 		return shoppingListItemFactory;
 	}
 
-	public IIngredientData getIngredientDbHelper() {
-		return serverDataHelper;
-	}
-
 	public IStoredData getStoredDbHelper() {
 		return stockDbHelper;
+	}
+
+	public IDatabaseHelper<IIngredient> getIngredientsDbHelper() {
+		return ingredientDbHelper;
+	}
+
+	public IDatabaseHelper<IRecipe> getRecipeDbHelper() {
+		return recipeDbHelper;
 	}
 
 }

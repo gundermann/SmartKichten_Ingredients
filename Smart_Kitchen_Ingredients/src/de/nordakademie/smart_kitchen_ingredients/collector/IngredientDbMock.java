@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
 
 /**
  * @author frederic.oppermann

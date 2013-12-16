@@ -1,6 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-public class Ingredient implements IIngredient, Comparable<IIngredient> {
+import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
+
+public class Ingredient implements IIngredient, IListElement,
+		Comparable<IIngredient> {
 
 	private String title;
 	private Unit unit;

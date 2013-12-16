@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
@@ -17,8 +18,9 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		IngredientsApplication app = (IngredientsApplication) getApplication();
 		super.fetchDataFromDb(new FetchDataAsyncTask<IRecipe>(
-				getProgressWheel(), new RecipeDbMock(), this));
+				getProgressWheel(), app.getRecipeDbHelper(), this));
 		initiateButtons();
 	}
 

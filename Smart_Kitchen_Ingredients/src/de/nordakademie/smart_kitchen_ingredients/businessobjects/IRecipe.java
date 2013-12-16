@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IRecipe extends Comparable<IRecipe> {
 
-	String getTitle();
+	String getName();
 
 	List<IIngredient> getIngredients();
 

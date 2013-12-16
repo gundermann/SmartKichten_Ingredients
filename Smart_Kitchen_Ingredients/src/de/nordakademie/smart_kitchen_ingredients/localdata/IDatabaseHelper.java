@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.collector;
+package de.nordakademie.smart_kitchen_ingredients.localdata;
 
 import java.util.List;
 

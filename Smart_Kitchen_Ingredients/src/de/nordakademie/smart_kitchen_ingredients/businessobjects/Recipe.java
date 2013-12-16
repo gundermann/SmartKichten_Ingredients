@@ -3,22 +3,24 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe implements IRecipe {
+import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
 
-	private String title;
+public class Recipe implements IRecipe, IListElement {
+
+	private String name;
 	private List<IIngredient> ingredients;
 
 	public Recipe() {
 		ingredients = new ArrayList<IIngredient>();
 	}
 
-	public Recipe(String title, List<IIngredient> ingredients) {
+	public Recipe(String name, List<IIngredient> ingredients) {
 		this.ingredients = ingredients;
-		this.title = title;
+		this.name = name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setIngredients(List<IIngredient> ingredients) {
@@ -26,8 +28,8 @@ public class Recipe implements IRecipe {
 	}
 
 	@Override
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -37,7 +39,7 @@ public class Recipe implements IRecipe {
 
 	@Override
 	public int compareTo(IRecipe another) {
-		return title.compareTo(another.getTitle());
+		return name.compareTo(another.getName());
 	}
 
 }

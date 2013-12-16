@@ -11,6 +11,7 @@ import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
@@ -74,21 +75,8 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		onCreate(db);
 	}
 
-	@Override
 	public void insertOrIgnoreShoppingItems(List<IIngredient> ingredientList) {
-		ContentValues values = new ContentValues();
-		for (IIngredient ingredient : ingredientList) {
-			values.put(COLUMN_INGREDIENT, ingredient.getName());
-			values.put(COLUMN_AMOUNT, ingredient.getQuantity());
-			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
-			values.put(COLUMN_BOUGHT, String.valueOf(false));
-		}
 
-		SQLiteDatabase writableDatabase = getWritableDatabase();
-		writableDatabase.insertWithOnConflict(TABLE_SHOPPING, null, values,
-				SQLiteDatabase.CONFLICT_IGNORE);
-		writableDatabase.close();
-		Log.i(TAG, "inserted to shopping_table");
 	}
 
 	@Override
@@ -224,5 +212,27 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 		return ingredient;
 
+	}
+
+	@Override
+	public void addItem(IIngredient ingredient) {
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_INGREDIENT, ingredient.getName());
+		values.put(COLUMN_AMOUNT, ingredient.getQuantity());
+		values.put(COLUMN_UNIT, ingredient.getUnit().toString());
+		values.put(COLUMN_BOUGHT, String.valueOf(false));
+
+		SQLiteDatabase writableDatabase = getWritableDatabase();
+		writableDatabase.insertWithOnConflict(TABLE_SHOPPING, null, values,
+				SQLiteDatabase.CONFLICT_IGNORE);
+		writableDatabase.close();
+		Log.i(TAG, "inserted to shopping_table");
+	}
+
+	@Override
+	public void addItem(IRecipe recipe) {
+		for (IIngredient ingredient : recipe.getIngredients()) {
+			addItem(ingredient);
+		}
 	}
 }
