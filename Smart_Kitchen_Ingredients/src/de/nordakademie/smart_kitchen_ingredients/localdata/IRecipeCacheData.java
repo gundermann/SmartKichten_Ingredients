@@ -4,7 +4,12 @@ import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
-public interface IRecipeData {
+/**
+ * 
+ * @author Kathrin Kurtz
+ * 
+ */
+public interface IRecipeCacheData {
 
 	public List<IRecipe> getAllRecipes();
 

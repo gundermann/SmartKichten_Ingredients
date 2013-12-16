@@ -9,12 +9,19 @@ import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.R.id;
 
+/**
+ * 
+ * @author Frauke Trautmann
+ * 
+ */
 public class ShoppingDateActivity extends Activity {
 
 	private TextView tvDisplayDate;
 	private DatePicker dpResult;
 	private TextView changeDate;
+	private TextView changeTime;
 
 	private int year;
 	private int month;
@@ -38,6 +45,7 @@ public class ShoppingDateActivity extends Activity {
 		tvDisplayDate = (TextView) findViewById(R.id.tvDate);
 		dpResult = (DatePicker) findViewById(R.id.dpResult);
 		changeDate = (TextView) findViewById(R.id.changeDateText);
+		changeTime = (TextView) findViewById(id.changeTimeText);
 
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);

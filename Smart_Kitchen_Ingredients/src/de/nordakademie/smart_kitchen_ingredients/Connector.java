@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Allgemeine Verbindung zu einem Server. Ist in der Lage einen Stream in einen
+ * String zu convertieren.
+ * 
+ * @author niels
+ * 
+ */
 public abstract class Connector implements IServerConnector {
 
 	protected String convertStreamToString(InputStream is) {

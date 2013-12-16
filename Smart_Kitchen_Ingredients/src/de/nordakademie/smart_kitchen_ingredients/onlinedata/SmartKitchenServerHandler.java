@@ -14,6 +14,9 @@ import de.nordakademie.smart_kitchen_ingredients.ServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
 
 /**
+ * Verarbeitung der Requests und Responses an und von dem zur Verfügung
+ * gestellten Server.
+ * 
  * @author Niels Gundermann
  */
 public class SmartKitchenServerHandler extends ServerHandler implements

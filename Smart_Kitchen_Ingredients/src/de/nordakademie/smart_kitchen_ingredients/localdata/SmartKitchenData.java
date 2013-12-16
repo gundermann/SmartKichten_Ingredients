@@ -10,11 +10,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
+/**
+ * Verarbeitung der Datenbankanfragen bzgl. der Einkaufsliste und der
+ * Bestehenden Zutaten.
+ * 
+ * @author niels
+ * 
+ */
 public class SmartKitchenData extends SQLiteOpenHelper implements
 		IShoppingData, IStoredData {
 
@@ -68,10 +75,10 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	}
 
 	@Override
-	public void insertOrIgnore(List<IIngredient> ingredientList) {
+	public void insertOrIgnoreShoppingItems(List<IIngredient> ingredientList) {
 		ContentValues values = new ContentValues();
 		for (IIngredient ingredient : ingredientList) {
-			values.put(COLUMN_INGREDIENT, ingredient.getName());
+			values.put(COLUMN_INGREDIENT, ingredient.getTitle());
 			values.put(COLUMN_AMOUNT, ingredient.getAmount());
 			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
 			values.put(COLUMN_BOUGHT, String.valueOf(false));
@@ -121,7 +128,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		value.put(COLUMN_BOUGHT, String.valueOf(item.isBought()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
 		writableDatabase.update(TABLE_SHOPPING, value, COLUMN_INGREDIENT
-				+ " = '" + item.getName() + "'", null);
+				+ " = '" + item.getTitle() + "'", null);
 		writableDatabase.close();
 		Log.i(TAG, "shopping_table updated");
 	}
@@ -161,12 +168,12 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		try {
 
 			List<IIngredient> values = new ArrayList<IIngredient>();
-			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
+			Cursor cursor = db.query(TABLE_STORED, new String[] {
 					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT }, null,
 					null, null, null, null);
 			try {
 				while (cursor.moveToNext()) {
-					values.add(getShoppingItem(cursor));
+					values.add(getStoredItem(cursor));
 				}
 				return values;
 			} finally {
@@ -177,10 +184,18 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		}
 	}
 
+	private IIngredient getStoredItem(Cursor cursor) {
+		String title = cursor.getString(0);
+		int amount = cursor.getInt(1);
+		Unit unit = Unit.valueOf(cursor.getString(2));
+		IIngredientFactory factory = app.getIngredientFactory();
+		return factory.createIngredient(title, amount, unit);
+	}
+
 	@Override
-	public void insertOrUpdateBoughtIngredient(Ingredient boughtIngredient) {
+	public void insertOrUpdateIngredient(IIngredient boughtIngredient) {
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_INGREDIENT, boughtIngredient.getName());
+		values.put(COLUMN_INGREDIENT, boughtIngredient.getTitle());
 		values.put(COLUMN_AMOUNT, boughtIngredient.getAmount());
 		values.put(COLUMN_UNIT, boughtIngredient.getUnit().toString());
 
@@ -189,5 +204,24 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 				SQLiteDatabase.CONFLICT_IGNORE);
 		writableDatabase.close();
 		Log.i(TAG, "inserted into stored_table");
+	}
+
+	@Override
+	public IIngredient getStoredIngredient(String title) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(STORED_TABLE_CREATE, new String[] {
+				COLUMN_AMOUNT, COLUMN_UNIT }, COLUMN_INGREDIENT + "=" + "'"
+				+ title + "'", null, null, null, null);
+
+		cursor.moveToNext();
+		int amount = cursor.getInt(0);
+		Unit unit = Unit.valueOf(cursor.getString(1));
+		IIngredient ingredient = app.getIngredientFactory().createIngredient(
+				title, amount, unit);
+		cursor.close();
+		db.close();
+
+		return ingredient;
+
 	}
 }

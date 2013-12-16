@@ -15,10 +15,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import de.nordakademie.smart_kitchen_ingredients.Connector;
-import de.nordakademie.smart_kitchen_ingredients.IServerConnector;
 
-public class BarcodeServerConnector extends Connector implements
-		IServerConnector {
+/**
+ * Stellt die Verbindung zu einem Server her, der eine API für Barcodes
+ * anbietet.
+ * 
+ * @author niels
+ * 
+ */
+public class BarcodeServerConnector extends Connector {
 
 	private static final String URL = "http://eandata.com/feed/";
 

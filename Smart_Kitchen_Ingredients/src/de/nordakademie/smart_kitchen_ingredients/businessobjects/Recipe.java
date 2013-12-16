@@ -3,16 +3,16 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeImpl implements IRecipe {
+public class Recipe implements IRecipe {
 
 	private String title;
 	private List<IIngredient> ingredients;
 
-	public RecipeImpl() {
+	public Recipe() {
 		ingredients = new ArrayList<IIngredient>();
 	}
 
-	public RecipeImpl(String title, List<IIngredient> ingredients) {
+	public Recipe(String title, List<IIngredient> ingredients) {
 		this.ingredients = ingredients;
 		this.title = title;
 	}

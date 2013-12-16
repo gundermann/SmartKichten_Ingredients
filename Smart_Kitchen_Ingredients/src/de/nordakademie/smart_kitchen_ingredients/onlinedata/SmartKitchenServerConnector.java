@@ -16,14 +16,15 @@ import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.Connector;
 
 /**
- * Stellt die Verbindung zum Server her.
+ * Stellt die Verbindung zum zur Verfügung gestellten Server her.
  * 
  * @author Niels Gundermann
  */
 public class SmartKitchenServerConnector extends Connector implements
 		ISmartKichtenServerConnector {
 	private final static String URL = "http://lx05.nordakademie.de:7002";
-	private static final String TAG = SmartKitchenServerConnector.class.getSimpleName();
+	private static final String TAG = SmartKitchenServerConnector.class
+			.getSimpleName();
 
 	@Override
 	public void postIngredientToServer(String jsonToPost) {
