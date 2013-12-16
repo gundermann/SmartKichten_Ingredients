@@ -10,6 +10,11 @@ import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
+/**
+* @author frederic.oppermann
+* @date 16.12.2013
+* @description
+*/
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
 	private Button showIngredientsButton;
 	private IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();

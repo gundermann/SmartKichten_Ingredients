@@ -5,6 +5,11 @@ import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
+/**
+* @author frederic.oppermann
+* @date 16.12.2013
+* @description
+*/
 public class RecipeDbMock implements IDatabaseHelper<IRecipe> {
 
 	@Override
