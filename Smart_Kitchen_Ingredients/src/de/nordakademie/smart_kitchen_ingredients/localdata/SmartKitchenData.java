@@ -31,7 +31,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 	private static final String TAG = SmartKitchenData.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 	private static final String DATABASE_NAME = "shoppingDB.db";
 
 	public static final String TABLE_SHOPPING = "shopping_table";

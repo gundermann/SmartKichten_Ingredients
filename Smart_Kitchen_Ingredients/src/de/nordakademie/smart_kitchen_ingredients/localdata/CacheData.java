@@ -226,9 +226,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 			values.put(COLUMN_UNIT, ingredient[2]);
 			writeIngredientToDB(values);
 			ingredientList.add(app.getIngredientFactory().createIngredient(
-					ingredient[0], Integer.valueOf(ingredient[1]),
-					Unit.valueOf(ingredient[2])));
-
+					ingredient[1], 0, Unit.valueOf(ingredient[2])));
 		}
 		return ingredientList;
 
