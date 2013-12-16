@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
+import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
  * 
@@ -17,6 +18,9 @@ import de.nordakademie.smart_kitchen_ingredients.R.id;
  * 
  */
 public class ShoppingDateActivity extends Activity {
+
+	private static final String TAG = StoredIngredientActivity.class
+			.getSimpleName();
 
 	private TextView tvDisplayDate;
 	private DatePicker dpResult;
@@ -32,10 +36,10 @@ public class ShoppingDateActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.shopping_date);
 
 		setCurrentDateOnView();
-		// addListenerOnButton();
 
 	}
 
@@ -62,23 +66,6 @@ public class ShoppingDateActivity extends Activity {
 		dpResult.init(year, month, day, null);
 
 	}
-
-	// public void addListenerOnButton() {
-	//
-	// btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
-	//
-	// btnChangeDate.setOnClickListener(new OnClickListener() {
-	//
-	// @Override
-	// public void onClick(View v) {
-	//
-	// showDialog(DATE_DIALOG_ID);
-	//
-	// }
-	//
-	// });
-
-	// }
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
