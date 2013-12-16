@@ -9,6 +9,9 @@
     <string name="minVolume">Ab wann soll die Einheit "ml" als knapp angezeigt werden?</string>
     <string name="summaryMinVolume">Knappheit für Einheit "g"</string>
     <string name="ingredientHintText">Ingredient name</string>
+    <string name="confirmDateButton">Termin anlegen</string>
+    <string name="dateTitle">Einkauf</string>
+    <string name="headlineShoppingDate">Termin anlegen</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
     <string name="addIngredientsButton">Zutat hinzufügen</string>
@@ -60,3 +63,4 @@
     </string-array>
 
 </resources>
+
