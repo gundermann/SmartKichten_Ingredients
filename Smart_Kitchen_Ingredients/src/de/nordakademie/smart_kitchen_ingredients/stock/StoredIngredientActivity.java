@@ -7,10 +7,14 @@ import java.util.TreeSet;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -30,13 +34,15 @@ import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientAc
  * 
  */
 public class StoredIngredientActivity extends Activity implements
-		OnClickListener, OnItemLongClickListener {
+		OnClickListener, OnItemLongClickListener,
+		OnSharedPreferenceChangeListener {
 
 	private static final String TAG = StoredIngredientActivity.class
 			.getSimpleName();
 
 	IngredientsApplication app;
 	ListView stockList;
+	SharedPreferences prefs;
 	ImageButton addStoredIngredientButton;
 
 	@Override
@@ -47,6 +53,8 @@ public class StoredIngredientActivity extends Activity implements
 
 		app = (IngredientsApplication) getApplication();
 
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.registerOnSharedPreferenceChangeListener(this);
 		addStoredIngredientButton = (ImageButton) findViewById(R.id.addNewStoredItem);
 		addStoredIngredientButton.setOnClickListener(this);
 
@@ -55,6 +63,26 @@ public class StoredIngredientActivity extends Activity implements
 
 		updateStockList();
 		Log.i(TAG, "created");
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.stock_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_stock_settings:
+			Intent intent = new Intent(getApplicationContext(),
+					StockPrefsActivity.class);
+			startActivity(intent);
+			break;
+		default:
+			break;
+		}
+		return true;
 	}
 
 	private void updateStockList() {
@@ -74,38 +102,9 @@ public class StoredIngredientActivity extends Activity implements
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapter, View view,
 			final int position, long arg3) {
-		Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(stockList.getItemAtPosition(position).toString());
-		builder.setCancelable(true);
-		builder.setPositiveButton("Delete",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						app.getStoredDbHelper().getStoredIngredient(
-								getTitleFromList(position));
-					}
+		Builder builder = new StoredIngredientOptionDialog(
+				getTitleFromList(position), app);
 
-				});
-
-		builder.setNeutralButton("Change",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(getApplicationContext(),
-								AddStoredIngredientActivity.class);
-						intent.putExtra("ingredientTitle",
-								getTitleFromList(position));
-						startActivity(intent);
-					}
-				});
-		builder.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				});
 		AlertDialog dialog = builder.create();
 		dialog.show();
 		return true;
@@ -119,8 +118,8 @@ public class StoredIngredientActivity extends Activity implements
 	public List<String> getStoredValues() {
 		List<String> values = new ArrayList<String>();
 		for (IIngredient item : getStoredItems()) {
-			values.add(item.getTitle() + " - "
-					+ String.valueOf(item.getAmount()) + " " + item.getUnit());
+			values.add(item.getName() + " - "
+					+ String.valueOf(item.getQuantity()) + " " + item.getUnit());
 		}
 		Log.i(TAG, "title of shoppingitems collected");
 		return values;
@@ -136,6 +135,12 @@ public class StoredIngredientActivity extends Activity implements
 		Log.i(TAG, "sort ingredients from database");
 
 		return storedShoppingItems;
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences preference,
+			String key) {
+		updateStockList();
 	}
 
 }

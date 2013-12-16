@@ -9,7 +9,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
  * @author Kathrin Kurtz
  * 
  */
-public interface IIngredientCacheData {
+public interface IIngredientData {
 
 	List<IIngredient> getAllIngredients();
 }

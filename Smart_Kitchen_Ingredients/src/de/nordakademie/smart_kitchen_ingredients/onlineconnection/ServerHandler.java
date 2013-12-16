@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients;
+package de.nordakademie.smart_kitchen_ingredients.onlineconnection;
 
 import java.util.ArrayList;
 import java.util.List;

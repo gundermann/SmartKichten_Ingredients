@@ -11,7 +11,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
  * @date 07.12.2013
  * @description
  */
-public class Ingredient implements IIngredient {
+public class Ingredient implements IIngredient, IListElement {
 	private static int runningNumber = 0;
 
 	private String name;
@@ -21,13 +21,13 @@ public class Ingredient implements IIngredient {
 	}
 
 	@Override
-	public String getTitle() {
+	public String getName() {
 		return name;
 	}
 
 	@Override
 	public String toString() {
-		return getTitle();
+		return getName();
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class Ingredient implements IIngredient {
 	}
 
 	@Override
-	public int getAmount() {
+	public int getQuantity() {
 		return 0;
 	}
 

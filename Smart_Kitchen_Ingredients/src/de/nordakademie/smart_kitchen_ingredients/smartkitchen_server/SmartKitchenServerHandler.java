@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.onlinedata;
+package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
-import de.nordakademie.smart_kitchen_ingredients.ServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
 /**
  * Verarbeitung der Requests und Responses an und von dem zur Verfügung

@@ -11,8 +11,8 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKichtenServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKichtenServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerHandler;
 
 public class ServerHandlerImplTest {
 

@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".IngredientCollectorActivity" >
+    tools:context=".AbstractCollectorActivity" >
 
     <ProgressBar
         android:id="@+id/collectorProgressBar"
@@ -18,11 +18,19 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/noResultsFoundView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No results found"
+        android:visibility="gone" />
+
     <EditText
-        android:id="@+id/ingredientNameInput"
+        android:id="@+id/searchBarInput"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/ingredientHintText"
+        android:hint="@string/searchBarHint"
         android:lines="1"
         android:scrollHorizontally="true" />
 
@@ -44,7 +52,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/showRecipesButtonText" />
+            android:text="@string/showRecipesButtonText"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/showIngredientsButton"
@@ -56,10 +65,10 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/ingredientList"
+        android:id="@+id/elementsList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/newIngredientButtons"
-        android:layout_below="@id/ingredientNameInput" />
+        android:layout_below="@id/searchBarInput" />
 
 </RelativeLayout>

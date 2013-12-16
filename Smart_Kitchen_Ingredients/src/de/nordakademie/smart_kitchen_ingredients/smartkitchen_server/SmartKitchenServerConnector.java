@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.onlinedata;
+package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
-import de.nordakademie.smart_kitchen_ingredients.Connector;
+import de.nordakademie.smart_kitchen_ingredients.onlineconnection.Connector;
 
 /**
  * Stellt die Verbindung zum zur Verfügung gestellten Server her.

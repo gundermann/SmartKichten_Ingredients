@@ -13,14 +13,14 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientCacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeCacheData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IIngredientData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IRecipeData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.ISmartKitchenServerHandler;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerConnector;
-import de.nordakademie.smart_kitchen_ingredients.onlinedata.SmartKitchenServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKitchenServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerConnector;
+import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerHandler;
 
 /**
  * Die allgemeine Application, die alle Factories und Datenbankhelper enthällt.
@@ -39,8 +39,8 @@ public class IngredientsApplication extends Application {
 	private IRecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-	private IIngredientCacheData cachedIngredientsHelper;
-	private IRecipeCacheData cachedRecipesHelper;
+	private IIngredientData cachedIngredientsHelper;
+	private IRecipeData cachedRecipesHelper;
 	private CacheData serverDataHelper;
 	private IStoredData stockDbHelper;
 
@@ -64,11 +64,13 @@ public class IngredientsApplication extends Application {
 		Log.i(TAG, "Application started");
 	}
 
-	public IIngredientCacheData getcachedIngredientsHelper() {
+	public IIngredientData getCachedIngredientsHelper() {
+
 		return cachedIngredientsHelper;
 	}
 
-	public IRecipeCacheData getcachedRecipesHelper() {
+
+	public IRecipeData getCachedRecipesHelper() {
 		return cachedRecipesHelper;
 	}
 
@@ -80,7 +82,7 @@ public class IngredientsApplication extends Application {
 		return serverDataHelper;
 	}
 
-	public IRecipeCacheData getRecipesFromCacheHelper() {
+	public IRecipeData getRecipesFromCacheHelper() {
 		return serverDataHelper;
 	}
 
@@ -104,7 +106,7 @@ public class IngredientsApplication extends Application {
 		return shoppingListItemFactory;
 	}
 
-	public IIngredientCacheData getIngredientDbHelper() {
+	public IIngredientData getIngredientDbHelper() {
 		return serverDataHelper;
 	}
 

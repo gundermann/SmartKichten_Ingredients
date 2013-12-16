@@ -18,7 +18,7 @@
 
     <uses-sdk
         android:minSdkVersion="9"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
@@ -30,6 +30,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <service android:name="de.nordakademie.smart_kitchen_ingredients.localdata.CacheUpdaterService" >
         </service>
         <service android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDataCleanUpService" >
@@ -44,12 +45,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.stock.StockPrefsActivity">
+        </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.IngredientRegistrationActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity"
+            android:label="@string/ingredientCollector" >
+        </activity>
+        <activity
+            android:name="de.nordakademie.smart_kitchen_ingredients.collector.RecipeCollectorActivity"
             android:label="@string/ingredientCollector" >
         </activity>
         <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity" >

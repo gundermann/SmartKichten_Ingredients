@@ -1,8 +1,5 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -12,10 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,12 +36,12 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 public class ShoppingListActivity extends Activity implements IModifyableList,
 		OnClickListener {
 
-	private static final int REQUEST_CODE = 1;
+	// private static final int REQUEST_CODE = 1;
 	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
 	private ImageButton btAddNewShoppingItem;
 	private IngredientsApplication app;
-	private Bitmap bitmap;
+	// private Bitmap bitmap;
 	private BroadcastReceiver notifyShoppingdataChange;
 
 	@Override
@@ -127,12 +121,12 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 					StoredIngredientActivity.class);
 			startActivity(storedIntent);
 			break;
-		case R.id.menu_import_shoppinglist:
-			Intent fotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			fotoIntent.setType("image/*");
-			fotoIntent.setAction(Intent.ACTION_GET_CONTENT);
-			fotoIntent.addCategory(Intent.CATEGORY_OPENABLE);
-			startActivityForResult(fotoIntent, REQUEST_CODE);
+		// case R.id.menu_import_shoppinglist:
+		// Intent fotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		// fotoIntent.setType("image/*");
+		// fotoIntent.setAction(Intent.ACTION_GET_CONTENT);
+		// fotoIntent.addCategory(Intent.CATEGORY_OPENABLE);
+		// startActivityForResult(fotoIntent, REQUEST_CODE);
 		default:
 			break;
 		}
@@ -143,7 +137,7 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	public List<String> getValues() {
 		List<String> values = new ArrayList<String>();
 		for (IShoppingListItem item : getShoppingItems()) {
-			values.add(item.getTitle());
+			values.add(item.getName());
 		}
 		Log.i(TAG, "title of shoppingitems collected");
 		return values;
@@ -187,58 +181,53 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
 				requestCode, resultCode, intent);
-		if (requestCode == REQUEST_CODE) {
-			handleFotoResult(resultCode, intent);
-		} else {
-			boolean success = false;
-			if (scanningResult != null) {
-				String itemDescription = app.getBarcodeEvaluator()
-						.getItemDescription(scanningResult.getContents());
-				success = evaluateBarcodeScan(itemDescription);
-
-				if (success) {
-					Toast toast = Toast.makeText(getApplicationContext(),
-							getText(R.string.scansuccess), Toast.LENGTH_SHORT);
-					toast.show();
-					Log.i(TAG, "ingredients matches");
-				} else {
-					Toast toast = Toast.makeText(getApplicationContext(),
-							getText(R.string.scanfault), Toast.LENGTH_SHORT);
-					toast.show();
-					Log.i(TAG, "ingredients doesn't match");
-				}
+		// if (requestCode == REQUEST_CODE) {
+		// handleFotoResult(resultCode, intent);
+		// } else {
+		try {
+			String itemDescription = app.getBarcodeEvaluator()
+					.getItemDescription(scanningResult.getContents());
+			if (evaluateBarcodeScan(itemDescription)) {
+				makeLongToast(R.string.scansuccess);
 			} else {
-				Toast toast = Toast.makeText(getApplicationContext(),
-						getText(R.string.scanerror), Toast.LENGTH_SHORT);
-				toast.show();
-				Log.i(TAG, "scan finished with errors");
+				makeLongToast(R.string.scanfault);
 			}
+		} catch (NullPointerException npe) {
+			makeLongToast(R.string.scanerror);
 		}
+		// }
 	}
 
-	private void handleFotoResult(int resultCode, Intent intent) {
-		InputStream stream = null;
-		if (resultCode == Activity.RESULT_OK) {
-			try {
-				if (bitmap != null) {
-					bitmap.recycle();
-				}
-				stream = getContentResolver().openInputStream(intent.getData());
-				bitmap = BitmapFactory.decodeStream(stream);
-				stream.close();
-
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	private void makeLongToast(int textId) {
+		Toast toast = Toast.makeText(getApplicationContext(), getText(textId),
+				Toast.LENGTH_SHORT);
+		toast.show();
+		Log.i(TAG, getText(textId).toString());
 	}
+
+	// private void handleFotoResult(int resultCode, Intent intent) {
+	// InputStream stream = null;
+	// if (resultCode == Activity.RESULT_OK) {
+	// try {
+	// if (bitmap != null) {
+	// bitmap.recycle();
+	// }
+	// stream = getContentResolver().openInputStream(intent.getData());
+	// bitmap = BitmapFactory.decodeStream(stream);
+	// stream.close();
+	//
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
 
 	private boolean evaluateBarcodeScan(String content) {
 		for (IShoppingListItem shoppingItem : getShoppingItems()) {
-			if (content.contains(shoppingItem.getTitle())) {
-				checkAndUpdateValueAtPosition(shoppingItem.getTitle());
+			if (content.contains(shoppingItem.getName())) {
+				checkAndUpdateValueAtPosition(shoppingItem.getName());
 				return true;
 			}
 		}
