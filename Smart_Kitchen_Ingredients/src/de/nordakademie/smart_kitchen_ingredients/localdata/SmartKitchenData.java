@@ -73,6 +73,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 				+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPPING);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORED);
 		onCreate(db);
 	}
 

@@ -21,6 +21,8 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IngredientDatabaseHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.RecipeDatabaseHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.DateFactory;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.IDateFactory;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKitchenServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerHandler;
@@ -46,6 +48,7 @@ public class IngredientsApplication extends Application {
 	private IStoredData stockDbHelper;
 	private IDatabaseHelper<IIngredient> ingredientDbHelper;
 	private IDatabaseHelper<IRecipe> recipeDbHelper;
+	private IDateFactory dateFactory;
 
 	@Override
 	public void onCreate() {
@@ -56,6 +59,7 @@ public class IngredientsApplication extends Application {
 		serverHandler = new SmartKitchenServerHandler(
 				new SmartKitchenServerConnector());
 		ingredientFactory = new IngredientFactory();
+		dateFactory = new DateFactory();
 		ingredientDbHelper = new IngredientDatabaseHelper(this);
 		recipeDbHelper = new RecipeDatabaseHelper(this);
 		shoppingListItemFactory = new ShoppingListItemFactory();
@@ -105,6 +109,10 @@ public class IngredientsApplication extends Application {
 
 	public IDatabaseHelper<IRecipe> getRecipeDbHelper() {
 		return recipeDbHelper;
+	}
+
+	public IDateFactory getDateFactory() {
+		return dateFactory;
 	}
 
 }
