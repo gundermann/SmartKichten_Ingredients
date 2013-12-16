@@ -14,8 +14,10 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFacto
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.DateDatabase;
 import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IDateDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IngredientDatabaseHelper;
@@ -47,6 +49,7 @@ public class IngredientsApplication extends Application {
 	private IBarcodeServerHandler barcodeEvaluator;
 	private CacheData serverDataHelper;
 	private IStoredData stockDbHelper;
+	private IDateDbHelper dateDbHelper;
 	private IDatabaseHelper<IIngredient> ingredientDbHelper;
 	private IDatabaseHelper<IRecipe> recipeDbHelper;
 	private IDateFactory dateFactory;
@@ -64,6 +67,7 @@ public class IngredientsApplication extends Application {
 		dateFactory = new DateFactory();
 		ingredientDbHelper = new IngredientDatabaseHelper(this);
 		recipeDbHelper = new RecipeDatabaseHelper(this);
+		dateDbHelper = new DateDatabase(this);
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactory();
 		barcodeEvaluator = new BarcodeServerHandler(
@@ -115,6 +119,10 @@ public class IngredientsApplication extends Application {
 
 	public IDateFactory getDateFactory() {
 		return dateFactory;
+	}
+
+	public IDateDbHelper getDateDbHelper() {
+		return dateDbHelper;
 	}
 
 	public boolean updateNeeded() {

@@ -12,25 +12,23 @@ import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.IDate;
 
-public class DateDatabase extends SQLiteOpenHelper implements DateDbHelper {
+public class DateDatabase extends SQLiteOpenHelper implements IDateDbHelper {
 
 	private IngredientsApplication app;
 
 	private static final String TAG = SmartKitchenData.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 	private static final String DATABASE_NAME = "dateDB.db";
 
 	public static final String TABLE_DATE = "date_table";
-	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_INTENTFLAG = "flag";
 	public static final String COLUMN_TITLE = "title";
-	public static final String COLUMN_TIMESTAMP = "ingredient";
-	public static final String COLUMN_INTENTFLAG = "amount";
+	public static final String COLUMN_TIMESTAMP = "timestamp";
 
 	private static final String DATE_TABLE_CREATE = "create table "
-			+ TABLE_DATE + " (" + COLUMN_ID
-			+ " integer primary key autoincrement, " + COLUMN_TITLE + " text, "
-			+ COLUMN_TIMESTAMP + " date, " + COLUMN_INTENTFLAG + " interger)";
+			+ TABLE_DATE + " (" + COLUMN_INTENTFLAG + " integer primary key, "
+			+ COLUMN_TITLE + " text, " + COLUMN_TIMESTAMP + " numeric);";
 
 	public DateDatabase(IngredientsApplication app) {
 		super(app.getApplicationContext(), DATABASE_NAME, null,
@@ -63,7 +61,7 @@ public class DateDatabase extends SQLiteOpenHelper implements DateDbHelper {
 
 		SQLiteDatabase db = getWritableDatabase();
 		try {
-			db.insertOrThrow(DATE_TABLE_CREATE, null, values);
+			db.insertOrThrow(TABLE_DATE, null, values);
 			success = true;
 			Log.i(TAG, "inserted into date_table");
 		} catch (SQLiteException sqle) {
@@ -78,7 +76,7 @@ public class DateDatabase extends SQLiteOpenHelper implements DateDbHelper {
 	@Override
 	public int getIntentFlagByTime(long timestamp) {
 		SQLiteDatabase db = getReadableDatabase();
-		Cursor cursor = db.query(DATE_TABLE_CREATE,
+		Cursor cursor = db.query(TABLE_DATE,
 				new String[] { COLUMN_INTENTFLAG }, COLUMN_TIMESTAMP + " = "
 						+ timestamp, null, null, null, null);
 
@@ -94,9 +92,9 @@ public class DateDatabase extends SQLiteOpenHelper implements DateDbHelper {
 		List<IDate> dateList = new ArrayList<IDate>();
 
 		SQLiteDatabase db = getReadableDatabase();
-		Cursor cursor = db.query(DATE_TABLE_CREATE, new String[] {
-				COLUMN_TITLE, COLUMN_TIMESTAMP, COLUMN_INTENTFLAG }, null,
-				null, null, null, null);
+		Cursor cursor = db.query(TABLE_DATE, new String[] { COLUMN_TITLE,
+				COLUMN_TIMESTAMP, COLUMN_INTENTFLAG }, null, null, null, null,
+				null);
 
 		while (cursor.moveToNext()) {
 			String title = cursor.getString(0);
@@ -111,4 +109,20 @@ public class DateDatabase extends SQLiteOpenHelper implements DateDbHelper {
 		return dateList;
 	}
 
+	@Override
+	public int getNextFlag() {
+		int flag = 0;
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(TABLE_DATE,
+				new String[] { COLUMN_INTENTFLAG }, null, null, null, null,
+				null);
+		while (cursor.moveToNext()) {
+			if (cursor.getInt(0) == flag) {
+				flag++;
+			} else {
+				break;
+			}
+		}
+		return flag;
+	}
 }
