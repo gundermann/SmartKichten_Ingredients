@@ -9,7 +9,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  * @author Kathrin Kurtz
  * 
  */
-public interface IRecipeCacheData {
+public interface IRecipeData {
 
 	public List<IRecipe> getAllRecipes();
 

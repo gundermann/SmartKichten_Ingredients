@@ -18,7 +18,7 @@
 
     <uses-sdk
         android:minSdkVersion="9"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
@@ -54,6 +54,10 @@
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity"
+            android:label="@string/ingredientCollector" >
+        </activity>
+        <activity
+            android:name="de.nordakademie.smart_kitchen_ingredients.collector.RecipeCollectorActivity"
             android:label="@string/ingredientCollector" >
         </activity>
         <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity" >

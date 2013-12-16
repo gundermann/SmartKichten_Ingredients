@@ -78,8 +78,8 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	public void insertOrIgnoreShoppingItems(List<IIngredient> ingredientList) {
 		ContentValues values = new ContentValues();
 		for (IIngredient ingredient : ingredientList) {
-			values.put(COLUMN_INGREDIENT, ingredient.getTitle());
-			values.put(COLUMN_AMOUNT, ingredient.getAmount());
+			values.put(COLUMN_INGREDIENT, ingredient.getName());
+			values.put(COLUMN_AMOUNT, ingredient.getQuantity());
 			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
 			values.put(COLUMN_BOUGHT, String.valueOf(false));
 		}
@@ -128,7 +128,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		value.put(COLUMN_BOUGHT, String.valueOf(item.isBought()));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
 		writableDatabase.update(TABLE_SHOPPING, value, COLUMN_INGREDIENT
-				+ " = '" + item.getTitle() + "'", null);
+				+ " = '" + item.getName() + "'", null);
 		writableDatabase.close();
 		Log.i(TAG, "shopping_table updated");
 	}
@@ -195,8 +195,9 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	@Override
 	public void insertOrUpdateIngredient(IIngredient boughtIngredient) {
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_INGREDIENT, boughtIngredient.getTitle());
-		values.put(COLUMN_AMOUNT, boughtIngredient.getAmount());
+		values.put(COLUMN_INGREDIENT, boughtIngredient.getName());
+		values.put(COLUMN_AMOUNT, boughtIngredient.getQuantity());
+
 		values.put(COLUMN_UNIT, boughtIngredient.getUnit().toString());
 
 		SQLiteDatabase writableDatabase = getWritableDatabase();

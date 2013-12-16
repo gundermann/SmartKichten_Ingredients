@@ -118,8 +118,8 @@ public class StoredIngredientActivity extends Activity implements
 	public List<String> getStoredValues() {
 		List<String> values = new ArrayList<String>();
 		for (IIngredient item : getStoredItems()) {
-			values.add(item.getTitle() + " - "
-					+ String.valueOf(item.getAmount()) + " " + item.getUnit());
+			values.add(item.getName() + " - "
+					+ String.valueOf(item.getQuantity()) + " " + item.getUnit());
 		}
 		Log.i(TAG, "title of shoppingitems collected");
 		return values;

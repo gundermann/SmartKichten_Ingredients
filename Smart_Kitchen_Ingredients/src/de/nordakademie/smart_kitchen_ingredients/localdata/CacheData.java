@@ -17,8 +17,8 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
-public class CacheData extends SQLiteOpenHelper implements IRecipeCacheData,
-		ICacheData, IIngredientCacheData {
+public class CacheData extends SQLiteOpenHelper implements IRecipeData,
+		ICacheData, IIngredientData {
 	/**
 	 * 
 	 * @author Kathrin Kurtz

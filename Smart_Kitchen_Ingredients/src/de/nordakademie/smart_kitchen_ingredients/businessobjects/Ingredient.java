@@ -13,13 +13,8 @@ public class Ingredient implements IIngredient, Comparable<IIngredient> {
 	}
 
 	@Override
-	public int getAmount() {
+	public int getQuantity() {
 		return amount;
-	}
-
-	@Override
-	public String getTitle() {
-		return title;
 	}
 
 	@Override
@@ -34,6 +29,11 @@ public class Ingredient implements IIngredient, Comparable<IIngredient> {
 
 	@Override
 	public int compareTo(IIngredient another) {
-		return this.getTitle().compareTo(another.getTitle());
+		return this.getName().compareTo(another.getName());
+	}
+
+	@Override
+	public String getName() {
+		return title;
 	}
 }
