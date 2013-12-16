@@ -87,17 +87,30 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 	public List<IRecipe> getAllRecipes() {
 		List<IRecipe> recipes = new ArrayList<IRecipe>();
+		if (cachedDataAvailable()) {
+			SQLiteDatabase db = getReadableDatabase();
+			String sql = "SELECT * FROM " + TABLE_RECIPES;
+			Cursor cursor = db.rawQuery(sql, null);
+
+			while (cursor.moveToNext()) {
+				IRecipeFactory recipeFactory = app.getRecipeFactory();
+				recipes.add(recipeFactory.createRecipe(cursor.getString(1),
+						getIngredientsForRecipeID(cursor.getString(0))));
+			}
+			db.close();
+		}
+		return recipes;
+	}
+
+	private boolean cachedDataAvailable() {
 		SQLiteDatabase db = getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_RECIPES;
 		Cursor cursor = db.rawQuery(sql, null);
 
-		while (cursor.moveToNext()) {
-			IRecipeFactory recipeFactory = app.getRecipeFactory();
-			recipes.add(recipeFactory.createRecipe(cursor.getString(1),
-					getIngredientsForRecipeID(cursor.getString(0))));
+		if (cursor.getCount() == 0) {
+
 		}
-		db.close();
-		return recipes;
+		return true;
 	}
 
 	private List<IIngredient> getIngredientsForRecipeID(String recipeID) {

@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
@@ -73,10 +74,6 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 				+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPPING);
 		onCreate(db);
-	}
-
-	public void insertOrIgnoreShoppingItems(List<IIngredient> ingredientList) {
-
 	}
 
 	@Override
@@ -214,25 +211,41 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 	}
 
-	@Override
-	public void addItem(IIngredient ingredient) {
+	private boolean insertItemsIntoDatabase(List<IIngredient> ingredients) {
+		boolean success = false;
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_INGREDIENT, ingredient.getName());
-		values.put(COLUMN_AMOUNT, ingredient.getQuantity());
-		values.put(COLUMN_UNIT, ingredient.getUnit().toString());
-		values.put(COLUMN_BOUGHT, String.valueOf(false));
+		for (IIngredient ingredient : ingredients) {
+			values.put(COLUMN_INGREDIENT, ingredient.getName());
+			values.put(COLUMN_AMOUNT, ingredient.getQuantity());
+			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
+			values.put(COLUMN_BOUGHT, String.valueOf(false));
+		}
 
 		SQLiteDatabase writableDatabase = getWritableDatabase();
-		writableDatabase.insertWithOnConflict(TABLE_SHOPPING, null, values,
-				SQLiteDatabase.CONFLICT_IGNORE);
-		writableDatabase.close();
-		Log.i(TAG, "inserted to shopping_table");
+		writableDatabase.beginTransaction();
+		try {
+			writableDatabase.insertOrThrow(TABLE_SHOPPING, null, values);
+			writableDatabase.setTransactionSuccessful();
+			Log.i(TAG, "inserted to shopping_table");
+
+		} catch (SQLiteException sqle) {
+			success = false;
+			Log.i(TAG, "error while insert into shopping_table");
+		} finally {
+			writableDatabase.endTransaction();
+			writableDatabase.close();
+		}
+		return success;
 	}
 
 	@Override
-	public void addItem(IRecipe recipe) {
-		for (IIngredient ingredient : recipe.getIngredients()) {
-			addItem(ingredient);
-		}
+	public boolean addItem(IIngredient ingredient) {
+		List<IIngredient> ingredietList = new ArrayList<IIngredient>();
+		return insertItemsIntoDatabase(ingredietList);
+	}
+
+	@Override
+	public boolean addItem(IRecipe recipe) {
+		return insertItemsIntoDatabase(recipe.getIngredients());
 	}
 }

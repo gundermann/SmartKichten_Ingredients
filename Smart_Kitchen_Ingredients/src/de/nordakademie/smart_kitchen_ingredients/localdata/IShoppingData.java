@@ -18,14 +18,14 @@ public interface IShoppingData {
 	 * 
 	 * @param ingredient
 	 */
-	void addItem(IIngredient ingredient);
+	boolean addItem(IIngredient ingredient);
 
 	/**
 	 * Fügt die Zutaten eines Rezepten zum einkaufen in die Datenbank ein.
 	 * 
 	 * @param recipe
 	 */
-	void addItem(IRecipe recipe);
+	boolean addItem(IRecipe recipe);
 
 	/**
 	 * Liefert alle Artikel, die auf der Einkaufsliste stehen, zurück.
