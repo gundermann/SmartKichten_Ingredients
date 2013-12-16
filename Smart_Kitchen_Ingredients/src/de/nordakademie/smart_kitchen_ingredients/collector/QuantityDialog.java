@@ -45,10 +45,21 @@ public class QuantityDialog extends DialogFragment {
 
 			@Override
 			public void onClick(View v) {
-				int val = Integer.parseInt(previousNumber.getText().toString());
-				Log.d("button", String.valueOf(val));
-				val++;
-				previousNumber.setText(String.valueOf(val));
+				int previousVal = getValueOf(previousNumber);
+				int currentVal = getValueOf(currentNumber);
+				int nextVal = getValueOf(nextNumber);
+
+				previousVal++;
+				currentVal++;
+				nextVal++;
+
+				previousNumber.setText(String.valueOf(previousVal));
+				currentNumber.setText(String.valueOf(currentVal));
+				nextNumber.setText(String.valueOf(nextVal));
+			}
+
+			private int getValueOf(TextView view) {
+				return Integer.valueOf(view.getText().toString());
 			}
 		});
 
