@@ -9,16 +9,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +24,6 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentIntegrator;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
@@ -89,20 +85,8 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	}
 
 	private void updateShoppingList() {
-		ListAdapter adapter = new AdapterFactory<IShoppingListItem>()
-				.createAdapter(getApplicationContext(),
-						R.layout.checkable_rowlayout, getShoppingItems());
-		for (int position = 0; position < adapter.getCount(); position++) {
-			CheckBox checkBox = ((CheckBox) adapter.getView(position, null,
-					null).findViewById(R.id.buyedCheck));
-			TextView textView = ((TextView) adapter.getView(position, null,
-					null).findViewById(R.id.labelOfCheckableList));
-			if (getShoppingItems().get(position).isBought()) {
-				textView.setPaintFlags(textView.getPaintFlags()
-						| Paint.STRIKE_THRU_TEXT_FLAG);
-				checkBox.setChecked(true);
-			}
-		}
+		ShoppingListAdapter adapter = new ShoppingListAdapter(
+				getApplicationContext(), this);
 		shoppingListView.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
 	}

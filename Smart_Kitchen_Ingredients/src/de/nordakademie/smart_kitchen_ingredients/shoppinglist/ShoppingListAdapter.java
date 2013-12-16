@@ -19,6 +19,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  */
 public class ShoppingListAdapter extends ArrayAdapter<String> {
 	private final Context context;
+	// TODO raus; app rein
 	private final IModifyableList list;
 	private CheckBox checkBox;
 	private TextView textView;

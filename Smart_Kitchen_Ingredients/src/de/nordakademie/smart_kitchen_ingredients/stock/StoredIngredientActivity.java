@@ -10,7 +10,6 @@ import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -23,7 +22,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
@@ -92,9 +90,6 @@ public class StoredIngredientActivity extends Activity implements
 		ListAdapter adapter = new AdapterFactory<IIngredient>().createAdapter(
 				getApplicationContext(), android.R.layout.simple_list_item_1,
 				app.getStoredDbHelper().getAllStoredIngredients());
-		for (int i = 0; i < adapter.getCount(); i++) {
-			((TextView) adapter.getView(i, null, null)).setTextColor(Color.RED);
-		}
 		stockList.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
 	}
