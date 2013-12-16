@@ -29,8 +29,11 @@
     <string name="insertStoredItems">Verfügbare Zutaten erfassen</string>
     <string name="currentDate">Datum: </string>
     <string name="changeShoppingDataPermissionDescription">Text</string>
-    <string name="changeDate">Wählen Sie ein Datum</string>
-    <string name="changeTime">Wählen Sie eine Uhrzeit</string>
+    <string name="changeDate">Datum</string>
+    <string name="changeTime">Uhrzeit</string>
+    <string name="confirmDateButton">Termin anlegen</string>
+    <string name="dateTitle">Einkauf</string>
+    <string name="headlineShoppingDate">Termin anlegen</string>
     <string name="showIngredientsButtonText">Show ingredients</string>
     <string name="title_activity_add_ingredient">AddIngredientActivity</string>
     <string name="ingredientName">Bezeichnung: </string>

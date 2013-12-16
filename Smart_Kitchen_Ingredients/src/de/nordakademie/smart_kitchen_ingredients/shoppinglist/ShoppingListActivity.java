@@ -53,7 +53,7 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.shopping_layout);
+		setContentView(R.layout.list_layout);
 
 		app = (IngredientsApplication) getApplication();
 		btAddNewShoppingItem = (ImageButton) findViewById(R.id.addNewShoppingItem);
