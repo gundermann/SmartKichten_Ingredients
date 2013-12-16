@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -58,7 +59,29 @@ public class QuantityDialog extends DialogFragment {
 	private Dialog buildDialog(View view) {
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 				getActivity());
-		dialogBuilder.setTitle(R.string.quantityDialogTitle).setView(view);
+		dialogBuilder
+				.setTitle(R.string.quantityDialogTitle)
+				.setView(view)
+				.setPositiveButton("positive",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+
+							}
+						})
+				.setNegativeButton("negative",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+
+							}
+						});
 		return dialogBuilder.create();
 	}
 
