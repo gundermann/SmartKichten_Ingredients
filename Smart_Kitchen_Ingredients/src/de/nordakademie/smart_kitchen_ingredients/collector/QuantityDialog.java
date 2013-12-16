@@ -106,6 +106,14 @@ public class QuantityDialog extends DialogFragment {
 	}
 
 	private void setOnClickListener() {
+		currentNumber.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+							
+			}
+		});
+		
 		increaseButton.setOnClickListener(new OnClickListener() {
 
 			@Override
