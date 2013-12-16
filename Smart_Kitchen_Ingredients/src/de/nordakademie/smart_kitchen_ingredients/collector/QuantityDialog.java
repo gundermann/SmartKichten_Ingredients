@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -45,29 +44,39 @@ public class QuantityDialog extends DialogFragment {
 
 			@Override
 			public void onClick(View v) {
-				int previousVal = getValueOf(previousNumber);
-				int currentVal = getValueOf(currentNumber);
 				int nextVal = getValueOf(nextNumber);
+				int currentVal = getValueOf(currentNumber);
+				int previousVal = getValueOf(previousNumber);
 
-				previousVal++;
-				currentVal++;
 				nextVal++;
+				currentVal++;
+				previousVal++;
 
-				previousNumber.setText(String.valueOf(previousVal));
-				currentNumber.setText(String.valueOf(currentVal));
 				nextNumber.setText(String.valueOf(nextVal));
+				currentNumber.setText(String.valueOf(currentVal));
+				previousNumber.setText(String.valueOf(previousVal));
 			}
 
-			private int getValueOf(TextView view) {
-				return Integer.valueOf(view.getText().toString());
-			}
 		});
 
 		decreaseButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Log.d("button", "decrease");
+				int previousVal = getValueOf(previousNumber);
+				int currentVal = getValueOf(currentNumber);
+				int nextVal = getValueOf(nextNumber);
+
+				if (previousVal > 0) {
+
+					previousVal--;
+					currentVal--;
+					nextVal--;
+				}
+
+				previousNumber.setText(String.valueOf(previousVal));
+				currentNumber.setText(String.valueOf(currentVal));
+				nextNumber.setText(String.valueOf(nextVal));
 
 			}
 		});
@@ -76,5 +85,9 @@ public class QuantityDialog extends DialogFragment {
 				getActivity());
 		dialogBuilder.setTitle(R.string.quantityDialogTitle).setView(view);
 		return dialogBuilder.create();
+	}
+
+	private int getValueOf(TextView view) {
+		return Integer.valueOf(view.getText().toString());
 	}
 }
