@@ -32,12 +32,17 @@ public class Ingredient implements IIngredient, IListElement {
 
 	@Override
 	public Unit getUnit() {
-		return Unit.g;
+		return Unit.Gramm;
 	}
 
 	@Override
 	public int getQuantity() {
 		return 0;
+	}
+
+	@Override
+	public String getElementUnit() {
+		return getUnit().toString();
 	}
 
 }
