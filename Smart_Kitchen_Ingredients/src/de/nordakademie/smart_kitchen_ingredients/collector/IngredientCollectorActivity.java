@@ -52,4 +52,14 @@ public class IngredientCollectorActivity extends
 		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
 				R.layout.list_view_entry, getElementsToShow()));
 	}
+
+	@Override
+	public void onPositiveFinishedDialog(int quantity) {
+		try {
+			((IngredientsApplication) getApplication()).getShoppingDbHelper()
+					.addItem((IIngredient) getCurrentElement(), quantity);
+		} catch (ClassCastException e) {
+			informUser(R.string.developerMistake);
+		}
+	}
 }

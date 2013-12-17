@@ -200,8 +200,8 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cursor = db.query(TABLE_STORED, new String[] { COLUMN_AMOUNT },
-				COLUMN_INGREDIENT + " = " + ingredient.getName(), null, null,
-				null, null);
+				COLUMN_INGREDIENT + " = '" + ingredient.getName() + "'", null,
+				null, null, null);
 		if (cursor.moveToNext()) {
 			savedQuantity = cursor.getInt(0);
 		}
