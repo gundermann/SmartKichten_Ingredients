@@ -61,7 +61,7 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View view) {
 				// Abfrage ob alle benötigten Infos eingegeben
 
 				try {
