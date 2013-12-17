@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
@@ -18,11 +19,10 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
  * @author Kathrin Kurtz
  * 
  */
-public class AddIngredientActivity extends Activity implements OnClickListener {
+public class AddIngredientActivity extends Activity  {
 
 	IngredientsApplication app;
 	String ingredientTitle;
-
 	Button saveIngredientButton;
 	Button quitButton;
 	TextView ingredientTitleTV;
@@ -49,40 +49,55 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
 
 		ingredientTitleTV.setText(ingredientTitle);
-
-		// saveIngredientButton.setOnClickListener(this);
-		quitButton.setOnClickListener(new OnClickListener() {
+		
+		quitButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(getApplicationContext(),
 						IngredientCollectorActivity.class));
-			}
-		});
-
+				finish();
+			}});
+		
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// Abfrage ob alle benötigten Infos eingegeben
+				TextView titleView = (TextView) findViewById(R.id.ingredientNameEdit);
+				String title = titleView.getText().toString();
+				TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
+				Spinner unitSpinner = (Spinner) findViewById(R.id.ingredientUnitSpinner);
+				Unit unit = Unit.valueOfFromShortening(unitSpinner.getSelectedItem().toString());
+				
+				if(amountView.getText().toString().equals("")){
+					showSavedOrNotInformation("Bitte Menge angeben!");
+				}
+				else if(amountView.getText().toString().length()>6){
+					showSavedOrNotInformation("Die Menge ist zu groß!");
+				}
+				else if(title.equals("")){
+					showSavedOrNotInformation("Bitte Bezeichnung angeben!");
+				}
+				else{
+					Integer amount = Integer.valueOf(amountView.getText().toString());
+					saveIngredientAndLeave(title, amount, unit);
+				}
+			}
 
-				try {
-					TextView titleView = (TextView) findViewById(R.id.ingredientNameEdit);
-					String title = titleView.getText().toString();
-					TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
-					Integer amount = Integer.valueOf(amountView.getText()
-							.toString());
-					Spinner unitView = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-					Unit unit = Unit.valueOf(unitView.getFocusedChild()
-							.toString());
-
+			private void saveIngredientAndLeave(String title, Integer amount,
+					Unit unit) {
+				try{
 					saveNewIngredientToDBs(title, amount, unit);
-
-					// Information Zutat wurde gespeichert
-					// PopupWindow savedInfo = new PopupWindow();
-					// savedInfo.setContentView(view);
-				} finally {
+					showSavedOrNotInformation("Zutat gespeichert");
+				}
+				 finally {
 					startActivity(new Intent(getApplicationContext(),
 							IngredientCollectorActivity.class));
-				}
+					finish();
+}
+			}
+			
+			private void showSavedOrNotInformation(String info){
+				Toast toast = Toast.makeText(app, info, Toast.LENGTH_LONG);
+				toast.show();
 			}
 
 			private void saveNewIngredientToDBs(String title, Integer amount,
@@ -90,14 +105,9 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 				IShoppingListItem newItem = app.getShoppingListItemFactory()
 						.createShoppingListItem(title, amount, unit, false);
 				app.getServerHandler().postIngredientToServer(newItem);
+				app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(app.getServerHandler().getIngredientListFromServer());
 				app.getShoppingDbHelper().addItem(newItem);
 			}
 		});
 	}
-
-	@Override
-	public void onClick(View view) {
-
-	}
-
 }
