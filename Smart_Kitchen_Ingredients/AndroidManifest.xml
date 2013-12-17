@@ -60,7 +60,8 @@
         </activity>
         <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity" >
         </activity>
-        <activity android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity">
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity"
+            		android:label="@string/title_activity_shoppingDate">
         </activity>
         <activity android:name="de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity">
         </activity>
@@ -76,6 +77,11 @@
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.AddIngredientActivity"
             android:label="@string/title_activity_add_ingredient" >
         </activity>
+        
+        <activity 
+            android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity"
+            android:label="@string/title_activity_shoppingDateList"> 
+            </activity>
     </application>
 
 </manifest>

@@ -26,7 +26,7 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
@@ -110,7 +110,7 @@ public class ShoppingListActivity extends Activity implements OnClickListener {
 			scanIntegrator.initiateScan();
 			break;
 		case R.id.menu_shoppingdate:
-			Intent dateIntent = new Intent(this, ShoppingDateActivity.class);
+			Intent dateIntent = new Intent(this, ShoppingDateListActivity.class);
 			startActivity(dateIntent);
 			break;
 		case R.id.menu_edit_stored_items:
