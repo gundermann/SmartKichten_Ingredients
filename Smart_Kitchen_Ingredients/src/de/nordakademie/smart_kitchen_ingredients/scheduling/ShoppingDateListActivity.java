@@ -1,11 +1,15 @@
 package de.nordakademie.smart_kitchen_ingredients.scheduling;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -21,13 +25,15 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  */
 
 public class ShoppingDateListActivity extends Activity implements
-		OnClickListener {
+		OnClickListener, OnItemClickListener {
 
 	private static final String TAG = StoredIngredientActivity.class
 			.getSimpleName();
 
 	private ListView shoppingDateList;
 	private ImageButton addShoppingDate;
+
+	private IngredientsApplication app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +45,25 @@ public class ShoppingDateListActivity extends Activity implements
 
 		addShoppingDate.setOnClickListener(this);
 
-		IngredientsApplication app = (IngredientsApplication) getApplication();
+		app = (IngredientsApplication) getApplication();
 
-		ListAdapter adapter = new ArrayAdapter<IDate>(this,
+		updateDateList();
+		shoppingDateList.setOnItemClickListener(this);
+		Log.i(TAG, "datelist updated");
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateDateList();
+	}
+
+	private void updateDateList() {
+		final ListAdapter adapter = new ArrayAdapter<IDate>(this,
 				android.R.layout.simple_list_item_1, app.getDateDbHelper()
 						.getAllDates());
 		shoppingDateList.setAdapter(adapter);
-		Log.i(TAG, "datelist updated");
-
 	}
 
 	@Override
@@ -54,6 +71,29 @@ public class ShoppingDateListActivity extends Activity implements
 		Intent dateIntent = new Intent(this, ShoppingDateActivity.class);
 		startActivity(dateIntent);
 
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View view,
+			int position, long id) {
+		AlertDialog.Builder adb = new AlertDialog.Builder(
+				ShoppingDateListActivity.this);
+		adb.setTitle(R.string.deleteDateTitle);
+		adb.setMessage(R.string.delteDateSure);
+		final int positionToRemove = position;
+		adb.setNegativeButton(R.string.deleteDateCancel, null);
+		adb.setPositiveButton(R.string.delteDateCommit,
+				new AlertDialog.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						IDate date = (IDate) shoppingDateList
+								.getItemAtPosition(positionToRemove);
+						app.getDateDbHelper().remove(date);
+						updateDateList();
+					}
+
+				});
+		adb.show();
 	}
 
 }

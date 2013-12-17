@@ -1,7 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.scheduling;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -67,9 +67,8 @@ public class ShoppingDateActivity extends Activity {
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						getApplicationContext(), 0, broadcast_intent,
 						intentFlag);
-				GregorianCalendar cal = new GregorianCalendar(year, month, day,
-						hour, minute);
-				long triggerAtTime = cal.getTimeInMillis();
+				Date cal = new Date(year, month, day, hour, minute);
+				long triggerAtTime = cal.getTime();
 
 				IDate date = app.getDateFactory().createDate(null,
 						triggerAtTime, intentFlag);

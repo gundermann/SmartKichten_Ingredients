@@ -1,19 +1,21 @@
 package de.nordakademie.smart_kitchen_ingredients.stock;
 
-import android.app.AlertDialog.Builder;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.DialogInterface;
-import android.content.Intent;
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.collector.AddIngredientActivity;
+import android.support.v4.app.FragmentActivity;
 import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity;
 
-public class StoredIngredientOptionDialog extends Builder {
+public class StoredIngredientOptionDialog extends AbstractBuilder {
+
+	private static final String TAG = StoredIngredientOptionDialog.class
+			.getSimpleName();
 
 	public StoredIngredientOptionDialog(final String titleFromList,
-			final IngredientsApplication app) {
-		super(app.getApplicationContext());
-		setMessage(titleFromList);
-		setCancelable(true);
+			final FragmentActivity activity) {
+		super(activity, titleFromList, true);
+
 		setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -25,22 +27,17 @@ public class StoredIngredientOptionDialog extends Builder {
 		setNeutralButton("Ändern", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(app.getApplicationContext(),
-						AddStoredIngredientActivity.class);
-				intent.putExtra("ingredientTitle", titleFromList);
-				app.getApplicationContext().startActivity(intent);
+				Map<String, String> extras = new HashMap<String, String>();
+				extras.put("ingredientTitle", titleFromList);
+				startNextActivityWithExtras(AddStoredIngredientActivity.class,
+						extras);
 			}
 		});
 
 		setNegativeButton("Nachkaufen", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Activity zum hinzufügen in die Shoppingliste
-				Intent intent = new Intent(app.getApplicationContext(),
-						AddIngredientActivity.class);
-				intent.putExtra("ingredientTitle", titleFromList);
-				app.getApplicationContext().startActivity(intent);
+				openQualityDialog(titleFromList, TAG);
 			}
 		});
 	}

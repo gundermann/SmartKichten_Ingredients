@@ -6,17 +6,20 @@
     
     <TextView
         android:id="@+id/labelOfStockList"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-    >
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+      >
+
     </TextView>
+
     <TextView
         android:id="@+id/labelOfAmountFromList"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-    >
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right"
+        >
 
     </TextView>
 </LinearLayout>

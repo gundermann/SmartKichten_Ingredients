@@ -34,17 +34,16 @@ public class AddIngredientActivity extends Activity  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_ingredient);
 		app = (IngredientsApplication) this.getApplication();
-		
+
 		quitButton = (Button) findViewById(R.id.quitButton);
 		saveIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);
-		
+
 		if (getIntent().getExtras() != null) {
 			ingredientTitle = getIntent().getExtras().get("ingredientTitle")
 					.toString();
 		}
 
 		app = (IngredientsApplication) getApplication();
-
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
 		ingredientAmountTV = (TextView) findViewById(R.id.ingredientAmountEdit);
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
@@ -61,25 +60,23 @@ public class AddIngredientActivity extends Activity  {
 		
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View view) {
+				TextView titleView = (TextView) findViewById(R.id.ingredientNameEdit);
+				String title = titleView.getText().toString();
+				TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
+				Spinner unitSpinner = (Spinner) findViewById(R.id.ingredientUnitSpinner);
+				Unit unit = Unit.valueOfFromShortening(unitSpinner.getSelectedItem().toString());
 				
-				
-					TextView titleView = (TextView) findViewById(R.id.ingredientNameEdit);
-					String title = titleView.getText().toString();
-					TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
+				if(amountView.getText().toString().equals("")){
+					showSavedOrNotInformation("Bitte Menge angeben!");
+				}
+				else if(title.equals("")){
+					showSavedOrNotInformation("Bitte Bezeichnung angeben!");
+				}
+				else{
 					Integer amount = Integer.valueOf(amountView.getText().toString());
-					Spinner unitView = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-					Unit unit = Unit.valueOf(unitView.getSelectedItem().toString());
-					
-					if(title == null){
-						showSavedOrNotInformation("Bitte Titel angeben!");
-					}
-					else if(amount == null){
-						showSavedOrNotInformation("Bitte Menge angeben!");
-					}
-					else{
-						saveIngredientAndLeave(title, amount, unit);
-						}
+					saveIngredientAndLeave(title, amount, unit);
+				}
 			}
 
 			private void saveIngredientAndLeave(String title, Integer amount,
@@ -88,7 +85,7 @@ public class AddIngredientActivity extends Activity  {
 					saveNewIngredientToDBs(title, amount, unit);
 					showSavedOrNotInformation("Zutat gespeichert");
 				}
-				finally{
+				 finally {
 					startActivity(new Intent(getApplicationContext(),
 							IngredientCollectorActivity.class));
 					finish();
@@ -100,9 +97,10 @@ public class AddIngredientActivity extends Activity  {
 				toast.show();
 			}
 
-			private void saveNewIngredientToDBs(String title, Integer amount, Unit unit) {
-				IShoppingListItem newItem = (IShoppingListItem) app.getShoppingListItemFactory()
-				.createShoppingListItem(title, amount, unit, false);
+			private void saveNewIngredientToDBs(String title, Integer amount,
+					Unit unit) {
+				IShoppingListItem newItem = app.getShoppingListItemFactory()
+						.createShoppingListItem(title, amount, unit, false);
 				app.getServerHandler().postIngredientToServer(newItem);
 				app.getShoppingDbHelper().addItem(newItem);
 			}
