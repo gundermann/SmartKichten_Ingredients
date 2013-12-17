@@ -66,19 +66,14 @@ public class ShoppingDateActivity extends Activity {
 
 	}
 
-	// display current date
 	public void setCurrentDateOnView() {
 
 		dpResult = (DatePicker) findViewById(R.id.dpResult);
-		// changeDate = (TextView) findViewById(R.id.changeDateText);
-		// changeTime = (TextView) findViewById(id.changeTimeText);
 
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
-
-		// set current date into datepicker
 		dpResult.init(year, month, day, null);
 
 	}
@@ -87,7 +82,6 @@ public class ShoppingDateActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case DATE_DIALOG_ID:
-			// set date picker as current date
 			return new DatePickerDialog(this, datePickerListener, year, month,
 					day);
 		}
@@ -96,7 +90,6 @@ public class ShoppingDateActivity extends Activity {
 
 	private final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
-		// when dialog box is closed, below method will be called.
 		@Override
 		public void onDateSet(DatePicker view, int selectedYear,
 				int selectedMonth, int selectedDay) {
