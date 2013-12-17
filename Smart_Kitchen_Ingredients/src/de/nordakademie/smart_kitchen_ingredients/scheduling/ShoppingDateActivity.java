@@ -153,10 +153,10 @@ public class ShoppingDateActivity extends Activity {
 
 		timePicker.setCurrentHour(hour);
 		timePicker.setCurrentMinute(minute);
-
 	}
 
 	private final TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+
 		@Override
 		public void onTimeSet(TimePicker view, int selectedHour,
 				int selectedMinute) {
