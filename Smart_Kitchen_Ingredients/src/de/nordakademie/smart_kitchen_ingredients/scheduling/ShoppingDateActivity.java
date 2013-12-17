@@ -3,7 +3,6 @@ package de.nordakademie.smart_kitchen_ingredients.scheduling;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -13,10 +12,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
+import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
@@ -28,7 +30,7 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  * 
  */
 public class ShoppingDateActivity extends Activity implements
-		OnTimeChangedListener {
+		OnTimeChangedListener, OnClickListener {
 
 	private static final String TAG = StoredIngredientActivity.class
 			.getSimpleName();
@@ -36,6 +38,8 @@ public class ShoppingDateActivity extends Activity implements
 	private DatePicker dpResult;
 	private Button confirmDate;
 	private TimePicker timePicker;
+	private EditText dateTitle;
+	private IDate chooseDate;
 
 	private String year;
 	private String month;
@@ -57,43 +61,16 @@ public class ShoppingDateActivity extends Activity implements
 		setCurrentTimeOnView();
 
 		confirmDate = (Button) findViewById(id.confirmButton);
-		confirmDate.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-				Intent broadcast_intent = new Intent(getApplicationContext(),
-						ShoppingDateAlarmReceiver.class);
-				int intentFlag = app.getDateDbHelper().getNextFlag();
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(
-						getApplicationContext(), 0, broadcast_intent,
-						intentFlag);
-				SimpleDateFormat formatter = new SimpleDateFormat(
-						"yyyyMMddhhmm", Locale.GERMAN);
-				StringBuilder sb = new StringBuilder();
-				sb.append(year).append(month).append(day).append(hour)
-						.append(minute);
-				Date cal;
-				try {
-					cal = formatter.parse(sb.toString());
-					long triggerAtTime = cal.getTime();
-
-					IDate date = app.getDateFactory().createDate(null,
-							triggerAtTime, intentFlag);
-					app.getDateDbHelper().insertNewDate(date);
-
-					alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
-							pendingIntent);
-				} catch (ParseException e) {
-					Log.d(TAG, "parseexc");
-					e.printStackTrace();
-				} finally {
-					finish();
-				}
-
-			}
-		});
+		dateTitle = (EditText) findViewById(R.id.chooseDateTitle);
+		confirmDate.setOnClickListener(this);
 
 		Log.i(TAG, "created");
+
+	}
+
+	public boolean dateTitleIsEmpty() {
+
+		return dateTitle.getText().toString().isEmpty();
 
 	}
 
@@ -139,4 +116,41 @@ public class ShoppingDateActivity extends Activity implements
 		minute = getModifyedCalendarValue(selectedMinute);
 
 	}
-};
+
+	@Override
+	public void onClick(View view) {
+		if (dateTitleIsEmpty()) {
+			Toast.makeText(getApplicationContext(),
+					R.string.toastInsertNewShoppingDate, Toast.LENGTH_LONG)
+					.show();
+		} else {
+
+			AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+			Intent broadcast_intent = new Intent(getApplicationContext(),
+					ShoppingDateAlarmReceiver.class);
+			int intentFlag = app.getDateDbHelper().getNextFlag();
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(
+					getApplicationContext(), 0, broadcast_intent, intentFlag);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmm",
+					Locale.GERMAN);
+			StringBuilder sb = new StringBuilder();
+			sb.append(year).append(month).append(day).append(hour)
+					.append(minute);
+			java.util.Date cal;
+			try {
+				cal = formatter.parse(sb.toString());
+				long triggerAtTime = cal.getTime();
+				chooseDate = app.getDateFactory().createDate(null,
+						triggerAtTime, intentFlag);
+				app.getDateDbHelper().insertNewDate(chooseDate);
+
+				alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
+						pendingIntent);
+			} catch (ParseException e) {
+				Log.d(TAG, "parseexc");
+			} finally {
+				finish();
+			}
+		}
+	}
+}

@@ -56,7 +56,7 @@
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.RecipeCollectorActivity"
-            android:label="@string/ingredientCollector" >
+            android:label="@string/recipeCollector" >
         </activity>
         <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity" >
         </activity>
