@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
@@ -35,10 +37,13 @@ public class ShoppingDateActivity extends Activity {
 	private TextView changeTime;
 	private Button confirmDate;
 	private TextView headlineShoppingDate;
+	private TimePicker timePicker;
 
 	private int year;
 	private int month;
 	private int day;
+	private int hour;
+	private int minute;
 
 	private IngredientsApplication app;
 
@@ -50,7 +55,6 @@ public class ShoppingDateActivity extends Activity {
 
 		app = (IngredientsApplication) getApplication();
 		setContentView(R.layout.shopping_date);
-		headlineShoppingDate = (TextView) findViewById(id.headlineShoppingDate);
 
 		confirmDate = (Button) findViewById(id.confirmButton);
 		confirmDate.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +67,8 @@ public class ShoppingDateActivity extends Activity {
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						getApplicationContext(), 0, broadcast_intent,
 						intentFlag);
-				GregorianCalendar cal = new GregorianCalendar(year, month, day);
+				GregorianCalendar cal = new GregorianCalendar(year, month, day,
+						hour, minute);
 				long triggerAtTime = cal.getTimeInMillis();
 
 				IDate date = app.getDateFactory().createDate(null,
@@ -72,6 +77,7 @@ public class ShoppingDateActivity extends Activity {
 
 				alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
 						pendingIntent);
+				finish();
 
 			}
 		});
@@ -116,4 +122,26 @@ public class ShoppingDateActivity extends Activity {
 		}
 	};
 
-}
+	public void setCurrentTimeOnView() {
+
+		timePicker = (TimePicker) findViewById(R.id.timePicker);
+
+		final Calendar c = Calendar.getInstance();
+		hour = c.get(Calendar.HOUR_OF_DAY);
+		minute = c.get(Calendar.MINUTE);
+
+		timePicker.setCurrentHour(hour);
+		timePicker.setCurrentMinute(minute);
+
+	}
+
+	private final TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+		@Override
+		public void onTimeSet(TimePicker view, int selectedHour,
+				int selectedMinute) {
+			hour = selectedHour;
+			minute = selectedMinute;
+
+		}
+	};
+};

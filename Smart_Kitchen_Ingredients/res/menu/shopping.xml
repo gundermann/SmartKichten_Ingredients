@@ -4,26 +4,26 @@
         android:id="@+id/menu_shoppingdate"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_today"
-        android:title="@string/setupShoppingDate"/>
+        android:title="@string/menuSetupShoppingDate"/>
     <item
         android:id="@+id/menu_qrscan"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/codeScannerMenu"/>
+        android:title="@string/menuCodeScanner"/>
     <item
         android:id="@+id/menu_clean_shoppingList"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/cleanShoppingList"/>
+        android:title="@string/menuCleanShoppingList"/>
     <item
         android:id="@+id/menu_import_shoppinglist"
         android:icon="@android:drawable/ic_menu_camera"
-        android:title="@string/shoppingListScannerMenu"/>
+        android:title="@string/menuShoppingListScanner"/>
     <item
         android:id="@+id/menu_delete_shoppinglist"
-        android:title="@string/deleteShoppingList"/>
+        android:title="@string/menuDeleteShoppingList"/>
     <item
         android:id="@+id/menu_edit_stored_items"
-        android:title="@string/insertStoredItems"/>
+        android:title="@string/menuInsertStoredItems"/>
 
 </menu>
