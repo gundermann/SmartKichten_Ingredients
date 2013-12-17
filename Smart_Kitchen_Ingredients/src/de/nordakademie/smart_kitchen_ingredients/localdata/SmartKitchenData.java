@@ -86,8 +86,8 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 			List<IShoppingListItem> values = new ArrayList<IShoppingListItem>();
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
-					COLUMN_INGREDIENT, COLUMN_UNIT, COLUMN_BOUGHT }, null,
-					null, null, null, null);
+					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT,
+					COLUMN_BOUGHT }, null, null, null, null, null);
 			try {
 				while (cursor.moveToNext()) {
 					values.add(getShoppingItem(cursor));
@@ -103,10 +103,11 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 	private IShoppingListItem getShoppingItem(Cursor cursor) {
 		String title = cursor.getString(0);
-		Unit unit = Unit.valueOf(cursor.getString(1));
-		boolean bought = Boolean.valueOf(cursor.getString(2));
+		int quantity = cursor.getInt(1);
+		Unit unit = Unit.valueOf(cursor.getString(2));
+		boolean bought = Boolean.valueOf(cursor.getString(3));
 		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
-		return factory.createShoppingListItem(title, unit, bought);
+		return factory.createShoppingListItem(title, quantity, unit, bought);
 	}
 
 	@Override
@@ -134,9 +135,9 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		try {
 
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
-					COLUMN_INGREDIENT, COLUMN_UNIT, COLUMN_BOUGHT },
-					COLUMN_INGREDIENT + " = '" + title + "'", null, null, null,
-					null);
+					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT,
+					COLUMN_BOUGHT }, COLUMN_INGREDIENT + " = '" + title + "'",
+					null, null, null, null);
 			try {
 				cursor.moveToNext();
 				return getShoppingItem(cursor);

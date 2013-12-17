@@ -1,9 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
-
-public class Ingredient implements IIngredient, IListElement,
-		Comparable<IIngredient> {
+public class Ingredient implements IIngredient, Comparable<IIngredient> {
 
 	private String title;
 	private Unit unit;
@@ -11,11 +8,6 @@ public class Ingredient implements IIngredient, IListElement,
 	public Ingredient(String title, Unit unit) {
 		this.title = title;
 		this.unit = unit;
-	}
-
-	@Override
-	public Unit getUnit() {
-		return unit;
 	}
 
 	@Override
@@ -35,6 +27,11 @@ public class Ingredient implements IIngredient, IListElement,
 
 	@Override
 	public String getElementUnit() {
-		return null;
+		return unit.toString();
+	}
+
+	@Override
+	public Unit getUnit() {
+		return unit;
 	}
 }

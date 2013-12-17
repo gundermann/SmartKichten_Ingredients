@@ -3,9 +3,12 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 public class ShoppingListItem extends Ingredient implements IShoppingListItem {
 
 	private boolean bought;
+	private int quantity;
 
-	public ShoppingListItem(String title, Unit unit, boolean bought) {
+	public ShoppingListItem(String title, int quantity, Unit unit,
+			boolean bought) {
 		super(title, unit);
+		this.quantity = quantity;
 		this.bought = bought;
 	}
 
@@ -29,6 +32,11 @@ public class ShoppingListItem extends Ingredient implements IShoppingListItem {
 		} else {
 			return -1;
 		}
+	}
+
+	@Override
+	public int getQuantity() {
+		return quantity;
 	}
 
 }

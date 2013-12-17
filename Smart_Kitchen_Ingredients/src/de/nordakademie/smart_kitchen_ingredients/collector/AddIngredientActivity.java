@@ -112,7 +112,7 @@ public class AddIngredientActivity extends Activity {
 	private void saveNewIngredientToDBs(String title, Integer quantity,
 			Unit unit) {
 		IShoppingListItem newItem = app.getShoppingListItemFactory()
-				.createShoppingListItem(title, unit, false);
+				.createShoppingListItem(title, quantity, unit, false);
 		try {
 			app.getServerHandler().postIngredientToServer(newItem);
 			app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(

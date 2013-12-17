@@ -3,9 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
-
-public class Recipe implements IRecipe, IListElement {
+public class Recipe implements IRecipe, Comparable<IRecipe> {
 
 	private String name;
 	private Map<IIngredient, Integer> ingredients;
@@ -44,7 +42,7 @@ public class Recipe implements IRecipe, IListElement {
 
 	@Override
 	public String getElementUnit() {
-		return null;
+		return "Personen";
 	}
 
 }

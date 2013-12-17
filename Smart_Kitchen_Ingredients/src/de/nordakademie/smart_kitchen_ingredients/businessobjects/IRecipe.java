@@ -2,9 +2,9 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
 import java.util.Map;
 
-public interface IRecipe extends Comparable<IRecipe> {
+import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
 
-	String getName();
+public interface IRecipe extends IListElement {
 
 	Map<IIngredient, Integer> getIngredients();
 
