@@ -64,50 +64,56 @@ public class AddIngredientActivity extends Activity {
 			public void onClick(View view) {
 				TextView titleView = (TextView) findViewById(R.id.ingredientNameEdit);
 				String title = titleView.getText().toString();
-				TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
-				Spinner unitSpinner = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-				Unit unit = Unit.valueOfFromShortening(unitSpinner
-						.getSelectedItem().toString());
+				if (!titleAlreadyOnServer(title)) {
 
-				if (amountView.getText().toString().equals("")) {
-					showSavedOrNotInformation("Bitte Menge angeben!");
-				} else if (amountView.getText().toString().length() > 6) {
-					showSavedOrNotInformation("Die Menge ist zu groß!");
-				} else if (title.equals("")) {
-					showSavedOrNotInformation("Bitte Bezeichnung angeben!");
-				} else {
-					Integer amount = Integer.valueOf(amountView.getText()
-							.toString());
-					saveIngredientAndLeave(title, amount, unit);
+					TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
+					Spinner unitSpinner = (Spinner) findViewById(R.id.ingredientUnitSpinner);
+					Unit unit = Unit.valueOfFromShortening(unitSpinner
+							.getSelectedItem().toString());
+
+					if (amountView.getText().toString().equals("")) {
+						showSavedOrNotInformation("Bitte Menge angeben!");
+					} else if (amountView.getText().toString().length() > 6) {
+						showSavedOrNotInformation("Die Menge ist zu groß!");
+					} else if (title.equals("")) {
+						showSavedOrNotInformation("Bitte Bezeichnung angeben!");
+					} else {
+						Integer amount = Integer.valueOf(amountView.getText()
+								.toString());
+						saveIngredientAndLeave(title, amount, unit);
+					}
 				}
-			}
-
-			private void saveIngredientAndLeave(String title, Integer amount,
-					Unit unit) {
-				try {
-					saveNewIngredientToDBs(title, amount, unit);
-					showSavedOrNotInformation("Zutat gespeichert");
-				} finally {
-					startActivity(new Intent(getApplicationContext(),
-							IngredientCollectorActivity.class));
-					finish();
-				}
-			}
-
-			private void showSavedOrNotInformation(String info) {
-				Toast toast = Toast.makeText(app, info, Toast.LENGTH_LONG);
-				toast.show();
-			}
-
-			private void saveNewIngredientToDBs(String title, Integer quantity,
-					Unit unit) {
-				IShoppingListItem newItem = app.getShoppingListItemFactory()
-						.createShoppingListItem(title, unit, false);
-				app.getServerHandler().postIngredientToServer(newItem);
-				app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(
-						app.getServerHandler().getIngredientListFromServer());
-				app.getShoppingDbHelper().addItem(newItem, quantity);
 			}
 		});
+	}
+
+	private boolean titleAlreadyOnServer(String title) {
+		return app.getCacheDbHelper().itemExists(title);
+	}
+
+	private void saveIngredientAndLeave(String title, Integer amount, Unit unit) {
+		try {
+			saveNewIngredientToDBs(title, amount, unit);
+			showSavedOrNotInformation("Zutat gespeichert");
+		} finally {
+			startActivity(new Intent(getApplicationContext(),
+					IngredientCollectorActivity.class));
+			finish();
+		}
+	}
+
+	private void showSavedOrNotInformation(String info) {
+		Toast toast = Toast.makeText(app, info, Toast.LENGTH_LONG);
+		toast.show();
+	}
+
+	private void saveNewIngredientToDBs(String title, Integer quantity,
+			Unit unit) {
+		IShoppingListItem newItem = app.getShoppingListItemFactory()
+				.createShoppingListItem(title, unit, false);
+		app.getServerHandler().postIngredientToServer(newItem);
+		app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(
+				app.getServerHandler().getIngredientListFromServer());
+		app.getShoppingDbHelper().addItem(newItem, quantity);
 	}
 }

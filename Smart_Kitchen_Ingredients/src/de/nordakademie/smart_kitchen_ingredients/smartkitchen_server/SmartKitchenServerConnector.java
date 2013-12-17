@@ -30,8 +30,7 @@ public class SmartKitchenServerConnector extends Connector implements
 	public void postIngredientToServer(String jsonToPost) {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(URL + "/ingredients");
-		httppost.setHeader("Content-Type", "application/json");
-		httppost.setHeader("Charset", "utf-8");
+		httppost.setHeader("Content-Type", "application/json; charset=utf-8");
 
 		try {
 			StringEntity entity = new StringEntity(jsonToPost);

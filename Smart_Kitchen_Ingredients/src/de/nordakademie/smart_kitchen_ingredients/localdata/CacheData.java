@@ -259,4 +259,16 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		db.close();
 		return ingredientsList;
 	}
+
+	@Override
+	public boolean itemExists(String itemTitle) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(TABLE_INGRDIENTS,
+				new String[] { COLUMN_INGRDIENTS }, COLUMN_INGRDIENTS + " = '"
+						+ itemTitle + "'", null, null, null, null);
+		int count = cursor.getCount();
+		cursor.close();
+		db.close();
+		return count > 0;
+	}
 }
