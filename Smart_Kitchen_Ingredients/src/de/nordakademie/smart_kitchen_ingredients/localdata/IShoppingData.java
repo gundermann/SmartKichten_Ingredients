@@ -38,8 +38,9 @@ public interface IShoppingData {
 	 * Aktualisiert einen einzukaufden Artikel auf der Einkaufsliste.
 	 * 
 	 * @param item
+	 * @return int
 	 */
-	void updateShoppingItem(IShoppingListItem item);
+	int updateShoppingItem(IShoppingListItem item);
 
 	/**
 	 * Entfernt als gekaufte markierte Artikel aus der Datenbank.

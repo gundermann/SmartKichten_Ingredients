@@ -5,7 +5,6 @@ import java.util.Map;
 
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
-import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity;
 
 public class StoredIngredientOptionDialog extends AbstractBuilder {
 
@@ -29,7 +28,7 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 			public void onClick(DialogInterface dialog, int which) {
 				Map<String, String> extras = new HashMap<String, String>();
 				extras.put("ingredientTitle", titleFromList);
-				startNextActivityWithExtras(AddStoredIngredientActivity.class,
+				startNextActivityWithExtras(StoredIngredientActivity.class,
 						extras);
 			}
 		});

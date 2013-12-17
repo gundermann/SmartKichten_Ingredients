@@ -50,7 +50,7 @@ public class StockListAdapter extends ArrayAdapter<IIngredient> {
 		nameTextView.setTextColor(Color.BLACK);
 		int quantity = getQuantityOfItem(item);
 		if (getQuantityOfItem(item) <= prefs.getInt(item.getUnit().toString(),
-				100)) {
+				item.getUnit().getDefaultMinimum())) {
 			stockTextView.setTextColor(Color.RED);
 		} else {
 			stockTextView.setTextColor(Color.GREEN);

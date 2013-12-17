@@ -23,7 +23,7 @@ import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
-import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
 
 /**
  * 
@@ -53,8 +53,13 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 		stockList = (ListView) findViewById(R.id.stockList);
 		stockList.setOnItemLongClickListener(this);
 
-		updateStockList();
 		Log.i(TAG, "created");
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateStockList();
 	}
 
 	@Override
@@ -85,7 +90,7 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 
 	@Override
 	public void onClick(View view) {
-		startNextActivity(AddStoredIngredientActivity.class);
+		startNextActivity(StoredIngredientCollectorActivity.class);
 	}
 
 	@Override

@@ -40,7 +40,8 @@ public class AddIngredientActivity extends Activity {
 		quitButton = (Button) findViewById(R.id.quitButton);
 		saveIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);
 
-		if (getIntent().getExtras() != null) {
+		if (getIntent().getExtras() != null
+				&& getIntent().getExtras().size() > 0) {
 			ingredientTitle = getIntent().getExtras().get("ingredientTitle")
 					.toString();
 		}
