@@ -56,6 +56,7 @@ public class AddIngredientActivity extends Activity  {
 			public void onClick(View v) {
 				startActivity(new Intent(getApplicationContext(),
 						IngredientCollectorActivity.class));
+				finish();
 			}});
 		
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
@@ -90,6 +91,7 @@ public class AddIngredientActivity extends Activity  {
 				finally{
 					startActivity(new Intent(getApplicationContext(),
 							IngredientCollectorActivity.class));
+					finish();
 }
 			}
 			
