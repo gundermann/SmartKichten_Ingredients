@@ -85,18 +85,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		});
 	}
 
-	// @Override
-	// public void onPositiveFinishedDialog(int quantity) {
-	// try {
-	// T castElement = (T) currentElement;
-	//
-	// ((IngredientsApplication) getApplication()).getShoppingDbHelper<T>()
-	// .addItem(castElement, quantity);
-	// } catch (ClassCastException e) {
-	// informUser(R.string.developerMistake);
-	// }
-	// }
-
 	protected void setNextActivityOnClick(View view,
 			final Class<?> nextActivityClass) {
 		view.setOnClickListener(new OnClickListener() {
