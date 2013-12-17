@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
@@ -38,6 +40,7 @@ public class ShoppingDateActivity extends Activity {
 	private Button confirmDate;
 	private TextView headlineShoppingDate;
 	private TimePicker timePicker;
+	private EditText dateTitle;
 
 	private int year;
 	private int month;
@@ -57,32 +60,46 @@ public class ShoppingDateActivity extends Activity {
 		setContentView(R.layout.shopping_date);
 
 		confirmDate = (Button) findViewById(id.confirmButton);
+		dateTitle = (EditText) findViewById(R.id.chooseDateTitle);
 		confirmDate.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-				Intent broadcast_intent = new Intent(getApplicationContext(),
-						ShoppingDateAlarmReceiver.class);
-				int intentFlag = app.getDateDbHelper().getNextFlag();
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(
-						getApplicationContext(), 0, broadcast_intent,
-						intentFlag);
-				Date cal = new Date(year, month, day, hour, minute);
-				long triggerAtTime = cal.getTime();
+				if (dateTitleIsEmpty()) {
+					Toast.makeText(getApplicationContext(),
+							R.string.toastInsertNewShoppingDate,
+							Toast.LENGTH_LONG).show();
+				} else {
+					AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+					Intent broadcast_intent = new Intent(
+							getApplicationContext(),
+							ShoppingDateAlarmReceiver.class);
+					int intentFlag = app.getDateDbHelper().getNextFlag();
+					PendingIntent pendingIntent = PendingIntent.getBroadcast(
+							getApplicationContext(), 0, broadcast_intent,
+							intentFlag);
+					Date cal = new Date(year, month, day, hour, minute);
+					long triggerAtTime = cal.getTime();
 
-				IDate date = app.getDateFactory().createDate(null,
-						triggerAtTime, intentFlag);
-				app.getDateDbHelper().insertNewDate(date);
+					IDate date = app.getDateFactory().createDate(null,
+							triggerAtTime, intentFlag);
+					app.getDateDbHelper().insertNewDate(date);
 
-				alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
-						pendingIntent);
-				finish();
+					alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
+							pendingIntent);
+					finish();
+				}
 
 			}
 		});
 
 		setCurrentDateOnView();
 		Log.i(TAG, "created");
+
+	}
+
+	public boolean dateTitleIsEmpty() {
+
+		return dateTitle.getText().toString().isEmpty();
 
 	}
 
