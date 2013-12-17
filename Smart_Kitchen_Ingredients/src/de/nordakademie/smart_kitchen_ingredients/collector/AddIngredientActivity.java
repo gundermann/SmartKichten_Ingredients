@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 
@@ -63,30 +63,37 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 				startActivity(new Intent(getApplicationContext(),
 						IngredientCollectorActivity.class));
 			}});
-saveIngredientButton.setOnClickListener(new OnClickListener() {
-			
+		
+		saveIngredientButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				//Abfrage ob alle benötigten Infos eingegeben
-				//speichere Zutat in Datenbank
 				
-				//füge Zutat dem Einkaufszettel hinzu
-				//saveNewShoppingListItem(title, amount, unit);
-				
-				//Information Zutat wurde gespeichert
-				PopupWindow savedInfo = new PopupWindow();
-				//savedInfo.setContentView(view);
-				
-				startActivity(new Intent(getApplicationContext(),
+				try{
+					TextView titleView = (TextView) findViewById(R.id.ingredientNameEdit);
+					String title = titleView.getText().toString();
+					TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
+					Integer amount = Integer.valueOf(amountView.getText().toString());
+					Spinner unitView = (Spinner) findViewById(R.id.ingredientUnitSpinner);
+					Unit unit = Unit.valueOf(unitView.getFocusedChild().toString());
+					
+					saveNewIngredientToDBs(title, amount, unit);
+					
+					//Information Zutat wurde gespeichert
+					//PopupWindow savedInfo = new PopupWindow();
+					//savedInfo.setContentView(view);
+				}
+				finally{
+					startActivity(new Intent(getApplicationContext(),
 						IngredientCollectorActivity.class));
+				}
 			}
 
-			private void saveNewShoppingListItem(String title, Integer amount, Unit unit) {
-				ShoppingListItem newItem = (ShoppingListItem) app.getShoppingListItemFactory()
+			private void saveNewIngredientToDBs(String title, Integer amount, Unit unit) {
+				IShoppingListItem newItem = (IShoppingListItem) app.getShoppingListItemFactory()
 				.createShoppingListItem(title, amount, unit, false);
-				List ingredientList = new ArrayList();
-				ingredientList.add(newItem);
-				//app.getShoppingDbHelper().insertOrIgnore(ingredientList);
+				app.getServerHandler().postIngredientToServer(newItem);
+				app.getShoppingDbHelper().addItem(newItem);
 			}
 		});
 	}
