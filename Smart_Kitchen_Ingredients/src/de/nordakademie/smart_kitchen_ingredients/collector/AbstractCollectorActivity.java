@@ -24,6 +24,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -50,6 +51,10 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 
 	public List<T> getElementsToShow() {
 		return elementsToShow;
+	}
+
+	public IListElement getCurrentElement() {
+		return currentElement;
 	}
 
 	@Override
@@ -80,14 +85,17 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		});
 	}
 
-	@Override
-	public void onPositiveFinishedDialog(int quantity) {
-		try {
-			T castElement = (T) currentElement;
-		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
-		}
-	}
+	// @Override
+	// public void onPositiveFinishedDialog(int quantity) {
+	// try {
+	// T castElement = (T) currentElement;
+	//
+	// ((IngredientsApplication) getApplication()).getShoppingDbHelper<T>()
+	// .addItem(castElement, quantity);
+	// } catch (ClassCastException e) {
+	// informUser(R.string.developerMistake);
+	// }
+	// }
 
 	protected void setNextActivityOnClick(View view,
 			final Class<?> nextActivityClass) {
@@ -95,8 +103,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(context,
-						nextActivityClass));
+				startActivity(new Intent(context, nextActivityClass));
 			}
 		});
 	}
