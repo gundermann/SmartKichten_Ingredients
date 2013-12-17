@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.google.zxing.client.android.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
@@ -96,7 +98,8 @@ public class ShoppingListActivity extends AbstractActivity implements
 	}
 
 	private void updateShoppingList() {
-		ShoppingListAdapter adapter = new ShoppingListAdapter(app);
+		ListAdapter adapter = new AdapterFactory<IShoppingListItem>()
+				.createCheckableAdapter(app);
 		shoppingListView.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
 	}

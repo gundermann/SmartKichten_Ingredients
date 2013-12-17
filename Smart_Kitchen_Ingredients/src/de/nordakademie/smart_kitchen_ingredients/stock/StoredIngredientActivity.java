@@ -22,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity;
 
 /**
@@ -76,7 +77,8 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 	}
 
 	private void updateStockList() {
-		ListAdapter adapter = new StockListAdapter(app);
+		ListAdapter adapter = new AdapterFactory<IIngredient>()
+				.createStoreAdapter(app);
 		stockList.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
 	}
