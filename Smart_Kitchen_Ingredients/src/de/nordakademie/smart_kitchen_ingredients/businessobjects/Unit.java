@@ -2,5 +2,6 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
 public enum Unit {
 
-	g, stk, ml;
+	// TODO wollen wir das wirklich so machen???
+	Gramm, Kilogramm, Milliliter, Liter, Stueck;
 }

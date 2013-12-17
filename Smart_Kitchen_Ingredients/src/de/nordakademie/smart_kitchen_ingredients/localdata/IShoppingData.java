@@ -3,6 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.localdata;
 import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 
 /**
@@ -13,11 +14,18 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
 public interface IShoppingData {
 
 	/**
-	 * Fügt der eine Liste von Zutaten zum einkaufen in die Datenbank ein.
+	 * Fügt der eine Zutat zum einkaufen in die Datenbank ein.
 	 * 
-	 * @param ingredientsList
+	 * @param ingredient
 	 */
-	void insertOrIgnoreShoppingItems(List<IIngredient> ingredientsList);
+	boolean addItem(IIngredient ingredient);
+
+	/**
+	 * Fügt die Zutaten eines Rezepten zum einkaufen in die Datenbank ein.
+	 * 
+	 * @param recipe
+	 */
+	boolean addItem(IRecipe recipe);
 
 	/**
 	 * Liefert alle Artikel, die auf der Einkaufsliste stehen, zurück.

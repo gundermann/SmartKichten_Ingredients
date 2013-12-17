@@ -19,12 +19,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity;
 
 /**
@@ -86,8 +87,9 @@ public class StoredIngredientActivity extends Activity implements
 	}
 
 	private void updateStockList() {
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, getStoredValues());
+		ListAdapter adapter = new AdapterFactory<IIngredient>().createAdapter(
+				getApplicationContext(), android.R.layout.simple_list_item_1,
+				app.getStoredDbHelper().getAllStoredIngredients());
 		stockList.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
 	}

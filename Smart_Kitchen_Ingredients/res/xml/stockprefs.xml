@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Preference xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
-	<EditTextPreference 
-	    android:title="@string/minAmount"
-	    android:summary="@string/summaryMinAmount"
-	    android:key="minAmount"/>
-	<EditTextPreference 
-	    android:summary="@string/summaryMinMass" 
-	    android:title="@string/minMass" 
-	    android:key="minMass"/>
-	<EditTextPreference 
-	    android:summary="@string/summaryMinVolume" 
-	    android:title="@string/minVolume" 
-	    android:key="minVolume"/> 
-</Preference>
+	
+</PreferenceScreen>

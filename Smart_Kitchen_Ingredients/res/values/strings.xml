@@ -47,7 +47,6 @@
     <string name="interrupt">Abbrechen</string>
     <string name="okButton">Zutat hinzufügen</string>
     <string name="chooseUnit">Einheit auswählen</string>
-    <string name="quantityDialogTitle">How many?</string>
     <string name="quantityPreviousDefaultNumber">0</string>
     <string name="quantityCurrentDefaultNumber">1</string>
     <string name="quantityNextDefaultNumber">2</string>

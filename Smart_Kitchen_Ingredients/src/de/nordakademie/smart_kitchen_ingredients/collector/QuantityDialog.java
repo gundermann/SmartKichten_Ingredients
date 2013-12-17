@@ -20,11 +20,18 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @description
  */
 public class QuantityDialog extends DialogFragment {
-	ImageButton increaseButton;
-	ImageButton decreaseButton;
-	TextView previousNumber;
-	TextView currentNumber;
-	TextView nextNumber;
+	private ImageButton increaseButton;
+	private ImageButton decreaseButton;
+	private TextView previousNumber;
+	private TextView currentNumber;
+	private TextView nextNumber;
+	private static IListElement element;
+
+	public static final QuantityDialog newInstance(IListElement element) {
+		QuantityDialog.element = element;
+		QuantityDialog dialog = new QuantityDialog();
+		return dialog;
+	}
 
 	private List<TextView> getAllNumberViews() {
 		List<TextView> views = new ArrayList<TextView>();
@@ -60,7 +67,7 @@ public class QuantityDialog extends DialogFragment {
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 				getActivity());
 		dialogBuilder
-				.setTitle(R.string.quantityDialogTitle)
+				.setTitle(element.getElementUnit())
 				.setView(view)
 				.setPositiveButton("positive",
 						new DialogInterface.OnClickListener() {
@@ -107,13 +114,13 @@ public class QuantityDialog extends DialogFragment {
 
 	private void setOnClickListener() {
 		currentNumber.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-							
+
 			}
 		});
-		
+
 		increaseButton.setOnClickListener(new OnClickListener() {
 
 			@Override

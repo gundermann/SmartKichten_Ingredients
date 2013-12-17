@@ -5,6 +5,7 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.List;
 
+import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;

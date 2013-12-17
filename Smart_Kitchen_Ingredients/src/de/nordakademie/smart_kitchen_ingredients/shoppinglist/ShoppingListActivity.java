@@ -25,6 +25,7 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentIntegrator;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IntentResult;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
@@ -33,15 +34,12 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  * @author Niels Gundermann
  * 
  */
-public class ShoppingListActivity extends Activity implements IModifyableList,
-		OnClickListener {
+public class ShoppingListActivity extends Activity implements OnClickListener {
 
-	// private static final int REQUEST_CODE = 1;
 	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
 	private ImageButton btAddNewShoppingItem;
 	private IngredientsApplication app;
-	// private Bitmap bitmap;
 	private BroadcastReceiver notifyShoppingdataChange;
 
 	@Override
@@ -87,8 +85,7 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	}
 
 	private void updateShoppingList() {
-		ShoppingListAdapter adapter = new ShoppingListAdapter(
-				getApplicationContext(), this);
+		ShoppingListAdapter adapter = new ShoppingListAdapter(app);
 		shoppingListView.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
 	}
@@ -103,9 +100,9 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clean_shoppingList:
-			Intent cleanIntent = new Intent(this,
-					ShoppingDataCleanUpService.class);
-			startService(cleanIntent);
+			IShoppingData db = app.getShoppingDbHelper();
+			db.cleanShoppingIngredients();
+			updateShoppingList();
 			break;
 		case R.id.menu_qrscan:
 			// Ist nur mit einer "vernünftigen" Kamera zu empfehlen
@@ -121,43 +118,12 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 					StoredIngredientActivity.class);
 			startActivity(storedIntent);
 			break;
-		// case R.id.menu_import_shoppinglist:
-		// Intent fotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		// fotoIntent.setType("image/*");
-		// fotoIntent.setAction(Intent.ACTION_GET_CONTENT);
-		// fotoIntent.addCategory(Intent.CATEGORY_OPENABLE);
-		// startActivityForResult(fotoIntent, REQUEST_CODE);
 		default:
 			break;
 		}
 		return true;
 	}
 
-	@Override
-	public List<String> getValues() {
-		List<String> values = new ArrayList<String>();
-		for (IShoppingListItem item : getShoppingItems()) {
-			values.add(item.getName());
-		}
-		Log.i(TAG, "title of shoppingitems collected");
-		return values;
-	}
-
-	@Override
-	public void checkAndUpdateValueAtPosition(String title) {
-		IShoppingListItem item = app.getShoppingDbHelper().getShoppingItem(
-				title);
-		if (!item.isBought()) {
-			item.setBought(true);
-		} else {
-			item.setBought(false);
-		}
-		app.getShoppingDbHelper().updateShoppingItem(item);
-		Log.i(TAG, "ingredient bought");
-		updateShoppingList();
-	}
-
-	@Override
 	public List<IShoppingListItem> getShoppingItems() {
 		List<IShoppingListItem> shoppingItems = new ArrayList<IShoppingListItem>();
 		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
@@ -166,7 +132,6 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 			shoppingItems.add(item);
 		}
 		Log.i(TAG, "sort ingredients from database");
-
 		return shoppingItems;
 	}
 
@@ -181,9 +146,6 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
 				requestCode, resultCode, intent);
-		// if (requestCode == REQUEST_CODE) {
-		// handleFotoResult(resultCode, intent);
-		// } else {
 		try {
 			String itemDescription = app.getBarcodeEvaluator()
 					.getItemDescription(scanningResult.getContents());
@@ -195,7 +157,6 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 		} catch (NullPointerException npe) {
 			makeLongToast(R.string.scanerror);
 		}
-		// }
 	}
 
 	private void makeLongToast(int textId) {
@@ -205,29 +166,12 @@ public class ShoppingListActivity extends Activity implements IModifyableList,
 		Log.i(TAG, getText(textId).toString());
 	}
 
-	// private void handleFotoResult(int resultCode, Intent intent) {
-	// InputStream stream = null;
-	// if (resultCode == Activity.RESULT_OK) {
-	// try {
-	// if (bitmap != null) {
-	// bitmap.recycle();
-	// }
-	// stream = getContentResolver().openInputStream(intent.getData());
-	// bitmap = BitmapFactory.decodeStream(stream);
-	// stream.close();
-	//
-	// } catch (FileNotFoundException e) {
-	// e.printStackTrace();
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-
 	private boolean evaluateBarcodeScan(String content) {
 		for (IShoppingListItem shoppingItem : getShoppingItems()) {
 			if (content.contains(shoppingItem.getName())) {
-				checkAndUpdateValueAtPosition(shoppingItem.getName());
+				app.getShoppingDbHelper()
+						.getShoppingItem(shoppingItem.getName())
+						.setBought(true);
 				return true;
 			}
 		}

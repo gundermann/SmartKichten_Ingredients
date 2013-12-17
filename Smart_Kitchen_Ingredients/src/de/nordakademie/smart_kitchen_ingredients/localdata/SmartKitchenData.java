@@ -6,11 +6,13 @@ import java.util.List;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
@@ -29,7 +31,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 	private static final String TAG = SmartKitchenData.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 	private static final String DATABASE_NAME = "shoppingDB.db";
 
 	public static final String TABLE_SHOPPING = "shopping_table";
@@ -71,24 +73,8 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 				+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPPING);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORED);
 		onCreate(db);
-	}
-
-	@Override
-	public void insertOrIgnoreShoppingItems(List<IIngredient> ingredientList) {
-		ContentValues values = new ContentValues();
-		for (IIngredient ingredient : ingredientList) {
-			values.put(COLUMN_INGREDIENT, ingredient.getName());
-			values.put(COLUMN_AMOUNT, ingredient.getQuantity());
-			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
-			values.put(COLUMN_BOUGHT, String.valueOf(false));
-		}
-
-		SQLiteDatabase writableDatabase = getWritableDatabase();
-		writableDatabase.insertWithOnConflict(TABLE_SHOPPING, null, values,
-				SQLiteDatabase.CONFLICT_IGNORE);
-		writableDatabase.close();
-		Log.i(TAG, "inserted to shopping_table");
 	}
 
 	@Override
@@ -224,5 +210,43 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 		return ingredient;
 
+	}
+
+	private boolean insertItemsIntoDatabase(List<IIngredient> ingredients) {
+		boolean success = false;
+		ContentValues values = new ContentValues();
+		for (IIngredient ingredient : ingredients) {
+			values.put(COLUMN_INGREDIENT, ingredient.getName());
+			values.put(COLUMN_AMOUNT, ingredient.getQuantity());
+			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
+			values.put(COLUMN_BOUGHT, String.valueOf(false));
+		}
+
+		SQLiteDatabase writableDatabase = getWritableDatabase();
+		writableDatabase.beginTransaction();
+		try {
+			writableDatabase.insertOrThrow(TABLE_SHOPPING, null, values);
+			writableDatabase.setTransactionSuccessful();
+			Log.i(TAG, "inserted to shopping_table");
+
+		} catch (SQLiteException sqle) {
+			success = false;
+			Log.i(TAG, "error while insert into shopping_table");
+		} finally {
+			writableDatabase.endTransaction();
+			writableDatabase.close();
+		}
+		return success;
+	}
+
+	@Override
+	public boolean addItem(IIngredient ingredient) {
+		List<IIngredient> ingredietList = new ArrayList<IIngredient>();
+		return insertItemsIntoDatabase(ingredietList);
+	}
+
+	@Override
+	public boolean addItem(IRecipe recipe) {
+		return insertItemsIntoDatabase(recipe.getIngredients());
 	}
 }

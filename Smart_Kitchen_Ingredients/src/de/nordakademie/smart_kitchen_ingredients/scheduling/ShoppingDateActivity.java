@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.scheduling;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -9,10 +10,12 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
@@ -37,12 +40,15 @@ public class ShoppingDateActivity extends Activity {
 	private int month;
 	private int day;
 
+	private IngredientsApplication app;
+
 	static final int DATE_DIALOG_ID = 999;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		app = (IngredientsApplication) getApplication();
 		setContentView(R.layout.shopping_date);
 		headlineShoppingDate = (TextView) findViewById(id.headlineShoppingDate);
 
@@ -53,9 +59,17 @@ public class ShoppingDateActivity extends Activity {
 				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 				Intent broadcast_intent = new Intent(getApplicationContext(),
 						ShoppingDateAlarmReceiver.class);
+				int intentFlag = app.getDateDbHelper().getNextFlag();
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
-						getApplicationContext(), 0, broadcast_intent, 0);
-				long triggerAtTime = System.currentTimeMillis() + 10000;
+						getApplicationContext(), 0, broadcast_intent,
+						intentFlag);
+				GregorianCalendar cal = new GregorianCalendar(year, month, day);
+				long triggerAtTime = cal.getTimeInMillis();
+
+				IDate date = app.getDateFactory().createDate(null,
+						triggerAtTime, intentFlag);
+				app.getDateDbHelper().insertNewDate(date);
+
 				alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
 						pendingIntent);
 
@@ -63,6 +77,7 @@ public class ShoppingDateActivity extends Activity {
 		});
 
 		setCurrentDateOnView();
+		Log.i(TAG, "created");
 
 	}
 

@@ -7,10 +7,9 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/quantityPickerTitle"
+        android:id="@+id/quantityPickerUnitTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quantityDialogTitle" />
+        android:layout_height="wrap_content" />
 
     <ImageButton
         android:id="@+id/quantityPickerIncreaseButton"
@@ -49,4 +48,5 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:src="@drawable/ic_action_expand" />
+
 </LinearLayout>
