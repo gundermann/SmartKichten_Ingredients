@@ -70,6 +70,9 @@ public class AddIngredientActivity extends Activity  {
 				if(amountView.getText().toString().equals("")){
 					showSavedOrNotInformation("Bitte Menge angeben!");
 				}
+				else if(amountView.getText().toString().length()>6){
+					showSavedOrNotInformation("Die Menge ist zu groß!");
+				}
 				else if(title.equals("")){
 					showSavedOrNotInformation("Bitte Bezeichnung angeben!");
 				}
@@ -102,6 +105,7 @@ public class AddIngredientActivity extends Activity  {
 				IShoppingListItem newItem = app.getShoppingListItemFactory()
 						.createShoppingListItem(title, amount, unit, false);
 				app.getServerHandler().postIngredientToServer(newItem);
+				app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(app.getServerHandler().getIngredientListFromServer());
 				app.getShoppingDbHelper().addItem(newItem);
 			}
 		});
