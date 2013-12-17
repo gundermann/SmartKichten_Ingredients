@@ -10,7 +10,7 @@
     <string name="summaryMinVolume">Knappheit für Einheit "g"</string>
     <string name="ingredientHintText">Ingredient name</string>
     <string name="confirmDateButton">Termin anlegen</string>
-    <string name="dateTitle">Einkauf</string>
+    <string name="dateTitle">Einkaufstitel</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
     <string name="addIngredientsButton">Zutat hinzufügen</string>
@@ -22,8 +22,8 @@
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="title_activity_shopping">Einkaufsliste</string>
-    <string name="title_activity_shoppingDateList">Terminübersicht</string>
-    <string name="title_activity_shoppingDate">Termin anlegen</string>
+    <string name="title_activity_shoppingDateList">Einkaufsliste: Terminübersicht</string>
+    <string name="title_activity_shoppingDate">Einkaufsliste: Termin anlegen</string>
     <string name="menuCodeScanner">Barcode scannen</string>
     <string name="menuShoppingListScanner">Einkaufsliste einscannen</string>
     <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
@@ -58,7 +58,7 @@
     <string name="deleteDateCancel">Abbrechen</string>
     <string name="delteDateCommit">Ok</string>
     <string name="delteDateSure">Sind Sie sicher, dass Sie den Termin löschen wollen?</string>
-    <string name="toastInsertNewShoppingDate">Feld Einkauf muss gefüllt sein</string>
+    <string name="toastInsertNewShoppingDate">Feld Einkaufstitel muss gefüllt sein</string>
     <string name="deleteDateTitle">Löschen?</string>
 
     <string-array name="unit_array">

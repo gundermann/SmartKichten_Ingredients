@@ -41,6 +41,7 @@ public class ShoppingDateActivity extends Activity {
 	private TextView headlineShoppingDate;
 	private TimePicker timePicker;
 	private EditText dateTitle;
+	private IDate chooseDate;
 
 	private int year;
 	private int month;
@@ -68,7 +69,10 @@ public class ShoppingDateActivity extends Activity {
 					Toast.makeText(getApplicationContext(),
 							R.string.toastInsertNewShoppingDate,
 							Toast.LENGTH_LONG).show();
-				} else {
+				}
+
+				else {
+
 					AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 					Intent broadcast_intent = new Intent(
 							getApplicationContext(),
@@ -90,6 +94,7 @@ public class ShoppingDateActivity extends Activity {
 				}
 
 			}
+
 		});
 
 		setCurrentDateOnView();
@@ -119,8 +124,8 @@ public class ShoppingDateActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case DATE_DIALOG_ID:
-			return new DatePickerDialog(this, datePickerListener, year, month,
-					day);
+			return (Dialog) (chooseDate = (IDate) new DatePickerDialog(this,
+					datePickerListener, year, month, day));
 		}
 		return null;
 	}
