@@ -47,7 +47,7 @@ public class IngredientsApplication extends Application {
 	private IRecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-	private CacheData serverDataHelper;
+	private ICacheData serverDataHelper;
 	private IStoredData stockDbHelper;
 	private IDateDbHelper dateDbHelper;
 	private IDatabaseHelper<IIngredient> ingredientDbHelper;
@@ -133,4 +133,10 @@ public class IngredientsApplication extends Application {
 		return false;
 	}
 
+	public void updateCache() {
+		serverDataHelper.insertOrUpdateAllIngredientsFromServer(serverHandler
+				.getIngredientListFromServer());
+		serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
+				.getRecipeListFromServer());
+	}
 }

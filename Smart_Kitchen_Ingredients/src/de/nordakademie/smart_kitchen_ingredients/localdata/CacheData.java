@@ -88,30 +88,28 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 	public List<IRecipe> getAllRecipes() {
 		List<IRecipe> recipes = new ArrayList<IRecipe>();
-		if (!app.updateNeeded() || cachedDataAvailable()) {
-			SQLiteDatabase db = getReadableDatabase();
-			String sql = "SELECT * FROM " + TABLE_RECIPES;
-			Cursor cursor = db.rawQuery(sql, null);
-
-			while (cursor.moveToNext()) {
-				IRecipeFactory recipeFactory = app.getRecipeFactory();
-				recipes.add(recipeFactory.createRecipe(cursor.getString(1),
-						getIngredientsForRecipeID(cursor.getString(0))));
-			}
-			db.close();
-		} else {
-			recipes = insertOrUpdateAllRecipesFromServer(app.getServerHandler()
-					.getRecipeListFromServer());
-		}
-		return recipes;
-	}
-
-	private boolean cachedDataAvailable() {
+		updateIfNecessary();
 		SQLiteDatabase db = getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_RECIPES;
 		Cursor cursor = db.rawQuery(sql, null);
 
-		if (cursor.getCount() == 0) {
+		while (cursor.moveToNext()) {
+			IRecipeFactory recipeFactory = app.getRecipeFactory();
+			recipes.add(recipeFactory.createRecipe(cursor.getString(1),
+					getIngredientsForRecipeID(cursor.getString(0))));
+		}
+		db.close();
+		return recipes;
+	}
+
+	private void updateIfNecessary() {
+		if (!app.updateNeeded() || cachedDataAvailable()) {
+			app.updateCache();
+		}
+	}
+
+	private boolean cachedDataAvailable() {
+		if (getReadableDatabase() == null) {
 			return false;
 		}
 		return true;
@@ -175,10 +173,10 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 			Map<IIngredient, Integer> currentIngredientList = new HashMap<IIngredient, Integer>();
 			List<String[]> ingredientList = recipes.get(currentRecipe);
 			for (String[] currentRecipeIngredient : ingredientList) {
-				currentIngredientList.put(
-						writeConnectionToRecipeToDB(currentRecipeID,
-								currentRecipeIngredient), Integer
-								.valueOf(currentRecipeIngredient[2]));
+				IIngredient ingredient = writeConnectionToRecipeToDB(
+						currentRecipeID, currentRecipeIngredient);
+				currentIngredientList.put(ingredient,
+						Integer.valueOf(currentRecipeIngredient[2]));
 				Log.w(TAG,
 						"die Tabelle mit rezeptID, ZutatenID und amount wurde erstellt.");
 			}
@@ -210,7 +208,6 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_RECIPE_ID, currentID);
 		values.put(COLUMN_TITLE, currentTitle);
-
 		SQLiteDatabase writableDatabase = getWritableDatabase();
 		writableDatabase.insertWithOnConflict(TABLE_RECIPES, null, values,
 				SQLiteDatabase.CONFLICT_IGNORE);
@@ -236,7 +233,6 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	}
 
 	private void writeIngredientToDB(ContentValues values) {
-
 		SQLiteDatabase writableDatabase = getWritableDatabase();
 		writableDatabase.insertWithOnConflict(TABLE_INGRDIENTS, null, values,
 				SQLiteDatabase.CONFLICT_IGNORE);
@@ -246,24 +242,20 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 	public List<IIngredient> getAllIngredients() {
 		List<IIngredient> ingredientsList = new ArrayList<IIngredient>();
-		if (!app.updateNeeded() || cachedDataAvailable()) {
-			IIngredientFactory ingredientFactory = app.getIngredientFactory();
-			SQLiteDatabase db = getReadableDatabase();
-			String sql = "SELECT * FROM " + TABLE_INGRDIENTS;
-			Cursor cursor = db.rawQuery(sql, null);
+		updateIfNecessary();
+		IIngredientFactory ingredientFactory = app.getIngredientFactory();
+		SQLiteDatabase db = getReadableDatabase();
+		String sql = "SELECT * FROM " + TABLE_INGRDIENTS;
+		Cursor cursor = db.rawQuery(sql, null);
 
-			while (cursor.moveToNext()) {
-				ingredientsList.add(ingredientFactory.createIngredient(
-						cursor.getString(1),
-						Unit.valueOfFromShortening(cursor.getString(2))));
-			}
-
-			cursor.close();
-			db.close();
-		} else {
-			ingredientsList = insertOrUpdateAllIngredientsFromServer(app
-					.getServerHandler().getIngredientListFromServer());
+		while (cursor.moveToNext()) {
+			ingredientsList.add(ingredientFactory.createIngredient(
+					cursor.getString(1),
+					Unit.valueOfFromShortening(cursor.getString(2))));
 		}
+
+		cursor.close();
+		db.close();
 		return ingredientsList;
 	}
 }
