@@ -126,4 +126,13 @@ public class DateDatabase extends SQLiteOpenHelper implements IDateDbHelper {
 		}
 		return flag;
 	}
+
+	@Override
+	public void remove(IDate date) {
+		SQLiteDatabase db = getWritableDatabase();
+		db.delete(TABLE_DATE, COLUMN_TIMESTAMP + " = " + date.getTimestamp(),
+				null);
+		db.close();
+
+	}
 }
