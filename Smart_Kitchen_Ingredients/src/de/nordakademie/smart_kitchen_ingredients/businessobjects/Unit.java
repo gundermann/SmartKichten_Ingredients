@@ -28,8 +28,7 @@ public enum Unit {
 		return shortUnit;
 	}
 
-	public static Unit valueOfFromShortening(String unitString)
-			throws IllegalArgumentException {
+	public static Unit valueOfFromShortening(String unitString) {
 		if (unitString.equals("g")) {
 			return Gramm;
 		} else if (unitString.equals("kg")) {
@@ -41,7 +40,7 @@ public enum Unit {
 		} else if (unitString.equals("stk")) {
 			return Stueck;
 		} else {
-			throw new IllegalArgumentException("no such unit: " + unitString);
+			return Unit.valueOf(unitString);
 		}
 	}
 }
