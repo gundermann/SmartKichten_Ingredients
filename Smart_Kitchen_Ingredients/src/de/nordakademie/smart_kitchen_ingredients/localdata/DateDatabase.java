@@ -14,7 +14,7 @@ import de.nordakademie.smart_kitchen_ingredients.scheduling.IDate;
 
 public class DateDatabase extends SQLiteOpenHelper implements IDateDbHelper {
 
-	private IngredientsApplication app;
+	private final IngredientsApplication app;
 
 	private static final String TAG = SmartKitchenData.class.getSimpleName();
 
@@ -33,6 +33,7 @@ public class DateDatabase extends SQLiteOpenHelper implements IDateDbHelper {
 	public DateDatabase(IngredientsApplication app) {
 		super(app.getApplicationContext(), DATABASE_NAME, null,
 				DATABASE_VERSION);
+		this.app = app;
 	}
 
 	@Override
