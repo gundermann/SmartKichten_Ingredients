@@ -103,12 +103,12 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	}
 
 	private void updateIfNecessary() {
-		if (!app.updateNeeded() || cachedDataAvailable()) {
+		if (app.updateNeeded() || !isCachedDataAvailable()) {
 			app.updateCache();
 		}
 	}
 
-	private boolean cachedDataAvailable() {
+	private boolean isCachedDataAvailable() {
 		if (getReadableDatabase() == null) {
 			return false;
 		}
@@ -264,7 +264,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	public boolean itemExists(String itemTitle) {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cursor = db.query(TABLE_INGRDIENTS,
-				new String[] { COLUMN_INGRDIENTS }, COLUMN_INGRDIENTS + " = '"
+				new String[] { COLUMN_NAME }, COLUMN_INGRDIENTS + " = '"
 						+ itemTitle + "'", null, null, null, null);
 		int count = cursor.getCount();
 		cursor.close();

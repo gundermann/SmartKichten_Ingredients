@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
 import java.lang.reflect.Type;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,7 +110,8 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 	}
 
 	@Override
-	public void postIngredientToServer(IIngredient ingredient) {
+	public void postIngredientToServer(IIngredient ingredient)
+			throws UnknownHostException {
 		String jsonToPost = jsonParser.toJson(ingredient);
 		connector.postIngredientToServer(jsonToPost);
 	}

@@ -1,5 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,9 @@ public interface ISmartKitchenServerHandler {
 	 * Sendet eine neues Rezept an den Server
 	 * 
 	 * @param ingredient
+	 * @throws UnknownHostException
 	 */
-	void postIngredientToServer(IIngredient ingredient);
+	void postIngredientToServer(IIngredient ingredient)
+			throws UnknownHostException;
 
 }

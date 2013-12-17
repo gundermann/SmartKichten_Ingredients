@@ -2,6 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.UnknownHostException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,7 +28,8 @@ public class SmartKitchenServerConnector extends Connector implements
 			.getSimpleName();
 
 	@Override
-	public void postIngredientToServer(String jsonToPost) {
+	public void postIngredientToServer(String jsonToPost)
+			throws UnknownHostException {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(URL + "/ingredients");
 		httppost.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -39,6 +41,8 @@ public class SmartKitchenServerConnector extends Connector implements
 		} catch (ClientProtocolException e) {
 			Log.e(TAG, "not successful");
 			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			throw new UnknownHostException();
 		} catch (IOException e) {
 			Log.e(TAG, "connot read server-response");
 			e.printStackTrace();

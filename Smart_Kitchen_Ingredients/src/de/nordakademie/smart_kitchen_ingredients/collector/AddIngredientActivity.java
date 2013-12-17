@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
+import java.net.UnknownHostException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -111,9 +113,13 @@ public class AddIngredientActivity extends Activity {
 			Unit unit) {
 		IShoppingListItem newItem = app.getShoppingListItemFactory()
 				.createShoppingListItem(title, unit, false);
-		app.getServerHandler().postIngredientToServer(newItem);
-		app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(
-				app.getServerHandler().getIngredientListFromServer());
+		try {
+			app.getServerHandler().postIngredientToServer(newItem);
+			app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(
+					app.getServerHandler().getIngredientListFromServer());
+		} catch (UnknownHostException e) {
+
+		}
 		app.getShoppingDbHelper().addItem(newItem, quantity);
 	}
 }
