@@ -26,6 +26,7 @@ public class QuantityDialog extends DialogFragment {
 	private TextView currentNumber;
 	private TextView nextNumber;
 	private static IListElement element;
+	private QuantityPickerDialogListener dialogListener;
 
 	public static final QuantityDialog newInstance(IListElement element) {
 		QuantityDialog.element = element;
@@ -60,6 +61,7 @@ public class QuantityDialog extends DialogFragment {
 		View view = getCurrentView();
 		instantiaveViews(view);
 		setOnClickListener();
+		dialogListener = (QuantityPickerDialogListener) getActivity();
 		return buildDialog(view);
 	}
 
@@ -69,27 +71,36 @@ public class QuantityDialog extends DialogFragment {
 		dialogBuilder
 				.setTitle(element.getElementUnit())
 				.setView(view)
-				.setPositiveButton("positive",
+				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								// TODO Auto-generated method stub
 
+								doOnPositive();
+								dismiss();
 							}
+
 						})
-				.setNegativeButton("negative",
+				.setNegativeButton(android.R.string.cancel,
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								// TODO Auto-generated method stub
-
+								dismiss();
 							}
 						});
 		return dialogBuilder.create();
+	}
+
+	public void doOnPositive() {
+		dialogListener.onFinishedDialog(getCurrentValue());
+	}
+
+	private Integer getCurrentValue() {
+		return Integer.valueOf(currentNumber.getText().toString());
 	}
 
 	private View getCurrentView() {

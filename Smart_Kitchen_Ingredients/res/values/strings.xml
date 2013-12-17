@@ -45,7 +45,6 @@
     <string name="ingredientUnit">Einheit: </string>
     <string name="addIngredients">Neue Zutat erstellen</string>
     <string name="ingredientAmount">"Menge: "</string>
-    <string name="interrupt">Abbrechen</string>
     <string name="okButton">Zutat hinzufügen</string>
     <string name="chooseUnit">Einheit auswählen</string>
     <string name="quantityPreviousDefaultNumber">0</string>
@@ -55,8 +54,6 @@
     <string name="changeShoppingDataPermissionDescription">Text</string>
     <string name="changeDate">Wählen Sie ein Datum</string>
     <string name="changeTime">Wählen Sie eine Uhrzeit</string>
-    <string name="deleteDateCancel">Abbrechen</string>
-    <string name="delteDateCommit">Ok</string>
     <string name="delteDateSure">Sind Sie sicher, dass Sie den Termin löschen wollen?</string>
     <string name="toastInsertNewShoppingDate">Feld Einkaufstitel muss gefüllt sein</string>
     <string name="deleteDateTitle">Löschen?</string>
@@ -70,4 +67,3 @@
     </string-array>
 
 </resources>
-

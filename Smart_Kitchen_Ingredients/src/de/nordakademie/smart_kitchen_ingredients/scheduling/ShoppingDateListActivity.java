@@ -80,8 +80,8 @@ public class ShoppingDateListActivity extends Activity implements
 		adb.setTitle(R.string.deleteDateTitle);
 		adb.setMessage(R.string.delteDateSure);
 		final int positionToRemove = position;
-		adb.setNegativeButton(R.string.deleteDateCancel, null);
-		adb.setPositiveButton(R.string.delteDateCommit,
+		adb.setNegativeButton(android.R.string.cancel, null);
+		adb.setPositiveButton(android.R.string.ok,
 				new AlertDialog.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
