@@ -28,7 +28,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
@@ -123,7 +123,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 			scanIntegrator.initiateScan();
 			break;
 		case R.id.menu_shoppingdate:
-			startNextActivity(ShoppingDateActivity.class);
+			startNextActivity(ShoppingDateListActivity.class);
 			break;
 		case R.id.menu_edit_stored_items:
 			startNextActivity(StoredIngredientActivity.class);
