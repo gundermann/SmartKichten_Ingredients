@@ -27,7 +27,7 @@
     <string name="menuCodeScanner">Barcode scannen</string>
     <string name="menuShoppingListScanner">Einkaufsliste einscannen</string>
     <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
-    <string name="menuSetupShoppingDate">Termin festlegen</string>
+    <string name="menuSetupShoppingDate">Termin</string>
     <string name="menuDeleteShoppingList">Einkaufliste löschen</string>
     <string name="menuCleanShoppingList">Einkaufliste aufräumen</string>
     <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
@@ -55,6 +55,10 @@
     <string name="changeShoppingDataPermissionDescription">Text</string>
     <string name="changeDate">Wählen Sie ein Datum</string>
     <string name="changeTime">Wählen Sie eine Uhrzeit</string>
+    <string name="deleteDateCancel">Abbrechen</string>
+    <string name="delteDateCommit">Ok</string>
+    <string name="delteDateSure">Sind Sie sicher, dass Sie den Termin löschen wollen?</string>
+    <string name="deleteDateTitle">Löschen?</string>
 
     <string-array name="unit_array">
         <item>g</item>

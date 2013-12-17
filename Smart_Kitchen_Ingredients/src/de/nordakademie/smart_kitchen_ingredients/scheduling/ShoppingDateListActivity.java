@@ -78,21 +78,21 @@ public class ShoppingDateListActivity extends Activity implements
 			int position, long id) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(
 				ShoppingDateListActivity.this);
-		adb.setTitle("Löschen?");
-		adb.setMessage("Sind Sie sich, dass die den Termin löschen wollen?"
-				+ position);
+		adb.setTitle(R.string.deleteDateTitle);
+		adb.setMessage(R.string.delteDateSure);
 		final int positionToRemove = position;
-		adb.setNegativeButton("Abbrechen", null);
-		adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				IDate date = (IDate) shoppingDateList
-						.getItemAtPosition(positionToRemove);
-				app.getDateDbHelper().remove(date);
-				updateDateList();
-			}
+		adb.setNegativeButton(R.string.deleteDateCancel, null);
+		adb.setPositiveButton(R.string.delteDateCommit,
+				new AlertDialog.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						IDate date = (IDate) shoppingDateList
+								.getItemAtPosition(positionToRemove);
+						app.getDateDbHelper().remove(date);
+						updateDateList();
+					}
 
-		});
+				});
 		adb.show();
 	}
 
