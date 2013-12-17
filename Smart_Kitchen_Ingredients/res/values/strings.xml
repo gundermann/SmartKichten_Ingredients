@@ -61,6 +61,7 @@
     <string name="toastInsertNewShoppingDate">Feld Einkaufstitel muss gefüllt sein</string>
     <string name="deleteDateTitle">Löschen?</string>
     <string name="recipeCollector">Einkaufsliste: Rezepte</string>
+    <string name="noResultsFound">Keine Ergebnisse gefunden</string>
 
     <string-array name="unit_array">
         <item>g</item>
