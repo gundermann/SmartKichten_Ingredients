@@ -12,6 +12,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -31,7 +32,8 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  */
 
 public abstract class AbstractCollectorActivity<T> extends FragmentActivity
-		implements TextWatcher, IAsyncTaskObserver<T> {
+		implements TextWatcher, IAsyncTaskObserver<T>,
+		QuantityPickerDialogListener {
 	private static String TAG;
 
 	private EditText searchBar;
@@ -71,6 +73,12 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 				quantityDialog.show(getSupportFragmentManager(), TAG);
 			}
 		});
+	}
+
+	@Override
+	public void onFinishedDialog(int quantity) {
+		Log.d("quantity", quantity + "");
+
 	}
 
 	protected void setNextActivityOnClick(View view,
