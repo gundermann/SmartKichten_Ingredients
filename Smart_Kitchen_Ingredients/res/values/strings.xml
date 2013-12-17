@@ -32,15 +32,15 @@
     <string name="menuCleanShoppingList">Einkaufliste aufräumen</string>
     <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
     <string name="searchBarHint">Suche&#8230;</string>
-    <string name="newIngredientButtonText">Add ingredient</string>
-    <string name="showRecipesButtonText">Show recipes</string>
+    <string name="newIngredientButtonText">Zutat hinzufügen</string>
+    <string name="showRecipesButtonText">Rezepte anzeigen</string>
     <string name="scanerror">Keine Ergebnisse gefunden</string>
     <string name="scansuccess">Übereinstimmung gefunden</string>
     <string name="scanfault">keine Übereinstimmung gefunden</string>
-    <string name="ingredientCollector">Zutatensammler</string>
+    <string name="ingredientCollector">Einkaufsliste: Zutaten</string>
     <string name="menuInsertStoredItems">Bestand</string>
-    <string name="showIngredientsButtonText">Show ingredients</string>
-    <string name="title_activity_add_ingredient">AddIngredientActivity</string>
+    <string name="showIngredientsButtonText">Zutaten anzeigen</string>
+    <string name="title_activity_add_ingredient">Einkaufsliste: Zutat hinzufügen</string>
     <string name="ingredientName">Bezeichnung: </string>
     <string name="ingredientUnit">Einheit: </string>
     <string name="addIngredients">Neue Zutat erstellen</string>
@@ -60,6 +60,7 @@
     <string name="delteDateSure">Sind Sie sicher, dass Sie den Termin löschen wollen?</string>
     <string name="toastInsertNewShoppingDate">Feld Einkaufstitel muss gefüllt sein</string>
     <string name="deleteDateTitle">Löschen?</string>
+    <string name="recipeCollector">Einkaufsliste: Rezepte</string>
 
     <string-array name="unit_array">
         <item>g</item>
