@@ -36,7 +36,6 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 		}
 
 		app = (IngredientsApplication) getApplication();
-
 		addIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
 		ingredientAmountTV = (TextView) findViewById(R.id.ingredientAmountEdit);
@@ -48,7 +47,6 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		// TODO Auto-generated method stub
 
 	}
 
