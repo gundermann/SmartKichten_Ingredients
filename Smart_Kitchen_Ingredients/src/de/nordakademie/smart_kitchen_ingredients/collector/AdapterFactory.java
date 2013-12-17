@@ -4,6 +4,9 @@ import java.util.List;
 
 import android.content.Context;
 import android.widget.ListAdapter;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListAdapter;
+import de.nordakademie.smart_kitchen_ingredients.stock.StockListAdapter;
 
 /**
  * @author frederic.oppermann
@@ -19,4 +22,15 @@ public class AdapterFactory<T> implements IAdapterFactory<T> {
 		return new CollectorAdapter<T>(applicationContext, entryView,
 				entryView, elements);
 	}
+
+	@Override
+	public ListAdapter createCheckableAdapter(IngredientsApplication application) {
+		return new ShoppingListAdapter(application);
+	}
+
+	@Override
+	public ListAdapter createStoreAdapter(IngredientsApplication application) {
+		return new StockListAdapter(application);
+	}
+
 }

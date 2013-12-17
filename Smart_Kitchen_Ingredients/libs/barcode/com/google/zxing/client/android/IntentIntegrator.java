@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package de.nordakademie.smart_kitchen_ingredients.barcodescan;
+package com.google.zxing.client.android;
 
 import java.util.Arrays;
 import java.util.Collection;

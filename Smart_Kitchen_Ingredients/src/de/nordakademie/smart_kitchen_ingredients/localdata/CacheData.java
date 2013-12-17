@@ -141,7 +141,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 				+ " WHERE " + COLUMN_INGRDIENTS_ID + "=" + id;
 		Cursor cursor = db.rawQuery(sql, null);
 		cursor.moveToNext();
-		return Unit.valueOf(cursor.getString(0));
+		return Unit.valueOfFromShortening(cursor.getString(0));
 	}
 
 	private String getIngredientNameByID(String id) {
@@ -200,7 +200,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		Log.i(TAG, "database of INDIGRENTS_TO_RECIPES updated");
 
 		return app.getIngredientFactory().createIngredient(ingredient[1],
-				Integer.valueOf(ingredient[2]), Unit.valueOf(ingredient[3]));
+				Integer.valueOf(ingredient[2]),
+				Unit.valueOfFromShortening(ingredient[3]));
 	}
 
 	private void writeRecipeToDB(String currentID, String currentTitle) {
@@ -225,8 +226,9 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 			values.put(COLUMN_NAME, ingredient[1]);
 			values.put(COLUMN_UNIT, ingredient[2]);
 			writeIngredientToDB(values);
-			ingredientList.add(app.getIngredientFactory().createIngredient(
-					ingredient[1], 0, Unit.valueOf(ingredient[2])));
+			ingredientList.add(app.getIngredientFactory()
+					.createIngredient(ingredient[1], 0,
+							Unit.valueOfFromShortening(ingredient[2])));
 		}
 		return ingredientList;
 
@@ -252,7 +254,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 			while (cursor.moveToNext()) {
 				ingredientsList.add(ingredientFactory.createIngredient(
 						cursor.getString(1), 0,
-						Unit.valueOf(cursor.getString(2))));
+						Unit.valueOfFromShortening(cursor.getString(2))));
 			}
 
 			cursor.close();
