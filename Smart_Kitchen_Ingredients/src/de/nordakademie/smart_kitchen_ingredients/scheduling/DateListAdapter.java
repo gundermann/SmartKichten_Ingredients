@@ -48,7 +48,7 @@ public class DateListAdapter extends ArrayAdapter<IDate> {
 		nameTextView.setTextColor(Color.BLACK);
 		nameTextView.setText(item.getTitle());
 		java.util.Date date = new java.util.Date(item.getTimestamp());
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy hh:mm",
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm",
 				Locale.GERMAN);
 		dateTextView.setText(formatter.format(date));
 	}

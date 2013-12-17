@@ -80,7 +80,7 @@ public class ShoppingDateActivity extends Activity implements
 
 		final Calendar c = Calendar.getInstance();
 		year = getModifyedCalendarValue(c.get(Calendar.YEAR));
-		month = getModifyedCalendarValue(c.get(Calendar.MONTH));
+		month = getModifyedCalendarValue(c.get(Calendar.MONTH) + 1);
 		day = getModifyedCalendarValue(c.get(Calendar.DAY_OF_MONTH));
 		dpResult.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
 				c.get(Calendar.DAY_OF_MONTH), null);
@@ -99,6 +99,7 @@ public class ShoppingDateActivity extends Activity implements
 
 		timePicker = (TimePicker) findViewById(R.id.timePicker);
 
+		timePicker.setIs24HourView(true);
 		final Calendar c = Calendar.getInstance();
 
 		hour = getModifyedCalendarValue(c.get(Calendar.HOUR_OF_DAY));
@@ -131,7 +132,7 @@ public class ShoppingDateActivity extends Activity implements
 			int intentFlag = app.getDateDbHelper().getNextFlag();
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(
 					getApplicationContext(), 0, broadcast_intent, intentFlag);
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmm",
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm",
 					Locale.GERMAN);
 			StringBuilder sb = new StringBuilder();
 			sb.append(year).append(month).append(day).append(hour)
