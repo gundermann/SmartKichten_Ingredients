@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
@@ -60,9 +60,8 @@ public class ShoppingDateListActivity extends Activity implements
 	}
 
 	private void updateDateList() {
-		final ListAdapter adapter = new ArrayAdapter<IDate>(this,
-				android.R.layout.simple_list_item_1, app.getDateDbHelper()
-						.getAllDates());
+		ListAdapter adapter = new AdapterFactory<IDate>()
+				.createDateAdapter(app);
 		shoppingDateList.setAdapter(adapter);
 	}
 

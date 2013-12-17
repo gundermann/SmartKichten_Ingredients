@@ -5,12 +5,8 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
  * @author Frauke Trautmann
  * 
  */
-public interface IIngredient extends IServerIngredient {
+public interface IIngredient {
+	String getName();
 
-	/**
-	 * Liefert die Menge die von einer Zutat benötigt wird.
-	 * 
-	 * @return int
-	 */
-	int getQuantity();
+	Unit getUnit();
 }

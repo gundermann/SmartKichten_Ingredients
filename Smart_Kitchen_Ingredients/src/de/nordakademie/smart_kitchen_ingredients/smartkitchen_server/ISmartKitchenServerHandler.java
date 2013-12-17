@@ -3,7 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 import java.util.List;
 import java.util.Map;
 
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 /**
  * @author Niels Gundermann
@@ -34,6 +34,6 @@ public interface ISmartKitchenServerHandler {
 	 * 
 	 * @param ingredient
 	 */
-	void postIngredientToServer(IServerIngredient ingredient);
+	void postIngredientToServer(IIngredient ingredient);
 
 }

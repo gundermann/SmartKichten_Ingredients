@@ -19,4 +19,7 @@ public interface IAdapterFactory<T> {
 	ListAdapter createCheckableAdapter(IngredientsApplication application);
 
 	ListAdapter createStoreAdapter(IngredientsApplication application);
+
+	ListAdapter createDateAdapter(IngredientsApplication application);
+
 }

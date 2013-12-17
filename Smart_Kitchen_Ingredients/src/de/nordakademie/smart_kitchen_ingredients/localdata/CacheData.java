@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -116,8 +117,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		return true;
 	}
 
-	private List<IIngredient> getIngredientsForRecipeID(String recipeID) {
-		List<IIngredient> ingredientsList = new ArrayList<IIngredient>();
+	private Map<IIngredient, Integer> getIngredientsForRecipeID(String recipeID) {
+		Map<IIngredient, Integer> ingredientsList = new HashMap<IIngredient, Integer>();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
 
 		SQLiteDatabase db = getReadableDatabase();
@@ -126,10 +127,10 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 				null, null, null);
 
 		while (cursor.moveToNext()) {
-			ingredientsList.add(ingredientFactory.createIngredient(
+			ingredientsList.put(ingredientFactory.createIngredient(
 					getIngredientNameByID(cursor.getString(1)),
-					cursor.getInt(2),
-					getIngredientUnitByID(cursor.getString(1))));
+					getIngredientUnitByID(cursor.getString(1))), cursor
+					.getInt(2));
 		}
 		db.close();
 		return ingredientsList;
@@ -171,11 +172,13 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 			String currentRecipeTitle = currentRecipe[1];
 			writeRecipeToDB(currentRecipeID, currentRecipeTitle);
 
-			List<IIngredient> currentIngredientList = new ArrayList<IIngredient>();
+			Map<IIngredient, Integer> currentIngredientList = new HashMap<IIngredient, Integer>();
 			List<String[]> ingredientList = recipes.get(currentRecipe);
-			for (String[] currentIngredient : ingredientList) {
-				currentIngredientList.add(writeConnectionToRecipeToDB(
-						currentRecipeID, currentIngredient));
+			for (String[] currentRecipeIngredient : ingredientList) {
+				currentIngredientList.put(
+						writeConnectionToRecipeToDB(currentRecipeID,
+								currentRecipeIngredient), Integer
+								.valueOf(currentRecipeIngredient[2]));
 				Log.w(TAG,
 						"die Tabelle mit rezeptID, ZutatenID und amount wurde erstellt.");
 			}
@@ -200,7 +203,6 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		Log.i(TAG, "database of INDIGRENTS_TO_RECIPES updated");
 
 		return app.getIngredientFactory().createIngredient(ingredient[1],
-				Integer.valueOf(ingredient[2]),
 				Unit.valueOfFromShortening(ingredient[3]));
 	}
 
@@ -226,9 +228,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 			values.put(COLUMN_NAME, ingredient[1]);
 			values.put(COLUMN_UNIT, ingredient[2]);
 			writeIngredientToDB(values);
-			ingredientList.add(app.getIngredientFactory()
-					.createIngredient(ingredient[1], 0,
-							Unit.valueOfFromShortening(ingredient[2])));
+			ingredientList.add(app.getIngredientFactory().createIngredient(
+					ingredient[1], Unit.valueOfFromShortening(ingredient[2])));
 		}
 		return ingredientList;
 
@@ -253,7 +254,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 			while (cursor.moveToNext()) {
 				ingredientsList.add(ingredientFactory.createIngredient(
-						cursor.getString(1), 0,
+						cursor.getString(1),
 						Unit.valueOfFromShortening(cursor.getString(2))));
 			}
 

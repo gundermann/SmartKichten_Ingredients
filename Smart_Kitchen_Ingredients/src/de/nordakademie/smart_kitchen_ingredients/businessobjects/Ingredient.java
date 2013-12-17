@@ -7,17 +7,10 @@ public class Ingredient implements IIngredient, IListElement,
 
 	private String title;
 	private Unit unit;
-	private int amount;
 
-	public Ingredient(String title, int amount, Unit unit) {
+	public Ingredient(String title, Unit unit) {
 		this.title = title;
-		this.amount = amount;
 		this.unit = unit;
-	}
-
-	@Override
-	public int getQuantity() {
-		return amount;
 	}
 
 	@Override

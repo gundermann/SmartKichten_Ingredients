@@ -26,7 +26,7 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 	Button saveIngredientButton;
 	Button quitButton;
 	TextView ingredientTitleTV;
-	TextView ingredientAmountTV;
+	TextView ingredientQuantityTV;
 	Spinner ingredientUnit;
 
 	@Override
@@ -45,7 +45,7 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 
 		app = (IngredientsApplication) getApplication();
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
-		ingredientAmountTV = (TextView) findViewById(R.id.ingredientAmountEdit);
+		ingredientQuantityTV = (TextView) findViewById(R.id.ingredientAmountEdit);
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
 
 		ingredientTitleTV.setText(ingredientTitle);
@@ -85,12 +85,12 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 				}
 			}
 
-			private void saveNewIngredientToDBs(String title, Integer amount,
+			private void saveNewIngredientToDBs(String title, Integer quantity,
 					Unit unit) {
 				IShoppingListItem newItem = app.getShoppingListItemFactory()
-						.createShoppingListItem(title, amount, unit, false);
+						.createShoppingListItem(title, unit, false);
 				app.getServerHandler().postIngredientToServer(newItem);
-				app.getShoppingDbHelper().addItem(newItem);
+				app.getShoppingDbHelper().addItem(newItem, quantity);
 			}
 		});
 	}
