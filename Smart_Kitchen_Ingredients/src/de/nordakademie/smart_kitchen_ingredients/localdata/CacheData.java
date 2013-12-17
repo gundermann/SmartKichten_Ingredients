@@ -165,7 +165,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 		List<IRecipe> recipeList = new ArrayList<IRecipe>();
 		Iterator<String[]> iterator = recipes.keySet().iterator();
-		if (iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			String[] currentRecipe = iterator.next();
 			String currentRecipeID = currentRecipe[0];
 			String currentRecipeTitle = currentRecipe[1];
