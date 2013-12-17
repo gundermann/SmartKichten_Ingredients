@@ -1,22 +1,22 @@
 package de.nordakademie.smart_kitchen_ingredients.scheduling;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.TimePicker.OnTimeChangedListener;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
@@ -27,23 +27,21 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  * @author Frauke Trautmann
  * 
  */
-public class ShoppingDateActivity extends Activity {
+public class ShoppingDateActivity extends Activity implements
+		OnTimeChangedListener {
 
 	private static final String TAG = StoredIngredientActivity.class
 			.getSimpleName();
 
 	private DatePicker dpResult;
-	private TextView changeDate;
-	private TextView changeTime;
 	private Button confirmDate;
-	private TextView headlineShoppingDate;
 	private TimePicker timePicker;
 
-	private int year;
-	private int month;
-	private int day;
-	private int hour;
-	private int minute;
+	private String year;
+	private String month;
+	private String day;
+	private String hour;
+	private String minute;
 
 	private IngredientsApplication app;
 
@@ -55,6 +53,8 @@ public class ShoppingDateActivity extends Activity {
 
 		app = (IngredientsApplication) getApplication();
 		setContentView(R.layout.shopping_date);
+		setCurrentDateOnView();
+		setCurrentTimeOnView();
 
 		confirmDate = (Button) findViewById(id.confirmButton);
 		confirmDate.setOnClickListener(new View.OnClickListener() {
@@ -67,21 +67,32 @@ public class ShoppingDateActivity extends Activity {
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						getApplicationContext(), 0, broadcast_intent,
 						intentFlag);
-				Date cal = new Date(year, month, day, hour, minute);
-				long triggerAtTime = cal.getTime();
+				SimpleDateFormat formatter = new SimpleDateFormat(
+						"yyyyMMddhhmm", Locale.GERMAN);
+				StringBuilder sb = new StringBuilder();
+				sb.append(year).append(month).append(day).append(hour)
+						.append(minute);
+				Date cal;
+				try {
+					cal = formatter.parse(sb.toString());
+					long triggerAtTime = cal.getTime();
 
-				IDate date = app.getDateFactory().createDate(null,
-						triggerAtTime, intentFlag);
-				app.getDateDbHelper().insertNewDate(date);
+					IDate date = app.getDateFactory().createDate(null,
+							triggerAtTime, intentFlag);
+					app.getDateDbHelper().insertNewDate(date);
 
-				alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
-						pendingIntent);
-				finish();
+					alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
+							pendingIntent);
+				} catch (ParseException e) {
+					Log.d(TAG, "parseexc");
+					e.printStackTrace();
+				} finally {
+					finish();
+				}
 
 			}
 		});
 
-		setCurrentDateOnView();
 		Log.i(TAG, "created");
 
 	}
@@ -91,56 +102,41 @@ public class ShoppingDateActivity extends Activity {
 		dpResult = (DatePicker) findViewById(R.id.dpResult);
 
 		final Calendar c = Calendar.getInstance();
-		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
-		dpResult.init(year, month, day, null);
+		year = getModifyedCalendarValue(c.get(Calendar.YEAR));
+		month = getModifyedCalendarValue(c.get(Calendar.MONTH));
+		day = getModifyedCalendarValue(c.get(Calendar.DAY_OF_MONTH));
+		dpResult.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+				c.get(Calendar.DAY_OF_MONTH), null);
 
 	}
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case DATE_DIALOG_ID:
-			return new DatePickerDialog(this, datePickerListener, year, month,
-					day);
+	private String getModifyedCalendarValue(int value) {
+		if (value > 9) {
+			return String.valueOf(value);
+		} else {
+			return "0" + String.valueOf(value);
 		}
-		return null;
 	}
-
-	private final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-
-		@Override
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-			year = selectedYear;
-			month = selectedMonth;
-			day = selectedDay;
-			dpResult.init(year, month, day, null);
-
-		}
-	};
 
 	public void setCurrentTimeOnView() {
 
 		timePicker = (TimePicker) findViewById(R.id.timePicker);
 
 		final Calendar c = Calendar.getInstance();
-		hour = c.get(Calendar.HOUR_OF_DAY);
-		minute = c.get(Calendar.MINUTE);
 
-		timePicker.setCurrentHour(hour);
-		timePicker.setCurrentMinute(minute);
+		hour = getModifyedCalendarValue(c.get(Calendar.HOUR_OF_DAY));
+		minute = getModifyedCalendarValue(c.get(Calendar.MINUTE));
 
+		timePicker.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+		timePicker.setCurrentMinute(c.get(Calendar.MINUTE));
+		timePicker.setOnTimeChangedListener(this);
 	}
 
-	private final TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-		@Override
-		public void onTimeSet(TimePicker view, int selectedHour,
-				int selectedMinute) {
-			hour = selectedHour;
-			minute = selectedMinute;
+	@Override
+	public void onTimeChanged(TimePicker view, int selectedHour,
+			int selectedMinute) {
+		hour = getModifyedCalendarValue(selectedHour);
+		minute = getModifyedCalendarValue(selectedMinute);
 
-		}
-	};
+	}
 };

@@ -2,9 +2,9 @@ package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -139,7 +139,6 @@ public class ShoppingListActivity extends AbstractActivity implements
 		startNextActivity(IngredientCollectorActivity.class);
 	}
 
-	@SuppressLint("DefaultLocale")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
@@ -147,7 +146,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 		try {
 			String itemDescription = app.getBarcodeEvaluator()
 					.getItemDescription(scanningResult.getContents());
-			if (evaluateBarcodeScan(itemDescription.toLowerCase())) {
+			if (evaluateBarcodeScan(itemDescription.toLowerCase(Locale.GERMAN))) {
 				makeLongToast(R.string.scansuccess);
 			} else {
 				makeLongToast(R.string.scanfault);
@@ -157,10 +156,10 @@ public class ShoppingListActivity extends AbstractActivity implements
 		}
 	}
 
-	@SuppressLint("DefaultLocale")
 	private boolean evaluateBarcodeScan(String content) {
 		for (IShoppingListItem shoppingItem : getShoppingItems()) {
-			if (content.contains(shoppingItem.getName().toLowerCase())) {
+			if (content.contains(shoppingItem.getName().toLowerCase(
+					Locale.GERMAN))) {
 				app.getShoppingDbHelper()
 						.getShoppingItem(shoppingItem.getName())
 						.setBought(true);
