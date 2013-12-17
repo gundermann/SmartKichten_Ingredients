@@ -14,4 +14,6 @@ public interface IDateDbHelper {
 
 	int getNextFlag();
 
+	void remove(IDate date);
+
 }
