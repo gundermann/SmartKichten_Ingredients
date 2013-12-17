@@ -1,33 +1,28 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
-
 
 /**
  * 
  * @author Kathrin Kurtz
  * 
  */
-public class AddIngredientActivity extends Activity implements OnClickListener {
+public class AddIngredientActivity extends Activity  {
 
 	IngredientsApplication app;
 	String ingredientTitle;
-
 	Button saveIngredientButton;
 	Button quitButton;
 	TextView ingredientTitleTV;
@@ -56,7 +51,6 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 
 		ingredientTitleTV.setText(ingredientTitle);
 		
-		//saveIngredientButton.setOnClickListener(this);
 		quitButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -67,26 +61,41 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				//Abfrage ob alle benötigten Infos eingegeben
 				
-				try{
+				
 					TextView titleView = (TextView) findViewById(R.id.ingredientNameEdit);
 					String title = titleView.getText().toString();
 					TextView amountView = (TextView) findViewById(R.id.ingredientAmountEdit);
 					Integer amount = Integer.valueOf(amountView.getText().toString());
 					Spinner unitView = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-					Unit unit = Unit.valueOf(unitView.getFocusedChild().toString());
+					Unit unit = Unit.valueOf(unitView.getSelectedItem().toString());
 					
+					if(title == null){
+						showSavedOrNotInformation("Bitte Titel angeben!");
+					}
+					else if(amount == null){
+						showSavedOrNotInformation("Bitte Menge angeben!");
+					}
+					else{
+						saveIngredientAndLeave(title, amount, unit);
+						}
+			}
+
+			private void saveIngredientAndLeave(String title, Integer amount,
+					Unit unit) {
+				try{
 					saveNewIngredientToDBs(title, amount, unit);
-					
-					//Information Zutat wurde gespeichert
-					//PopupWindow savedInfo = new PopupWindow();
-					//savedInfo.setContentView(view);
+					showSavedOrNotInformation("Zutat gespeichert");
 				}
 				finally{
 					startActivity(new Intent(getApplicationContext(),
-						IngredientCollectorActivity.class));
-				}
+							IngredientCollectorActivity.class));
+}
+			}
+			
+			private void showSavedOrNotInformation(String info){
+				Toast toast = Toast.makeText(app, info, Toast.LENGTH_LONG);
+				toast.show();
 			}
 
 			private void saveNewIngredientToDBs(String title, Integer amount, Unit unit) {
@@ -97,11 +106,4 @@ public class AddIngredientActivity extends Activity implements OnClickListener {
 			}
 		});
 	}
-
-	@Override
-	public void onClick(View view) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
