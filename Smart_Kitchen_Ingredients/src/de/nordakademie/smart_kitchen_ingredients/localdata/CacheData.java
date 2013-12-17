@@ -160,7 +160,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 			Map<String[], List<String[]>> recipes) {
 		// KEY: String Array - Value: String Array
 		// rezept zutaten
-		// 0=id 1=titel 0=id 1=titel 2=einheit 3=menge
+		// 0=id 1=titel
+		// 0=id 1=titel 2=einheit 3=menge
 
 		List<IRecipe> recipeList = new ArrayList<IRecipe>();
 		Iterator<String[]> iterator = recipes.keySet().iterator();
@@ -176,7 +177,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 				IIngredient ingredient = writeConnectionToRecipeToDB(
 						currentRecipeID, currentRecipeIngredient);
 				currentIngredientList.put(ingredient,
-						Integer.valueOf(currentRecipeIngredient[2]));
+						Integer.valueOf(currentRecipeIngredient[3]));
 				Log.w(TAG,
 						"die Tabelle mit rezeptID, ZutatenID und amount wurde erstellt.");
 			}
@@ -201,7 +202,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		Log.i(TAG, "database of INDIGRENTS_TO_RECIPES updated");
 
 		return app.getIngredientFactory().createIngredient(ingredient[1],
-				Unit.valueOfFromShortening(ingredient[3]));
+				Unit.valueOfFromShortening(ingredient[2]));
 	}
 
 	private void writeRecipeToDB(String currentID, String currentTitle) {
