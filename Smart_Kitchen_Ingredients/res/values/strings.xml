@@ -10,7 +10,8 @@
     <string name="summaryMinVolume">Knappheit für Einheit "g"</string>
     <string name="ingredientHintText">Ingredient name</string>
     <string name="confirmDateButton">Termin anlegen</string>
-    <string name="dateTitle">Einkaufstitel</string>
+    <string name="dateTitle">Einkauf</string>
+    <string name="headlineShoppingDate">Termin anlegen</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
     <string name="addIngredientsButton">Zutat hinzufügen</string>
@@ -59,6 +60,7 @@
     <string name="deleteDateTitle">Löschen?</string>
     <string name="recipeCollector">Einkaufsliste: Rezepte</string>
     <string name="noResultsFound">Keine Ergebnisse gefunden</string>
+    <string name="developerMistake">Sorry - hier hat ein Entwickler gepfuscht!</string>
 
     <string-array name="unit_array">
         <item>g</item>

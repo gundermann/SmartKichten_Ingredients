@@ -9,5 +9,5 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
  * @description
  */
 public interface QuantityPickerDialogListener {
-	void onFinishedDialog(int quantity);
+	void onPositiveFinishedDialog(int quantity);
 }

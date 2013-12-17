@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -43,6 +44,9 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	private ProgressBar progressWheel;
 	private Button addNewIngredient;
 	private View noResultsFound;
+	private IListElement currentElement;
+
+	private Context context;
 
 	public List<T> getElementsToShow() {
 		return elementsToShow;
@@ -56,6 +60,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		initiateAllViews();
 		addLayoutChangeListener();
 		makeListEntriesClickable();
+		context = getApplicationContext();
 		setNextActivityOnClick(addNewIngredient, AddIngredientActivity.class);
 	}
 
@@ -65,20 +70,23 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view,
 					int position, long arg3) {
-				IListElement element = (IListElement) adapterView.getAdapter()
+				currentElement = (IListElement) adapterView.getAdapter()
 						.getItem(position);
 
 				DialogFragment quantityDialog = QuantityDialog
-						.newInstance(element);
+						.newInstance(currentElement);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
 			}
 		});
 	}
 
 	@Override
-	public void onFinishedDialog(int quantity) {
-		Log.d("quantity", quantity + "");
-
+	public void onPositiveFinishedDialog(int quantity) {
+		try {
+			T castElement = (T) currentElement;
+		} catch (ClassCastException e) {
+			informUser(R.string.developerMistake);
+		}
 	}
 
 	protected void setNextActivityOnClick(View view,
@@ -87,7 +95,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(getApplicationContext(),
+				startActivity(new Intent(context,
 						nextActivityClass));
 			}
 		});
@@ -127,21 +135,22 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		return progressWheel;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void afterTextChanged(Editable s) {
 		noResultsFound.setVisibility(View.GONE);
 
 		List<IListElement> elementsInList = new ArrayList<IListElement>();
-
-		for (IListElement element : (List<IListElement>) allElements) {
-			if (ingredientNameMatchSearchString(element)) {
-				elementsInList.add(element);
+		try {
+			for (IListElement element : (List<IListElement>) allElements) {
+				if (ingredientNameMatchSearchString(element)) {
+					elementsInList.add(element);
+				}
 			}
+			informUserWhenNoResults(elementsInList);
+			elementsToShow = (List<T>) elementsInList;
+		} catch (ClassCastException e) {
+			informUser(R.string.developerMistake);
 		}
-		informUserWhenNoResults(elementsInList);
-
-		elementsToShow = (List<T>) elementsInList;
 	}
 
 	private void informUserWhenNoResults(List<IListElement> elementsInList) {
@@ -186,5 +195,9 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void informUser(int stringId) {
+		Toast.makeText(context, stringId, Toast.LENGTH_LONG).show();
 	}
 }
