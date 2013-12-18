@@ -1,6 +1,8 @@
 package de.nordakademie.smart_kitchen_ingredients.stock;
 
-
+/**
+ * @author Kathrin Kurtz
+ */
 
 import android.content.DialogInterface;
 import android.content.Intent;

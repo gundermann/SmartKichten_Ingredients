@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import android.os.Bundle;
+import android.view.View;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
@@ -11,6 +12,9 @@ public class StoredIngredientCollectorActivity extends
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		showRecepiesButton.setVisibility(View.GONE);
+		confirmShoppingList.setVisibility(View.GONE);
+		
 	}
 
 	@Override
