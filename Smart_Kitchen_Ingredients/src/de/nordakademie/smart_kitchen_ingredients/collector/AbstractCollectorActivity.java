@@ -35,7 +35,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		implements TextWatcher, IAsyncTaskObserver<T>,
 		QuantityPickerDialogListener {
-	private static String TAG;
+	protected static String TAG;
 
 	private EditText searchBar;
 	private ListView elementsListView;
@@ -77,7 +77,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 				currentElement = (IListElement) adapterView.getAdapter()
 						.getItem(position);
 
-				DialogFragment quantityDialog = QuantityDialog
+				DialogFragment quantityDialog = QuantityPickerDialog
 						.newInstance(currentElement);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
 			}

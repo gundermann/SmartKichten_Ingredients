@@ -1,8 +1,5 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -25,7 +22,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @date 15.12.2013
  * @description
  */
-public class QuantityDialog extends DialogFragment {
+public class QuantityPickerDialog extends DialogFragment {
 	private InputMethodManager inputManager;
 	private ImageButton increaseButton;
 	private ImageButton decreaseButton;
@@ -36,32 +33,20 @@ public class QuantityDialog extends DialogFragment {
 	private static IListElement element;
 	private QuantityPickerDialogListener dialogListener;
 
-	public static final QuantityDialog newInstance(IListElement element) {
-		QuantityDialog.element = element;
-		QuantityDialog dialog = new QuantityDialog();
+	public static final QuantityPickerDialog newInstance(IListElement element) {
+		QuantityPickerDialog.element = element;
+		QuantityPickerDialog dialog = new QuantityPickerDialog();
 		return dialog;
 	}
 
-	private List<TextView> getAllNumberViews() {
-		List<TextView> views = new ArrayList<TextView>();
-		views.add(nextNumber);
-		views.add(currentNumber);
-		views.add(previousNumber);
-		return views;
+	private void setCurrentNumber(int newValue) {
+		setNewValue(nextNumber, newValue + 1);
+		setNewValue(currentNumber, newValue);
+		setNewValue(previousNumber, newValue - 1);
 	}
 
 	void setNewValue(TextView view, int newValue) {
 		view.setText(String.valueOf(newValue));
-	}
-
-	void increase(TextView view) {
-		int value = getValueOf(view) + 1;
-		setNewValue(view, value);
-	}
-
-	void decrease(TextView view) {
-		int value = getValueOf(view) - 1;
-		setNewValue(view, value);
 	}
 
 	private void hideElement(View view) {
@@ -74,7 +59,7 @@ public class QuantityDialog extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		
+
 		View view = getCurrentView();
 		instantiaveViews(view);
 		setOnClickListener();
@@ -97,15 +82,16 @@ public class QuantityDialog extends DialogFragment {
 
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				setCurrentNumber(getValueOf(currentNumberInput));
 				if (event != null
 						&& event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 					Log.d("quantity", event.getKeyCode() + "");
 
 					inputManager.hideSoftInputFromWindow(
 							currentNumberInput.getWindowToken(), 0);
+
 					showElement(currentNumber);
-					currentNumber.setVisibility(View.VISIBLE);
-					currentNumberInput.setVisibility(View.GONE);
+					hideElement(currentNumberInput);
 				}
 				return false;
 			}
@@ -188,9 +174,7 @@ public class QuantityDialog extends DialogFragment {
 
 			@Override
 			public void onClick(View v) {
-				for (TextView view : getAllNumberViews()) {
-					increase(view);
-				}
+				setCurrentNumber(getValueOf(currentNumber) + 1);
 			}
 
 		});
@@ -200,9 +184,7 @@ public class QuantityDialog extends DialogFragment {
 			@Override
 			public void onClick(View v) {
 				if (getValueOf(previousNumber) > 0) {
-					for (TextView view : getAllNumberViews()) {
-						decrease(view);
-					}
+					setCurrentNumber(getValueOf(currentNumber) - 1);
 				}
 			}
 		});
