@@ -28,6 +28,7 @@ public class AddIngredientActivity extends Activity {
 	TextView ingredientTitleTV;
 	TextView ingredientQuantityTV;
 	Spinner ingredientUnit;
+	private String currentShoppingListName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,11 @@ public class AddIngredientActivity extends Activity {
 
 		if (getIntent().getExtras() != null
 				&& getIntent().getExtras().size() > 0) {
-			ingredientTitle = getIntent().getExtras().get("ingredientTitle")
-					.toString();
+			ingredientTitle = getIntent().getExtras().getString(
+					"ingredientTitle");
+			currentShoppingListName = getIntent().getExtras().getString(
+					"shoppingListName");
+
 		}
 
 		app = (IngredientsApplication) getApplication();
@@ -110,6 +114,7 @@ public class AddIngredientActivity extends Activity {
 		fetchDataFromDb(new PostNewIngredientAsyncTask(newItem,
 				app.getServerHandler(), app.getCacheDbHelper()));
 
-		app.getShoppingDbHelper().addItem(newItem, quantity);
+		app.getShoppingDbHelper().addItem(newItem, quantity,
+				currentShoppingListName);
 	}
 }

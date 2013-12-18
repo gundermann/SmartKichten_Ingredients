@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
@@ -11,9 +12,12 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.localdata.tables.ShoppingListTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.tables.ShoppingTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.tables.StoredTable;
 
@@ -27,18 +31,22 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.tables.StoredTable;
 public class SmartKitchenData extends AbstractData implements IShoppingData,
 		IStoredData {
 
+	private final IngredientsApplication app;
+
 	private static final String TAG = SmartKitchenData.class.getSimpleName();
-	private static final int DATABASE_VERSION = 13;
+	private static final int DATABASE_VERSION = 16;
 	private static final String DATABASE_NAME = "smartkitchen.db";
 
 	public SmartKitchenData(IngredientsApplication app) {
 		super(app, DATABASE_NAME, null, DATABASE_VERSION);
+		this.app = app;
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL(ShoppingTable.getTableCreation());
 		database.execSQL(StoredTable.getTableCreation());
+		database.execSQL(ShoppingListTable.getTableCreation());
 		Log.i(TAG, "shoppingDB created");
 	}
 
@@ -48,14 +56,28 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 				+ newVersion + ", which will destroy all old data");
 		db.execSQL(ShoppingTable.getDrop());
 		db.execSQL(StoredTable.getDrop());
+		db.execSQL(ShoppingListTable.getDrop());
 		onCreate(db);
 	}
 
 	@Override
-	public List<IShoppingListItem> getAllShoppingItems() {
+	public List<IShoppingList> getAllShoppingLists() {
+		openResoures();
+		List<IShoppingList> values = new ArrayList<IShoppingList>();
+		setCursor(ShoppingListTable.TABLE_NAME, ShoppingListTable.selectName());
+		while (cursor.moveToNext()) {
+			values.add(getShoppingListName(cursor));
+		}
+		closeResources();
+		return values;
+	}
+
+	@Override
+	public List<IShoppingListItem> getAllShoppingItems(String shoppingList) {
 		openResoures();
 		List<IShoppingListItem> values = new ArrayList<IShoppingListItem>();
-		setCursor(ShoppingTable.TABLE_NAME, ShoppingTable.selectAllButId());
+		setCursor(ShoppingTable.TABLE_NAME, ShoppingTable.selectAllButId(),
+				getWhere(ShoppingTable.SHOPPING_LIST, shoppingList));
 		while (cursor.moveToNext()) {
 			values.add(getShoppingItem());
 		}
@@ -69,6 +91,12 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
 		return factory.createShoppingListItem(cursor.getString(0),
 				cursor.getInt(1), unit, bought);
+	}
+
+	private IShoppingList getShoppingListName(Cursor cursor) {
+		String title = cursor.getString(0);
+		IShoppingList list = new ShoppingList(title);
+		return list;
 	}
 
 	@Override
@@ -166,12 +194,12 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 	}
 
 	private boolean insertItemsIntoDatabase(
-			List<IShoppingListItem> shoppingItemList) {
+			List<IShoppingListItem> shoppingItemList, String shoppingList) {
 		boolean success = false;
 		for (IShoppingListItem shoppingItem : shoppingItemList) {
 			if (updateShoppingItem(shoppingItem) == 0) {
 				ContentValues values = ShoppingTable
-						.getContentValuesForAllButId(shoppingItem);
+						.getContentValuesForAllButId(shoppingItem, shoppingList);
 				openResoures();
 				try {
 					writeableDb.insertOrThrow(ShoppingTable.TABLE_NAME, null,
@@ -188,8 +216,21 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 		return success;
 	}
 
+	private boolean insertShoppingListIntoDatabase(
+			IShoppingList shoppingListName) {
+		boolean success = false;
+		ContentValues values = ShoppingListTable
+				.getContentValues(shoppingListName.getName());
+		openResoures();
+		insert(ShoppingListTable.TABLE_NAME, values);
+		Log.i(TAG, "inserted to table_shopping_list");
+		closeResources();
+		return success;
+	}
+
 	@Override
-	public boolean addItem(IIngredient ingredient, int quantity) {
+	public boolean addItem(IIngredient ingredient, int quantity,
+			String shoppingList) {
 		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
 		IShoppingListItem shoppingListItem = app.getShoppingListItemFactory()
 				.createShoppingListItem(ingredient.getName(),
@@ -197,11 +238,17 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 						ingredient.getUnit(), false);
 		shoppingItemList.add(shoppingListItem);
 
-		return insertItemsIntoDatabase(shoppingItemList);
+		return insertItemsIntoDatabase(shoppingItemList, shoppingList);
 	}
 
 	@Override
-	public boolean addItem(IRecipe recipe, int quantity) {
+	public boolean addItem(IShoppingList shoppingList) {
+
+		return insertShoppingListIntoDatabase(shoppingList);
+	}
+
+	@Override
+	public boolean addItem(IRecipe recipe, int quantity, String shoppingList) {
 		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
 		for (IIngredient ingredient : recipe.getIngredients().keySet()) {
 			IShoppingListItem shoppingListItem = app
@@ -213,7 +260,7 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 			shoppingItemList.add(shoppingListItem);
 		}
 
-		return insertItemsIntoDatabase(shoppingItemList);
+		return insertItemsIntoDatabase(shoppingItemList, shoppingList);
 	}
 
 	@Override

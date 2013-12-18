@@ -1,9 +1,15 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
+/**
+ * 
+ * @author Frauke Trautmann
+ * 
+ */
+
 public class ShoppingListItem extends Ingredient implements IShoppingListItem {
 
 	private boolean bought;
-	private int quantity;
+	private final int quantity;
 
 	public ShoppingListItem(String title, int quantity, Unit unit,
 			boolean bought) {

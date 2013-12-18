@@ -5,7 +5,6 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
@@ -19,7 +18,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  */
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
 	private Button showIngredientsButton;
-	private IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
+	private final IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
 	private IngredientsApplication app;
 
 	@Override
@@ -64,7 +63,7 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 			IRecipe recipeToAdd = app.getRecipeDbHelper().getExplicitItem(
 					getCurrentElement().getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem(recipeToAdd, quantity);
+					.addItem(recipeToAdd, quantity, currentShoppingList);
 		} catch (ClassCastException e) {
 			informUser(R.string.developerMistake);
 		}

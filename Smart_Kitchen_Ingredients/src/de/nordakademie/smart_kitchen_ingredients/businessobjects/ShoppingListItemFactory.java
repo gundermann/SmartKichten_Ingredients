@@ -1,5 +1,10 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
+/**
+ * 
+ * @author Frauke Trautmann
+ * 
+ */
 
 public class ShoppingListItemFactory implements IShoppingListItemFactory {
 

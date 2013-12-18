@@ -25,15 +25,18 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
  */
 public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 		implements OnClickListener {
-	private IngredientsApplication app;
+	private final IngredientsApplication app;
 	private CheckBox checkBox;
 	private TextView nameView;
 	private TextView unitView;
+	private final String currentShoppingListName;
 
-	public ShoppingListAdapter(IngredientsApplication application) {
+	public ShoppingListAdapter(IngredientsApplication application,
+			String currentShoppingList) {
 		super(application.getApplicationContext(),
 				R.layout.checkable_rowlayout, R.id.labelOfCheckableList);
 		app = application;
+		currentShoppingListName = currentShoppingList;
 		setupShoppingItems();
 	}
 
@@ -46,7 +49,8 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 	}
 
 	private List<IShoppingListItem> getAllShoppingItems() {
-		return app.getShoppingDbHelper().getAllShoppingItems();
+		return app.getShoppingDbHelper().getAllShoppingItems(
+				currentShoppingListName);
 	}
 
 	@Override

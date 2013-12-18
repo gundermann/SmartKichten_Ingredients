@@ -10,6 +10,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
@@ -55,6 +56,7 @@ public class IngredientsApplication extends Application {
 	private IDatabaseHelper<IRecipe> recipeDbHelper;
 	private IDateFactory dateFactory;
 	private long lastUpdate = 0;
+	private IShoppingList shoppingList;
 
 	@Override
 	public void onCreate() {
@@ -80,6 +82,10 @@ public class IngredientsApplication extends Application {
 
 	public IShoppingData getShoppingDbHelper() {
 		return shoppingDbHelper;
+	}
+
+	public IShoppingList getName() {
+		return shoppingList;
 	}
 
 	public ICacheData getCacheDbHelper() {

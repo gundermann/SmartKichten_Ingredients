@@ -80,6 +80,8 @@
             android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity"
             android:label="@string/title_activity_shoppingDateList" >
         </activity>
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListIngredientsActivity">
+            </activity>
     </application>
 
 </manifest>

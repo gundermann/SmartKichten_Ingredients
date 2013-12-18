@@ -11,6 +11,7 @@ public class ShoppingTable {
 	public static final String QUANTITY = "quantity";
 	public static final String UNIT = "unit";
 	public static final String BOUGHT = "bought";
+	public static final String SHOPPING_LIST = "shopping_list";
 
 	public static String getDrop() {
 		StringBuilder sb = new StringBuilder();
@@ -23,7 +24,8 @@ public class ShoppingTable {
 		sb.append("create table ").append(TABLE_NAME).append(" (").append(ID)
 				.append(" integer primary key autoincrement, ").append(NAME)
 				.append(" text, ").append(QUANTITY).append(" interger, ")
-				.append(UNIT).append(" text, ").append(BOUGHT).append(" text)");
+				.append(UNIT).append(" text, ").append(BOUGHT)
+				.append(" text, ").append(SHOPPING_LIST).append(" text)");
 		return sb.toString();
 	}
 
@@ -41,11 +43,12 @@ public class ShoppingTable {
 	}
 
 	public static ContentValues getContentValuesForAllButId(
-			IShoppingListItem shoppingItem) {
+			IShoppingListItem shoppingItem, String shoppingList) {
 		ContentValues values = getContentValuesForQuantityBought(
 				shoppingItem.getQuantity(), shoppingItem.isBought());
 		values.put(NAME, shoppingItem.getName());
 		values.put(UNIT, shoppingItem.getUnit().toString());
+		values.put(SHOPPING_LIST, shoppingList);
 
 		return values;
 	}
@@ -53,4 +56,5 @@ public class ShoppingTable {
 	public static String[] selectQuantity() {
 		return new String[] { QUANTITY };
 	}
+
 }

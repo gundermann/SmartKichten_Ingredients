@@ -1,105 +1,104 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.TreeSet;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.zxing.client.android.IntentIntegrator;
-import com.google.zxing.client.android.IntentResult;
 
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
-import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialog;
+import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
- * @author Niels Gundermann
+ * 
+ * @author Frauke Trautmann
+ * 
  */
+
 public class ShoppingListActivity extends AbstractActivity implements
-		OnClickListener {
+		OnClickListener, OnItemClickListener, InsertNameDialogListener {
 
 	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
-	private ImageButton btAddNewShoppingItem;
+	private ImageButton btAddNewShoppingList;
 	private BroadcastReceiver notifyShoppingdataChange;
+	private Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_layout);
-		btAddNewShoppingItem = (ImageButton) findViewById(R.id.addNewShoppingItem);
-		btAddNewShoppingItem.setOnClickListener(this);
+		btAddNewShoppingList = (ImageButton) findViewById(R.id.addNewShoppingItem);
+		btAddNewShoppingList.setOnClickListener(this);
 		shoppingListView = (ListView) findViewById(R.id.shoppingList);
-		setupShoppingList();
+
+		AdapterFactory<IShoppingList> adapterFactory = new AdapterFactory<IShoppingList>();
+		ListAdapter adapter = adapterFactory.createAdapter(
+				getApplicationContext(), R.layout.list_view_entry, getName());
+
+		shoppingListView.setAdapter(adapter);
+		shoppingListView.setOnItemClickListener(this);
 		Log.i(TAG, "created");
 	}
 
-	private void setupShoppingList() {
-		TextView emptyView = new TextView(getApplicationContext());
-		emptyView.setText(R.string.emptyShoppingList);
-		shoppingListView.setEmptyView(findViewById(android.R.id.empty));
+	private List<IShoppingList> getName() {
+		// TreeSet<IShoppingList> listName = new TreeSet<IShoppingList>();
+		// listName.addAll(app.getShoppingDbHelper().getAllShoppingLists());
+		// List<IShoppingList> shoppingList = new ArrayList<IShoppingList>(
+		// listName);
+		// return shoppingList;
+		return app.getShoppingDbHelper().getAllShoppingLists();
+	}
+
+	@Override
+	public void onClick(View v) {
+		DialogFragment dialog = new InsertNameDialog();
+		dialog.show(getSupportFragmentManager(), TAG);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		updateShoppingList();
-		notifyShoppingdataChange = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				updateShoppingList();
-				Log.d(this.getClass().getSimpleName(), "onReceive");
-			}
-		};
+	};
 
-		IntentFilter broadcastIntentFilter = new IntentFilter(
-				IngredientsApplication.CHANGING);
-		registerReceiver(notifyShoppingdataChange, broadcastIntentFilter,
-				IngredientsApplication.PERMISSION, null);
-		Log.i(TAG, "broadcastreceiver registed");
+	private void updateShoppingList() {
+		ListAdapter adapter = new AdapterFactory<IShoppingList>()
+				.createAdapter(app, android.R.layout.simple_list_item_1,
+						getName());
+		shoppingListView.setAdapter(adapter);
+		Log.i(TAG, "shoppinglist updated");
 	}
 
 	@Override
-	protected void onPause() {
-		super.onPause();
-		unregisterReceiver(notifyShoppingdataChange);
-		Log.i(TAG, "broadcastreceiver unregisted");
-	}
-
-	private List<IShoppingListItem> getShoppingItems() {
-		List<IShoppingListItem> shoppingItems = new ArrayList<IShoppingListItem>();
-		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
-		ingredients.addAll(app.getShoppingDbHelper().getAllShoppingItems());
-		for (IShoppingListItem item : ingredients) {
-			shoppingItems.add(item);
-		}
-		return shoppingItems;
-	}
-
-	private void updateShoppingList() {
-		ListAdapter adapter = new AdapterFactory<IShoppingListItem>()
-				.createCheckableAdapter(app);
-		shoppingListView.setAdapter(adapter);
-		Log.i(TAG, "shoppinglist updated");
+	public void onItemClick(AdapterView<?> adapterView, View view,
+			int position, long id) {
+		// AlertDialog.Builder adb = new AlertDialog.Builder(
+		// ShoppingListActivity.this);
+		startActivity(new Intent(getApplicationContext(),
+				ShoppingListIngredientsActivity.class).putExtra(
+				"shoppingListName", ((IShoppingList) shoppingListView
+						.getItemAtPosition(position)).getName()));
 	}
 
 	@Override
@@ -126,9 +125,6 @@ public class ShoppingListActivity extends AbstractActivity implements
 		case R.id.menu_edit_stored_items:
 			startNextActivity(StoredIngredientActivity.class);
 			break;
-		case R.id.menu_delete_shoppinglist:
-			app.getShoppingDbHelper().deleteAllShoppingItems();
-			updateShoppingList();
 		default:
 			break;
 		}
@@ -136,38 +132,10 @@ public class ShoppingListActivity extends AbstractActivity implements
 	}
 
 	@Override
-	public void onClick(View view) {
-		startNextActivity(IngredientCollectorActivity.class);
+	public void onPositiveFinishedDialog(String name) {
+		app.getShoppingDbHelper().addItem(new ShoppingList(name));
+		startActivity(new Intent(getApplicationContext(),
+				ShoppingListIngredientsActivity.class).putExtra(
+				"shoppingListName", name));
 	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
-				requestCode, resultCode, intent);
-		try {
-			String itemDescription = app.getBarcodeEvaluator()
-					.getItemDescription(scanningResult.getContents());
-			if (evaluateBarcodeScan(itemDescription.toLowerCase(Locale.GERMAN))) {
-				makeLongToast(R.string.scansuccess);
-			} else {
-				makeLongToast(R.string.scanfault);
-			}
-		} catch (NullPointerException npe) {
-			makeLongToast(R.string.scanerror);
-		}
-	}
-
-	private boolean evaluateBarcodeScan(String content) {
-		for (IShoppingListItem shoppingItem : getShoppingItems()) {
-			if (content.contains(shoppingItem.getName().toLowerCase(
-					Locale.GERMAN))) {
-				app.getShoppingDbHelper()
-						.getShoppingItem(shoppingItem.getName())
-						.setBought(true);
-				return true;
-			}
-		}
-		return false;
-	}
-
 }
