@@ -48,9 +48,11 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_layout);
+		setContentView(R.layout.list_layout_ingredients);
+		TextView listName = (TextView) findViewById(R.id.shoppingListName);
 		currentShoppingListName = getIntent().getExtras().getString(
 				"shoppingListName");
+		listName.setText(currentShoppingListName);
 		btAddNewShoppingItem = (ImageButton) findViewById(R.id.addNewShoppingItem);
 		btAddNewShoppingItem.setOnClickListener(this);
 		shoppingListView = (ListView) findViewById(R.id.shoppingList);

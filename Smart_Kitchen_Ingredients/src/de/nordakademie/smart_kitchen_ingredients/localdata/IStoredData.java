@@ -33,4 +33,6 @@ public interface IStoredData {
 	IIngredient getStoredIngredient(String title);
 
 	int getQuantity(IIngredient item);
+	
+	void deleteStoredIngredient(String title);
 }

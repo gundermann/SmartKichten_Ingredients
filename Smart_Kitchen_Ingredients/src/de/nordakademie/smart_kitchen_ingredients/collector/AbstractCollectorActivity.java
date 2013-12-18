@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -54,6 +54,10 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		return elementsToShow;
 	}
 
+	protected ListView getElementsListView() {
+		return elementsListView;
+	}
+
 	public IListElement getCurrentElement() {
 		return currentElement;
 	}
@@ -72,10 +76,16 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		addLayoutChangeListener();
 		makeListEntriesClickable();
 		context = getApplicationContext();
-		startActivity(new Intent(getApplicationContext(),
-				AddIngredientActivity.class).putExtra("shoppingListName",
-				currentShoppingList).putExtra("ingredientTitle",
-				currentElement.getName()));
+		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
+		addNewIngredient.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(getApplicationContext(),
+						AddIngredientActivity.class).putExtra(
+						"shoppingListName", currentShoppingList).putExtra(
+						"ingredientTitle", searchBar.getText().toString()));
+			}
+		});
 	}
 
 	private void makeListEntriesClickable() {
@@ -86,7 +96,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 					int position, long arg3) {
 				currentElement = (IListElement) adapterView.getAdapter()
 						.getItem(position);
-
 				DialogFragment quantityDialog = QuantityPickerDialog
 						.newInstance(currentElement);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
@@ -153,7 +162,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			informUserWhenNoResults(elementsInList);
 			elementsToShow = (List<T>) elementsInList;
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
 	}
 
@@ -199,9 +209,5 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public void informUser(int stringId) {
-		Toast.makeText(context, stringId, Toast.LENGTH_LONG).show();
 	}
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,13 +31,17 @@ public class QuantityPickerDialog extends DialogFragment {
 	private TextView currentNumber;
 	private TextView nextNumber;
 	private EditText currentNumberInput;
-	private static IListElement element;
+	private IListElement element;
 	private QuantityPickerDialogListener dialogListener;
 
 	public static final QuantityPickerDialog newInstance(IListElement element) {
-		QuantityPickerDialog.element = element;
 		QuantityPickerDialog dialog = new QuantityPickerDialog();
+		dialog.setListElement(element);
 		return dialog;
+	}
+
+	public void setListElement(IListElement element) {
+		this.element = element;
 	}
 
 	private void setCurrentNumber(int newValue) {
@@ -132,7 +137,7 @@ public class QuantityPickerDialog extends DialogFragment {
 	}
 
 	public void doOnPositive() {
-		dialogListener.onPositiveFinishedDialog(getCurrentValue());
+		dialogListener.onPositiveFinishedDialog(element, getCurrentValue());
 	}
 
 	private Integer getCurrentValue() {
@@ -162,14 +167,6 @@ public class QuantityPickerDialog extends DialogFragment {
 	}
 
 	private void setOnClickListener() {
-		currentNumber.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-
 		increaseButton.setOnClickListener(new OnClickListener() {
 
 			@Override

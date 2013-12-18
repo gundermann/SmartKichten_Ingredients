@@ -27,7 +27,6 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
-import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialog;
 import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity;
@@ -63,8 +62,10 @@ public class ShoppingListActivity extends AbstractActivity implements
 
 		shoppingListView.setAdapter(adapter);
 		shoppingListView.setOnItemClickListener(this);
+
 		shoppingListView.setOnItemLongClickListener(this);
 		Log.i(TAG, "created");
+
 	}
 
 	private List<IShoppingList> getName() {
@@ -127,12 +128,10 @@ public class ShoppingListActivity extends AbstractActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(
-				ShoppingListActivity.this);
 		startActivity(new Intent(getApplicationContext(),
 				ShoppingListIngredientsActivity.class).putExtra(
-				"shoppingListName", adapterView.getAdapter().getItem(position)
-						.toString()));
+				"shoppingListName", ((IShoppingList) shoppingListView
+						.getItemAtPosition(position)).getName()));
 	}
 
 	@Override
@@ -169,7 +168,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 	public void onPositiveFinishedDialog(String name) {
 		app.getShoppingDbHelper().addItem(new ShoppingList(name));
 		startActivity(new Intent(getApplicationContext(),
-				IngredientCollectorActivity.class).putExtra("shoppingListName",
-				name));
+				ShoppingListIngredientsActivity.class).putExtra(
+				"shoppingListName", name));
 	}
 }

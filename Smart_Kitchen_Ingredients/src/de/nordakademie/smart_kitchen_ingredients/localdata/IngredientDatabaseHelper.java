@@ -22,4 +22,9 @@ public class IngredientDatabaseHelper implements IDatabaseHelper<IIngredient> {
 	public List<IIngredient> getDatabaseEntries() {
 		return db.getAllIngredients();
 	}
+
+	@Override
+	public IIngredient getExplicitItem(String title) {
+		return db.getIngredientByTitle(title);
+	}
 }

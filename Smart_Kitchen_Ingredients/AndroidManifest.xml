@@ -39,7 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="de.nordakademie.smart_kitchen_ingredients.stock.StockPrefsActivity" >
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.stock.StockPrefsActivity" 
+            	  android:label="@string/menuInsertStoredItems">
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity"
@@ -51,15 +52,19 @@
             android:label="@string/recipeCollector" 
             android:launchMode="singleTask">
         </activity>
-        <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity" >
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity" 
+            	  android:label="@string/stock_ingredients" >
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateActivity"
             android:label="@string/title_activity_shoppingDate" >
         </activity>
-        <activity android:name="de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity" >
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity"
+            	  android:label="@string/menuInsertStoredItems"
+            	  android:launchMode="singleTask" >
         </activity>
-        <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientActivity" >
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientActivity" 
+            	  android:label="@string/menuInsertStoredItems">
         </activity>
 
         <receiver android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateAlarmReceiver" >

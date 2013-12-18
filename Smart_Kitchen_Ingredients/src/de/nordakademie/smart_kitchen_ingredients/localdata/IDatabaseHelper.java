@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface IDatabaseHelper<T> {
 	List<T> getDatabaseEntries();
-	
-	
+
+	T getExplicitItem(String title);
+
 }

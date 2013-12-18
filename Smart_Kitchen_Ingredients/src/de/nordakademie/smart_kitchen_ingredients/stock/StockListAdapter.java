@@ -46,7 +46,6 @@ public class StockListAdapter extends ArrayAdapter<IIngredient> {
 	}
 
 	private void updateLayout(IIngredient item) {
-		// TODO Defaultminimum in Unit
 		nameTextView.setTextColor(Color.BLACK);
 		int quantity = getQuantityOfItem(item);
 		if (getQuantityOfItem(item) <= prefs.getInt(item.getUnit().toString(),

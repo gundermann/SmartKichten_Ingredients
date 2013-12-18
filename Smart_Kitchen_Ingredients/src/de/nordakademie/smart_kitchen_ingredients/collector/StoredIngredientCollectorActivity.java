@@ -6,7 +6,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 public class StoredIngredientCollectorActivity extends
-		IngredientCollectorActivity {
+		IngredientCollectorActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -14,14 +14,13 @@ public class StoredIngredientCollectorActivity extends
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
 			((IngredientsApplication) getApplication()).getStoredDbHelper()
-					.insertOrUpdateIngredient(
-							(IIngredient) getCurrentElement(), quantity);
+					.insertOrUpdateIngredient((IIngredient) element, quantity);
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
 	}
-
 }

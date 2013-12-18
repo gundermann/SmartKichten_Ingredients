@@ -29,7 +29,6 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 	private CheckBox checkBox;
 	private TextView nameView;
 	private TextView unitView;
-	private int selectedPosition;
 	private final String currentShoppingListName;
 
 	public ShoppingListAdapter(IngredientsApplication application,
@@ -64,15 +63,10 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 		nameView = (TextView) rowView.findViewById(R.id.labelOfCheckableList);
 		unitView = (TextView) rowView.findViewById(R.id.unitOfCheckableList);
 		checkBox = (CheckBox) rowView.findViewById(R.id.buyedCheck);
-		checkBox.setOnClickListener(getListenerForPosition(position));
+		checkBox.setOnClickListener(this);
 
 		updateLayout(getItem(position));
 		return rowView;
-	}
-
-	private OnClickListener getListenerForPosition(int position) {
-		selectedPosition = position;
-		return this;
 	}
 
 	private void updateShoppingItem(IShoppingListItem item) {
@@ -91,7 +85,7 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 
 	@Override
 	public void onClick(View v) {
-		IShoppingListItem item = getItem(selectedPosition);
+		IShoppingListItem item = getItemByView((View) v.getParent());
 		if (!item.isBought()) {
 			item.setBought(true);
 		} else {
@@ -100,6 +94,12 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 		updateShoppingItem(item);
 		app.sendBroadcast(new Intent(IngredientsApplication.CHANGING),
 				IngredientsApplication.PERMISSION);
+	}
+
+	private IShoppingListItem getItemByView(View v) {
+		String itemTitle = ((TextView) v
+				.findViewById(R.id.labelOfCheckableList)).getText().toString();
+		return app.getShoppingDbHelper().getShoppingItem(itemTitle);
 	}
 
 }
