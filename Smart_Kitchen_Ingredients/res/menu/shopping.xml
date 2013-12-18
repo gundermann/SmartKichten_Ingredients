@@ -5,17 +5,8 @@
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_today"
         android:title="@string/menuSetupShoppingDate"/>
-    <item
-        android:id="@+id/menu_qrscan"
-        android:title="@string/menuCodeScanner"/>
-    <item
-        android:id="@+id/menu_clean_shoppingList"
-        android:title="@string/menuCleanShoppingList"/>
-    <item
-        android:id="@+id/menu_delete_shoppinglist"
-        android:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/menuDeleteShoppingList"/>
+
+    
     <item
         android:id="@+id/menu_edit_stored_items"
         android:title="@string/menuInsertStoredItems"/>
