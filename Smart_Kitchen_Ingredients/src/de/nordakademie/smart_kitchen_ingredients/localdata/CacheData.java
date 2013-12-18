@@ -95,6 +95,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 		while (cursor.moveToNext()) {
 			IRecipeFactory recipeFactory = app.getRecipeFactory();
+			// TODO sehr inperformant --> nur Rezeptnamen der AsyncTask
+			// zurückliefern.
 			recipes.add(recipeFactory.createRecipe(cursor.getString(1),
 					getIngredientsForRecipeID(cursor.getString(0))));
 		}
@@ -103,8 +105,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	}
 
 	private void updateIfNecessary() {
-		if (app.updateNeeded() || !isCachedDataAvailable()) {
-			app.updateCache();
+		if (isCachedDataAvailable()) {
+			app.updateIfNecessary();
 		}
 	}
 

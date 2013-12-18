@@ -126,23 +126,20 @@ public class IngredientsApplication extends Application {
 		return dateDbHelper;
 	}
 
-	public boolean updateNeeded() {
-		if (System.currentTimeMillis() - lastUpdate > ONE_DAY) {
-			lastUpdate = System.currentTimeMillis();
-			return true;
-		}
-		return false;
-	}
-
-	public void updateCache() {
-		serverDataHelper.insertOrUpdateAllIngredientsFromServer(serverHandler
-				.getIngredientListFromServer());
-		serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
-				.getRecipeListFromServer());
-	}
-
 	public void informUserAboutSomething() {
 		Toast.makeText(getApplicationContext(), "AppToast", Toast.LENGTH_LONG)
 				.show();
+	}
+
+	public void updateIfNecessary() {
+		if (System.currentTimeMillis() - lastUpdate > ONE_DAY) {
+			serverDataHelper
+					.insertOrUpdateAllIngredientsFromServer(serverHandler
+							.getIngredientListFromServer());
+			serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
+					.getRecipeListFromServer());
+			lastUpdate = System.currentTimeMillis();
+		}
+
 	}
 }
