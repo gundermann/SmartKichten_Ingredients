@@ -55,4 +55,9 @@ public interface IShoppingData {
 	 * @return IShoppingListItem
 	 */
 	IShoppingListItem getShoppingItem(String title);
+	
+	/**
+	 * Löscht alle in der Einkaufsliste enthaltenen Zutaten
+	 */
+	void deleteAllShoppingItems();
 }
