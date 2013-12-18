@@ -46,8 +46,9 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 			public void onItemClick(AdapterView<?> adapterView, View view,
 					int position, long arg3) {
 				ShowRecipeIngredientsDialog.newInstance(
-						(IRecipe) adapterView.getAdapter().getItem(position))
-						.show(getSupportFragmentManager(), TAG);
+						findIngredientInDatabase((IRecipe) adapterView
+								.getAdapter().getItem(position))).show(
+						getSupportFragmentManager(), TAG);
 
 			}
 		});
@@ -73,14 +74,17 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	@Override
 	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
-			IngredientsApplication app = ((IngredientsApplication) getApplication());
-			IRecipe recipeToAdd = app.getRecipeDbHelper().getExplicitItem(
-					element.getName());
+			IRecipe recipeToAdd = findIngredientInDatabase(element);
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
 
 			.addItem(recipeToAdd, quantity, currentShoppingList);
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
+	}
+
+	private IRecipe findIngredientInDatabase(IListElement element) {
+		return app.getRecipeDbHelper().getExplicitItem(element.getName());
 	}
 }

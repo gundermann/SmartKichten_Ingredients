@@ -19,7 +19,8 @@ public class StoredIngredientCollectorActivity extends
 			((IngredientsApplication) getApplication()).getStoredDbHelper()
 					.insertOrUpdateIngredient((IIngredient) element, quantity);
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
 	}
 }

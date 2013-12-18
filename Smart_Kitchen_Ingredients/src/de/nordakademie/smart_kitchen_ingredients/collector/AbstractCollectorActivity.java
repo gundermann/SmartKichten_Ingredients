@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -162,7 +162,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			informUserWhenNoResults(elementsInList);
 			elementsToShow = (List<T>) elementsInList;
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
 	}
 
@@ -208,9 +209,5 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public void informUser(int stringId) {
-		Toast.makeText(context, stringId, Toast.LENGTH_LONG).show();
 	}
 }

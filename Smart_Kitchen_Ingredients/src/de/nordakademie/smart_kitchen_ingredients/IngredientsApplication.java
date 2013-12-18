@@ -143,8 +143,8 @@ public class IngredientsApplication extends Application {
 		}
 	}
 
-	public void informUserAboutSomething() {
-		Toast.makeText(getApplicationContext(), "AppToast", Toast.LENGTH_LONG)
+	public void informUser(int stringId) {
+		Toast.makeText(getApplicationContext(), stringId, Toast.LENGTH_LONG)
 				.show();
 	}
 

@@ -68,9 +68,11 @@ public class IngredientCollectorActivity extends
 			.addItem((IIngredient) ingredientToAdd, quantity,
 					currentShoppingList);
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		} catch (Exception e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
 	}
 }
