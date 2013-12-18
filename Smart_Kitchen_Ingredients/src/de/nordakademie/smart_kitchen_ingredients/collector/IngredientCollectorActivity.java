@@ -19,16 +19,16 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
 	private Button showRecepiesButton;
-	private IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
+	private final IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
 	private IngredientsApplication app;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (IngredientsApplication) getApplication();
 		initiateButtons();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -61,8 +61,11 @@ public class IngredientCollectorActivity extends
 	public void onPositiveFinishedDialog(int quantity) {
 		try {
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IIngredient) getCurrentElement(), quantity);
+					.addItem((IIngredient) getCurrentElement(), quantity,
+							currentShoppingList);
 		} catch (ClassCastException e) {
+			informUser(R.string.developerMistake);
+		} catch (Exception e) {
 			informUser(R.string.developerMistake);
 		}
 	}

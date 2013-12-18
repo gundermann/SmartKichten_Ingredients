@@ -1,12 +1,12 @@
 package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 
-public abstract class AbstractActivity extends Activity {
+public abstract class AbstractActivity extends FragmentActivity {
 
 	protected IngredientsApplication app;
 

@@ -33,7 +33,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 	private static final String TAG = SmartKitchenData.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 	private static final String DATABASE_NAME = "shoppingDB.db";
 
 	public static final String TABLE_SHOPPING = "shopping_table";
@@ -273,7 +273,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	}
 
 	private boolean insertItemsIntoDatabase(
-			List<IShoppingListItem> shoppingItemList) {
+			List<IShoppingListItem> shoppingItemList, String shoppingList) {
 		boolean success = false;
 		for (IShoppingListItem shoppingItem : shoppingItemList) {
 			if (updateShoppingItem(shoppingItem) == 0) {
@@ -282,6 +282,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 				values.put(COLUMN_AMOUNT, shoppingItem.getQuantity());
 				values.put(COLUMN_UNIT, shoppingItem.getUnit().toString());
 				values.put(COLUMN_BOUGHT, String.valueOf(false));
+				values.put(COLUMN_SHOPPING_LIST_NAME, shoppingList);
 
 				SQLiteDatabase writableDatabase = getWritableDatabase();
 				try {
@@ -322,14 +323,15 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	}
 
 	@Override
-	public boolean addItem(IIngredient ingredient, int quantity) {
+	public boolean addItem(IIngredient ingredient, int quantity,
+			String shoppingList) {
 		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
 		IShoppingListItem shoppingListItem = app.getShoppingListItemFactory()
 				.createShoppingListItem(ingredient.getName(), quantity,
 						ingredient.getUnit(), false);
 		shoppingItemList.add(shoppingListItem);
 
-		return insertItemsIntoDatabase(shoppingItemList);
+		return insertItemsIntoDatabase(shoppingItemList, shoppingList);
 	}
 
 	@Override
@@ -339,7 +341,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	}
 
 	@Override
-	public boolean addItem(IRecipe recipe, int quantity) {
+	public boolean addItem(IRecipe recipe, int quantity, String shoppingList) {
 		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
 		for (IIngredient ingredient : recipe.getIngredients().keySet()) {
 			IShoppingListItem shoppingListItem = app
@@ -350,7 +352,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 			shoppingItemList.add(shoppingListItem);
 		}
 
-		return insertItemsIntoDatabase(shoppingItemList);
+		return insertItemsIntoDatabase(shoppingItemList, shoppingList);
 	}
 
 	private int getQuantityShopping(IIngredient item) {

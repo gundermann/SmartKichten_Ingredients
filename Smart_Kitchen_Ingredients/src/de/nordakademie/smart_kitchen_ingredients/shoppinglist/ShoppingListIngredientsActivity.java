@@ -146,7 +146,9 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 
 	@Override
 	public void onClick(View view) {
-		startNextActivity(IngredientCollectorActivity.class);
+		startActivity(new Intent(getApplicationContext(),
+				IngredientCollectorActivity.class).putExtra("shoppingListName",
+				currentShoppingListName));
 	}
 
 	@Override

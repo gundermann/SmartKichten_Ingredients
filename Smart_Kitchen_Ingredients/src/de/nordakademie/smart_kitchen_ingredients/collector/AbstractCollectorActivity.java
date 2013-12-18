@@ -48,6 +48,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 
 	private Context context;
 
+	protected String currentShoppingList;
+
 	public List<T> getElementsToShow() {
 		return elementsToShow;
 	}
@@ -59,13 +61,21 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (getIntent().getExtras() != null
+				&& getIntent().getExtras().size() > 0) {
+			currentShoppingList = getIntent().getExtras().getString(
+					"shoppingListName");
+		}
 		TAG = this.getClass().getSimpleName();
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
 		makeListEntriesClickable();
 		context = getApplicationContext();
-		setNextActivityOnClick(addNewIngredient, AddIngredientActivity.class);
+		startActivity(new Intent(getApplicationContext(),
+				AddIngredientActivity.class).putExtra("shoppingListName",
+				currentShoppingList).putExtra("ingredientTitle",
+				currentElement.getName()));
 	}
 
 	private void makeListEntriesClickable() {
