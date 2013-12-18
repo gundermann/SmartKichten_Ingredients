@@ -126,12 +126,7 @@ public class IngredientsApplication extends Application {
 		return dateDbHelper;
 	}
 
-	public void informUserAboutSomething() {
-		Toast.makeText(getApplicationContext(), "AppToast", Toast.LENGTH_LONG)
-				.show();
-	}
-
-	public void updateIfNecessary() {
+	public void updateCache() {
 		if (System.currentTimeMillis() - lastUpdate > ONE_DAY) {
 			serverDataHelper
 					.insertOrUpdateAllIngredientsFromServer(serverHandler
@@ -140,6 +135,11 @@ public class IngredientsApplication extends Application {
 					.getRecipeListFromServer());
 			lastUpdate = System.currentTimeMillis();
 		}
-
 	}
+
+	public void informUserAboutSomething() {
+		Toast.makeText(getApplicationContext(), "AppToast", Toast.LENGTH_LONG)
+				.show();
+	}
+
 }

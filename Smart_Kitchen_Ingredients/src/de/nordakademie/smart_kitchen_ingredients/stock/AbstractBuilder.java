@@ -34,8 +34,8 @@ public abstract class AbstractBuilder extends Builder {
 	}
 
 	protected void openQualityDialog(String title, String TAG) {
-		IListElement element = (IListElement) app.getShoppingDbHelper()
-				.getShoppingItem(title);
+		IListElement element = app.getStoredDbHelper().getStoredIngredient(
+				title);
 
 		DialogFragment quantityDialog = QuantityDialog.newInstance(element);
 		quantityDialog.show(activity.getSupportFragmentManager(), TAG);
