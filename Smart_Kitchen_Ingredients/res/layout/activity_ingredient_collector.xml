@@ -42,6 +42,13 @@
         android:layout_alignParentBottom="true" >
 
         <Button
+            android:id="@+id/confirmShoppingList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/confirmShoppingListAdd" />
+
+        <Button
             android:id="@+id/addNewIngredientButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -63,6 +70,8 @@
             android:layout_weight="0.5"
             android:text="@string/showIngredientsButtonText"
             android:visibility="gone" />
+        
+        
     </LinearLayout>
 
     <ListView

@@ -2,8 +2,10 @@ package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -36,7 +39,8 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  */
 
 public class ShoppingListActivity extends AbstractActivity implements
-		OnClickListener, OnItemClickListener, InsertNameDialogListener {
+		OnClickListener, OnItemClickListener, InsertNameDialogListener,
+		OnItemLongClickListener {
 
 	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
@@ -58,6 +62,9 @@ public class ShoppingListActivity extends AbstractActivity implements
 
 		shoppingListView.setAdapter(adapter);
 		shoppingListView.setOnItemClickListener(this);
+
+		shoppingListView.setOnItemLongClickListener(this);
+		Log.i(TAG, "created");
 
 	}
 
@@ -88,6 +95,34 @@ public class ShoppingListActivity extends AbstractActivity implements
 						getName());
 		shoppingListView.setAdapter(adapter);
 		Log.i(TAG, "shoppinglist updated");
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> adapterView, View view,
+			int position, long id) {
+		AlertDialog.Builder adb = new AlertDialog.Builder(
+				ShoppingListActivity.this);
+		adb.setTitle(R.string.deleteShoppingListTitle);
+		adb.setMessage(R.string.deleteShoppingListSure);
+		final int positionToRemove = position;
+		adb.setNegativeButton(android.R.string.cancel, null);
+		adb.setPositiveButton(android.R.string.ok,
+				new AlertDialog.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						IShoppingList shoppingLists = (IShoppingList) shoppingListView
+								.getItemAtPosition(positionToRemove);
+						delteShoppingList(shoppingLists);
+						updateShoppingList();
+					}
+				});
+		adb.show();
+		return true;
+	}
+
+	private void delteShoppingList(IShoppingList shoppingLists) {
+		app.getShoppingDbHelper().delete(shoppingLists);
+
 	}
 
 	@Override
