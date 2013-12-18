@@ -48,6 +48,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 
 	private Context context;
 
+	protected String currentShoppingList;
+
 	public List<T> getElementsToShow() {
 		return elementsToShow;
 	}
@@ -63,13 +65,27 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (getIntent().getExtras() != null
+				&& getIntent().getExtras().size() > 0) {
+			currentShoppingList = getIntent().getExtras().getString(
+					"shoppingListName");
+		}
 		TAG = this.getClass().getSimpleName();
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
 		makeListEntriesClickable();
 		context = getApplicationContext();
-		setNextActivityOnClick(addNewIngredient, AddIngredientActivity.class);
+		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
+		addNewIngredient.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(getApplicationContext(),
+						AddIngredientActivity.class).putExtra(
+						"shoppingListName", currentShoppingList).putExtra(
+						"ingredientTitle", searchBar.getText().toString()));
+			}
+		});
 	}
 
 	private void makeListEntriesClickable() {
@@ -80,7 +96,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 					int position, long arg3) {
 				currentElement = (IListElement) adapterView.getAdapter()
 						.getItem(position);
-
 				DialogFragment quantityDialog = QuantityPickerDialog
 						.newInstance(currentElement);
 				quantityDialog.show(getSupportFragmentManager(), TAG);

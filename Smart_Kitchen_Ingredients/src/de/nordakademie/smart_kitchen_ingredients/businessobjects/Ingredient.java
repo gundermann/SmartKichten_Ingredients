@@ -1,9 +1,15 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
+/**
+ * 
+ * @author Frauke Trautmann
+ * 
+ */
+
 public class Ingredient implements IIngredient, Comparable<IIngredient> {
 
-	private String title;
-	private Unit unit;
+	private final String title;
+	private final Unit unit;
 
 	public Ingredient(String title, Unit unit) {
 		this.title = title;

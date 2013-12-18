@@ -16,10 +16,10 @@ public interface IAdapterFactory<T> {
 	ListAdapter createAdapter(Context applicationContext, int entryView,
 			List<T> elements);
 
-	ListAdapter createCheckableAdapter(IngredientsApplication application);
+	ListAdapter createCheckableAdapter(IngredientsApplication application,
+			String currentShoppingListName);
 
 	ListAdapter createStoreAdapter(IngredientsApplication application);
 
 	ListAdapter createDateAdapter(IngredientsApplication application);
-
 }

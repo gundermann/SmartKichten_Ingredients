@@ -1,9 +1,8 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.net.UnknownHostException;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +28,7 @@ public class AddIngredientActivity extends Activity {
 	TextView ingredientTitleTV;
 	TextView ingredientQuantityTV;
 	Spinner ingredientUnit;
+	private String currentShoppingListName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,11 @@ public class AddIngredientActivity extends Activity {
 
 		if (getIntent().getExtras() != null
 				&& getIntent().getExtras().size() > 0) {
-			ingredientTitle = getIntent().getExtras().get("ingredientTitle")
-					.toString();
+			ingredientTitle = getIntent().getExtras().getString(
+					"ingredientTitle");
+			currentShoppingListName = getIntent().getExtras().getString(
+					"shoppingListName");
+
 		}
 
 		app = (IngredientsApplication) getApplication();
@@ -99,17 +102,19 @@ public class AddIngredientActivity extends Activity {
 		toast.show();
 	}
 
+	protected void fetchDataFromDb(AsyncTask<Void, Void, Boolean> updateDataTask) {
+		updateDataTask.execute();
+	}
+
 	private void saveNewIngredientToDBs(String title, Integer quantity,
 			Unit unit) {
 		IShoppingListItem newItem = app.getShoppingListItemFactory()
 				.createShoppingListItem(title, quantity, unit, false);
-		try {
-			app.getServerHandler().postIngredientToServer(newItem);
-			app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(
-					app.getServerHandler().getIngredientListFromServer());
-		} catch (UnknownHostException e) {
 
-		}
-		app.getShoppingDbHelper().addItem(newItem, quantity);
+		fetchDataFromDb(new PostNewIngredientAsyncTask(newItem,
+				app.getServerHandler(), app.getCacheDbHelper()));
+
+		app.getShoppingDbHelper().addItem(newItem, quantity,
+				currentShoppingListName);
 	}
 }

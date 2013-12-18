@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 
 /**
@@ -13,26 +14,32 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
  */
 public interface IShoppingData {
 
+	List<IShoppingList> getAllShoppingLists();
+
 	/**
 	 * Fügt der eine Zutat zum einkaufen in die Datenbank ein.
 	 * 
 	 * @param ingredient
+	 * @param currentShoppingList
 	 */
-	boolean addItem(IIngredient ingredient, int quantity);
+	boolean addItem(IIngredient ingredient, int quantity,
+			String currentShoppingList);
 
 	/**
 	 * Fügt die Zutaten eines Rezepten zum einkaufen in die Datenbank ein.
 	 * 
 	 * @param recipe
 	 */
-	boolean addItem(IRecipe recipe, int quantity);
+	boolean addItem(IRecipe recipe, int quantity, String shoppingList);
 
 	/**
 	 * Liefert alle Artikel, die auf der Einkaufsliste stehen, zurück.
 	 * 
+	 * @param currentShoppingListName
+	 * 
 	 * @return List<IShoppingListItem>
 	 */
-	List<IShoppingListItem> getAllShoppingItems();
+	List<IShoppingListItem> getAllShoppingItems(String currentShoppingListName);
 
 	/**
 	 * Aktualisiert einen einzukaufden Artikel auf der Einkaufsliste.
@@ -55,7 +62,11 @@ public interface IShoppingData {
 	 * @return IShoppingListItem
 	 */
 	IShoppingListItem getShoppingItem(String title);
-	
+
+	boolean addItem(IShoppingList shoppingList);
+
+	int getQuantityShopping(IIngredient item);
+
 	/**
 	 * Löscht alle in der Einkaufsliste enthaltenen Zutaten
 	 */

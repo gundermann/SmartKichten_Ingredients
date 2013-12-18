@@ -5,7 +5,6 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,7 +20,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  */
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
 	private Button showIngredientsButton;
-	private IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
+	private final IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
 	private IngredientsApplication app;
 
 	@Override
@@ -74,8 +73,12 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	@Override
 	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
+			IngredientsApplication app = ((IngredientsApplication) getApplication());
+			IRecipe recipeToAdd = app.getRecipeDbHelper().getExplicitItem(
+					element.getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IRecipe) element, quantity);
+
+			.addItem(recipeToAdd, quantity, currentShoppingList);
 		} catch (ClassCastException e) {
 			informUser(R.string.developerMistake);
 		}

@@ -10,6 +10,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
@@ -55,6 +56,7 @@ public class IngredientsApplication extends Application {
 	private IDatabaseHelper<IRecipe> recipeDbHelper;
 	private IDateFactory dateFactory;
 	private long lastUpdate = 0;
+	private IShoppingList shoppingList;
 
 	@Override
 	public void onCreate() {
@@ -80,6 +82,10 @@ public class IngredientsApplication extends Application {
 
 	public IShoppingData getShoppingDbHelper() {
 		return shoppingDbHelper;
+	}
+
+	public IShoppingList getName() {
+		return shoppingList;
 	}
 
 	public ICacheData getCacheDbHelper() {
@@ -126,23 +132,20 @@ public class IngredientsApplication extends Application {
 		return dateDbHelper;
 	}
 
-	public boolean updateNeeded() {
-		if (System.currentTimeMillis() - lastUpdate > ONE_DAY) {
-			lastUpdate = System.currentTimeMillis();
-			return true;
-		}
-		return false;
-	}
-
 	public void updateCache() {
-		serverDataHelper.insertOrUpdateAllIngredientsFromServer(serverHandler
-				.getIngredientListFromServer());
-		serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
-				.getRecipeListFromServer());
+		if (System.currentTimeMillis() - lastUpdate > ONE_DAY) {
+			serverDataHelper
+					.insertOrUpdateAllIngredientsFromServer(serverHandler
+							.getIngredientListFromServer());
+			serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
+					.getRecipeListFromServer());
+			lastUpdate = System.currentTimeMillis();
+		}
 	}
 
 	public void informUserAboutSomething() {
 		Toast.makeText(getApplicationContext(), "AppToast", Toast.LENGTH_LONG)
 				.show();
 	}
+
 }

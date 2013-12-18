@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 
 public class StoredIngredientOptionDialog extends AbstractBuilder {
@@ -18,7 +19,10 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 		setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				app.getStoredDbHelper().getStoredIngredient(titleFromList);
+				app.getStoredDbHelper().deleteStoredIngredient(titleFromList);
+				Intent intent = new Intent(app.getApplicationContext(), StoredIngredientActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				app.startActivity(intent);
 			}
 
 		});
@@ -26,10 +30,11 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 		setNeutralButton("Ändern", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Map<String, String> extras = new HashMap<String, String>();
-				extras.put("ingredientTitle", titleFromList);
-				startNextActivityWithExtras(StoredIngredientActivity.class,
-						extras);
+				//Map<String, String> extras = new HashMap<String, String>();
+				//extras.put("ingredientTitle", titleFromList);
+				//startNextActivityWithExtras(StoredIngredientActivity.class,
+				//		extras);
+				//app.getStoredDbHelper().insertOrUpdateIngredient(titleFromList, quantity);
 			}
 		});
 
@@ -40,5 +45,4 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 			}
 		});
 	}
-
 }
