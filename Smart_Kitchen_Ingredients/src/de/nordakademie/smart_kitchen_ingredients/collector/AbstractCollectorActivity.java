@@ -83,6 +83,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			@Override
 			public void onClick(View view) {
 				startActivity(new Intent(context, ShoppingListActivity.class));
+
 			}
 		});
 		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
