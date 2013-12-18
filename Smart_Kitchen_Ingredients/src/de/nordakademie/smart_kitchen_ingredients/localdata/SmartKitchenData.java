@@ -382,4 +382,10 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		return quantity;
 	}
 
+	@Override
+	public void deleteAllShoppingItems() {
+		SQLiteDatabase db = getWritableDatabase();
+		db.delete(TABLE_SHOPPING, null, null);
+		db.close();
+	}
 }

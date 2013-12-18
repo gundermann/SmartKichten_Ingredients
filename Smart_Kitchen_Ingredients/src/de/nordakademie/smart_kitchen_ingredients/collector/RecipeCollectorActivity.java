@@ -5,6 +5,7 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
@@ -20,14 +21,14 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	private Button showIngredientsButton;
 	private IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
 	private IngredientsApplication app;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (IngredientsApplication) getApplication();
 		initiateButtons();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();

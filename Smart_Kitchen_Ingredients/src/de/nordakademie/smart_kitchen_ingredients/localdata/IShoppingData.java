@@ -62,4 +62,10 @@ public interface IShoppingData {
 	IShoppingListItem getShoppingItem(String title);
 
 	boolean addItem(IShoppingList shoppingList);
+
+	/**
+	 * Löscht alle in der Einkaufsliste enthaltenen Zutaten
+	 */
+	void deleteAllShoppingItems();
+
 }
