@@ -241,4 +241,11 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 		closeResources();
 		return quantity;
 	}
+
+	@Override
+	public void deleteAllShoppingItems() {
+		SQLiteDatabase db = getWritableDatabase();
+		db.delete(ShoppingTable.TABLE_NAME, " * ", null);
+		db.close();
+	}
 }

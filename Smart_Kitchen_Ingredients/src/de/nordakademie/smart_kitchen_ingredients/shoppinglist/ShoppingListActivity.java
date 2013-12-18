@@ -126,6 +126,8 @@ public class ShoppingListActivity extends AbstractActivity implements
 		case R.id.menu_edit_stored_items:
 			startNextActivity(StoredIngredientActivity.class);
 			break;
+		case R.id.menu_delete_shoppinglist:
+			app.getShoppingDbHelper().deleteAllShoppingItems();
 		default:
 			break;
 		}

@@ -141,7 +141,7 @@ public class ShoppingDateActivity extends Activity implements
 			try {
 				cal = formatter.parse(sb.toString());
 				long triggerAtTime = cal.getTime();
-				chooseDate = app.getDateFactory().createDate(null,
+				chooseDate = app.getDateFactory().createDate(dateTitle.getText().toString(),
 						triggerAtTime, intentFlag);
 				app.getDateDbHelper().insertNewDate(chooseDate);
 
