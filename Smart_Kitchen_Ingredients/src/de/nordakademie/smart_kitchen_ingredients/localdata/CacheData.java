@@ -62,11 +62,10 @@ public class CacheData extends AbstractData implements ICacheData {
 			recipeMap.put(cursor.getString(0), cursor.getString(1));
 		}
 		for (String id : recipeMap.keySet()) {
-			// TODO sehr inperformant --> nur Rezeptnamen der AsyncTask
-			// zurückliefern.
+			// // TODO sehr inperformant --> nur Rezeptnamen der AsyncTask
+			// // zurückliefern.
 			IRecipeFactory recipeFactory = app.getRecipeFactory();
-			recipes.add(recipeFactory.createRecipe(recipeMap.get(id),
-					getIngredientsForRecipeID(id)));
+			recipes.add(recipeFactory.createRecipe(recipeMap.get(id), null));
 		}
 		closeResources();
 		return recipes;
