@@ -63,8 +63,7 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 			IRecipe recipeToAdd = app.getRecipeDbHelper().getExplicitItem(
 					getCurrentElement().getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IRecipe) getCurrentElement(), quantity,
-							currentShoppingList);
+					.addItem(recipeToAdd, quantity, currentShoppingList);
 		} catch (ClassCastException e) {
 			informUser(R.string.developerMistake);
 		}
