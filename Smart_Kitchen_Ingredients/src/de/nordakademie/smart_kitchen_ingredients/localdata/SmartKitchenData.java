@@ -297,11 +297,23 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 	}
 
 	@Override
+	public void delete(IShoppingList shoppingList) {
+		SQLiteDatabase db = getWritableDatabase();
+		db.delete(ShoppingListTable.TABLE_NAME,
+				getWhere(ShoppingListTable.NAME, shoppingList.getName()), null);
+		db.delete(ShoppingTable.TABLE_NAME,
+				getWhere(ShoppingTable.SHOPPING_LIST, shoppingList.getName()),
+				null);
+		db.close();
+
+	}
+
+	@Override
 	public void deleteStoredIngredient(String title) {
 		SQLiteDatabase db = getWritableDatabase();
-		db.delete(StoredTable.TABLE_NAME, StoredTable.NAME
-				+ " = '" + title + "'", null);
+		db.delete(StoredTable.TABLE_NAME, StoredTable.NAME + " = '" + title
+				+ "'", null);
 		db.close();
-		
+
 	}
 }

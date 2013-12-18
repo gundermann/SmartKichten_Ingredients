@@ -71,4 +71,7 @@ public interface IShoppingData {
 	 * Löscht alle in der Einkaufsliste enthaltenen Zutaten
 	 */
 	void deleteAllShoppingItems();
+
+	void delete(IShoppingList shoppingList);
+
 }

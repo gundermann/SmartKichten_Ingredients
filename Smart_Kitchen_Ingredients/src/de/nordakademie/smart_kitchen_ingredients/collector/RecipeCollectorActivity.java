@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
@@ -38,6 +40,19 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	private void initiateButtons() {
 		showIngredientsButton = (Button) findViewById(R.id.showIngredientsButton);
 		showIngredientsButton.setVisibility(View.VISIBLE);
+		getElementsListView().setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int position, long arg3) {
+				ShowRecipeIngredientsDialog.newInstance(
+						findIngredientInDatabase((IRecipe) adapterView
+								.getAdapter().getItem(position))).show(
+						getSupportFragmentManager(), TAG);
+
+			}
+		});
+
 		setNextActivityOnClick(showIngredientsButton,
 				IngredientCollectorActivity.class);
 	}
@@ -57,15 +72,19 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
-			IngredientsApplication app = ((IngredientsApplication) getApplication());
-			IRecipe recipeToAdd = app.getRecipeDbHelper().getExplicitItem(
-					getCurrentElement().getName());
+			IRecipe recipeToAdd = findIngredientInDatabase(element);
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem(recipeToAdd, quantity, currentShoppingList);
+
+			.addItem(recipeToAdd, quantity, currentShoppingList);
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
+	}
+
+	private IRecipe findIngredientInDatabase(IListElement element) {
+		return app.getRecipeDbHelper().getExplicitItem(element.getName());
 	}
 }

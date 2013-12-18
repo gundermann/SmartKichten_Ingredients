@@ -58,18 +58,21 @@ public class IngredientCollectorActivity extends
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
 			IngredientsApplication app = ((IngredientsApplication) getApplication());
 			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
-					.getExplicitItem(getCurrentElement().getName());
+					.getExplicitItem(element.getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IIngredient) getCurrentElement(), quantity,
-							currentShoppingList);
+
+			.addItem((IIngredient) ingredientToAdd, quantity,
+					currentShoppingList);
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		} catch (Exception e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
 	}
 }
