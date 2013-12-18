@@ -21,9 +21,8 @@ public abstract class AbstractActivity extends Activity {
 	}
 
 	protected void makeLongToast(int textId) {
-		Toast toast = Toast.makeText(getApplicationContext(), getText(textId),
-				Toast.LENGTH_SHORT);
-		toast.show();
+		Toast.makeText(getApplicationContext(), getText(textId),
+				Toast.LENGTH_SHORT).show();
 	}
 
 }
