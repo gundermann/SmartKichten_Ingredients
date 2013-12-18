@@ -23,6 +23,7 @@ import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
+import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
 
 /**
@@ -33,7 +34,7 @@ import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientColle
  */
 public class StoredIngredientActivity extends AbstractFragmentActivity
 		implements OnClickListener, OnItemLongClickListener,
-		OnSharedPreferenceChangeListener {
+		OnSharedPreferenceChangeListener, QuantityPickerDialogListener {
 
 	private static final String TAG = StoredIngredientActivity.class
 			.getSimpleName();
@@ -134,6 +135,12 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 	public void onSharedPreferenceChanged(SharedPreferences preference,
 			String key) {
 		updateStockList();
+	}
+
+	@Override
+	public void onPositiveFinishedDialog(int quantity) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

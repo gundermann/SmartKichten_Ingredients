@@ -6,7 +6,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 public class StoredIngredientCollectorActivity extends
-		IngredientCollectorActivity {
+		IngredientCollectorActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
