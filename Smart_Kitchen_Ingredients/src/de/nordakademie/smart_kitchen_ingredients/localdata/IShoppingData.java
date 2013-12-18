@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 
 /**
@@ -12,6 +13,8 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
  * 
  */
 public interface IShoppingData {
+
+	List<IShoppingList> getAllShoppingLists();
 
 	/**
 	 * Fügt der eine Zutat zum einkaufen in die Datenbank ein.
@@ -30,9 +33,11 @@ public interface IShoppingData {
 	/**
 	 * Liefert alle Artikel, die auf der Einkaufsliste stehen, zurück.
 	 * 
+	 * @param currentShoppingListName
+	 * 
 	 * @return List<IShoppingListItem>
 	 */
-	List<IShoppingListItem> getAllShoppingItems();
+	List<IShoppingListItem> getAllShoppingItems(String currentShoppingListName);
 
 	/**
 	 * Aktualisiert einen einzukaufden Artikel auf der Einkaufsliste.
@@ -55,4 +60,6 @@ public interface IShoppingData {
 	 * @return IShoppingListItem
 	 */
 	IShoppingListItem getShoppingItem(String title);
+
+	boolean addItem(IShoppingList shoppingList);
 }

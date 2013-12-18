@@ -13,8 +13,10 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
 /**
@@ -27,7 +29,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 public class SmartKitchenData extends SQLiteOpenHelper implements
 		IShoppingData, IStoredData {
 
-	private IngredientsApplication app;
+	private final IngredientsApplication app;
 
 	private static final String TAG = SmartKitchenData.class.getSimpleName();
 
@@ -40,12 +42,14 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	public static final String COLUMN_AMOUNT = "amount";
 	public static final String COLUMN_UNIT = "unit";
 	public static final String COLUMN_BOUGHT = "bourght";
+	public static final String COLUMN_SHOPPING_LIST_NAME = "title";
 
 	public static final String TABLE_STORED = "stored_table";
 
 	private static final String SHOPPING_TABLE_CREATE = "create table "
 			+ TABLE_SHOPPING + " (" + COLUMN_ID
-			+ " integer primary key autoincrement, " + COLUMN_INGREDIENT
+			+ " integer primary key autoincrement, "
+			+ COLUMN_SHOPPING_LIST_NAME + " text, " + COLUMN_INGREDIENT
 			+ " text, " + COLUMN_AMOUNT + " interger, " + COLUMN_UNIT
 			+ " text, " + COLUMN_BOUGHT + " text)";
 
@@ -54,6 +58,11 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 			+ " integer primary key autoincrement, " + COLUMN_INGREDIENT
 			+ " text, " + COLUMN_AMOUNT + " interger, " + COLUMN_UNIT
 			+ " text)";
+
+	public static final String TABLE_SHOPPING_LIST = "shopping_list_table";
+
+	private static final String TABLE_SHOPPING_LIST_CREATE = "create table "
+			+ TABLE_SHOPPING_LIST + " (" + COLUMN_SHOPPING_LIST_NAME + " text)";
 
 	public SmartKitchenData(IngredientsApplication app) {
 		super(app.getApplicationContext(), DATABASE_NAME, null,
@@ -65,6 +74,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL(SHOPPING_TABLE_CREATE);
 		database.execSQL(STORED_TABLE_CREATE);
+		database.execSQL(TABLE_SHOPPING_LIST_CREATE);
 		Log.i(TAG, "shoppingDB created");
 	}
 
@@ -74,21 +84,45 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 				+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPPING);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORED);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPPING_LIST);
 		onCreate(db);
 	}
 
 	@Override
-	public List<IShoppingListItem> getAllShoppingItems() {
+	public List<IShoppingListItem> getAllShoppingItems(
+			String currentShoppingListName) {
 		SQLiteDatabase db = getReadableDatabase();
 		try {
 
 			List<IShoppingListItem> values = new ArrayList<IShoppingListItem>();
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
 					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT,
-					COLUMN_BOUGHT }, null, null, null, null, null);
+					COLUMN_BOUGHT }, COLUMN_SHOPPING_LIST_NAME + " = '"
+					+ currentShoppingListName + "'", null, null, null, null);
 			try {
 				while (cursor.moveToNext()) {
 					values.add(getShoppingItem(cursor));
+				}
+				return values;
+			} finally {
+				cursor.close();
+			}
+		} finally {
+			db.close();
+		}
+	}
+
+	@Override
+	public List<IShoppingList> getAllShoppingLists() {
+		SQLiteDatabase db = getReadableDatabase();
+		try {
+			List<IShoppingList> values = new ArrayList<IShoppingList>();
+			Cursor cursor = db.query(TABLE_SHOPPING_LIST,
+					new String[] { COLUMN_SHOPPING_LIST_NAME }, null, null,
+					null, null, null);
+			try {
+				while (cursor.moveToNext()) {
+					values.add(getShoppingListName(cursor));
 				}
 				return values;
 			} finally {
@@ -106,6 +140,12 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		boolean bought = Boolean.valueOf(cursor.getString(3));
 		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
 		return factory.createShoppingListItem(title, quantity, unit, bought);
+	}
+
+	private IShoppingList getShoppingListName(Cursor cursor) {
+		String title = cursor.getString(0);
+		IShoppingList list = new ShoppingList(title);
+		return list;
 	}
 
 	@Override
@@ -260,6 +300,27 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		return success;
 	}
 
+	private boolean insertShoppingListIntoDatabase(
+			IShoppingList shoppingListName) {
+		boolean success = false;
+
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_SHOPPING_LIST_NAME, shoppingListName.getName());
+		SQLiteDatabase writableDatabase = getWritableDatabase();
+		try {
+			writableDatabase.insertOrThrow(TABLE_SHOPPING_LIST, null, values);
+			Log.i(TAG, "inserted to table_shopping_list");
+
+		} catch (SQLiteException sqle) {
+			success = false;
+			Log.i(TAG, "error while insert into table_shopping_list");
+		} finally {
+			writableDatabase.close();
+
+		}
+		return success;
+	}
+
 	@Override
 	public boolean addItem(IIngredient ingredient, int quantity) {
 		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
@@ -269,6 +330,12 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		shoppingItemList.add(shoppingListItem);
 
 		return insertItemsIntoDatabase(shoppingItemList);
+	}
+
+	@Override
+	public boolean addItem(IShoppingList shoppingList) {
+
+		return insertShoppingListIntoDatabase(shoppingList);
 	}
 
 	@Override
@@ -314,4 +381,5 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		db.close();
 		return quantity;
 	}
+
 }

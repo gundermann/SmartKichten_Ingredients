@@ -1,5 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
+/**
+ * 
+ * @author Frauke Trautmann
+ * 
+ */
+
 public enum Unit {
 
 	Gramm, Kilogramm, Milliliter, Liter, Stueck;
