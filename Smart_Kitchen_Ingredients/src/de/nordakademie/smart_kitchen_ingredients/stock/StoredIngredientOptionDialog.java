@@ -1,11 +1,12 @@
 package de.nordakademie.smart_kitchen_ingredients.stock;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialog;
 
 public class StoredIngredientOptionDialog extends AbstractBuilder {
 
@@ -27,22 +28,14 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 
 		});
 
-		setNeutralButton("Ändern", new DialogInterface.OnClickListener() {
+		setNeutralButton("Bestand erhöhen", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				//Map<String, String> extras = new HashMap<String, String>();
-				//extras.put("ingredientTitle", titleFromList);
-				//startNextActivityWithExtras(StoredIngredientActivity.class,
-				//		extras);
-				//app.getStoredDbHelper().insertOrUpdateIngredient(titleFromList, quantity);
-			}
-		});
-
-		setNegativeButton("Nachkaufen", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				openQualityDialog(titleFromList, TAG);
-			}
-		});
+				IIngredient element = app.getStoredDbHelper().getStoredIngredient(titleFromList);
+				QuantityPickerDialog dia = QuantityPickerDialog.newInstance(element);
+				dia.show(activity.getSupportFragmentManager(), "addBestand");
+				
+			}});
 	}
 }
+	
