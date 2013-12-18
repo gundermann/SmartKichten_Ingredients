@@ -62,8 +62,9 @@ public class CacheData extends AbstractData implements ICacheData {
 			recipeMap.put(cursor.getString(0), cursor.getString(1));
 		}
 		for (String id : recipeMap.keySet()) {
-			// // TODO sehr inperformant --> nur Rezeptnamen der AsyncTask
-			// // zurückliefern.
+			// TODO sehr inperformant --> nur Rezeptnamen der AsyncTask
+			// zurückliefern. Ist abgeschlossen --> Refactoring im
+			// IDatabaseHelper nötig
 			IRecipeFactory recipeFactory = app.getRecipeFactory();
 			recipes.add(recipeFactory.createRecipe(recipeMap.get(id), null));
 		}
@@ -213,5 +214,28 @@ public class CacheData extends AbstractData implements ICacheData {
 		int count = cursor.getCount();
 		closeResources();
 		return count > 0;
+	}
+
+	public IRecipe getRecipeByTitle(String title) {
+		openResoures();
+		setCursor(RecipesTable.TABLE_NAME, RecipesTable.selectAllColunms(),
+				getWhere(RecipesTable.TITLE, title));
+		cursor.moveToNext();
+		IRecipe recipe = app.getRecipeFactory().createRecipe(title,
+				getIngredientsForRecipeID(cursor.getString(0)));
+		closeResources();
+		return recipe;
+	}
+
+	public IIngredient getIngredientByTitle(String title) {
+		openResoures();
+		setCursor(IngredientsTable.TABLE_NAME,
+				IngredientsTable.selectUnitColumn(),
+				getWhere(IngredientsTable.NAME, title));
+		cursor.moveToNext();
+		IIngredient ingredient = app.getIngredientFactory().createIngredient(
+				title, Unit.valueOfFromShortening(cursor.getString(0)));
+		closeResources();
+		return ingredient;
 	}
 }

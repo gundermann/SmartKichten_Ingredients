@@ -32,4 +32,5 @@ public class RecipesTable extends AbstractTable {
 		values.put(RecipesTable.TITLE, title);
 		return values;
 	}
+
 }

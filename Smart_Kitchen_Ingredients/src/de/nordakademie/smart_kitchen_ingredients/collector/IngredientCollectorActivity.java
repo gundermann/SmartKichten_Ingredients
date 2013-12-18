@@ -21,14 +21,14 @@ public class IngredientCollectorActivity extends
 	private Button showRecepiesButton;
 	private IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
 	private IngredientsApplication app;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (IngredientsApplication) getApplication();
 		initiateButtons();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -60,8 +60,11 @@ public class IngredientCollectorActivity extends
 	@Override
 	public void onPositiveFinishedDialog(int quantity) {
 		try {
+			IngredientsApplication app = ((IngredientsApplication) getApplication());
+			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
+					.getExplicitItem(getCurrentElement().getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IIngredient) getCurrentElement(), quantity);
+					.addItem(ingredientToAdd, quantity);
 		} catch (ClassCastException e) {
 			informUser(R.string.developerMistake);
 		}
