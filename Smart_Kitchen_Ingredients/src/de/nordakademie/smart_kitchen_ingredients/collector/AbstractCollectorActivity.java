@@ -43,7 +43,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	private List<T> allElements = new ArrayList<T>();
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
-	private Button addNewIngredient;
+	protected Button addNewIngredient;
 	protected Button confirmShoppingList;
 	private View noResultsFound;
 	private IListElement currentElement;

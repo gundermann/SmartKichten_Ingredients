@@ -86,7 +86,7 @@ public class AddIngredientActivity extends Activity {
 		return app.getCacheDbHelper().itemExists(title);
 	}
 
-	private void saveIngredientAndLeave(String title, Integer amount, Unit unit) {
+	protected void saveIngredientAndLeave(String title, Integer amount, Unit unit) {
 		try {
 			saveNewIngredientToDBs(title, amount, unit);
 			showSavedOrNotInformation("Zutat gespeichert");
@@ -97,7 +97,7 @@ public class AddIngredientActivity extends Activity {
 		}
 	}
 
-	private void showSavedOrNotInformation(String info) {
+	protected void showSavedOrNotInformation(String info) {
 		Toast toast = Toast.makeText(app, info, Toast.LENGTH_LONG);
 		toast.show();
 	}
