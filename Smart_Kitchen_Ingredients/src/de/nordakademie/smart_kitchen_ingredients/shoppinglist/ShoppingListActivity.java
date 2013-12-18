@@ -58,7 +58,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 
 		shoppingListView.setAdapter(adapter);
 		shoppingListView.setOnItemClickListener(this);
-		Log.i(TAG, "created");
+
 	}
 
 	private List<IShoppingList> getName() {
@@ -93,8 +93,6 @@ public class ShoppingListActivity extends AbstractActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
-		// AlertDialog.Builder adb = new AlertDialog.Builder(
-		// ShoppingListActivity.this);
 		startActivity(new Intent(getApplicationContext(),
 				ShoppingListIngredientsActivity.class).putExtra(
 				"shoppingListName", ((IShoppingList) shoppingListView
