@@ -1,17 +1,27 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
+import android.os.Bundle;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 public class StoredIngredientCollectorActivity extends
-		AbstractCollectorActivity<IIngredient> {
+		IngredientCollectorActivity {
 
-	/* (non-Javadoc)
-	 * @see de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener#onPositiveFinishedDialog(int)
-	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
 	@Override
 	public void onPositiveFinishedDialog(int quantity) {
-		// TODO Auto-generated method stub
-		
+		try {
+			((IngredientsApplication) getApplication()).getStoredDbHelper()
+					.insertOrUpdateIngredient(
+							(IIngredient) getCurrentElement(), quantity);
+		} catch (ClassCastException e) {
+			informUser(R.string.developerMistake);
+		}
 	}
 
 }

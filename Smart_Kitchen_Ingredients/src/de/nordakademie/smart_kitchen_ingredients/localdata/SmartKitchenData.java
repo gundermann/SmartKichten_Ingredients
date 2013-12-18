@@ -1,9 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -86,8 +84,8 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 			List<IShoppingListItem> values = new ArrayList<IShoppingListItem>();
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
-					COLUMN_INGREDIENT, COLUMN_UNIT, COLUMN_BOUGHT }, null,
-					null, null, null, null);
+					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT,
+					COLUMN_BOUGHT }, null, null, null, null, null);
 			try {
 				while (cursor.moveToNext()) {
 					values.add(getShoppingItem(cursor));
@@ -103,21 +101,24 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 	private IShoppingListItem getShoppingItem(Cursor cursor) {
 		String title = cursor.getString(0);
-		Unit unit = Unit.valueOf(cursor.getString(1));
-		boolean bought = Boolean.valueOf(cursor.getString(2));
+		int quantity = cursor.getInt(1);
+		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
+		boolean bought = Boolean.valueOf(cursor.getString(3));
 		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
-		return factory.createShoppingListItem(title, unit, bought);
+		return factory.createShoppingListItem(title, quantity, unit, bought);
 	}
 
 	@Override
-	public void updateShoppingItem(IShoppingListItem item) {
+	public int updateShoppingItem(IShoppingListItem item) {
 		ContentValues value = new ContentValues();
 		value.put(COLUMN_BOUGHT, String.valueOf(item.isBought()));
+		value.put(COLUMN_AMOUNT, item.getQuantity() + getQuantityShopping(item));
 		SQLiteDatabase writableDatabase = getWritableDatabase();
-		writableDatabase.update(TABLE_SHOPPING, value, COLUMN_INGREDIENT
-				+ " = '" + item.getName() + "'", null);
+		int updatedRows = writableDatabase.update(TABLE_SHOPPING, value,
+				COLUMN_INGREDIENT + " = '" + item.getName() + "'", null);
 		writableDatabase.close();
 		Log.i(TAG, "shopping_table updated");
+		return updatedRows;
 	}
 
 	@Override
@@ -134,9 +135,9 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		try {
 
 			Cursor cursor = db.query(TABLE_SHOPPING, new String[] {
-					COLUMN_INGREDIENT, COLUMN_UNIT, COLUMN_BOUGHT },
-					COLUMN_INGREDIENT + " = '" + title + "'", null, null, null,
-					null);
+					COLUMN_INGREDIENT, COLUMN_AMOUNT, COLUMN_UNIT,
+					COLUMN_BOUGHT }, COLUMN_INGREDIENT + " = '" + title + "'",
+					null, null, null, null);
 			try {
 				cursor.moveToNext();
 				return getShoppingItem(cursor);
@@ -173,7 +174,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 
 	private IIngredient getStoredItem(Cursor cursor) {
 		String title = cursor.getString(0);
-		Unit unit = Unit.valueOf(cursor.getString(2));
+		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
 		IIngredientFactory factory = app.getIngredientFactory();
 		return factory.createIngredient(title, unit);
 	}
@@ -188,8 +189,12 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		values.put(COLUMN_UNIT, boughtIngredient.getUnit().toString());
 
 		SQLiteDatabase writableDatabase = getWritableDatabase();
-		writableDatabase.insertWithOnConflict(TABLE_STORED, null, values,
-				SQLiteDatabase.CONFLICT_IGNORE);
+		int updatedRows = writableDatabase.update(TABLE_STORED, values,
+				COLUMN_INGREDIENT + " = '" + boughtIngredient.getName() + "'",
+				null);
+		if (updatedRows == 0) {
+			writableDatabase.insertOrThrow(TABLE_STORED, null, values);
+		}
 		writableDatabase.close();
 		Log.i(TAG, "inserted into stored_table");
 	}
@@ -228,45 +233,71 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	}
 
 	private boolean insertItemsIntoDatabase(
-			Map<IIngredient, Integer> ingredients, int quantity) {
+			List<IShoppingListItem> shoppingItemList) {
 		boolean success = false;
-		ContentValues values = new ContentValues();
-		for (IIngredient ingredient : ingredients.keySet()) {
-			int savedQuantity = getSavedQuantityOfIngredient(ingredient);
-			values.put(COLUMN_INGREDIENT, ingredient.getName());
-			values.put(COLUMN_AMOUNT, quantity * ingredients.get(ingredient)
-					+ savedQuantity);
-			values.put(COLUMN_UNIT, ingredient.getUnit().toString());
-			values.put(COLUMN_BOUGHT, String.valueOf(false));
-		}
+		for (IShoppingListItem shoppingItem : shoppingItemList) {
+			if (updateShoppingItem(shoppingItem) == 0) {
+				ContentValues values = new ContentValues();
+				values.put(COLUMN_INGREDIENT, shoppingItem.getName());
+				values.put(COLUMN_AMOUNT, shoppingItem.getQuantity());
+				values.put(COLUMN_UNIT, shoppingItem.getUnit().toString());
+				values.put(COLUMN_BOUGHT, String.valueOf(false));
 
-		SQLiteDatabase writableDatabase = getWritableDatabase();
-		writableDatabase.beginTransaction();
-		try {
-			writableDatabase.insertOrThrow(TABLE_SHOPPING, null, values);
-			writableDatabase.setTransactionSuccessful();
-			Log.i(TAG, "inserted to shopping_table");
+				SQLiteDatabase writableDatabase = getWritableDatabase();
+				try {
+					writableDatabase
+							.insertOrThrow(TABLE_SHOPPING, null, values);
+					Log.i(TAG, "inserted to shopping_table");
 
-		} catch (SQLiteException sqle) {
-			success = false;
-			Log.i(TAG, "error while insert into shopping_table");
-		} finally {
-			writableDatabase.endTransaction();
-			writableDatabase.close();
+				} catch (SQLiteException sqle) {
+					success = false;
+					Log.i(TAG, "error while insert into shopping_table");
+				} finally {
+					writableDatabase.close();
+				}
+			}
 		}
 		return success;
 	}
 
 	@Override
 	public boolean addItem(IIngredient ingredient, int quantity) {
-		Map<IIngredient, Integer> ingredientList = new HashMap<IIngredient, Integer>();
-		ingredientList.put(ingredient, quantity);
-		return insertItemsIntoDatabase(ingredientList, 1);
+		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
+		IShoppingListItem shoppingListItem = app.getShoppingListItemFactory()
+				.createShoppingListItem(ingredient.getName(), quantity,
+						ingredient.getUnit(), false);
+		shoppingItemList.add(shoppingListItem);
+
+		return insertItemsIntoDatabase(shoppingItemList);
 	}
 
 	@Override
 	public boolean addItem(IRecipe recipe, int quantity) {
-		return insertItemsIntoDatabase(recipe.getIngredients(), quantity);
+		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
+		for (IIngredient ingredient : recipe.getIngredients().keySet()) {
+			IShoppingListItem shoppingListItem = app
+					.getShoppingListItemFactory().createShoppingListItem(
+							ingredient.getName(),
+							recipe.getIngredients().get(ingredient) * quantity,
+							ingredient.getUnit(), false);
+			shoppingItemList.add(shoppingListItem);
+		}
+
+		return insertItemsIntoDatabase(shoppingItemList);
+	}
+
+	private int getQuantityShopping(IIngredient item) {
+		int quantity = 0;
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(TABLE_SHOPPING,
+				new String[] { COLUMN_AMOUNT }, COLUMN_INGREDIENT + " = '"
+						+ item.getName() + "'", null, null, null, null);
+		if (cursor.moveToNext()) {
+			quantity = cursor.getInt(0);
+		}
+		cursor.close();
+		db.close();
+		return quantity;
 	}
 
 	@Override
@@ -274,8 +305,8 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		int quantity = 0;
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cursor = db.query(TABLE_STORED, new String[] { COLUMN_AMOUNT },
-				COLUMN_INGREDIENT + " = " + item.getName(), null, null, null,
-				null);
+				COLUMN_INGREDIENT + " = '" + item.getName() + "'", null, null,
+				null, null);
 		if (cursor.moveToNext()) {
 			quantity = cursor.getInt(0);
 		}

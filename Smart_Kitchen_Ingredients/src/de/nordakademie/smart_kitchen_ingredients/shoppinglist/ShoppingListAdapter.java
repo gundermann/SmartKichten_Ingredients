@@ -27,7 +27,8 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 		implements OnClickListener {
 	private IngredientsApplication app;
 	private CheckBox checkBox;
-	private TextView textView;
+	private TextView nameView;
+	private TextView unitView;
 	private int selectedPosition;
 
 	public ShoppingListAdapter(IngredientsApplication application) {
@@ -56,12 +57,12 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 
 		View rowView = inflater.inflate(R.layout.checkable_rowlayout, parent,
 				false);
-		textView = (TextView) rowView.findViewById(R.id.labelOfCheckableList);
+		nameView = (TextView) rowView.findViewById(R.id.labelOfCheckableList);
+		unitView = (TextView) rowView.findViewById(R.id.unitOfCheckableList);
 		checkBox = (CheckBox) rowView.findViewById(R.id.buyedCheck);
 		checkBox.setOnClickListener(getListenerForPosition(position));
 
-		updateLayout(getItem(position).isBought());
-		textView.setText(getItem(position).getName());
+		updateLayout(getItem(position));
 		return rowView;
 	}
 
@@ -74,12 +75,14 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 		app.getShoppingDbHelper().updateShoppingItem(item);
 	}
 
-	private void updateLayout(boolean bought) {
-		if (bought) {
-			textView.setPaintFlags(textView.getPaintFlags()
+	private void updateLayout(IShoppingListItem item) {
+		if (item.isBought()) {
+			nameView.setPaintFlags(nameView.getPaintFlags()
 					| Paint.STRIKE_THRU_TEXT_FLAG);
 			checkBox.setChecked(true);
 		}
+		nameView.setText(item.getName());
+		unitView.setText(item.getQuantity() + " " + item.getUnit());
 	}
 
 	@Override
