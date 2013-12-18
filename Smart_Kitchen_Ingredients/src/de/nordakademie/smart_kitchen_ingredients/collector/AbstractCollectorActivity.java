@@ -44,7 +44,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
 	private Button addNewIngredient;
-	private Button confirmShoppingList;
+	protected Button confirmShoppingList;
 	private View noResultsFound;
 	private IListElement currentElement;
 
@@ -211,6 +211,10 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	public void update(AsyncTask<Void, Void, List<T>> task) {
 		try {
 			setAllElements(task.get());
+			if (allElements.isEmpty()) {
+				((IngredientsApplication) getApplication())
+						.informUser(R.string.noNetworkConnection);
+			}
 			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
 					.getText());
 		} catch (InterruptedException e) {

@@ -35,7 +35,7 @@ public class SmartKitchenServerConnector extends Connector implements
 		httppost.setHeader("Content-Type", "application/json");
 
 		try {
-			StringEntity entity = new StringEntity(jsonToPost);
+			StringEntity entity = new StringEntity(jsonToPost, "UTF-8");
 			httppost.setEntity(entity);
 			httpclient.execute(httppost);
 		} catch (ClientProtocolException e) {

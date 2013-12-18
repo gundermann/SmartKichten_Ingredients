@@ -14,9 +14,9 @@
             android:layout_width="104dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="0.37"
-            android:ems="10"
+            android:ems="9"
             android:paddingRight="0dp"
             android:text="@string/dateTitle"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -27,10 +27,10 @@
             android:hint="@string/dateTitleHint"
             android:layout_width="124dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="0.39"
             android:background="#cfff"
             android:ems="10" />
@@ -42,8 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
   />
  
     <TimePicker
@@ -51,8 +51,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         />
 
     <Button
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:background="#cfff"
         android:padding="5dp"
         android:text="@string/confirmDateButton"
