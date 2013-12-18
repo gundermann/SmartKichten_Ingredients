@@ -70,4 +70,6 @@ public interface IShoppingData {
 	 */
 	void deleteAllShoppingItems();
 
+	void delete(IShoppingList shoppingList);
+
 }

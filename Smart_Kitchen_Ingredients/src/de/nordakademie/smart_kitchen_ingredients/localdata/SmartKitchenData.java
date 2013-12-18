@@ -390,4 +390,15 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 		db.delete(TABLE_SHOPPING, null, null);
 		db.close();
 	}
+
+	@Override
+	public void delete(IShoppingList shoppingList) {
+		SQLiteDatabase db = getWritableDatabase();
+		db.delete(TABLE_SHOPPING_LIST, COLUMN_SHOPPING_LIST_NAME + "='"
+				+ shoppingList.getName() + "'", null);
+		db.delete(TABLE_SHOPPING, COLUMN_SHOPPING_LIST_NAME + "='"
+				+ shoppingList.getName() + "'", null);
+		db.close();
+
+	}
 }

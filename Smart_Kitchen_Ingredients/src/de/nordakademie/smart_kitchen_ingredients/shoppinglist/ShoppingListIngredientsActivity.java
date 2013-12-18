@@ -28,7 +28,6 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
@@ -116,7 +115,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.shopping, menu);
+		getMenuInflater().inflate(R.menu.shopping_ingredient, menu);
 		Log.i(TAG, "menu inflated");
 		return true;
 	}
@@ -131,9 +130,6 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 		case R.id.menu_qrscan:
 			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 			scanIntegrator.initiateScan();
-			break;
-		case R.id.menu_shoppingdate:
-			startNextActivity(ShoppingDateListActivity.class);
 			break;
 		case R.id.menu_edit_stored_items:
 			startNextActivity(StoredIngredientActivity.class);
