@@ -1,5 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -42,5 +43,16 @@ public abstract class AbstractData extends SQLiteOpenHelper {
 
 	protected void setCursor(String tableName, String[] allColunms) {
 		setCursor(tableName, allColunms, null);
+	}
+
+	protected String getWhere(String table, String value) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(table).append("='").append(value).append("'");
+		return sb.toString();
+	}
+
+	protected void insert(String table, ContentValues values) {
+		writeableDb.insertWithOnConflict(table, null, values,
+				SQLiteDatabase.CONFLICT_IGNORE);
 	}
 }

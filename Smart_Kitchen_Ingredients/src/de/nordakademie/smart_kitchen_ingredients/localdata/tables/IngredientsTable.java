@@ -16,11 +16,11 @@ public class IngredientsTable extends AbstractTable {
 		return sb.toString();
 	}
 
-	public static String[] getUnitColumn() {
+	public static String[] selectUnitColumn() {
 		return new String[] { UNIT };
 	}
 
-	public static String[] getNameColumn() {
+	public static String[] selectNameColumn() {
 		return new String[] { NAME };
 	}
 

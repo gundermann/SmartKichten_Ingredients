@@ -16,7 +16,7 @@ public class RecipesTable extends AbstractTable {
 		return sb.toString();
 	}
 
-	public static String[] getAllColunms() {
+	public static String[] selectAllColunms() {
 		return new String[] { ID, TITLE };
 	}
 

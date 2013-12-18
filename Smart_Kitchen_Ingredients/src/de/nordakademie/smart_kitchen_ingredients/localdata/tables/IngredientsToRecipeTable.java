@@ -16,7 +16,7 @@ public class IngredientsToRecipeTable extends AbstractTable {
 		return sb.toString();
 	}
 
-	public static String[] getIngredientIdAndQuantity() {
+	public static String[] selectIngredientIdAndQuantity() {
 		return new String[] { INGRDIENT_ID, QUANTITY };
 	}
 
