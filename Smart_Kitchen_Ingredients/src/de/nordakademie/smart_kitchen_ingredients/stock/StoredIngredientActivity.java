@@ -23,6 +23,7 @@ import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
+import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
 import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
 
@@ -138,9 +139,10 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
-		// TODO Auto-generated method stub
-		
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
+		app.getStoredDbHelper().insertOrUpdateIngredient(
+				(IIngredient) element, quantity);
+		updateStockList();
 	}
 
 }
