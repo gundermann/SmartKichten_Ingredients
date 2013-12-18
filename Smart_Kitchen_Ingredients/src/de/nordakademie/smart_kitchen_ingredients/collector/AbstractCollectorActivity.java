@@ -72,10 +72,16 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		addLayoutChangeListener();
 		makeListEntriesClickable();
 		context = getApplicationContext();
-		startActivity(new Intent(getApplicationContext(),
-				AddIngredientActivity.class).putExtra("shoppingListName",
-				currentShoppingList).putExtra("ingredientTitle",
-				currentElement.getName()));
+		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
+		addNewIngredient.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(getApplicationContext(),
+						AddIngredientActivity.class).putExtra(
+						"shoppingListName", currentShoppingList).putExtra(
+						"ingredientTitle", currentElement.getName()));
+			}
+		});
 	}
 
 	private void makeListEntriesClickable() {
@@ -86,7 +92,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 					int position, long arg3) {
 				currentElement = (IListElement) adapterView.getAdapter()
 						.getItem(position);
-
 				DialogFragment quantityDialog = QuantityPickerDialog
 						.newInstance(currentElement);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
