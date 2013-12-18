@@ -210,6 +210,10 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	public void update(AsyncTask<Void, Void, List<T>> task) {
 		try {
 			setAllElements(task.get());
+			if (allElements.isEmpty()) {
+				((IngredientsApplication) getApplication())
+						.informUser(R.string.noNetworkConnection);
+			}
 			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
 					.getText());
 		} catch (InterruptedException e) {
