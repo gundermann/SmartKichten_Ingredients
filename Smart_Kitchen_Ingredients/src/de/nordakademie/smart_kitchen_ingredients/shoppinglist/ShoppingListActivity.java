@@ -3,8 +3,6 @@ package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -45,12 +44,13 @@ public class ShoppingListActivity extends AbstractActivity implements
 	private static String TAG = ShoppingListActivity.class.getSimpleName();
 	private ListView shoppingListView;
 	private ImageButton btAddNewShoppingList;
-	private BroadcastReceiver notifyShoppingdataChange;
-	private Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// don't destroy dialog on rotate
+		int FLAG = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
+		getWindow().setFlags(FLAG, FLAG);
 		setContentView(R.layout.list_layout);
 		btAddNewShoppingList = (ImageButton) findViewById(R.id.addNewShoppingItem);
 		btAddNewShoppingList.setOnClickListener(this);
