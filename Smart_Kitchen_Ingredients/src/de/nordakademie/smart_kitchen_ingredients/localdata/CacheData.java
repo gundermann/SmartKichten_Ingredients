@@ -266,7 +266,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	public boolean itemExists(String itemTitle) {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cursor = db.query(TABLE_INGRDIENTS,
-				new String[] { COLUMN_NAME }, COLUMN_INGRDIENTS + " = '"
+				new String[] { COLUMN_NAME }, COLUMN_INGRDIENTS_ID + " = '"
 						+ itemTitle + "'", null, null, null, null);
 		int count = cursor.getCount();
 		cursor.close();

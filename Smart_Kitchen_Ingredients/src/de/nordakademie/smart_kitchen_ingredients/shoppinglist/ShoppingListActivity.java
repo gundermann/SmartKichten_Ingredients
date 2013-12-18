@@ -32,9 +32,7 @@ import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActi
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
- * 
  * @author Niels Gundermann
- * 
  */
 public class ShoppingListActivity extends AbstractActivity implements
 		OnClickListener {
