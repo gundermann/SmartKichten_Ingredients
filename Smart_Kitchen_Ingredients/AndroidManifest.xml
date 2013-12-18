@@ -60,7 +60,8 @@
             android:label="@string/title_activity_shoppingDate" >
         </activity>
         <activity android:name="de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity"
-            	  android:label="@string/menuInsertStoredItems" >
+            	  android:label="@string/menuInsertStoredItems"
+            	  android:launchMode="singleTask" >
         </activity>
         <activity android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientActivity" 
             	  android:label="@string/menuInsertStoredItems">

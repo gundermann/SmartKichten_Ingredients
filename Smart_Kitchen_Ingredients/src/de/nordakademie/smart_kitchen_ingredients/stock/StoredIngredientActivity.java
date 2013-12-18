@@ -100,6 +100,7 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 				getTitleFromList(position), this);
 		AlertDialog dialog = builder.create();
 		dialog.show();
+		updateStockList();
 		return true;
 	}
 
