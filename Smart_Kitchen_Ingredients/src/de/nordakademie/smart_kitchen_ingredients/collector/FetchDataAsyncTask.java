@@ -8,7 +8,7 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IDatabaseHelper;
 
 /**
  * @author frederic.oppermann

@@ -17,16 +17,17 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.localdata.CacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.DateDatabase;
-import de.nordakademie.smart_kitchen_ingredients.localdata.ICacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IDateDbHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IShoppingData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IStoredData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IngredientDatabaseHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.RecipeDatabaseHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.SmartKitchenData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IngredientDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.RecipeDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenDateData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IDateDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IShoppingData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IStoredData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenShoppingData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenStoredData;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.DateFactory;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.IDateFactory;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKitchenServerHandler;
@@ -65,19 +66,19 @@ public class IngredientsApplication extends Application {
 		super.onCreate();
 
 		serverDataHelper = new CacheData(this);
-		shoppingDbHelper = new SmartKitchenData(this);
+		shoppingDbHelper = new SmartKitchenShoppingData(this);
 		serverHandler = new SmartKitchenServerHandler(
 				new SmartKitchenServerConnector());
 		ingredientFactory = new IngredientFactory();
 		dateFactory = new DateFactory();
 		ingredientDbHelper = new IngredientDatabaseHelper(this);
 		recipeDbHelper = new RecipeDatabaseHelper(this);
-		dateDbHelper = new DateDatabase(this);
+		dateDbHelper = new SmartKitchenDateData(this);
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactory();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
-		stockDbHelper = new SmartKitchenData(this);
+		stockDbHelper = new SmartKitchenStoredData(this);
 
 		Log.i(TAG, "Application started");
 	}

@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.localdata;
+package de.nordakademie.smart_kitchen_ingredients.localdata.cache;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +15,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFact
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.localdata.AbstractData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.tables.IngredientsTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.tables.IngredientsToRecipeTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.tables.RecipesTable;
@@ -55,7 +56,7 @@ public class CacheData extends AbstractData implements ICacheData {
 	public List<IRecipe> getAllRecipes() {
 		List<IRecipe> recipes = new ArrayList<IRecipe>();
 		updateIfNecessary();
-		openResoures();
+		openCursorResoures();
 		setCursor(RecipesTable.TABLE_NAME, RecipesTable.selectAllColunms());
 		Map<String, String> recipeMap = new HashMap<String, String>();
 		while (cursor.moveToNext()) {
@@ -68,7 +69,7 @@ public class CacheData extends AbstractData implements ICacheData {
 			IRecipeFactory recipeFactory = app.getRecipeFactory();
 			recipes.add(recipeFactory.createRecipe(recipeMap.get(id), null));
 		}
-		closeResources();
+		closeCursorResources();
 		return recipes;
 	}
 
@@ -88,7 +89,7 @@ public class CacheData extends AbstractData implements ICacheData {
 	private Map<IIngredient, Integer> getIngredientsForRecipeID(String recipeID) {
 		Map<IIngredient, Integer> ingredientsList = new HashMap<IIngredient, Integer>();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
-		openResoures();
+		openCursorResoures();
 		setCursor(IngredientsToRecipeTable.TABLE_NAME,
 				IngredientsToRecipeTable.selectIngredientIdAndQuantity(),
 				getWhere(IngredientsToRecipeTable.RECIPE_ID, recipeID));
@@ -103,7 +104,7 @@ public class CacheData extends AbstractData implements ICacheData {
 					getIngredientNameByID(id), getIngredientUnitByID(id)),
 					quantityMap.get(id));
 		}
-		closeResources();
+		closeCursorResources();
 		return ingredientsList;
 	}
 
@@ -150,11 +151,11 @@ public class CacheData extends AbstractData implements ICacheData {
 
 	private IIngredient insertIngredientsForRecipe(String recipeID,
 			String[] ingredient) {
-		openResoures();
+		openCursorResoures();
 		insert(IngredientsToRecipeTable.TABLE_NAME,
 				IngredientsToRecipeTable.getContentValuesForAll(recipeID,
 						ingredient));
-		closeResources();
+		closeCursorResources();
 		Log.i(TAG, "database of INDIGRENTS_TO_RECIPES updated");
 
 		return app.getIngredientFactory().createIngredient(ingredient[1],
@@ -162,10 +163,10 @@ public class CacheData extends AbstractData implements ICacheData {
 	}
 
 	private void insertRecipe(String id, String title) {
-		openResoures();
+		openCursorResoures();
 		insert(RecipesTable.TABLE_NAME,
 				RecipesTable.getContentValuesForAll(id, title));
-		closeResources();
+		closeCursorResources();
 		Log.i(TAG, "database of RECIPES updated");
 	}
 
@@ -173,14 +174,14 @@ public class CacheData extends AbstractData implements ICacheData {
 	public List<IIngredient> insertOrUpdateAllIngredientsFromServer(
 			List<String[]> ingredients) {
 		List<IIngredient> ingredientList = new ArrayList<IIngredient>();
-		openResoures();
+		openCursorResoures();
 		for (String[] ingredient : ingredients) {
 			writeIngredientToDB(IngredientsTable
 					.getContenValuesForAll(ingredient));
 			ingredientList.add(app.getIngredientFactory().createIngredient(
 					ingredient[1], Unit.valueOfFromShortening(ingredient[2])));
 		}
-		closeResources();
+		closeCursorResources();
 		return ingredientList;
 
 	}
@@ -194,48 +195,48 @@ public class CacheData extends AbstractData implements ICacheData {
 		List<IIngredient> ingredientsList = new ArrayList<IIngredient>();
 		updateIfNecessary();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
-		openResoures();
+		openCursorResoures();
 		setCursor(IngredientsTable.TABLE_NAME, IngredientsTable.getAllColunms());
 		while (cursor.moveToNext()) {
 			ingredientsList.add(ingredientFactory.createIngredient(
 					cursor.getString(1),
 					Unit.valueOfFromShortening(cursor.getString(2))));
 		}
-		closeResources();
+		closeCursorResources();
 		return ingredientsList;
 	}
 
 	@Override
 	public boolean itemExists(String itemTitle) {
-		openResoures();
+		openCursorResoures();
 		setCursor(IngredientsTable.TABLE_NAME,
 				IngredientsTable.selectNameColumn(),
 				getWhere(IngredientsTable.NAME, itemTitle));
 		int count = cursor.getCount();
-		closeResources();
+		closeCursorResources();
 		return count > 0;
 	}
 
 	public IRecipe getRecipeByTitle(String title) {
-		openResoures();
+		openCursorResoures();
 		setCursor(RecipesTable.TABLE_NAME, RecipesTable.selectAllColunms(),
 				getWhere(RecipesTable.TITLE, title));
 		cursor.moveToNext();
 		IRecipe recipe = app.getRecipeFactory().createRecipe(title,
 				getIngredientsForRecipeID(cursor.getString(0)));
-		closeResources();
+		closeCursorResources();
 		return recipe;
 	}
 
 	public IIngredient getIngredientByTitle(String title) {
-		openResoures();
+		openCursorResoures();
 		setCursor(IngredientsTable.TABLE_NAME,
 				IngredientsTable.selectUnitColumn(),
 				getWhere(IngredientsTable.NAME, title));
 		cursor.moveToNext();
 		IIngredient ingredient = app.getIngredientFactory().createIngredient(
 				title, Unit.valueOfFromShortening(cursor.getString(0)));
-		closeResources();
+		closeCursorResources();
 		return ingredient;
 	}
 }
