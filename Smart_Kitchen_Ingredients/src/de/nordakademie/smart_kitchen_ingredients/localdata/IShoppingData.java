@@ -55,4 +55,6 @@ public interface IShoppingData {
 	 * @return IShoppingListItem
 	 */
 	IShoppingListItem getShoppingItem(String title);
+
+	int getQuantityShopping(IIngredient item);
 }

@@ -24,8 +24,8 @@ public abstract class AbstractData extends SQLiteOpenHelper {
 	}
 
 	protected void openResoures() {
-		writeableDb = getWritableDatabase();
 		readableDb = getReadableDatabase();
+		writeableDb = getWritableDatabase();
 	}
 
 	protected void closeResources() {

@@ -8,6 +8,12 @@ public class IngredientsToRecipeTable extends AbstractTable {
 	public static final String INGRDIENT_ID = "indigrent_id";
 	public static final String QUANTITY = "quantity";
 
+	public static String getDrop() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("DROP TABLE IF EXISTS ").append(TABLE_NAME);
+		return sb.toString();
+	}
+
 	public static String getTableCreation() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("create table ").append(TABLE_NAME).append(" (")
