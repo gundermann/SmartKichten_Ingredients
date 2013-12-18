@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
@@ -17,8 +15,11 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFact
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.localdata.tables.IngredientsTable;
+import de.nordakademie.smart_kitchen_ingredients.localdata.tables.IngredientsToRecipeTable;
+import de.nordakademie.smart_kitchen_ingredients.localdata.tables.RecipesTable;
 
-public class CacheData extends SQLiteOpenHelper implements ICacheData {
+public class CacheData extends AbstractData implements ICacheData {
 	/**
 	 * 
 	 * @author Kathrin Kurtz
@@ -27,90 +28,36 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 	private static final String TAG = CacheData.class.getSimpleName();
 
-	private static final int DATABASE_VERSION = 2;
-	private static final String DATABASE_NAME = "cacheDB.db";
-
-	public static final String TABLE_RECIPES = "recipes_table";
-	public static final String COLUMN_RECIPE_ID = "id";
-	public static final String COLUMN_TITLE = "title";
-
-	public static final String TABLE_INGRDIENTS = "ingredients_table";
-	public static final String COLUMN_INGRDIENTS_ID = "id";
-	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_UNIT = "unit";
-
-	public static final String TABLE_INGREDIENTS_TO_RECIPES = "indigrentToRecipe";
-	public static final String COLUMN_RECIPES = "recipe_id";
-	public static final String COLUMN_INGRDIENTS = "indigrent_id";
-	public static final String COLUMN_AMOUNT = "amount";
-
-	IngredientsApplication app;
-
-	private SQLiteDatabase writeableDb;
-
-	private SQLiteDatabase readableDb;
-
-	private Cursor cursor;
+	private static final int DATABASE_VERSION = 3;
+	private static final String DATABASE_NAME = "cache.db";
 
 	public CacheData(IngredientsApplication application) {
-		super(application.getApplicationContext(), DATABASE_NAME, null,
-				DATABASE_VERSION);
-		app = application;
+		super(application, DATABASE_NAME, null, DATABASE_VERSION);
 	}
-
-	private static final String DATABASE_CREATE_RECIPES = "create table "
-			+ TABLE_RECIPES + " (" + COLUMN_RECIPE_ID
-			+ " text primary key not null, " + COLUMN_TITLE + " text)";
-
-	private static final String DATABASE_CREATE_INDIGRENTS = "create table "
-			+ TABLE_INGRDIENTS + " (" + COLUMN_INGRDIENTS_ID
-			+ " text primary key not null, " + COLUMN_NAME + " text, "
-			+ COLUMN_UNIT + " text)";
-
-	private static final String DATABASE_CREATE_INDIGRENTS_TO_RECIPES = "create table "
-			+ TABLE_INGREDIENTS_TO_RECIPES
-			+ " ("
-			+ COLUMN_RECIPES
-			+ " text, "
-			+ COLUMN_INGRDIENTS + " text, " + COLUMN_AMOUNT + " Integer)";
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		Log.w(TAG, "Tabellen in der Datenbank angelegt.");
-		database.execSQL(DATABASE_CREATE_RECIPES);
-		database.execSQL(DATABASE_CREATE_INDIGRENTS);
-		database.execSQL(DATABASE_CREATE_INDIGRENTS_TO_RECIPES);
+		database.execSQL(RecipesTable.getTableCreation());
+		database.execSQL(IngredientsTable.getTableCreation());
+		database.execSQL(IngredientsToRecipeTable.getTableCreation());
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 				+ newVersion + ", which will destroy all old data");
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGRDIENTS);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS_TO_RECIPES);
+		db.execSQL(RecipesTable.getDrop());
+		db.execSQL(IngredientsTable.getDrop());
+		db.execSQL(IngredientsToRecipeTable.getDrop());
 		onCreate(db);
-	}
-
-	private void openResoures() {
-		writeableDb = getWritableDatabase();
-		readableDb = getReadableDatabase();
-	}
-
-	private void closeResources() {
-		writeableDb.close();
-		readableDb.close();
-		if (cursor != null && cursor.isClosed()) {
-			cursor.close();
-		}
 	}
 
 	public List<IRecipe> getAllRecipes() {
 		List<IRecipe> recipes = new ArrayList<IRecipe>();
 		updateIfNecessary();
 		openResoures();
-		cursor = readableDb.query(TABLE_RECIPES, new String[] {
-				COLUMN_RECIPE_ID, COLUMN_TITLE }, null, null, null, null, null);
+		setCursor(RecipesTable.TABLE_NAME, RecipesTable.getAllColunms());
 		Map<String, String> recipeMap = new HashMap<String, String>();
 		while (cursor.moveToNext()) {
 			recipeMap.put(cursor.getString(0), cursor.getString(1));
@@ -140,36 +87,37 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	private Map<IIngredient, Integer> getIngredientsForRecipeID(String recipeID) {
 		Map<IIngredient, Integer> ingredientsList = new HashMap<IIngredient, Integer>();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
-
 		openResoures();
-		cursor = readableDb.query(TABLE_INGREDIENTS_TO_RECIPES, new String[] {
-				COLUMN_INGRDIENTS, COLUMN_AMOUNT }, COLUMN_RECIPES + " = '"
-				+ recipeID + "'", null, null, null, null);
+		setCursor(IngredientsToRecipeTable.TABLE_NAME,
+				IngredientsToRecipeTable.getIngredientIdAndQuantity(),
+				IngredientsToRecipeTable.RECIPE_ID + " = '" + recipeID + "'");
 
+		Map<String, Integer> quantityMap = new HashMap<String, Integer>();
 		while (cursor.moveToNext()) {
-			String id = cursor.getString(0);
-			int quantity = cursor.getInt(1);
+			quantityMap.put(cursor.getString(0), cursor.getInt(1));
+		}
 
+		for (String id : quantityMap.keySet()) {
 			ingredientsList.put(ingredientFactory.createIngredient(
 					getIngredientNameByID(id), getIngredientUnitByID(id)),
-					quantity);
+					quantityMap.get(id));
 		}
 		closeResources();
 		return ingredientsList;
 	}
 
 	private Unit getIngredientUnitByID(String id) {
-		String sql = "SELECT " + COLUMN_UNIT + " FROM " + TABLE_INGRDIENTS
-				+ " WHERE " + COLUMN_INGRDIENTS_ID + "=" + id;
-		cursor = readableDb.rawQuery(sql, null);
+		setCursor(IngredientsTable.TABLE_NAME,
+				IngredientsTable.getUnitColumn(), IngredientsTable.ID + "="
+						+ id);
 		cursor.moveToNext();
 		return Unit.valueOfFromShortening(cursor.getString(0));
 	}
 
 	private String getIngredientNameByID(String id) {
-		String sql = "SELECT " + COLUMN_NAME + " FROM " + TABLE_INGRDIENTS
-				+ " WHERE " + COLUMN_INGRDIENTS_ID + "=" + id;
-		Cursor cursor = readableDb.rawQuery(sql, null);
+		setCursor(IngredientsTable.TABLE_NAME,
+				IngredientsTable.getNameColumn(), IngredientsTable.ID + "="
+						+ id);
 		cursor.moveToNext();
 		String ingredientId = cursor.getString(0);
 		return ingredientId;
@@ -178,10 +126,6 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	@Override
 	public List<IRecipe> insertOrUpdateAllRecipesFromServer(
 			Map<String[], List<String[]>> recipes) {
-		// KEY: String Array - Value: String Array
-		// rezept zutaten
-		// 0=id 1=titel
-		// 0=id 1=titel 2=einheit 3=menge
 
 		List<IRecipe> recipeList = new ArrayList<IRecipe>();
 		Iterator<String[]> iterator = recipes.keySet().iterator();
@@ -210,14 +154,13 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 
 	private IIngredient writeConnectionToRecipeToDB(String recipeID,
 			String[] ingredient) {
-		ContentValues values = new ContentValues();
-		values.put(COLUMN_RECIPES, recipeID);
-		values.put(COLUMN_INGRDIENTS, ingredient[0]);
-		values.put(COLUMN_AMOUNT, ingredient[3]);
+
+		ContentValues values = IngredientsToRecipeTable.getContentValuesForAll(
+				recipeID, ingredient);
 
 		openResoures();
-		writeableDb.insertWithOnConflict(TABLE_INGREDIENTS_TO_RECIPES, null,
-				values, SQLiteDatabase.CONFLICT_IGNORE);
+		writeableDb.insertWithOnConflict(IngredientsToRecipeTable.TABLE_NAME,
+				null, values, SQLiteDatabase.CONFLICT_IGNORE);
 		closeResources();
 		Log.i(TAG, "database of INDIGRENTS_TO_RECIPES updated");
 
@@ -225,12 +168,10 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 				Unit.valueOfFromShortening(ingredient[2]));
 	}
 
-	private void writeRecipeToDB(String currentID, String currentTitle) {
-		ContentValues values = new ContentValues();
-		values.put(COLUMN_RECIPE_ID, currentID);
-		values.put(COLUMN_TITLE, currentTitle);
+	private void writeRecipeToDB(String id, String title) {
+		ContentValues values = RecipesTable.getContentValuesForAll(id, title);
 		openResoures();
-		writeableDb.insertWithOnConflict(TABLE_RECIPES, null, values,
+		writeableDb.insertWithOnConflict(RecipesTable.TABLE_NAME, null, values,
 				SQLiteDatabase.CONFLICT_IGNORE);
 		closeResources();
 		Log.i(TAG, "database of RECIPES updated");
@@ -242,11 +183,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		List<IIngredient> ingredientList = new ArrayList<IIngredient>();
 		openResoures();
 		for (String[] ingredient : ingredients) {
-			ContentValues values = new ContentValues();
-			values.put(COLUMN_INGRDIENTS_ID, ingredient[0]);
-			values.put(COLUMN_NAME, ingredient[1]);
-			values.put(COLUMN_UNIT, ingredient[2]);
-			writeIngredientToDB(values);
+			writeIngredientToDB(IngredientsTable
+					.getContenValuesForAll(ingredient));
 			ingredientList.add(app.getIngredientFactory().createIngredient(
 					ingredient[1], Unit.valueOfFromShortening(ingredient[2])));
 		}
@@ -256,8 +194,8 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	}
 
 	private void writeIngredientToDB(ContentValues values) {
-		writeableDb.insertWithOnConflict(TABLE_INGRDIENTS, null, values,
-				SQLiteDatabase.CONFLICT_IGNORE);
+		writeableDb.insertWithOnConflict(IngredientsTable.TABLE_NAME, null,
+				values, SQLiteDatabase.CONFLICT_IGNORE);
 		Log.i(TAG, "database of Indigrents updated");
 	}
 
@@ -266,8 +204,7 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 		updateIfNecessary();
 		IIngredientFactory ingredientFactory = app.getIngredientFactory();
 		openResoures();
-		String sql = "SELECT * FROM " + TABLE_INGRDIENTS;
-		cursor = readableDb.rawQuery(sql, null);
+		setCursor(IngredientsTable.TABLE_NAME, IngredientsTable.getAllColunms());
 		while (cursor.moveToNext()) {
 			ingredientsList.add(ingredientFactory.createIngredient(
 					cursor.getString(1),
@@ -280,9 +217,9 @@ public class CacheData extends SQLiteOpenHelper implements ICacheData {
 	@Override
 	public boolean itemExists(String itemTitle) {
 		openResoures();
-		cursor = readableDb.query(TABLE_INGRDIENTS,
-				new String[] { COLUMN_NAME }, COLUMN_INGRDIENTS + " = '"
-						+ itemTitle + "'", null, null, null, null);
+		setCursor(IngredientsTable.TABLE_NAME,
+				IngredientsTable.getNameColumn(),
+				IngredientsTable.getNameColumn() + " = '" + itemTitle + "'");
 		int count = cursor.getCount();
 		closeResources();
 		return count > 0;
