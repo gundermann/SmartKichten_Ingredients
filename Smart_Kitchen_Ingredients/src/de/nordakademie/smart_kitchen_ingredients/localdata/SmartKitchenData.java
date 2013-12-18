@@ -318,7 +318,7 @@ public class SmartKitchenData extends SQLiteOpenHelper implements
 	@Override
 	public void deleteAllShoppingItems() {
 		SQLiteDatabase db = getWritableDatabase();
-		db.delete(TABLE_SHOPPING, " * ", null);
+		db.delete(TABLE_SHOPPING, null, null);
 		db.close();
 	}
 }

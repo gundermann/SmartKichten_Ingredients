@@ -130,6 +130,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 			break;
 		case R.id.menu_delete_shoppinglist:
 			app.getShoppingDbHelper().deleteAllShoppingItems();
+			updateShoppingList();
 		default:
 			break;
 		}
