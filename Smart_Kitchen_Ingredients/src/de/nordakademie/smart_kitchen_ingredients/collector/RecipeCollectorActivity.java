@@ -19,14 +19,20 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
 	private Button showIngredientsButton;
 	private IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
-
+	private IngredientsApplication app;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		IngredientsApplication app = (IngredientsApplication) getApplication();
+		app = (IngredientsApplication) getApplication();
+		initiateButtons();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		super.fetchDataFromDb(new FetchDataAsyncTask<IRecipe>(
 				getProgressWheel(), app.getRecipeDbHelper(), this));
-		initiateButtons();
 	}
 
 	private void initiateButtons() {

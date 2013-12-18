@@ -20,16 +20,20 @@ public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
 	private Button showRecepiesButton;
 	private IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
-
+	private IngredientsApplication app;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		IngredientsApplication app = (IngredientsApplication) getApplication();
-
+		app = (IngredientsApplication) getApplication();
+		initiateButtons();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		super.fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(
 				getProgressWheel(), app.getIngredientsDbHelper(), this));
-		initiateButtons();
 	}
 
 	private void initiateButtons() {
