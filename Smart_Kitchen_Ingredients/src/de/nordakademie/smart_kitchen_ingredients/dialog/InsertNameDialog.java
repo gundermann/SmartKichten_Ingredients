@@ -12,6 +12,7 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -35,14 +36,21 @@ public class InsertNameDialog extends DialogFragment {
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 				getActivity());
 
-		dialogBuilder.setTitle("INSERT R.STRING.TITLE.HERE").setView(view)
+		dialogBuilder.setTitle(R.string.addShoppingListDialog).setView(view)
 				.setPositiveButton(android.R.string.ok, new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						Log.d(TAG, inputField.getText().toString());
-						dialogListener.onPositiveFinishedDialog(inputField
-								.getText().toString());
+						if (!inputField.getText().toString().equals("")) {
+							Log.d(TAG, inputField.getText().toString());
+							dialogListener.onPositiveFinishedDialog(inputField
+									.getText().toString());
+						} else {
+							((IngredientsApplication) getActivity()
+									.getApplication())
+									.informUser(R.string.userInformFieldIsEmpty);
+
+						}
 					}
 				});
 		return dialogBuilder.create();

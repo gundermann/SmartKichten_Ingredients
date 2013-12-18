@@ -19,9 +19,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import com.google.zxing.client.android.IntentIntegrator;
-
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
@@ -144,14 +141,6 @@ public class ShoppingListActivity extends AbstractActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_clean_shoppingList:
-			app.getShoppingDbHelper().cleanShoppingIngredients();
-			updateShoppingList();
-			break;
-		case R.id.menu_qrscan:
-			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-			scanIntegrator.initiateScan();
-			break;
 		case R.id.menu_shoppingdate:
 			startNextActivity(ShoppingDateListActivity.class);
 			break;

@@ -18,7 +18,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
  */
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
-	private Button showRecepiesButton;
+	protected Button showRecepiesButton;
 	private final IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
 	private IngredientsApplication app;
 
