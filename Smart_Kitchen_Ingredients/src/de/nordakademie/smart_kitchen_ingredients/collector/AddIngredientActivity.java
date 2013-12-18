@@ -1,9 +1,8 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.net.UnknownHostException;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -99,17 +98,18 @@ public class AddIngredientActivity extends Activity {
 		toast.show();
 	}
 
+	protected void fetchDataFromDb(AsyncTask<Void, Void, Boolean> updateDataTask) {
+		updateDataTask.execute();
+	}
+
 	private void saveNewIngredientToDBs(String title, Integer quantity,
 			Unit unit) {
 		IShoppingListItem newItem = app.getShoppingListItemFactory()
 				.createShoppingListItem(title, quantity, unit, false);
-		try {
-			app.getServerHandler().postIngredientToServer(newItem);
-			app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(
-					app.getServerHandler().getIngredientListFromServer());
-		} catch (UnknownHostException e) {
 
-		}
+		fetchDataFromDb(new PostNewIngredientAsyncTask(newItem,
+				app.getServerHandler(), app.getCacheDbHelper()));
+
 		app.getShoppingDbHelper().addItem(newItem, quantity);
 	}
 }
