@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListActivity;
 
 /**
  * @author frederic.oppermann
@@ -43,6 +44,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
 	private Button addNewIngredient;
+	private Button confirmShoppingList;
 	private View noResultsFound;
 	private IListElement currentElement;
 
@@ -76,6 +78,13 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		addLayoutChangeListener();
 		makeListEntriesClickable();
 		context = getApplicationContext();
+		confirmShoppingList = (Button) findViewById(R.id.confirmShoppingList);
+		confirmShoppingList.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(context, ShoppingListActivity.class));
+			}
+		});
 		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
 		addNewIngredient.setOnClickListener(new OnClickListener() {
 			@Override
@@ -86,6 +95,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 						"ingredientTitle", searchBar.getText().toString()));
 			}
 		});
+
 	}
 
 	private void makeListEntriesClickable() {
