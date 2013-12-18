@@ -52,6 +52,10 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		return elementsToShow;
 	}
 
+	protected ListView getElementsListView() {
+		return elementsListView;
+	}
+
 	public IListElement getCurrentElement() {
 		return currentElement;
 	}

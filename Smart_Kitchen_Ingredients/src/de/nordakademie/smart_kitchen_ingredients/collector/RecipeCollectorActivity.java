@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
@@ -39,6 +41,18 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	private void initiateButtons() {
 		showIngredientsButton = (Button) findViewById(R.id.showIngredientsButton);
 		showIngredientsButton.setVisibility(View.VISIBLE);
+		getElementsListView().setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int position, long arg3) {
+				ShowRecipeIngredientsDialog.newInstance(
+						(IRecipe) adapterView.getAdapter().getItem(position))
+						.show(getSupportFragmentManager(), TAG);
+
+			}
+		});
+
 		setNextActivityOnClick(showIngredientsButton,
 				IngredientCollectorActivity.class);
 	}
@@ -58,10 +72,10 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IRecipe) getCurrentElement(), quantity);
+					.addItem((IRecipe) element, quantity);
 		} catch (ClassCastException e) {
 			informUser(R.string.developerMistake);
 		}

@@ -14,14 +14,12 @@ public class StoredIngredientCollectorActivity extends
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
 			((IngredientsApplication) getApplication()).getStoredDbHelper()
-					.insertOrUpdateIngredient(
-							(IIngredient) getCurrentElement(), quantity);
+					.insertOrUpdateIngredient((IIngredient) element, quantity);
 		} catch (ClassCastException e) {
 			informUser(R.string.developerMistake);
 		}
 	}
-
 }
