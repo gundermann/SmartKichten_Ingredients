@@ -26,7 +26,6 @@ public class AddIngredientActivity extends Activity {
 	IngredientsApplication app;
 	String ingredientTitle;
 	Button saveIngredientButton;
-	Button quitButton;
 	TextView ingredientTitleTV;
 	TextView ingredientQuantityTV;
 	Spinner ingredientUnit;
@@ -37,7 +36,6 @@ public class AddIngredientActivity extends Activity {
 		setContentView(R.layout.activity_add_ingredient);
 		app = (IngredientsApplication) this.getApplication();
 
-		quitButton = (Button) findViewById(R.id.quitButton);
 		saveIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);
 
 		if (getIntent().getExtras() != null
@@ -52,15 +50,6 @@ public class AddIngredientActivity extends Activity {
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
 
 		ingredientTitleTV.setText(ingredientTitle);
-
-		quitButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(getApplicationContext(),
-						IngredientCollectorActivity.class));
-				finish();
-			}
-		});
 
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
 			@Override
