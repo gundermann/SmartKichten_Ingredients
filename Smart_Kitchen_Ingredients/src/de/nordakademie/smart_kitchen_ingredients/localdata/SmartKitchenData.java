@@ -245,7 +245,7 @@ public class SmartKitchenData extends AbstractData implements IShoppingData,
 	@Override
 	public void deleteAllShoppingItems() {
 		SQLiteDatabase db = getWritableDatabase();
-		db.delete(ShoppingTable.TABLE_NAME, " * ", null);
+		db.delete(ShoppingTable.TABLE_NAME, null, null);
 		db.close();
 	}
 }
