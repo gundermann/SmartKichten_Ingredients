@@ -4,8 +4,8 @@ public class ShoppingListItem extends Ingredient implements IShoppingListItem {
 
 	private boolean bought;
 
-	public ShoppingListItem(String title, int amount, Unit unit, boolean bought) {
-		super(title, amount, unit);
+	public ShoppingListItem(String title, Unit unit, boolean bought) {
+		super(title, unit);
 		this.bought = bought;
 	}
 

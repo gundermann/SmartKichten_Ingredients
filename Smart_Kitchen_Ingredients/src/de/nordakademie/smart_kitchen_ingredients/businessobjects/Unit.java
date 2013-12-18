@@ -28,7 +28,7 @@ public enum Unit {
 		return shortUnit;
 	}
 
-	public static Unit valueOfFromShortening(String unitString){
+	public static Unit valueOfFromShortening(String unitString) {
 		if (unitString.equals("g")) {
 			return Gramm;
 		} else if (unitString.equals("kg")) {

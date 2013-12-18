@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
@@ -60,9 +60,8 @@ public class ShoppingDateListActivity extends Activity implements
 	}
 
 	private void updateDateList() {
-		final ListAdapter adapter = new ArrayAdapter<IDate>(this,
-				android.R.layout.simple_list_item_1, app.getDateDbHelper()
-						.getAllDates());
+		ListAdapter adapter = new AdapterFactory<IDate>()
+				.createDateAdapter(app);
 		shoppingDateList.setAdapter(adapter);
 	}
 
@@ -81,8 +80,8 @@ public class ShoppingDateListActivity extends Activity implements
 		adb.setTitle(R.string.deleteDateTitle);
 		adb.setMessage(R.string.delteDateSure);
 		final int positionToRemove = position;
-		adb.setNegativeButton(R.string.deleteDateCancel, null);
-		adb.setPositiveButton(R.string.delteDateCommit,
+		adb.setNegativeButton(android.R.string.cancel, null);
+		adb.setPositiveButton(android.R.string.ok,
 				new AlertDialog.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

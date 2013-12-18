@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
 /**
-* @author frederic.oppermann
-* @date 16.12.2013
-* @description
-*/
+ * @author frederic.oppermann
+ * @date 16.12.2013
+ * @description
+ */
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
 	private Button showIngredientsButton;
 	private IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
@@ -48,5 +49,15 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 		super.afterTextChanged(s);
 		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
 				R.layout.list_view_entry, getElementsToShow()));
+	}
+
+	@Override
+	public void onPositiveFinishedDialog(int quantity) {
+		try {
+			((IngredientsApplication) getApplication()).getShoppingDbHelper()
+					.addItem((IRecipe) getCurrentElement(), quantity);
+		} catch (ClassCastException e) {
+			informUser(R.string.developerMistake);
+		}
 	}
 }

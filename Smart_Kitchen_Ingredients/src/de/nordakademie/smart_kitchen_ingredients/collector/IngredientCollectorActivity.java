@@ -12,10 +12,10 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 /**
-* @author frederic.oppermann
-* @date 16.12.2013
-* @description
-*/
+ * @author frederic.oppermann
+ * @date 16.12.2013
+ * @description
+ */
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
 	private Button showRecepiesButton;
@@ -51,5 +51,15 @@ public class IngredientCollectorActivity extends
 		super.afterTextChanged(s);
 		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
 				R.layout.list_view_entry, getElementsToShow()));
+	}
+
+	@Override
+	public void onPositiveFinishedDialog(int quantity) {
+		try {
+			((IngredientsApplication) getApplication()).getShoppingDbHelper()
+					.addItem((IIngredient) getCurrentElement(), quantity);
+		} catch (ClassCastException e) {
+			informUser(R.string.developerMistake);
+		}
 	}
 }

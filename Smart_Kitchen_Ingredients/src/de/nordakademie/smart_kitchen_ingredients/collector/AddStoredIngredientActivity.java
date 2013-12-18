@@ -18,10 +18,11 @@ public class AddStoredIngredientActivity extends AddIngredientActivity implement
 	public void onClick(View view) {
 		String title = ingredientTitleTV.getText().toString();
 		Unit unit = Unit.valueOf(ingredientUnit.getSelectedItem().toString());
-		int amount = Integer.parseInt(ingredientAmountTV.getText().toString());
+		int quantity = Integer
+				.parseInt(ingredientQuantityTV.getText().toString());
 
 		IIngredient ingredient = app.getIngredientFactory().createIngredient(
-				title, amount, unit);
-		app.getStoredDbHelper().insertOrUpdateIngredient(ingredient);
+				title, unit);
+		app.getStoredDbHelper().insertOrUpdateIngredient(ingredient, quantity);
 	}
 }

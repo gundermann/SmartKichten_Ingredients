@@ -19,4 +19,6 @@ public interface ICacheData {
 	public List<IIngredient> insertOrUpdateAllIngredientsFromServer(
 			List<String[]> ingredients);
 
+	public boolean itemExists(String itemTitle);
+
 }

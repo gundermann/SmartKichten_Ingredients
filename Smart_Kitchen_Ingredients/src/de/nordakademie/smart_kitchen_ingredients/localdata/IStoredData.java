@@ -23,7 +23,7 @@ public interface IStoredData {
 	 * 
 	 * @param boughtIngredient
 	 */
-	void insertOrUpdateIngredient(IIngredient boughtIngredient);
+	void insertOrUpdateIngredient(IIngredient boughtIngredient, int quantity);
 
 	/**
 	 * Liefert eine Zutat mit dem übergebenen Titel zurück.
@@ -31,4 +31,6 @@ public interface IStoredData {
 	 * @param ingredientTitle
 	 */
 	IIngredient getStoredIngredient(String title);
+
+	int getQuantity(IIngredient item);
 }

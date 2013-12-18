@@ -2,6 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerHandler;
@@ -47,7 +48,7 @@ public class IngredientsApplication extends Application {
 	private IRecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-	private CacheData serverDataHelper;
+	private ICacheData serverDataHelper;
 	private IStoredData stockDbHelper;
 	private IDateDbHelper dateDbHelper;
 	private IDatabaseHelper<IIngredient> ingredientDbHelper;
@@ -133,4 +134,15 @@ public class IngredientsApplication extends Application {
 		return false;
 	}
 
+	public void updateCache() {
+		serverDataHelper.insertOrUpdateAllIngredientsFromServer(serverHandler
+				.getIngredientListFromServer());
+		serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
+				.getRecipeListFromServer());
+	}
+
+	public void informUserAboutSomething() {
+		Toast.makeText(getApplicationContext(), "AppToast", Toast.LENGTH_LONG)
+				.show();
+	}
 }

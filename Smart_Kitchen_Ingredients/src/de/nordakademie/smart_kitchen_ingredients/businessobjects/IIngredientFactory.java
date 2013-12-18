@@ -15,6 +15,6 @@ public interface IIngredientFactory {
 	 * @param unit
 	 * @return IIngredient
 	 */
-	IIngredient createIngredient(String title, int amount, Unit unit);
+	IIngredient createIngredient(String title, Unit unit);
 
 }

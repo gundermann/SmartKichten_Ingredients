@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
+import java.net.UnknownHostException;
+
 import de.nordakademie.smart_kitchen_ingredients.onlineconnection.IServerConnector;
 
 /**
@@ -14,5 +16,5 @@ public interface ISmartKichtenServerConnector extends IServerConnector {
 	 * 
 	 * @param jsonToPost
 	 */
-	void postIngredientToServer(String jsonToPost);
+	void postIngredientToServer(String jsonToPost) throws UnknownHostException;
 }

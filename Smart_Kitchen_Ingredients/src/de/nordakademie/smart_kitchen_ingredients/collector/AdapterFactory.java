@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.widget.ListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.DateListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockListAdapter;
 
@@ -31,6 +32,10 @@ public class AdapterFactory<T> implements IAdapterFactory<T> {
 	@Override
 	public ListAdapter createStoreAdapter(IngredientsApplication application) {
 		return new StockListAdapter(application);
+	}
+
+	public ListAdapter createDateAdapter(IngredientsApplication application) {
+		return new DateListAdapter(application);
 	}
 
 }

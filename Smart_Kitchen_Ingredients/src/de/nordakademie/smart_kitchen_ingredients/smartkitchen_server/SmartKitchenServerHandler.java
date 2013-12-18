@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
 import java.lang.reflect.Type;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IServerIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
 /**
@@ -44,12 +45,13 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 	}
 
 	private List<String[]> removeNullValues(List<String[]> ingredientList) {
+		List<String[]> returnValues = new ArrayList<String[]>();
 		for (String[] strings : ingredientList) {
-			if (strings == null) {
-				ingredientList.remove(strings);
+			if (strings != null) {
+				returnValues.add(strings);
 			}
 		}
-		return ingredientList;
+		return returnValues;
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 	private String[] getRecipeKey(JsonObject json) {
 		try {
 			String id = json.get("_id").getAsString();
-			String recipeTitle = json.get("title").getAsString();
+			String recipeTitle = json.get("name").getAsString();
 			String[] key = new String[2];
 			key[0] = id;
 			key[1] = recipeTitle;
@@ -108,7 +110,8 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 	}
 
 	@Override
-	public void postIngredientToServer(IServerIngredient ingredient) {
+	public void postIngredientToServer(IIngredient ingredient)
+			throws UnknownHostException {
 		String jsonToPost = jsonParser.toJson(ingredient);
 		connector.postIngredientToServer(jsonToPost);
 	}

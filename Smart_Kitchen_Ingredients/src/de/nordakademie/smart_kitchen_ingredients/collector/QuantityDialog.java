@@ -5,11 +5,17 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.R;
@@ -20,12 +26,15 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @description
  */
 public class QuantityDialog extends DialogFragment {
+	private InputMethodManager inputManager;
 	private ImageButton increaseButton;
 	private ImageButton decreaseButton;
 	private TextView previousNumber;
 	private TextView currentNumber;
 	private TextView nextNumber;
+	private EditText currentNumberInput;
 	private static IListElement element;
+	private QuantityPickerDialogListener dialogListener;
 
 	public static final QuantityDialog newInstance(IListElement element) {
 		QuantityDialog.element = element;
@@ -55,11 +64,54 @@ public class QuantityDialog extends DialogFragment {
 		setNewValue(view, value);
 	}
 
+	private void hideElement(View view) {
+		view.setVisibility(View.GONE);
+	}
+
+	private void showElement(View view) {
+		view.setVisibility(View.VISIBLE);
+	}
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		
 		View view = getCurrentView();
 		instantiaveViews(view);
 		setOnClickListener();
+
+		currentNumber.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				inputManager = (InputMethodManager) getActivity()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				hideElement(currentNumber);
+				showElement(currentNumberInput);
+				currentNumberInput.requestFocus();
+				inputManager.showSoftInput(currentNumberInput,
+						InputMethodManager.SHOW_FORCED);
+			}
+		});
+
+		currentNumberInput.setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (event != null
+						&& event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+					Log.d("quantity", event.getKeyCode() + "");
+
+					inputManager.hideSoftInputFromWindow(
+							currentNumberInput.getWindowToken(), 0);
+					showElement(currentNumber);
+					currentNumber.setVisibility(View.VISIBLE);
+					currentNumberInput.setVisibility(View.GONE);
+				}
+				return false;
+			}
+		});
+
+		dialogListener = (QuantityPickerDialogListener) getActivity();
 		return buildDialog(view);
 	}
 
@@ -69,27 +121,36 @@ public class QuantityDialog extends DialogFragment {
 		dialogBuilder
 				.setTitle(element.getElementUnit())
 				.setView(view)
-				.setPositiveButton("positive",
+				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								// TODO Auto-generated method stub
 
+								doOnPositive();
+								dismiss();
 							}
+
 						})
-				.setNegativeButton("negative",
+				.setNegativeButton(android.R.string.cancel,
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								// TODO Auto-generated method stub
-
+								dismiss();
 							}
 						});
 		return dialogBuilder.create();
+	}
+
+	public void doOnPositive() {
+		dialogListener.onPositiveFinishedDialog(getCurrentValue());
+	}
+
+	private Integer getCurrentValue() {
+		return Integer.valueOf(currentNumber.getText().toString());
 	}
 
 	private View getCurrentView() {
@@ -110,6 +171,8 @@ public class QuantityDialog extends DialogFragment {
 				.findViewById(R.id.quantityPickerCurrentNumber);
 		nextNumber = (TextView) view
 				.findViewById(R.id.quantityPickerNextNumber);
+		currentNumberInput = (EditText) view
+				.findViewById(R.id.quantityPickerCurrentQuantityInput);
 	}
 
 	private void setOnClickListener() {

@@ -2,25 +2,10 @@
 <resources>
 
     <string name="setupStock">Bestand Einstellungen</string>
-    <string name="minAmount">Ab wann soll die Einheit "stk" als knapp angezeigt werden?</string>
-    <string name="summaryMinAmount">Knappheit für Einheit "stk"</string>
-    <string name="summaryMinMass">Knappheit für Einheit "g"</string>
-    <string name="minMass">Ab wann soll die Einheit "g" als knapp angezeigt werden?</string>
-    <string name="minVolume">Ab wann soll die Einheit "ml" als knapp angezeigt werden?</string>
-    <string name="summaryMinVolume">Knappheit für Einheit "g"</string>
-    <string name="ingredientHintText">Ingredient name</string>
     <string name="confirmDateButton">Termin anlegen</string>
-    <string name="dateTitle">Einkaufstitel</string>
+    <string name="dateTitle">Einkauf</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
-    <string name="addIngredientsButton">Zutat hinzufügen</string>
-    <string name="addToShoppingList">Zur Einkaufliste hinzufügen</string>
-    <string name="title_activity_main_menu">Hauptmenü</string>
-    <string name="allocateIngredients">Zutaten erfassen</string>
-    <string name="shopping">Einkauf</string>
-    <string name="wantToDeleteIngretientsList">Wollen Sie die Zutatenliste wirklich verwerfen?</string>
-    <string name="yes">Ja</string>
-    <string name="no">Nein</string>
     <string name="title_activity_shopping">Einkaufsliste</string>
     <string name="title_activity_shoppingDateList">Einkaufsliste: Terminübersicht</string>
     <string name="title_activity_shoppingDate">Einkaufsliste: Termin anlegen</string>
@@ -45,23 +30,21 @@
     <string name="ingredientUnit">Einheit: </string>
     <string name="addIngredients">Neue Zutat erstellen</string>
     <string name="ingredientAmount">"Menge: "</string>
-    <string name="interrupt">Abbrechen</string>
     <string name="okButton">Zutat hinzufügen</string>
     <string name="chooseUnit">Einheit auswählen</string>
     <string name="quantityPreviousDefaultNumber">0</string>
     <string name="quantityCurrentDefaultNumber">1</string>
     <string name="quantityNextDefaultNumber">2</string>
-    <string name="currentDate">Datum: </string>
     <string name="changeShoppingDataPermissionDescription">Text</string>
-    <string name="changeDate">Wählen Sie ein Datum</string>
-    <string name="changeTime">Wählen Sie eine Uhrzeit</string>
-    <string name="deleteDateCancel">Abbrechen</string>
-    <string name="delteDateCommit">Ok</string>
     <string name="delteDateSure">Sind Sie sicher, dass Sie den Termin löschen wollen?</string>
     <string name="toastInsertNewShoppingDate">Feld Einkaufstitel muss gefüllt sein</string>
     <string name="deleteDateTitle">Löschen?</string>
     <string name="recipeCollector">Einkaufsliste: Rezepte</string>
     <string name="noResultsFound">Keine Ergebnisse gefunden</string>
+    <string name="developerMistake">Sorry - hier hat ein Entwickler gepfuscht!</string>
+    <string name="dateTitleHint">Bezeichnung&#8230;</string>
+    <string name="newIngredientHint">Name&#8230;</string>
+    <string name="menuBackToMainPackage">Startseite</string>
 
     <string-array name="unit_array">
         <item>g</item>
@@ -70,4 +53,3 @@
     </string-array>
 
 </resources>
-

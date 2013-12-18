@@ -1,20 +1,20 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
 
 public class Recipe implements IRecipe, IListElement {
 
 	private String name;
-	private List<IIngredient> ingredients;
+	private Map<IIngredient, Integer> ingredients;
 
 	public Recipe() {
-		ingredients = new ArrayList<IIngredient>();
+		ingredients = new HashMap<IIngredient, Integer>();
 	}
 
-	public Recipe(String name, List<IIngredient> ingredients) {
+	public Recipe(String name, Map<IIngredient, Integer> ingredients) {
 		this.ingredients = ingredients;
 		this.name = name;
 	}
@@ -23,7 +23,7 @@ public class Recipe implements IRecipe, IListElement {
 		this.name = name;
 	}
 
-	public void setIngredients(List<IIngredient> ingredients) {
+	public void setIngredients(Map<IIngredient, Integer> ingredients) {
 		this.ingredients = ingredients;
 	}
 
@@ -33,7 +33,7 @@ public class Recipe implements IRecipe, IListElement {
 	}
 
 	@Override
-	public List<IIngredient> getIngredients() {
+	public Map<IIngredient, Integer> getIngredients() {
 		return ingredients;
 	}
 
