@@ -9,8 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,7 +25,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @date 15.12.2013
  * @description
  */
-public class QuantityDialog extends DialogFragment implements TextWatcher {
+public class QuantityDialog extends DialogFragment {
 	private InputMethodManager inputManager;
 	private ImageButton increaseButton;
 	private ImageButton decreaseButton;
@@ -76,10 +74,10 @@ public class QuantityDialog extends DialogFragment implements TextWatcher {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-
+		
 		View view = getCurrentView();
 		instantiaveViews(view);
-		setListener();
+		setOnClickListener();
 
 		currentNumber.setOnClickListener(new OnClickListener() {
 
@@ -177,8 +175,15 @@ public class QuantityDialog extends DialogFragment implements TextWatcher {
 				.findViewById(R.id.quantityPickerCurrentQuantityInput);
 	}
 
-	private void setListener() {
-		currentNumberInput.addTextChangedListener(this);
+	private void setOnClickListener() {
+		currentNumber.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+
 		increaseButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -205,25 +210,5 @@ public class QuantityDialog extends DialogFragment implements TextWatcher {
 
 	private int getValueOf(TextView view) {
 		return Integer.valueOf(view.getText().toString());
-	}
-
-	@Override
-	public void afterTextChanged(Editable editable) {
-	}
-
-	@Override
-	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-			int arg3) {
-
-	}
-
-	@Override
-	public void onTextChanged(CharSequence sequence, int arg1, int arg2,
-			int arg3) {
-		int currentQuantity = Integer.valueOf(currentNumberInput.getText()
-				.toString());
-		previousNumber.setText(String.valueOf(currentQuantity - 1));
-		currentNumber.setText(String.valueOf(currentQuantity));
-		nextNumber.setText(String.valueOf(currentQuantity + 1));
 	}
 }
