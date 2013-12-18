@@ -46,6 +46,7 @@
     <string name="newIngredientHint">Name&#8230;</string>
     <string name="menuBackToMainPackage">Startseite</string>
     <string name="stock_ingredients">Bestand: Zutaten hinzufügen</string>
+    <string name="noNetworkConnection">Keine Netzwerkverbindung - Server nicht erreichbar</string>
 
     <string-array name="unit_array">
         <item>g</item>

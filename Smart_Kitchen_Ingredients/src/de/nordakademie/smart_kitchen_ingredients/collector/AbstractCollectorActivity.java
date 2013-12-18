@@ -24,6 +24,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -195,6 +196,10 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	public void update(AsyncTask<Void, Void, List<T>> task) {
 		try {
 			setAllElements(task.get());
+			if (allElements.isEmpty()) {
+				((IngredientsApplication) getApplication())
+						.informUser(getString(R.string.noNetworkConnection));
+			}
 			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
 					.getText());
 		} catch (InterruptedException e) {

@@ -109,16 +109,6 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 		return listItem;
 	}
 
-	// public List<String> getStoredValues() {
-	// List<String> values = new ArrayList<String>();
-	// for (IIngredient item : getStoredItems()) {
-	// values.add(item.getName() + " - "
-	// + String.valueOf() + " " + item.getUnit());
-	// }
-	// Log.i(TAG, "title of shoppingitems collected");
-	// return values;
-	// }
-
 	public List<IIngredient> getStoredItems() {
 		List<IIngredient> storedShoppingItems = new ArrayList<IIngredient>();
 		TreeSet<IIngredient> ingredients = new TreeSet<IIngredient>();

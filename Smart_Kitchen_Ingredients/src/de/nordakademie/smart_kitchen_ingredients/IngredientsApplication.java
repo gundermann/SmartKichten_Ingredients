@@ -1,6 +1,8 @@
 package de.nordakademie.smart_kitchen_ingredients;
 
 import android.app.Application;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerConnector;
@@ -133,7 +135,10 @@ public class IngredientsApplication extends Application {
 	}
 
 	public void updateCache() {
-		if (System.currentTimeMillis() - lastUpdate > ONE_DAY) {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (System.currentTimeMillis() - lastUpdate > ONE_DAY
+				&& netInfo != null && netInfo.isConnected()) {
 			serverDataHelper
 					.insertOrUpdateAllIngredientsFromServer(serverHandler
 							.getIngredientListFromServer());
@@ -143,8 +148,8 @@ public class IngredientsApplication extends Application {
 		}
 	}
 
-	public void informUserAboutSomething() {
-		Toast.makeText(getApplicationContext(), "AppToast", Toast.LENGTH_LONG)
+	public void informUser(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG)
 				.show();
 	}
 
