@@ -39,12 +39,13 @@
     <string name="delteDateSure">Sind Sie sicher, dass Sie den Termin löschen wollen?</string>
     <string name="toastInsertNewShoppingDate">Feld Einkaufstitel muss gefüllt sein</string>
     <string name="deleteDateTitle">Löschen?</string>
-    <string name="recipeCollector">Zutatenplaner: Rezepte</string>
+    <string name="recipeCollector">Einkaufsliste: Rezeptzutaten hinzufügen</string>
     <string name="noResultsFound">Keine Ergebnisse gefunden</string>
     <string name="developerMistake">Sorry - hier hat ein Entwickler gepfuscht!</string>
     <string name="dateTitleHint">Bezeichnung&#8230;</string>
     <string name="newIngredientHint">Name&#8230;</string>
     <string name="menuBackToMainPackage">Startseite</string>
+    <string name="stock_ingredients">Bestand: Zutaten hinzufügen</string>
 
     <string-array name="unit_array">
         <item>g</item>

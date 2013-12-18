@@ -79,7 +79,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 				startActivity(new Intent(getApplicationContext(),
 						AddIngredientActivity.class).putExtra(
 						"shoppingListName", currentShoppingList).putExtra(
-						"ingredientTitle", currentElement.getName()));
+						"ingredientTitle", searchBar.getText().toString()));
 			}
 		});
 	}

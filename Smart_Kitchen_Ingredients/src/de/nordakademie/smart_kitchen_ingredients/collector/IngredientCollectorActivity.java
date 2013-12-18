@@ -60,6 +60,9 @@ public class IngredientCollectorActivity extends
 	@Override
 	public void onPositiveFinishedDialog(int quantity) {
 		try {
+			IngredientsApplication app = ((IngredientsApplication) getApplication());
+			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
+					.getExplicitItem(getCurrentElement().getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
 					.addItem((IIngredient) getCurrentElement(), quantity,
 							currentShoppingList);

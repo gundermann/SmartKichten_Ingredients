@@ -65,9 +65,10 @@ public interface IShoppingData {
 
 	boolean addItem(IShoppingList shoppingList);
 
+	int getQuantityShopping(IIngredient item);
+
 	/**
 	 * Löscht alle in der Einkaufsliste enthaltenen Zutaten
 	 */
 	void deleteAllShoppingItems();
-
 }

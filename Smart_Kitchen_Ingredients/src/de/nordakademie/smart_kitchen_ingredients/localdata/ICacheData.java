@@ -13,6 +13,13 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  */
 public interface ICacheData {
 
+	/**
+	 * KEY: String Array - Value: List of String Array KEY/rezept 0=id 1=titel
+	 * VALUE/zutaten 0=id 1=titel 2=einheit 3=menge
+	 * 
+	 * @param recipes
+	 * @return
+	 */
 	public List<IRecipe> insertOrUpdateAllRecipesFromServer(
 			Map<String[], List<String[]>> recipes);
 

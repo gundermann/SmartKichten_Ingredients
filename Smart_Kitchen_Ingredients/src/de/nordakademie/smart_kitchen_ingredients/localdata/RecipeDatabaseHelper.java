@@ -18,4 +18,9 @@ public class RecipeDatabaseHelper implements IDatabaseHelper<IRecipe> {
 		return db.getAllRecipes();
 	}
 
+	@Override
+	public IRecipe getExplicitItem(String title) {
+		return db.getRecipeByTitle(title);
+	}
+
 }

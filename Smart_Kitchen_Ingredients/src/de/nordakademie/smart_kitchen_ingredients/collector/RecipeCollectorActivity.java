@@ -59,6 +59,9 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	@Override
 	public void onPositiveFinishedDialog(int quantity) {
 		try {
+			IngredientsApplication app = ((IngredientsApplication) getApplication());
+			IRecipe recipeToAdd = app.getRecipeDbHelper().getExplicitItem(
+					getCurrentElement().getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
 					.addItem((IRecipe) getCurrentElement(), quantity,
 							currentShoppingList);
