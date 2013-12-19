@@ -214,8 +214,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		try {
 			setAllElements(task.get());
 			if (allElements.isEmpty()) {
-				((IngredientsApplication) getApplication())
-						.informUser(R.string.noNetworkConnection);
+				app.informUser(R.string.noNetworkConnection);
 			}
 			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
 					.getText());

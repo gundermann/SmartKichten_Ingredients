@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables;
 
 import android.content.ContentValues;
+import android.util.Log;
 
 public class IngredientsToRecipeTable {
 	public static final String TABLE_NAME = "indigrentToRecipe";
