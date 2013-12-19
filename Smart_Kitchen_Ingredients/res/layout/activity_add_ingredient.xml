@@ -18,11 +18,15 @@
 
     <EditText
         android:id="@+id/ingredientNameEdit"
-        android:hint="@string/newIngredientHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:ems="10" >
+        android:ems="10"
+        android:hint="@string/newIngredientHint"
+        android:inputType="text" 
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
+        android:maxLength="30" >
+
     </EditText>
 
     <TextView
@@ -50,7 +54,8 @@
         android:layout_marginBottom="10dp"
         android:digits="0123456789"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:maxLength="6"/>
 
     <Button
         android:id="@+id/submitNewIngredientButton"

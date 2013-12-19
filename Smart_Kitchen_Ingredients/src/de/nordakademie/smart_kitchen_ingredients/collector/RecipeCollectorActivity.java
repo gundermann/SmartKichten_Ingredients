@@ -4,9 +4,13 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
@@ -20,14 +24,32 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	private Button showIngredientsButton;
 	private final IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
 	private IngredientsApplication app;
+	private ListView elementsListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (IngredientsApplication) getApplication();
 		showIngredientsButton = (Button) findViewById(R.id.showIngredientsButton);
+		elementsListView = getElementsListView();
 		showIngredientsButton.setVisibility(View.GONE);
 		confirmShoppingList.setVisibility(View.GONE);
+
+		elementsListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View arg1,
+					int position, long arg3) {
+
+				IRecipe findIngredientInDatabase = findIngredientInDatabase((IRecipe) adapterView
+						.getAdapter().getItem(position));
+
+				DialogFragment showIngredientsDialog = ShowRecipeIngredientsDialog
+						.newInstance(findIngredientInDatabase, app);
+
+				showIngredientsDialog.show(getSupportFragmentManager(), TAG);
+			}
+		});
 	}
 
 	@Override

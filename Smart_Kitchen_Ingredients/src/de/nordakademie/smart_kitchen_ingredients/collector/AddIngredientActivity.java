@@ -56,7 +56,7 @@ public class AddIngredientActivity extends Activity {
 		ingredientQuantityTV = (TextView) findViewById(R.id.ingredientAmountEdit);
 		
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-		SpinnerAdapter adapter = (SpinnerAdapter) new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Unit.values());
+		SpinnerAdapter adapter = (SpinnerAdapter) new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, Unit.values());
 		ingredientUnit.setAdapter(adapter);
 		
 		ingredientTitleTV.setText(ingredientTitle);
@@ -74,18 +74,18 @@ public class AddIngredientActivity extends Activity {
 							.getSelectedItem().toString());
 
 					if (amountView.getText().toString().equals("")) {
-						showSavedOrNotInformation(getString(R.string.amountNeeded));
-					} else if (amountView.getText().toString().length() > 6) {
-						showSavedOrNotInformation(getString(R.string.amountToHight));
+						app.informUser(R.string.amountNeeded);
 					} else if (title.equals("")) {
-						showSavedOrNotInformation(getString(R.string.nameNeeded));
+						app.informUser(R.string.nameNeeded);
+					} else if (1 > Integer.valueOf(amountView.getText().toString())) {
+							app.informUser(R.string.enterAmountMoreThanNull);
 					} else {
 						Integer amount = Integer.valueOf(amountView.getText()
 								.toString());
 						saveIngredientAndLeave(title, amount, unit);
 					}
 				} else {
-					showSavedOrNotInformation(getString(R.string.ingredientOnServer));
+					app.informUser(R.string.ingredientOnServer);
 				}
 			}
 		});
@@ -115,11 +115,6 @@ public class AddIngredientActivity extends Activity {
 		}
 	}
 
-	protected void showSavedOrNotInformation(String info) {
-		Toast toast = Toast.makeText(app, info, Toast.LENGTH_LONG);
-		toast.show();
-	}
-
 	protected void fetchDataFromDb(AsyncTask<Void, Void, Boolean> updateDataTask) {
 		updateDataTask.execute();
 	}
@@ -135,7 +130,7 @@ public class AddIngredientActivity extends Activity {
 		if (!isItemAlreadyInDb(newItem)) {
 			app.getShoppingDbHelper().addItem(newItem, quantity,
 					currentShoppingListName);
-			app.informUser(R.string.ingredientSaved);
+			//app.informUser(R.string.ingredientSaved);
 		}
 
 	}
