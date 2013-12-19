@@ -79,22 +79,26 @@
 
         <receiver android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateAlarmReceiver" >
         </receiver>
+        <!-- 
         <receiver android:name="de.nordakademie.smart_kitchen_ingredients.localdata.cache.NetworkReceiver">
              <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+         -->
 
         <uses-library android:name="android.test.runner" />
 
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.AddIngredientActivity"
-            android:label="@string/title_activity_add_ingredient"
+            android:label="@string/title_activity_add_ingredient" 
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity"
-            android:label="@string/title_activity_add_ingredient"
+            android:launchMode="singleTask"
+            android:label="@string/stock_ingredients" 
             android:screenOrientation="portrait" >
         </activity>
         <activity

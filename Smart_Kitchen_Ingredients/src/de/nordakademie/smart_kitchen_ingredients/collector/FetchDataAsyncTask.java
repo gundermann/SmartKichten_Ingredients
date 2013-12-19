@@ -31,7 +31,9 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	@Override
 	protected void onPreExecute() {
-		progressWheel.setVisibility(View.VISIBLE);
+		if (progressWheel != null) {
+			progressWheel.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
@@ -41,7 +43,11 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	@Override
 	protected void onPostExecute(List<T> result) {
-		progressWheel.setVisibility(View.GONE);
-		observer.update(this);
+		if (progressWheel != null) {
+			progressWheel.setVisibility(View.GONE);
+		}
+		if (observer != null) {
+			observer.update(this);
+		}
 	}
 }

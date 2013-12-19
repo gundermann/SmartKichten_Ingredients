@@ -49,10 +49,11 @@ public class SmartKitchenStoredData extends AbstractSmartKitchenData implements
 		openCursorResoures();
 		setCursor(StoredTable.TABLE_NAME, StoredTable.selectUnit(),
 				getWhere(StoredTable.NAME, title));
-		cursor.moveToNext();
-		Unit unit = Unit.valueOfFromShortening(cursor.getString(0));
-		IIngredient ingredient = IngredientFactory
-				.createIngredient(title, unit);
+		IIngredient ingredient = null;
+		if (cursor.moveToNext()) {
+			Unit unit = Unit.valueOfFromShortening(cursor.getString(0));
+			ingredient = IngredientFactory.createIngredient(title, unit);
+		}
 		closeCursorResources();
 		return ingredient;
 

@@ -54,11 +54,14 @@ public abstract class AbstractSmartKitchenData extends AbstractData {
 		onCreate(db);
 	}
 
-	protected int updateShoppingItem(IShoppingListItem item) {
+	protected int updateShoppingItem(IShoppingListItem item, String shoppinglist) {
 		ContentValues value = ShoppingTable.getContentValuesForQuantityBought(
 				item.getQuantity(), item.isBought());
-		int updatedRows = update(ShoppingTable.TABLE_NAME, value,
-				getWhere(ShoppingTable.NAME, item.getName()));
+		int updatedRows = update(
+				ShoppingTable.TABLE_NAME,
+				value,
+				getWhere(ShoppingTable.selectNameAndShoppinglist(),
+						new String[] { item.getName(), shoppinglist }));
 		Log.i(TAG, "shopping_table updated");
 		return updatedRows;
 	}
@@ -66,7 +69,7 @@ public abstract class AbstractSmartKitchenData extends AbstractData {
 	protected boolean insertItemsIntoDatabase(
 			List<IShoppingListItem> shoppingItemList, String shoppingList) {
 		for (IShoppingListItem shoppingItem : shoppingItemList) {
-			if (updateShoppingItem(shoppingItem) == 0) {
+			if (updateShoppingItem(shoppingItem, shoppingList) == 0) {
 				ContentValues values = ShoppingTable
 						.getContentValuesForAllButId(shoppingItem, shoppingList);
 				if (!insert(ShoppingTable.TABLE_NAME, values)) {

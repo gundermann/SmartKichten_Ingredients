@@ -36,7 +36,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:entries="@array/unit_array"
         android:prompt="@string/chooseUnit" />
 
     <TextView
@@ -57,6 +56,6 @@
         android:id="@+id/submitNewIngredientButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/okButton" />
+        android:text="@string/newIngredientButtonText" />
 
 </LinearLayout>

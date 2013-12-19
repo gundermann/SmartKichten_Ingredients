@@ -43,8 +43,21 @@ public abstract class AbstractData extends SQLiteOpenHelper {
 	}
 
 	protected String getWhere(String column, Object value) {
+		String[] columns = new String[] { column };
+		String[] values = new String[] { value.toString() };
+		return getWhere(columns, values);
+	}
+
+	protected String getWhere(String[] columns, Object[] value) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(column).append("='").append(value).append("'");
+		int size = columns.length;
+		for (int index = 0; index < size; index++) {
+			sb.append(columns[index]).append("='").append(value[index])
+					.append("'");
+			if (index + 1 < size) {
+				sb.append(" AND ");
+			}
+		}
 		return sb.toString();
 	}
 

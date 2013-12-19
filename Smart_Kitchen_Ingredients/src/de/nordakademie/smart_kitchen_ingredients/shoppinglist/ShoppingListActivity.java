@@ -66,11 +66,6 @@ public class ShoppingListActivity extends AbstractActivity implements
 	}
 
 	private List<IShoppingList> getName() {
-		// TreeSet<IShoppingList> listName = new TreeSet<IShoppingList>();
-		// listName.addAll(app.getShoppingDbHelper().getAllShoppingLists());
-		// List<IShoppingList> shoppingList = new ArrayList<IShoppingList>(
-		// listName);
-		// return shoppingList;
 		return app.getShoppingDbHelper().getAllShoppingLists();
 	}
 

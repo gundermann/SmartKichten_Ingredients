@@ -49,13 +49,6 @@
             android:text="@string/confirmShoppingListAdd" />
 
         <Button
-            android:id="@+id/addNewIngredientButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/newIngredientButtonText" />
-
-        <Button
             android:id="@+id/showRecipesButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

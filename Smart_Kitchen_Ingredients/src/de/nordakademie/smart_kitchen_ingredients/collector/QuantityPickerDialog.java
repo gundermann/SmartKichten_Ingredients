@@ -1,14 +1,13 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -18,14 +17,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import android.view.KeyEvent;
+import android.view.View.OnLongClickListener;
 
 /**
  * @author frederic.oppermann
  * @date 15.12.2013
  * @description
  */
-@SuppressLint("ValidFragment")
-public class QuantityPickerDialog extends DialogFragment {
+public class QuantityPickerDialog extends DialogFragment implements TextWatcher {
 	private InputMethodManager inputManager;
 	private ImageButton increaseButton;
 	private ImageButton decreaseButton;
@@ -37,16 +37,19 @@ public class QuantityPickerDialog extends DialogFragment {
 	private QuantityPickerDialogListener dialogListener;
 	IngredientsApplication app;
 
-	public QuantityPickerDialog(IngredientsApplication app) {
-		this.app = app;
 
-	}
-
+	// TODO no parcable used -> Kanonen auf Spatzen
 	public static final QuantityPickerDialog newInstance(IListElement element,
 			IngredientsApplication app) {
-		QuantityPickerDialog dialog = new QuantityPickerDialog(app);
+		QuantityPickerDialog dialog = new QuantityPickerDialog();
+		dialog.setApplication(app);
 		dialog.setListElement(element);
 		return dialog;
+	}
+	
+	public void setApplication(IngredientsApplication app) {
+		this.app = app;
+		
 	}
 
 	public void setListElement(IListElement element) {
@@ -54,9 +57,20 @@ public class QuantityPickerDialog extends DialogFragment {
 	}
 
 	private void setCurrentNumber(int newValue) {
-		setNewValue(nextNumber, newValue + 1);
-		setNewValue(currentNumber, newValue);
-		setNewValue(previousNumber, newValue - 1);
+		if (newValue > 0) {
+			setNewValue(nextNumber, newValue + 1);
+			setNewValue(currentNumber, newValue);
+			setNewValue(previousNumber, newValue - 1);
+		} else {
+			((IngredientsApplication) getActivity().getApplication())
+					.informUser(R.string.numberHaveToBeGreaterThanZero);
+		}
+	}
+
+	private void setCurrentNumber(String number) {
+		if (!number.trim().isEmpty()) {
+			setCurrentNumber(Integer.valueOf(number));
+		}
 	}
 
 	void setNewValue(TextView view, int newValue) {
@@ -96,10 +110,9 @@ public class QuantityPickerDialog extends DialogFragment {
 
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				setCurrentNumber(getValueOf(currentNumberInput));
+				setCurrentNumber(currentNumberInput);
 				if (event != null
 						&& event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-					Log.d("quantity", event.getKeyCode() + "");
 
 					inputManager.hideSoftInputFromWindow(
 							currentNumberInput.getWindowToken(), 0);
@@ -111,8 +124,21 @@ public class QuantityPickerDialog extends DialogFragment {
 			}
 		});
 
+		currentNumberInput.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				currentNumberInput.selectAll();
+				return true;
+			}
+		});
+
 		dialogListener = (QuantityPickerDialogListener) getActivity();
 		return buildDialog(view);
+	}
+
+	private void setCurrentNumber(EditText editText) {
+		setCurrentNumber(editText.getText().toString());
 	}
 
 	private Dialog buildDialog(View view) {
@@ -174,6 +200,8 @@ public class QuantityPickerDialog extends DialogFragment {
 				.findViewById(R.id.quantityPickerNextNumber);
 		currentNumberInput = (EditText) view
 				.findViewById(R.id.quantityPickerCurrentQuantityInput);
+
+		currentNumberInput.addTextChangedListener(this);
 	}
 
 	private void setOnClickListener() {
@@ -181,23 +209,45 @@ public class QuantityPickerDialog extends DialogFragment {
 
 			@Override
 			public void onClick(View v) {
-				setCurrentNumber(getValueOf(currentNumber) + 1);
+				increaseCurrentValue();
+				updateCurrentNumberInput();
 			}
 
 		});
 
 		decreaseButton.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				if (getValueOf(previousNumber) > 0) {
-					setCurrentNumber(getValueOf(currentNumber) - 1);
-				}
+				decreaseCurrentValue();
+				updateCurrentNumberInput();
 			}
+
 		});
 	}
 
-	private int getValueOf(TextView view) {
-		return Integer.valueOf(view.getText().toString());
+	private void updateCurrentNumberInput() {
+		currentNumberInput.setText(currentNumber.getText());
+	}
+
+	private void increaseCurrentValue() {
+		setCurrentNumber(getCurrentValue() + 1);
+	}
+
+	private void decreaseCurrentValue() {
+		setCurrentNumber(getCurrentValue() - 1);
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		setCurrentNumber(s.toString());
 	}
 }
