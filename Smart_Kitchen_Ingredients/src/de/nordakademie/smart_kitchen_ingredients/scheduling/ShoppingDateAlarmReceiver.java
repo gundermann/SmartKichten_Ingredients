@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListActivity;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListIngredientsActivity;
 
 /**
@@ -24,7 +25,7 @@ public class ShoppingDateAlarmReceiver extends BroadcastReceiver {
 	}
 
 	public void createNotification(Context context) {
-		Intent intent = new Intent(context, ShoppingListIngredientsActivity.class);
+		Intent intent = new Intent(context, ShoppingListActivity.class);
 		PendingIntent pIntent = PendingIntent
 				.getActivity(context, 0, intent, 0);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(
