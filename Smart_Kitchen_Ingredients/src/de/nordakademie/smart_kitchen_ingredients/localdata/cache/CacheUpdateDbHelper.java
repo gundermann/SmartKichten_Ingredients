@@ -8,6 +8,7 @@ import java.util.Map;
 
 import android.content.ContentValues;
 import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
@@ -55,7 +56,7 @@ public class CacheUpdateDbHelper extends AbstractCacheData implements
 		for (String[] ingredient : ingredients) {
 			writeIngredientToDB(IngredientsTable
 					.getContenValuesForAll(ingredient));
-			ingredientList.add(app.getIngredientFactory().createIngredient(
+			ingredientList.add(IngredientFactory.createIngredient(
 					ingredient[1], Unit.valueOfFromShortening(ingredient[2])));
 		}
 		return ingredientList;
@@ -74,7 +75,7 @@ public class CacheUpdateDbHelper extends AbstractCacheData implements
 						ingredient));
 		Log.i(TAG, "database of INDIGRENTS_TO_RECIPES updated");
 
-		return app.getIngredientFactory().createIngredient(ingredient[1],
+		return IngredientFactory.createIngredient(ingredient[1],
 				Unit.valueOfFromShortening(ingredient[2]));
 	}
 

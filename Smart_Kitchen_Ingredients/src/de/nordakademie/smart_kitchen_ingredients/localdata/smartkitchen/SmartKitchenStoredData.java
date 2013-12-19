@@ -5,9 +5,9 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.StoredTable;
 
@@ -51,8 +51,8 @@ public class SmartKitchenStoredData extends AbstractSmartKitchenData implements
 				getWhere(StoredTable.NAME, title));
 		cursor.moveToNext();
 		Unit unit = Unit.valueOfFromShortening(cursor.getString(0));
-		IIngredient ingredient = app.getIngredientFactory().createIngredient(
-				title, unit);
+		IIngredient ingredient = IngredientFactory
+				.createIngredient(title, unit);
 		closeCursorResources();
 		return ingredient;
 
@@ -90,8 +90,7 @@ public class SmartKitchenStoredData extends AbstractSmartKitchenData implements
 
 	private IIngredient getStoredItem() {
 		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
-		IIngredientFactory factory = app.getIngredientFactory();
-		return factory.createIngredient(cursor.getString(0), unit);
+		return IngredientFactory.createIngredient(cursor.getString(0), unit);
 	}
 
 }

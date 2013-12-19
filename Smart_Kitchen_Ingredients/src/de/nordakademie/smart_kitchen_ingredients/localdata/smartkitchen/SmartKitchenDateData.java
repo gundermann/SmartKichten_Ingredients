@@ -6,9 +6,10 @@ import java.util.List;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import de.nordakademie.smart_kitchen_ingredients.DateFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.DateTable;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.IDate;
 
 public class SmartKitchenDateData extends AbstractSmartKitchenData implements
 		IDateDbHelper {
@@ -60,8 +61,7 @@ public class SmartKitchenDateData extends AbstractSmartKitchenData implements
 			String title = cursor.getString(0);
 			long timestamp = cursor.getLong(1);
 			int intentFlag = cursor.getInt(2);
-			dateList.add(app.getDateFactory().createDate(title, timestamp,
-					intentFlag));
+			dateList.add(DateFactory.createDate(title, timestamp, intentFlag));
 		}
 		closeCursorResources();
 		return dateList;

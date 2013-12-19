@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.nordakademie.smart_kitchen_ingredients.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
@@ -16,7 +16,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.Ingredie
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.RecipesTable;
 
 public class RecipeDbHelper extends AbstractCacheData implements
-		ICacheDbHelper<IRecipe> {
+		IAbstractCacheDbHelper<IRecipe> {
 
 	public RecipeDbHelper(IngredientsApplication app) {
 		super(app);
@@ -58,7 +58,6 @@ public class RecipeDbHelper extends AbstractCacheData implements
 
 	private Map<IIngredient, Integer> getIngredientsForRecipeID(String recipeID) {
 		Map<IIngredient, Integer> ingredientsList = new HashMap<IIngredient, Integer>();
-		IIngredientFactory ingredientFactory = app.getIngredientFactory();
 		openCursorResoures();
 		setCursor(IngredientsToRecipeTable.TABLE_NAME,
 				IngredientsToRecipeTable.selectIngredientIdAndQuantity(),
@@ -70,7 +69,7 @@ public class RecipeDbHelper extends AbstractCacheData implements
 		}
 
 		for (String id : quantityMap.keySet()) {
-			ingredientsList.put(ingredientFactory.createIngredient(
+			ingredientsList.put(IngredientFactory.createIngredient(
 					getIngredientNameByID(id), getIngredientUnitByID(id)),
 					quantityMap.get(id));
 		}

@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.scheduling;
+package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
 public class Date implements IDate, Comparable<IDate> {
 

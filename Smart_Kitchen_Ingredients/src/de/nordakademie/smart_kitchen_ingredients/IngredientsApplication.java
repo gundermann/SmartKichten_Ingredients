@@ -9,16 +9,12 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerConnec
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheUpdateDbHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IAbstractCacheDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbUpdateHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IngredientDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.RecipeDbHelper;
@@ -28,14 +24,12 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IStoredD
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenDateData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenStoredData;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.DateFactory;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.IDateFactory;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKitchenServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitchenServerHandler;
 
 /**
- * Die allgemeine Application, die alle Factories und Datenbankhelper enthällt.
+ * Die allgemeine Application, die alle Datenbankhelper enthällt.
  * 
  * @author niels
  * 
@@ -48,18 +42,16 @@ public class IngredientsApplication extends Application {
 	private final String TAG = IngredientsApplication.class.getSimpleName();
 	private IShoppingDbHelper shoppingDbHelper;
 	private ISmartKitchenServerHandler serverHandler;
-	private IIngredientFactory ingredientFactory;
 	private IRecipeFactory recipeFactory;
-	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
 	private ICacheDbUpdateHelper serverDataHelper;
 	private IStoredDbHelper stockDbHelper;
 	private IDateDbHelper dateDbHelper;
-	private ICacheDbHelper<IIngredient> ingredientDbHelper;
-	private ICacheDbHelper<IRecipe> recipeDbHelper;
-	private IDateFactory dateFactory;
+	private IAbstractCacheDbHelper<IIngredient> ingredientDbHelper;
+	private IAbstractCacheDbHelper<IRecipe> recipeDbHelper;
 	private long lastUpdate = 0;
 	private IShoppingList shoppingList;
+	private boolean isUpdating = false;
 
 	@Override
 	public void onCreate() {
@@ -69,12 +61,9 @@ public class IngredientsApplication extends Application {
 		shoppingDbHelper = new SmartKitchenShoppingData(this);
 		serverHandler = new SmartKitchenServerHandler(
 				new SmartKitchenServerConnector());
-		ingredientFactory = new IngredientFactory();
-		dateFactory = new DateFactory();
 		ingredientDbHelper = new IngredientDbHelper(this);
 		recipeDbHelper = new RecipeDbHelper(this);
 		dateDbHelper = new SmartKitchenDateData(this);
-		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactory();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
@@ -99,10 +88,6 @@ public class IngredientsApplication extends Application {
 		return serverHandler;
 	}
 
-	public IIngredientFactory getIngredientFactory() {
-		return ingredientFactory;
-	}
-
 	public IRecipeFactory getRecipeFactory() {
 		return recipeFactory;
 	}
@@ -111,24 +96,16 @@ public class IngredientsApplication extends Application {
 		return barcodeEvaluator;
 	}
 
-	public IShoppingListItemFactory getShoppingListItemFactory() {
-		return shoppingListItemFactory;
-	}
-
 	public IStoredDbHelper getStoredDbHelper() {
 		return stockDbHelper;
 	}
 
-	public ICacheDbHelper<IIngredient> getIngredientsDbHelper() {
+	public IAbstractCacheDbHelper<IIngredient> getIngredientsDbHelper() {
 		return ingredientDbHelper;
 	}
 
-	public ICacheDbHelper<IRecipe> getRecipeDbHelper() {
+	public IAbstractCacheDbHelper<IRecipe> getRecipeDbHelper() {
 		return recipeDbHelper;
-	}
-
-	public IDateFactory getDateFactory() {
-		return dateFactory;
 	}
 
 	public IDateDbHelper getDateDbHelper() {
@@ -138,14 +115,16 @@ public class IngredientsApplication extends Application {
 	public void updateCache() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if (System.currentTimeMillis() - lastUpdate > ONE_DAY
+		if (!isUpdating && System.currentTimeMillis() - lastUpdate > ONE_DAY
 				&& netInfo != null && netInfo.isConnected()) {
+			isUpdating = true;
 			serverDataHelper
 					.insertOrUpdateAllIngredientsFromServer(serverHandler
 							.getIngredientListFromServer());
 			serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
 					.getRecipeListFromServer());
 			lastUpdate = System.currentTimeMillis();
+			isUpdating = false;
 		}
 	}
 
