@@ -79,7 +79,7 @@ public class AddIngredientActivity extends Activity {
 						app.informUser(R.string.amountToHight);
 					} else if (title.equals("")) {
 						app.informUser(R.string.nameNeeded);
-					} else if (title.equals("0")) {
+					} else if (amountView.getText().toString().equals("0")) {
 							app.informUser(R.string.enterAmountMoreThanNull);
 					} else {
 						Integer amount = Integer.valueOf(amountView.getText()
