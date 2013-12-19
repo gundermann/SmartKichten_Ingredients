@@ -70,7 +70,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		}
 		TAG = this.getClass().getSimpleName();
 		app = (IngredientsApplication) getApplication();
-		setContentView(R.layout.activity_ingredient_collector);
+		setContentView(R.layout.ingredient_collector_layout);
 		initiateAllViews();
 		addLayoutChangeListener();
 		makeListEntriesClickable();

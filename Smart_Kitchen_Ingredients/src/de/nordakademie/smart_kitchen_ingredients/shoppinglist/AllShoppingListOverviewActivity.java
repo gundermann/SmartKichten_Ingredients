@@ -12,17 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
-import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialog;
 import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity;
@@ -34,39 +33,37 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  * 
  */
 
-public class ShoppingListActivity extends AbstractActivity implements
+public class AllShoppingListOverviewActivity extends AbstractActivity implements
 		OnClickListener, OnItemClickListener, InsertNameDialogListener,
 		OnItemLongClickListener {
 
-	private static String TAG = ShoppingListActivity.class.getSimpleName();
-	private ListView shoppingListView;
+	private static String TAG = AllShoppingListOverviewActivity.class
+			.getSimpleName();
+	private ListView shoppingListsView;
 	private ImageButton btAddNewShoppingList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// don't destroy dialog on rotate
-		int FLAG = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
-		getWindow().setFlags(FLAG, FLAG);
-		setContentView(R.layout.list_layout);
+		setContentView(R.layout.all_shopping_list_overview_layout);
 
 		btAddNewShoppingList = (ImageButton) findViewById(R.id.addNewShoppingItem);
 		btAddNewShoppingList.setOnClickListener(this);
-		shoppingListView = (ListView) findViewById(R.id.shoppingList);
+		shoppingListsView = (ListView) findViewById(R.id.shoppingList);
 
-		AdapterFactory<IShoppingList> adapterFactory = new AdapterFactory<IShoppingList>();
-		ListAdapter adapter = adapterFactory.createAdapter(
-				getApplicationContext(), R.layout.list_view_entry, getName());
+		ListAdapter adapter = AdapterFactory.createShoppingListAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getShoppingLists());
 
-		shoppingListView.setAdapter(adapter);
-		shoppingListView.setOnItemClickListener(this);
+		shoppingListsView.setAdapter(adapter);
+		shoppingListsView.setOnItemClickListener(this);
 
-		shoppingListView.setOnItemLongClickListener(this);
+		shoppingListsView.setOnItemLongClickListener(this);
 		Log.i(TAG, "created");
 
 	}
 
-	private List<IShoppingList> getName() {
+	private List<IShoppingList> getShoppingLists() {
 		return app.getShoppingDbHelper().getAllShoppingLists();
 	}
 
@@ -83,10 +80,8 @@ public class ShoppingListActivity extends AbstractActivity implements
 	};
 
 	private void updateShoppingList() {
-		ListAdapter adapter = new AdapterFactory<IShoppingList>()
-				.createAdapter(app, android.R.layout.simple_list_item_1,
-						getName());
-		shoppingListView.setAdapter(adapter);
+		shoppingListsView.setAdapter(AdapterFactory.createShoppingListAdapter(
+				app, android.R.layout.simple_list_item_1, getShoppingLists()));
 		Log.i(TAG, "shoppinglist updated");
 	}
 
@@ -94,7 +89,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(
-				ShoppingListActivity.this);
+				AllShoppingListOverviewActivity.this);
 		adb.setTitle(R.string.deleteShoppingListTitle);
 		adb.setMessage(R.string.deleteShoppingListSure);
 		final int positionToRemove = position;
@@ -103,7 +98,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 				new AlertDialog.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						IShoppingList shoppingLists = (IShoppingList) shoppingListView
+						IShoppingList shoppingLists = (IShoppingList) shoppingListsView
 								.getItemAtPosition(positionToRemove);
 						delteShoppingList(shoppingLists);
 						updateShoppingList();
@@ -123,7 +118,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 			int position, long id) {
 		startActivity(new Intent(getApplicationContext(),
 				ShoppingListIngredientsActivity.class).putExtra(
-				"shoppingListName", ((IShoppingList) shoppingListView
+				"shoppingListName", ((IShoppingList) shoppingListsView
 						.getItemAtPosition(position)).getName()));
 	}
 

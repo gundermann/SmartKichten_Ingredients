@@ -18,11 +18,10 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
 import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
@@ -84,9 +83,8 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 	}
 
 	private void updateStockList() {
-		ListAdapter adapter = new AdapterFactory<IIngredient>()
-				.createStoreAdapter(app);
-		stockList.setAdapter(adapter);
+
+		stockList.setAdapter(AdapterFactory.createStoreAdapter(app));
 		Log.i(TAG, "shoppinglist updated");
 	}
 
@@ -130,8 +128,8 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 
 	@Override
 	public void onPositiveFinishedDialog(IListElement element, int quantity) {
-		app.getStoredDbHelper().insertOrUpdateIngredient(
-				(IIngredient) element, quantity);
+		app.getStoredDbHelper().insertOrUpdateIngredient((IIngredient) element,
+				quantity);
 		updateStockList();
 	}
 

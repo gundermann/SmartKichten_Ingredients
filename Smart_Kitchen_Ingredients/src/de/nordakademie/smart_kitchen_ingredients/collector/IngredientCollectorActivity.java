@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
@@ -21,7 +22,6 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
 	protected Button showRecepiesButton;
-	private final IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
 	private IngredientsApplication app;
 
 	@Override
@@ -55,15 +55,17 @@ public class IngredientCollectorActivity extends
 	@Override
 	public void update(AsyncTask<Void, Void, List<IIngredient>> task) {
 		super.update(task);
-		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
-				R.layout.list_view_entry, getElementsToShow()));
+		setNewAdapter(AdapterFactory.createIngredientCollectorAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElementsToShow()));
 	}
 
 	@Override
 	public void afterTextChanged(Editable s) {
 		super.afterTextChanged(s);
-		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
-				R.layout.list_view_entry, getElementsToShow()));
+		setNewAdapter(AdapterFactory.createIngredientCollectorAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElementsToShow()));
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public class IngredientCollectorActivity extends
 			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
 					.getExplicitItem(element.getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-			.addItem(ingredientToAdd, quantity, currentShoppingList);
+					.addItem(ingredientToAdd, quantity, currentShoppingList);
 			app.informUser(R.string.addIngredientToShoppingList);
 
 		} catch (ClassCastException e) {

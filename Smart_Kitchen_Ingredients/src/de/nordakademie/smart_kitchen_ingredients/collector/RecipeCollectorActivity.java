@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
@@ -22,7 +23,6 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  */
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
 	private Button showIngredientsButton;
-	private final IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
 	private IngredientsApplication app;
 	private ListView elementsListView;
 
@@ -62,15 +62,17 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	@Override
 	public void update(AsyncTask<Void, Void, List<IRecipe>> task) {
 		super.update(task);
-		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
-				R.layout.list_view_entry, getElementsToShow()));
+		setNewAdapter(AdapterFactory.createRecipeCollectorAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElementsToShow()));
 	}
 
 	@Override
 	public void afterTextChanged(Editable s) {
 		super.afterTextChanged(s);
-		setNewAdapter(adapterFactory.createAdapter(getApplicationContext(),
-				R.layout.list_view_entry, getElementsToShow()));
+		setNewAdapter(AdapterFactory.createRecipeCollectorAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElementsToShow()));
 	}
 
 	@Override

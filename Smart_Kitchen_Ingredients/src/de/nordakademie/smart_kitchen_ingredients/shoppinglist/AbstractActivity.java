@@ -10,11 +10,13 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 public abstract class AbstractActivity extends FragmentActivity {
 
 	protected IngredientsApplication app;
+	protected static String TAG;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (IngredientsApplication) getApplication();
+		TAG = this.getClass().getSimpleName();
 		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 	}
 

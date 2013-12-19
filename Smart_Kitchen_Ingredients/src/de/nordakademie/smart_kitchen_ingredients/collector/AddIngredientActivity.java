@@ -38,7 +38,7 @@ public class AddIngredientActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
-		setContentView(R.layout.activity_add_ingredient);
+		setContentView(R.layout.add_ingredient_layout);
 		app = (IngredientsApplication) this.getApplication();
 
 		saveIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);

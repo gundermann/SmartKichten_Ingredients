@@ -18,17 +18,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.zxing.client.android.IntentIntegrator;
 import com.google.zxing.client.android.IntentResult;
 
+import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
@@ -51,7 +50,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_layout_ingredients);
+		setContentView(R.layout.shopping_list_layout);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		TextView listName = (TextView) findViewById(R.id.shoppingListName);
 		currentShoppingListName = getIntent().getExtras().getString(
@@ -113,9 +112,8 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 	}
 
 	private void updateShoppingIngredientsList() {
-		ListAdapter adapter = new AdapterFactory<IShoppingListItem>()
-				.createCheckableAdapter(app, currentShoppingListName);
-		shoppingListView.setAdapter(adapter);
+		shoppingListView.setAdapter(AdapterFactory.createCheckableAdapter(app,
+				currentShoppingListName));
 		Log.i(TAG, "shoppinglist updated");
 	}
 

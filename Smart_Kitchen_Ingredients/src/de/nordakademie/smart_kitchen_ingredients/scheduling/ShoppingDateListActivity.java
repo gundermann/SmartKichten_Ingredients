@@ -13,12 +13,11 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
-import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
@@ -41,7 +40,7 @@ public class ShoppingDateListActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_layout);
+		setContentView(R.layout.all_shopping_list_overview_layout);
 
 		shoppingDateList = (ListView) findViewById(R.id.shoppingList);
 		addShoppingDate = (ImageButton) findViewById(R.id.addNewShoppingItem);
@@ -64,9 +63,7 @@ public class ShoppingDateListActivity extends Activity implements
 	}
 
 	private void updateDateList() {
-		ListAdapter adapter = new AdapterFactory<IDate>()
-				.createDateAdapter(app);
-		shoppingDateList.setAdapter(adapter);
+		shoppingDateList.setAdapter(AdapterFactory.createDateAdapter(app));
 	}
 
 	@Override
