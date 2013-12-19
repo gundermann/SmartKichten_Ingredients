@@ -67,16 +67,19 @@ public class AddIngredientActivity extends Activity {
 							.getSelectedItem().toString());
 
 					if (amountView.getText().toString().equals("")) {
-						showSavedOrNotInformation("Bitte Menge angeben!");
+						showSavedOrNotInformation(getString(R.string.amountNeeded));
 					} else if (amountView.getText().toString().length() > 6) {
-						showSavedOrNotInformation("Die Menge ist zu groß!");
+						showSavedOrNotInformation(getString(R.string.amountToHight));
 					} else if (title.equals("")) {
-						showSavedOrNotInformation("Bitte Bezeichnung angeben!");
+						showSavedOrNotInformation(getString(R.string.nameNeeded));
 					} else {
 						Integer amount = Integer.valueOf(amountView.getText()
 								.toString());
 						saveIngredientAndLeave(title, amount, unit);
 					}
+				}
+				else{
+					showSavedOrNotInformation(getString(R.string.ingredientOnServer));
 				}
 			}
 		});
