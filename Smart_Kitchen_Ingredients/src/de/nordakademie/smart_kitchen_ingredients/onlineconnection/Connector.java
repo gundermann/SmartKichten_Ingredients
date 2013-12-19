@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
  * @author niels
  * 
  */
-public abstract class Connector implements IServerConnector {
+public abstract class Connector {
 
 	protected String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));

@@ -9,7 +9,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,11 +46,13 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 	private ImageButton btAddNewShoppingItem;
 	private BroadcastReceiver notifyShoppingdataChange;
 	private String currentShoppingListName;
+	private SharedPreferences prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_layout_ingredients);
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		TextView listName = (TextView) findViewById(R.id.shoppingListName);
 		currentShoppingListName = getIntent().getExtras().getString(
 				"shoppingListName");
@@ -155,31 +159,34 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 				requestCode, resultCode, intent);
 		try {
 			if (app.isNetworkConnected()) {
-				String itemDescription = app.getBarcodeEvaluator()
-						.getItemDescription(scanningResult.getContents());
-				if (evaluateBarcodeScan(itemDescription
-						.toLowerCase(Locale.GERMAN))) {
-					makeLongToast(R.string.scansuccess);
-				} else {
-					makeLongToast(R.string.scanfault);
-				}
+				String apikey = prefs.getString("barcodeApiKey",
+						"E1C9A73C52A822FB");
+				new CheckBarcodeAysncTask(scanningResult.getContents(),
+						app.getBarcodeEvaluator(), getShoppingItems(),
+						currentShoppingListName, app.getShoppingDbHelper(),
+						apikey, this).execute();
 			}
 		} catch (NullPointerException npe) {
 			makeLongToast(R.string.scanerror);
 		}
 	}
 
-	private boolean evaluateBarcodeScan(String content) {
+	public void evaluateBarcodeScan(String content) {
+		boolean success = false;
 		for (IShoppingListItem shoppingItem : getShoppingItems()) {
 			if (content.contains(shoppingItem.getName().toLowerCase(
 					Locale.GERMAN))) {
 				app.getShoppingDbHelper()
 						.getShoppingItem(shoppingItem.getName(),
 								currentShoppingListName).setBought(true);
-				return true;
+				success = true;
+				break;
 			}
 		}
-		return false;
+		if (success) {
+			app.informUser(R.string.scansuccess);
+		} else {
+			app.informUser(R.string.scanfault);
+		}
 	}
-
 }

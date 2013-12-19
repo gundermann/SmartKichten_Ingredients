@@ -57,7 +57,7 @@ public class AddIngredientActivity extends Activity {
 		ingredientQuantityTV = (TextView) findViewById(R.id.ingredientAmountEdit);
 		
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-		SpinnerAdapter adapter = (SpinnerAdapter) new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Unit.values());
+		SpinnerAdapter adapter = (SpinnerAdapter) new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, Unit.values());
 		ingredientUnit.setAdapter(adapter);
 		
 		ingredientTitleTV.setText(ingredientTitle);
@@ -76,10 +76,10 @@ public class AddIngredientActivity extends Activity {
 
 					if (amountView.getText().toString().equals("")) {
 						app.informUser(R.string.amountNeeded);
-					} else if (amountView.getText().toString().length() > 6) {
-						app.informUser(R.string.amountToHight);
 					} else if (title.equals("")) {
 						app.informUser(R.string.nameNeeded);
+					} else if (1 > Integer.valueOf(amountView.getText().toString())) {
+							app.informUser(R.string.enterAmountMoreThanNull);
 					} else {
 						Integer amount = Integer.valueOf(amountView.getText()
 								.toString());

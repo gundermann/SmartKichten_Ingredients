@@ -14,7 +14,6 @@
             android:layout_width="104dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
             android:layout_weight="0.37"
             android:ems="9"
             android:paddingRight="0dp"
@@ -27,32 +26,29 @@
             android:hint="@string/dateTitleHint"
             android:layout_width="124dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
             android:layout_weight="0.39"
             android:background="#cfff"
-            android:ems="10" />
+            android:ems="10"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
+      		android:maxLength="30" />
 
     </LinearLayout>
-
-    <DatePicker
-        android:id="@+id/dpResult"
+    
+    <DatePicker 
+        android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:calendarViewShown="false"
         android:layout_gravity="center"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="0dp"
-  />
- 
+        />
+
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
         />
 
     <Button
@@ -60,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="0dp"
         android:background="#cfff"
         android:padding="5dp"
         android:text="@string/confirmDateButton"

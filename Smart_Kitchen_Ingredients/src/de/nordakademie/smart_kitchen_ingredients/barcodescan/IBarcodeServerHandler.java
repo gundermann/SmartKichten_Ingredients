@@ -12,8 +12,9 @@ public interface IBarcodeServerHandler {
 	 * identifiziert wurde.
 	 * 
 	 * @param barcode
+	 * @param apikey
 	 * @return String
 	 */
-	String getItemDescription(String barcode);
+	String getItemDescription(String barcode, String apikey);
 
 }

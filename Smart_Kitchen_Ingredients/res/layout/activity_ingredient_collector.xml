@@ -33,7 +33,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/searchBarHint"
         android:lines="1"
-        android:scrollHorizontally="true" />
+        android:scrollHorizontally="true"
+        android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
+        />
 
     <LinearLayout
         android:id="@+id/newIngredientButtons"

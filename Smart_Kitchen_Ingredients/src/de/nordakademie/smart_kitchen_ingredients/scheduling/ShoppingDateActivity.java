@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
@@ -32,13 +33,13 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  * 
  */
 public class ShoppingDateActivity extends Activity implements
-		OnTimeChangedListener, OnClickListener {
+		OnTimeChangedListener, OnClickListener, OnDateChangedListener {
 
 	private static final String TAG = StoredIngredientActivity.class
 			.getSimpleName();
 
-	private DatePicker dpResult;
 	private Button confirmDate;
+	private DatePicker calendar;
 	private TimePicker timePicker;
 	private EditText dateTitle;
 	private IDate chooseDate;
@@ -59,13 +60,14 @@ public class ShoppingDateActivity extends Activity implements
 
 		app = (IngredientsApplication) getApplication();
 		setContentView(R.layout.shopping_date);
-		setCurrentDateOnView();
-		setCurrentTimeOnView();
 
+		calendar = (DatePicker) findViewById(R.id.calendarView);
 		confirmDate = (Button) findViewById(id.confirmButton);
 		dateTitle = (EditText) findViewById(R.id.chooseDateTitle);
 		confirmDate.setOnClickListener(this);
 
+		setCurrentTimeOnView();
+		setCurrentDateOnView();
 		Log.i(TAG, "created");
 		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 
@@ -74,19 +76,6 @@ public class ShoppingDateActivity extends Activity implements
 	public boolean dateTitleIsEmpty() {
 
 		return dateTitle.getText().toString().isEmpty();
-
-	}
-
-	public void setCurrentDateOnView() {
-
-		dpResult = (DatePicker) findViewById(R.id.dpResult);
-
-		final Calendar c = Calendar.getInstance();
-		year = getModifyedCalendarValue(c.get(Calendar.YEAR));
-		month = getModifyedCalendarValue(c.get(Calendar.MONTH) + 1);
-		day = getModifyedCalendarValue(c.get(Calendar.DAY_OF_MONTH));
-		dpResult.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
-				c.get(Calendar.DAY_OF_MONTH), null);
 
 	}
 
@@ -156,5 +145,25 @@ public class ShoppingDateActivity extends Activity implements
 				finish();
 			}
 		}
+	}
+
+	private void setCurrentDateOnView() {
+		final Calendar c = Calendar.getInstance();
+		year = getModifyedCalendarValue(c.get(Calendar.YEAR));
+		month = getModifyedCalendarValue(c.get(Calendar.MONTH) + 1);
+		day = getModifyedCalendarValue(c.get(Calendar.DAY_OF_MONTH));
+		calendar.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+				c.get(Calendar.DAY_OF_MONTH), this);
+
+	}
+
+	@Override
+	public void onDateChanged(DatePicker view, int curyear, int monthOfYear,
+			int dayOfMonth) {
+
+		year = getModifyedCalendarValue(curyear);
+		month = getModifyedCalendarValue(monthOfYear + 1);
+		day = getModifyedCalendarValue(dayOfMonth);
+
 	}
 }

@@ -49,6 +49,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 		int FLAG = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
 		getWindow().setFlags(FLAG, FLAG);
 		setContentView(R.layout.list_layout);
+
 		btAddNewShoppingList = (ImageButton) findViewById(R.id.addNewShoppingItem);
 		btAddNewShoppingList.setOnClickListener(this);
 		shoppingListView = (ListView) findViewById(R.id.shoppingList);
@@ -142,6 +143,9 @@ public class ShoppingListActivity extends AbstractActivity implements
 		case R.id.menu_edit_stored_items:
 			startNextActivity(StoredIngredientActivity.class);
 			break;
+		case R.id.menu_barcode_apikey:
+			startActivity(new Intent(getApplicationContext(),
+					SmartKitchenIngredientsPrefsActivity.class));
 		default:
 			break;
 		}
@@ -155,4 +159,5 @@ public class ShoppingListActivity extends AbstractActivity implements
 				ShoppingListIngredientsActivity.class).putExtra(
 				"shoppingListName", name));
 	}
+
 }
