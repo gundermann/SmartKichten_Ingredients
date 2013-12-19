@@ -42,7 +42,7 @@ public abstract class AbstractCacheData extends AbstractData {
 	}
 
 	protected void updateIfNecessary() {
-		if (isCachedDataAvailable()) {
+		if (!isCachedDataAvailable()) {
 			app.updateCache();
 		}
 	}

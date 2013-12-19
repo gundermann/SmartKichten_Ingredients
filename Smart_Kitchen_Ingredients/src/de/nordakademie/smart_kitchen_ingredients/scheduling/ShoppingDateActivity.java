@@ -151,7 +151,7 @@ public class ShoppingDateActivity extends Activity implements
 		year = getModifyedCalendarValue(c.get(Calendar.YEAR));
 		month = getModifyedCalendarValue(c.get(Calendar.MONTH) + 1);
 		day = getModifyedCalendarValue(c.get(Calendar.DAY_OF_MONTH));
-		calendar.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1,
+		calendar.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
 				c.get(Calendar.DAY_OF_MONTH), this);
 
 	}
@@ -161,7 +161,7 @@ public class ShoppingDateActivity extends Activity implements
 			int dayOfMonth) {
 
 		year = getModifyedCalendarValue(curyear);
-		month = getModifyedCalendarValue(monthOfYear);
+		month = getModifyedCalendarValue(monthOfYear + 1);
 		day = getModifyedCalendarValue(dayOfMonth);
 
 	}
