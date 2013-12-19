@@ -10,12 +10,15 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 public class StoredIngredientCollectorActivity extends
 		IngredientCollectorActivity {
+	
+	private IngredientsApplication app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		showRecepiesButton.setVisibility(View.GONE);
 		confirmShoppingList.setVisibility(View.GONE);
+		app = (IngredientsApplication) getApplication();
 	}
 
 	@Override
@@ -36,6 +39,7 @@ public class StoredIngredientCollectorActivity extends
 		try {
 			((IngredientsApplication) getApplication()).getStoredDbHelper()
 					.insertOrUpdateIngredient((IIngredient) element, quantity);
+			app.informUser(R.string.addedToStock);
 		} catch (ClassCastException e) {
 			((IngredientsApplication) getApplication())
 					.informUser(R.string.developerMistake);
