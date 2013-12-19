@@ -51,6 +51,7 @@ public class IngredientsApplication extends Application {
 	private IAbstractCacheDbHelper<IRecipe> recipeDbHelper;
 	private long lastUpdate = 0;
 	private IShoppingList shoppingList;
+	private boolean isUpdating = false;
 
 	@Override
 	public void onCreate() {
@@ -114,14 +115,16 @@ public class IngredientsApplication extends Application {
 	public void updateCache() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if (System.currentTimeMillis() - lastUpdate > ONE_DAY
+		if (!isUpdating && System.currentTimeMillis() - lastUpdate > ONE_DAY
 				&& netInfo != null && netInfo.isConnected()) {
+			isUpdating = true;
 			serverDataHelper
 					.insertOrUpdateAllIngredientsFromServer(serverHandler
 							.getIngredientListFromServer());
 			serverDataHelper.insertOrUpdateAllRecipesFromServer(serverHandler
 					.getRecipeListFromServer());
 			lastUpdate = System.currentTimeMillis();
+			isUpdating = false;
 		}
 	}
 
