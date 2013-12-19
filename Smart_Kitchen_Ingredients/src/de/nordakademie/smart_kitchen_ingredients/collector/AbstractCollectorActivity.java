@@ -63,7 +63,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 		if (getIntent().getExtras() != null
 				&& getIntent().getExtras().size() > 0) {
 			currentShoppingList = getIntent().getExtras().getString(
