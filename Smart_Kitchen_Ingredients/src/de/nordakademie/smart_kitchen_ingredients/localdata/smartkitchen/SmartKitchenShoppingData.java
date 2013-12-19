@@ -11,6 +11,9 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingListTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingTable;
 
@@ -134,5 +137,28 @@ public class SmartKitchenShoppingData extends AbstractSmartKitchenData
 		}
 		closeCursorResources();
 		return values;
+	}
+
+	private IShoppingListItem getShoppingItem() {
+		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
+		boolean bought = Boolean.valueOf(cursor.getString(3));
+		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
+		return factory.createShoppingListItem(cursor.getString(0),
+				cursor.getInt(1), unit, bought);
+	}
+
+	private IShoppingList getShoppingListName() {
+		String title = cursor.getString(0);
+		IShoppingList list = new ShoppingList(title);
+		return list;
+	}
+
+	private boolean insertShoppingListIntoDatabase(
+			IShoppingList shoppingListName) {
+		ContentValues values = ShoppingListTable
+				.getContentValues(shoppingListName.getName());
+		boolean success = insert(ShoppingListTable.TABLE_NAME, values);
+		Log.i(TAG, "inserted to table_shopping_list");
+		return success;
 	}
 }

@@ -17,15 +17,15 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbUpdateHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheUpdateDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbUpdateHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IngredientDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.RecipeDbHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenDateData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IDateDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IShoppingDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IStoredDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenDateData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenStoredData;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.DateFactory;
@@ -65,7 +65,7 @@ public class IngredientsApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
-		serverDataHelper = new CacheData(this);
+		serverDataHelper = new CacheUpdateDbHelper(this);
 		shoppingDbHelper = new SmartKitchenShoppingData(this);
 		serverHandler = new SmartKitchenServerHandler(
 				new SmartKitchenServerConnector());

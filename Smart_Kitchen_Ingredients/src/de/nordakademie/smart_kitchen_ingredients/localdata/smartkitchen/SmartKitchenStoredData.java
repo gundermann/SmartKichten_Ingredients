@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.StoredTable;
 
@@ -85,6 +86,12 @@ public class SmartKitchenStoredData extends AbstractSmartKitchenData implements
 		}
 		closeCursorResources();
 		return values;
+	}
+
+	private IIngredient getStoredItem() {
+		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
+		IIngredientFactory factory = app.getIngredientFactory();
+		return factory.createIngredient(cursor.getString(0), unit);
 	}
 
 }

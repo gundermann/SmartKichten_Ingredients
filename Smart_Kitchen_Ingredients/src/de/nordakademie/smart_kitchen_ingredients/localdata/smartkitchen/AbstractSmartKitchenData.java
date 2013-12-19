@@ -6,13 +6,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredientFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.localdata.AbstractData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingListTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingTable;
@@ -25,13 +19,13 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.S
  * @author niels
  * 
  */
-public class AbstractSmartKitchenData extends AbstractData {
+public abstract class AbstractSmartKitchenData extends AbstractData {
 
 	protected final IngredientsApplication app;
 
 	protected static String TAG = AbstractSmartKitchenData.class
 			.getSimpleName();
-	private static final int DATABASE_VERSION = 16;
+	private static final int DATABASE_VERSION = 17;
 	private static final String DATABASE_NAME = "smartkitchen.db";
 
 	public AbstractSmartKitchenData(IngredientsApplication app) {
@@ -57,26 +51,6 @@ public class AbstractSmartKitchenData extends AbstractData {
 		onCreate(db);
 	}
 
-	protected IShoppingListItem getShoppingItem() {
-		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
-		boolean bought = Boolean.valueOf(cursor.getString(3));
-		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
-		return factory.createShoppingListItem(cursor.getString(0),
-				cursor.getInt(1), unit, bought);
-	}
-
-	protected IShoppingList getShoppingListName() {
-		String title = cursor.getString(0);
-		IShoppingList list = new ShoppingList(title);
-		return list;
-	}
-
-	protected IIngredient getStoredItem() {
-		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
-		IIngredientFactory factory = app.getIngredientFactory();
-		return factory.createIngredient(cursor.getString(0), unit);
-	}
-
 	protected int updateShoppingItem(IShoppingListItem item) {
 		ContentValues value = ShoppingTable.getContentValuesForQuantityBought(
 				item.getQuantity(), item.isBought());
@@ -98,15 +72,6 @@ public class AbstractSmartKitchenData extends AbstractData {
 			}
 		}
 		return true;
-	}
-
-	protected boolean insertShoppingListIntoDatabase(
-			IShoppingList shoppingListName) {
-		ContentValues values = ShoppingListTable
-				.getContentValues(shoppingListName.getName());
-		boolean success = insert(ShoppingListTable.TABLE_NAME, values);
-		Log.i(TAG, "inserted to table_shopping_list");
-		return success;
 	}
 
 }
