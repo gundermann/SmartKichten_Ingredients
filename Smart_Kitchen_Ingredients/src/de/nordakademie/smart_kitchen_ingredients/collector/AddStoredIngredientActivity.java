@@ -18,7 +18,7 @@ public class AddStoredIngredientActivity extends AddIngredientActivity {
 			Unit unit) {
 		try {
 			saveNewIngredientToDBs(title, amount, unit);
-			showSavedOrNotInformation(getString(R.string.ingredientSaved));
+			testNetworkAndInformUser();
 		} finally {
 			startActivity(new Intent(getApplicationContext(),
 					StoredIngredientActivity.class));

@@ -94,16 +94,20 @@ public class AddIngredientActivity extends Activity {
 			Unit unit) {
 		try {
 			saveNewIngredientToDBs(title, amount, unit);
-			if(app.isNetworkConnected()){
-				showSavedOrNotInformation(getString(R.string.addedIngredientAlsoOnServer));
-			}
-			else{
-				showSavedOrNotInformation(getString(R.string.addedIngredientOnListNotServer));
-			}
+			testNetworkAndInformUser();
 		} finally {
 			startActivity(new Intent(getApplicationContext(),
 					IngredientCollectorActivity.class));
 			finish();
+		}
+	}
+
+	protected void testNetworkAndInformUser() {
+		if(app.isNetworkConnected()){
+			showSavedOrNotInformation(getString(R.string.addedIngredientAlsoOnServer));
+		}
+		else{
+			showSavedOrNotInformation(getString(R.string.addedIngredientOnListNotServer));
 		}
 	}
 
