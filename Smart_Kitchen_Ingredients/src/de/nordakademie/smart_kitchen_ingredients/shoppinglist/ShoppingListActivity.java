@@ -76,7 +76,7 @@ public class ShoppingListActivity extends AbstractActivity implements
 
 	@Override
 	public void onClick(View v) {
-		DialogFragment dialog = new InsertNameDialog();
+		DialogFragment dialog = new InsertNameDialog(app);
 		dialog.show(getSupportFragmentManager(), TAG);
 	}
 

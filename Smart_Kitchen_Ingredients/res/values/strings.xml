@@ -58,6 +58,8 @@
 
     <string name="stock_ingredients">Bestand: Zutaten hinzufügen</string>
     <string name="noNetworkConnection">Keine Netzwerkverbindung - Server nicht erreichbar</string>
+    
+    <string name="addIngredientToShoppingList">Zutat der Einkaufsliste hinzugefügt</string>
 
 
     <string-array name="unit_array">
