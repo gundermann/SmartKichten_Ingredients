@@ -13,7 +13,12 @@ public class CacheUpdaterService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((IngredientsApplication) getApplication()).updateCache();
+		IngredientsApplication app = (IngredientsApplication) getApplication();
+		// new FetchDataAsyncTask<IIngredient>(null,
+		// app.getIngredientsDbHelper(),
+		// this).execute();
+		// new FetchDataAsyncTask<IRecipe>(null, app.getRecipeDbHelper(), this)
+		// .execute();
 		Log.i(TAG, "onCreate");
 	}
 
@@ -41,4 +46,15 @@ public class CacheUpdaterService extends Service {
 		return super.onUnbind(intent);
 
 	}
+
+	// @Override
+	// public void update(AsyncTask<Void, Void, List<IIngredient>> task) {
+	//
+	// }
+	//
+	// @Override
+	// public void update(AsyncTask<Void, Void, List<IRecipe>> task) {
+	//
+	// }
+
 }

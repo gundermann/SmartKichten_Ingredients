@@ -154,13 +154,15 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
 				requestCode, resultCode, intent);
 		try {
-
-			String itemDescription = app.getBarcodeEvaluator()
-					.getItemDescription(scanningResult.getContents());
-			if (evaluateBarcodeScan(itemDescription.toLowerCase(Locale.GERMAN))) {
-				makeLongToast(R.string.scansuccess);
-			} else {
-				makeLongToast(R.string.scanfault);
+			if (app.isNetworkConnected()) {
+				String itemDescription = app.getBarcodeEvaluator()
+						.getItemDescription(scanningResult.getContents());
+				if (evaluateBarcodeScan(itemDescription
+						.toLowerCase(Locale.GERMAN))) {
+					makeLongToast(R.string.scansuccess);
+				} else {
+					makeLongToast(R.string.scanfault);
+				}
 			}
 		} catch (NullPointerException npe) {
 			makeLongToast(R.string.scanerror);
