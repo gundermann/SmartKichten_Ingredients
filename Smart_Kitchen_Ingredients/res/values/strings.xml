@@ -49,12 +49,12 @@
     <string name="ingredientInDatabase">Zutat schon vorhanden</string>
     <string name="addShoppingListDialog">Neue Einkaufsliste anlegen</string>
     <string name="eingabeShoppingListName">Bsp. ALDI</string>
-
+	<string name="addedToStock">Zutat dem Bestand hinzugefügt</string>
     <string name="userInformFieldIsEmpty">Feld muss gefüllt sein</string>
     <string name="numberHaveToBeGreaterThanZero">Mengen kleiner als 1 sind nicht möglich!</string>
     <string name="ingredientOnServer">Die Zutat ist bereits auf dem Server vorhanden!</string>
     <string name="amountNeeded">Bitte Menge angeben!</string>
-    <string name="amountToHight">Die Menge ist zu groß!</string>
+    <string name="amountToHight">Geben Sie eine Menge kleiner als 7 Zeichen an!</string>
     <string name="nameNeeded">Bitte Bezeichnung angeben!</string>
     <string name="deleteShoppingListTitle">Einkaufsliste löschen?</string>
     <string name="deleteShoppingListSure">Sind Sie sicher, dass Sie die Einkaufsliste löschen wollen?</string>
@@ -62,5 +62,6 @@
     <string name="addIngredientToShoppingList">Zutat der Einkaufsliste hinzugefügt</string>
     <string name="addedIngredientAlsoOnServer">Zutat der Liste und dem Server hinzugefügt</string>
     <string name="addedIngredientOnListNotServer">Zutat der Liste hinzugefügt. Zutat aufgrund fehlender Verbindung nicht dem Server hinzugefügt</string>
-
+	<string name="enterAmountMoreThanNull">Die Menge muss größer 0 sein.</string>
+    
 </resources>

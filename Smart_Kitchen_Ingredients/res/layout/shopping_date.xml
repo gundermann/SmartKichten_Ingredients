@@ -34,7 +34,8 @@
             android:layout_weight="0.39"
             android:background="#cfff"
             android:ems="10"
-            android:inputType="textCapCharacters" />
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
+      		android:maxLength="30" />
 
     </LinearLayout>
 

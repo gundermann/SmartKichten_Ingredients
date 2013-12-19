@@ -153,7 +153,7 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								app.informUser(R.string.addIngredientToShoppingList);
+								//app.informUser(R.string.addIngredientToShoppingList);
 								doOnPositive();
 								dismiss();
 							}
