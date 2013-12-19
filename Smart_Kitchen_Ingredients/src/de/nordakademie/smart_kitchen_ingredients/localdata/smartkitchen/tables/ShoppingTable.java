@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.localdata.tables;
+package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables;
 
 import android.content.ContentValues;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;

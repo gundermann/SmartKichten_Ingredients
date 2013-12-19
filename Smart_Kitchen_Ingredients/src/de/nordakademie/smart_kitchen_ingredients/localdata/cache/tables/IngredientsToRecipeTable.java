@@ -1,8 +1,8 @@
-package de.nordakademie.smart_kitchen_ingredients.localdata.tables;
+package de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables;
 
 import android.content.ContentValues;
 
-public class IngredientsToRecipeTable extends AbstractTable {
+public class IngredientsToRecipeTable {
 	public static final String TABLE_NAME = "indigrentToRecipe";
 	public static final String RECIPE_ID = "recipe_id";
 	public static final String INGRDIENT_ID = "indigrent_id";
