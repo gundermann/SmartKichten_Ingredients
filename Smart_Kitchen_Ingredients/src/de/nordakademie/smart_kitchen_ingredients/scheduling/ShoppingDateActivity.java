@@ -67,6 +67,7 @@ public class ShoppingDateActivity extends Activity implements
 		confirmDate.setOnClickListener(this);
 
 		Log.i(TAG, "created");
+		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 
 	}
 

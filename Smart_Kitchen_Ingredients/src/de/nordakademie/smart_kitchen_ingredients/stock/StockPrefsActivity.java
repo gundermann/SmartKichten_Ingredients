@@ -5,6 +5,7 @@ import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
@@ -15,6 +16,7 @@ public class StockPrefsActivity extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.stockprefs);
+		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 
 		for (Unit unit : Unit.values()) {
 			EditTextPreference editTextPreference = new EditTextPreference(this);
