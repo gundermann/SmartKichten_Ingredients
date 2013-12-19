@@ -35,6 +35,9 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 		showIngredientsButton.setVisibility(View.GONE);
 		confirmShoppingList.setVisibility(View.GONE);
 
+		showIngredientsButton
+				.setOnClickListener(getOnClickListener(IngredientCollectorActivity.class));
+
 		elementsListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

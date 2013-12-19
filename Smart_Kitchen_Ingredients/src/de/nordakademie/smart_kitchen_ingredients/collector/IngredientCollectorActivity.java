@@ -39,8 +39,8 @@ public class IngredientCollectorActivity extends
 	private void initiateButtons() {
 		showRecepiesButton = (Button) findViewById(R.id.showRecipesButton);
 		showRecepiesButton.setVisibility(View.VISIBLE);
-		setNextActivityOnClick(showRecepiesButton,
-				RecipeCollectorActivity.class);
+		showRecepiesButton
+				.setOnClickListener(getOnClickListener(RecipeCollectorActivity.class));
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class IngredientCollectorActivity extends
 			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
 					.getExplicitItem(element.getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-			.addItem(ingredientToAdd, quantity, currentShoppingList);
+					.addItem(ingredientToAdd, quantity, currentShoppingList);
 			app.informUser(R.string.addIngredientToShoppingList);
 
 		} catch (ClassCastException e) {

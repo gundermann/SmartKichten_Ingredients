@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import de.nordakademie.smart_kitchen_ingredients.AbstractSmartKitchenActivity;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListIngredientsActivity;
@@ -36,9 +36,9 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListIngred
  * @description
  */
 
-public abstract class AbstractCollectorActivity<T> extends FragmentActivity
-		implements TextWatcher, IAsyncTaskObserver<T>,
-		QuantityPickerDialogListener {
+public abstract class AbstractCollectorActivity<T> extends
+		AbstractSmartKitchenActivity implements TextWatcher,
+		IAsyncTaskObserver<T>, QuantityPickerDialogListener {
 	protected static String TAG;
 
 	private EditText searchBar;
@@ -121,18 +121,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 						.newInstance((IListElement) adapterView.getAdapter()
 								.getItem(position), app);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
-			}
-		});
-	}
-
-	protected void setNextActivityOnClick(View view,
-			final Class<?> nextActivityClass) {
-		view.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(context, nextActivityClass).putExtra(
-						"shoppingListName", currentShoppingList));
 			}
 		});
 	}
