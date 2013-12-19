@@ -6,9 +6,10 @@
     <string name="dateTitle">Einkauf</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_shopping">Zutatenplaner: Einkaufsliste</string>
+    <string name="title_activity_shopping">Zutatenplaner: Einkaufslisten</string>
     <string name="title_activity_shoppingDateList">Zutatenplaner: Terminübersicht</string>
     <string name="title_activity_shoppingDate">Zutatenplaner: Termin anlegen</string>
+    <string name="title_activity_shoppingListIngredient">Zutatenplaner: Einkaufslistenübersicht</string>
     <string name="menuCodeScanner">Barcodescanner</string>
     <string name="menuShoppingListScanner">Einkaufsliste einscannen</string>
     <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
@@ -17,7 +18,7 @@
     <string name="menuCleanShoppingList">Einkaufliste aufräumen</string>
     <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
     <string name="searchBarHint">Suche&#8230;</string>
-    <string name="newIngredientButtonText">Zutat hinzufügen</string>
+    <string name="newIngredientButtonText">Zutat erstellen</string>
     <string name="showRecipesButtonText">Rezepte anzeigen</string>
     <string name="scanerror">Keine Ergebnisse gefunden</string>
     <string name="scansuccess">Übereinstimmung gefunden</string>
@@ -30,7 +31,6 @@
     <string name="ingredientUnit">Einheit: </string>
     <string name="addIngredients">Neue Zutat erstellen</string>
     <string name="ingredientAmount">"Menge: "</string>
-    <string name="okButton">Zutat hinzufügen</string>
     <string name="chooseUnit">Einheit auswählen</string>
     <string name="quantityPreviousDefaultNumber">0</string>
     <string name="quantityCurrentDefaultNumber">1</string>
@@ -46,20 +46,22 @@
     <string name="newIngredientHint">Name&#8230;</string>
     <string name="menuBackToMainPackage">Startseite</string>
     <string name="confirmShoppingListAdd">Eingabe bestätigen</string>
+    <string name="ingredientInDatabase">Zutat schon vorhanden</string>
     <string name="addShoppingListDialog">Neue Einkaufsliste anlegen</string>
     <string name="eingabeShoppingListName">Bsp. ALDI</string>
     <string name="ingredientSaved">Zutat gespeichert</string>
     <string name="userInformFieldIsEmpty">Feld muss gefüllt sein</string>
     <string name="numberHaveToBeGreaterThanZero">Mengen kleiner als 1 sind nicht möglich!</string>
+    <string name="ingredientOnServer">Die Zutat ist bereits auf dem Server vorhanden!</string>
+    <string name="amountNeeded">Bitte Menge angeben!</string>
+    <string name="amountToHight">Die Menge ist zu groß!</string>
+    <string name="nameNeeded">Bitte Bezeichnung angeben!</string>
     <string name="deleteShoppingListTitle">Einkaufsliste löschen?</string>
     <string name="deleteShoppingListSure">Sind Sie sicher, dass Sie die Einkaufsliste löschen wollen?</string>
     <string name="stock_ingredients">Bestand: Zutaten hinzufügen</string>
     <string name="noNetworkConnection">Keine Netzwerkverbindung - Server nicht erreichbar</string>
-
-    <string-array name="unit_array">
-        <item>g</item>
-        <item>stk</item>
-        <item>ml</item>
-    </string-array>
+    <string name="addIngredientToShoppingList">Zutat der Einkaufsliste hinzugefügt</string>
+    <string name="addedIngredientAlsoOnServer">Zutat der Liste und dem Server hinzugefügt</string>
+    <string name="addedIngredientOnListNotServer">Zutat der Liste hinzugefügt. Zutat aufgrund fehlender Verbindung nicht dem Server hinzugefügt</string>
 
 </resources>

@@ -13,6 +13,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -25,8 +28,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListActivity;
 import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListIngredientsActivity;
 
 /**
@@ -45,10 +46,9 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	private List<T> allElements = new ArrayList<T>();
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
-	protected Button addNewIngredient;
 	protected Button confirmShoppingList;
 	private View noResultsFound;
-	private IListElement currentElement;
+	private IngredientsApplication app;
 
 	private Context context;
 
@@ -62,10 +62,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		return elementsListView;
 	}
 
-	public IListElement getCurrentElement() {
-		return currentElement;
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,6 +71,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 					"shoppingListName");
 		}
 		TAG = this.getClass().getSimpleName();
+		app = (IngredientsApplication) getApplication();
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
@@ -84,24 +81,34 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		confirmShoppingList.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
 				startActivity(new Intent(context,
 						ShoppingListIngredientsActivity.class).putExtra(
 						"shoppingListName", currentShoppingList));
-
 			}
 		});
-		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
-		addNewIngredient.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(getApplicationContext(),
-						AddIngredientActivity.class).putExtra(
-						"shoppingListName", currentShoppingList).putExtra(
-						"ingredientTitle", searchBar.getText().toString()));
-			}
-		});
+	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.collection_menu, menu);
+		Log.i(TAG, "menu inflated");
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.addNewIngredient:
+			startActivity(new Intent(getApplicationContext(),
+					AddIngredientActivity.class).putExtra("shoppingListName",
+					currentShoppingList).putExtra("ingredientTitle",
+					searchBar.getText().toString()));
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void makeListEntriesClickable() {
@@ -110,10 +117,9 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view,
 					int position, long arg3) {
-				currentElement = (IListElement) adapterView.getAdapter()
-						.getItem(position);
 				DialogFragment quantityDialog = QuantityPickerDialog
-						.newInstance(currentElement);
+						.newInstance((IListElement) adapterView.getAdapter()
+								.getItem(position), app);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
 			}
 		});
@@ -125,7 +131,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(context, nextActivityClass));
+				startActivity(new Intent(context, nextActivityClass).putExtra(
+						"shoppingListName", currentShoppingList));
 			}
 		});
 	}
@@ -151,7 +158,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		searchBar.addTextChangedListener(this);
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
-		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
 		noResultsFound = findViewById(R.id.noResultsFoundView);
 
 	}

@@ -65,8 +65,8 @@ public class IngredientCollectorActivity extends
 					.getExplicitItem(element.getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
 
-			.addItem((IIngredient) ingredientToAdd, quantity,
-					currentShoppingList);
+			.addItem(ingredientToAdd, quantity, currentShoppingList);
+
 		} catch (ClassCastException e) {
 			((IngredientsApplication) getApplication())
 					.informUser(R.string.developerMistake);

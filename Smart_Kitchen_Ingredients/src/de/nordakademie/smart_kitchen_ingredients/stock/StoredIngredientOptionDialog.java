@@ -23,21 +23,26 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				app.getStoredDbHelper().deleteStoredIngredient(titleFromList);
-				Intent intent = new Intent(app.getApplicationContext(), StoredIngredientActivity.class);
+				Intent intent = new Intent(app.getApplicationContext(),
+						StoredIngredientActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				app.startActivity(intent);
 			}
 
 		});
 
-		setNeutralButton("Bestand erhöhen", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				IIngredient element = app.getStoredDbHelper().getStoredIngredient(titleFromList);
-				QuantityPickerDialog dia = QuantityPickerDialog.newInstance(element);
-				dia.show(activity.getSupportFragmentManager(), "addBestand");
-				
-			}});
+		setNeutralButton("Bestand erhöhen",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						IIngredient element = app.getStoredDbHelper()
+								.getStoredIngredient(titleFromList);
+						QuantityPickerDialog dia = QuantityPickerDialog
+								.newInstance(element, app);
+						dia.show(activity.getSupportFragmentManager(),
+								"addBestand");
+
+					}
+				});
 	}
 }
-	

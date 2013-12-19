@@ -6,12 +6,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
@@ -50,8 +54,11 @@ public class AddIngredientActivity extends Activity {
 		app = (IngredientsApplication) getApplication();
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
 		ingredientQuantityTV = (TextView) findViewById(R.id.ingredientAmountEdit);
+		
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-
+		SpinnerAdapter adapter = (SpinnerAdapter) new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Unit.values());
+		ingredientUnit.setAdapter(adapter);
+		
 		ingredientTitleTV.setText(ingredientTitle);
 
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
@@ -67,16 +74,18 @@ public class AddIngredientActivity extends Activity {
 							.getSelectedItem().toString());
 
 					if (amountView.getText().toString().equals("")) {
-						showSavedOrNotInformation("Bitte Menge angeben!");
+						showSavedOrNotInformation(getString(R.string.amountNeeded));
 					} else if (amountView.getText().toString().length() > 6) {
-						showSavedOrNotInformation("Die Menge ist zu groß!");
+						showSavedOrNotInformation(getString(R.string.amountToHight));
 					} else if (title.equals("")) {
-						showSavedOrNotInformation("Bitte Bezeichnung angeben!");
+						showSavedOrNotInformation(getString(R.string.nameNeeded));
 					} else {
 						Integer amount = Integer.valueOf(amountView.getText()
 								.toString());
 						saveIngredientAndLeave(title, amount, unit);
 					}
+				} else {
+					showSavedOrNotInformation(getString(R.string.ingredientOnServer));
 				}
 			}
 		});
@@ -86,14 +95,23 @@ public class AddIngredientActivity extends Activity {
 		return app.getCacheDbHelper().itemExists(title);
 	}
 
-	protected void saveIngredientAndLeave(String title, Integer amount, Unit unit) {
+	protected void saveIngredientAndLeave(String title, Integer amount,
+			Unit unit) {
 		try {
+			testNetworkAndInformUser();
 			saveNewIngredientToDBs(title, amount, unit);
-			showSavedOrNotInformation("Zutat gespeichert");
 		} finally {
 			startActivity(new Intent(getApplicationContext(),
 					IngredientCollectorActivity.class));
 			finish();
+		}
+	}
+
+	protected void testNetworkAndInformUser() {
+		if (app.isNetworkConnected()) {
+			app.informUser(R.string.addedIngredientAlsoOnServer);
+		} else {
+			app.informUser(R.string.addedIngredientOnListNotServer);
 		}
 	}
 
@@ -108,13 +126,21 @@ public class AddIngredientActivity extends Activity {
 
 	private void saveNewIngredientToDBs(String title, Integer quantity,
 			Unit unit) {
-		IShoppingListItem newItem = app.getShoppingListItemFactory()
+		IShoppingListItem newItem = ShoppingListItemFactory
 				.createShoppingListItem(title, quantity, unit, false);
 
 		fetchDataFromDb(new PostNewIngredientAsyncTask(newItem,
 				app.getServerHandler(), app.getCacheDbHelper()));
 
-		app.getShoppingDbHelper().addItem(newItem, quantity,
-				currentShoppingListName);
+		if (!isItemAlreadyInDb(newItem)) {
+			app.getShoppingDbHelper().addItem(newItem, quantity,
+					currentShoppingListName);
+			app.informUser(R.string.ingredientSaved);
+		}
+
+	}
+
+	private boolean isItemAlreadyInDb(IShoppingListItem newItem) {
+		return app.getShoppingDbHelper().getShoppingItem(newItem.getName()) != null;
 	}
 }

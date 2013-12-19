@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.localdata.tables;
+package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables;
 
 import android.content.ContentValues;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
@@ -55,6 +55,10 @@ public class ShoppingTable {
 
 	public static String[] selectQuantity() {
 		return new String[] { QUANTITY };
+	}
+
+	public static String[] selectNameAndShoppinglist() {
+		return new String[] { NAME, SHOPPING_LIST };
 	}
 
 }

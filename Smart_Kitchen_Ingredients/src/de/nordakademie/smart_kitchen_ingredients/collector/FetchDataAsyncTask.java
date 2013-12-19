@@ -8,7 +8,7 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
-import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IAbstractCacheDbHelper;
 
 /**
  * @author frederic.oppermann
@@ -18,11 +18,11 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.IDatabaseHelper;
 public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	private ProgressBar progressWheel;
-	private IDatabaseHelper<T> databseAccessHelper;
+	private IAbstractCacheDbHelper<T> databseAccessHelper;
 	private IAsyncTaskObserver<T> observer;
 
 	public FetchDataAsyncTask(ProgressBar progressWheel,
-			IDatabaseHelper<T> databseAccessHelper,
+			IAbstractCacheDbHelper<T> databseAccessHelper,
 			IAsyncTaskObserver<T> observer) {
 		this.progressWheel = progressWheel;
 		this.databseAccessHelper = databseAccessHelper;
@@ -31,7 +31,9 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	@Override
 	protected void onPreExecute() {
-		progressWheel.setVisibility(View.VISIBLE);
+		if (progressWheel != null) {
+			progressWheel.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
@@ -41,7 +43,11 @@ public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	@Override
 	protected void onPostExecute(List<T> result) {
-		progressWheel.setVisibility(View.GONE);
-		observer.update(this);
+		if (progressWheel != null) {
+			progressWheel.setVisibility(View.GONE);
+		}
+		if (observer != null) {
+			observer.update(this);
+		}
 	}
 }

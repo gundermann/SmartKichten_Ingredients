@@ -3,6 +3,7 @@
  */
 package de.nordakademie.smart_kitchen_ingredients.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -21,11 +22,17 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @date 18.12.2013
  * @description
  */
+@SuppressLint("ValidFragment")
 public class InsertNameDialog extends DialogFragment {
 	private final static String TAG = InsertNameDialog.class.getSimpleName();
 
 	private EditText inputField;
 	private InsertNameDialogListener dialogListener;
+	IngredientsApplication app;
+
+	public InsertNameDialog(IngredientsApplication app) {
+		this.app = app;
+	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -38,13 +45,10 @@ public class InsertNameDialog extends DialogFragment {
 				getActivity());
 
 		dialogBuilder.setTitle(R.string.addShoppingListDialog).setView(view)
-				.setPositiveButton(android.R.string.ok, null); // clickListener
-																// is added in
-																// onShow() to
-																// prevent
-																// dialog
-																// dismiss on
-																// errors.
+		// clickListeneris added in onShow() to prevent dialog dismiss on
+		// errors.
+				.setPositiveButton(android.R.string.ok, null);
+
 		return dialogBuilder.create();
 	}
 

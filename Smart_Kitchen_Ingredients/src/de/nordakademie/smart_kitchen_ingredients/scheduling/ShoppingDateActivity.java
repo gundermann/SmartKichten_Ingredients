@@ -19,9 +19,11 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
+import de.nordakademie.smart_kitchen_ingredients.DateFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.R.id;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
@@ -141,8 +143,8 @@ public class ShoppingDateActivity extends Activity implements
 			try {
 				cal = formatter.parse(sb.toString());
 				long triggerAtTime = cal.getTime();
-				chooseDate = app.getDateFactory().createDate(dateTitle.getText().toString(),
-						triggerAtTime, intentFlag);
+				chooseDate = DateFactory.createDate(dateTitle.getText()
+						.toString(), triggerAtTime, intentFlag);
 				app.getDateDbHelper().insertNewDate(chooseDate);
 
 				alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime,
