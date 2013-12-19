@@ -6,6 +6,7 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -13,11 +14,11 @@ import android.content.DialogInterface.OnClickListener;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
@@ -26,11 +27,21 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  * @date 18.12.2013
  * @description
  */
+@SuppressLint("ValidFragment")
 public class ShowRecipeIngredientsDialog extends DialogFragment {
 	private IRecipe recipe;
+	@SuppressLint("ValidFragment")
+	private final IngredientsApplication app;
 
-	public static ShowRecipeIngredientsDialog newInstance(IRecipe recipe) {
-		ShowRecipeIngredientsDialog dialog = new ShowRecipeIngredientsDialog();
+	public ShowRecipeIngredientsDialog(IngredientsApplication app) {
+		this.app = app;
+	}
+
+	@SuppressLint("ValidFragment")
+	public static ShowRecipeIngredientsDialog newInstance(IRecipe recipe,
+			IngredientsApplication app) {
+		ShowRecipeIngredientsDialog dialog = new ShowRecipeIngredientsDialog(
+				app);
 		dialog.setRecipe(recipe);
 		return dialog;
 	}
@@ -66,9 +77,10 @@ public class ShowRecipeIngredientsDialog extends DialogFragment {
 		dialogBuilder
 				.setView(scrollView)
 				.setPositiveButton(android.R.string.ok, new OnClickListener() {
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						QuantityPickerDialog.newInstance(recipe).show(
+						QuantityPickerDialog.newInstance(recipe, app).show(
 								getFragmentManager(), getTag());
 
 					}

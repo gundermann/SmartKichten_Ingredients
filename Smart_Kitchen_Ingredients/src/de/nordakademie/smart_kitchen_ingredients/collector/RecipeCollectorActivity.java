@@ -47,7 +47,7 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 					int position, long arg3) {
 				ShowRecipeIngredientsDialog.newInstance(
 						findIngredientInDatabase((IRecipe) adapterView
-								.getAdapter().getItem(position))).show(
+								.getAdapter().getItem(position)), app).show(
 						getSupportFragmentManager(), TAG);
 
 			}
