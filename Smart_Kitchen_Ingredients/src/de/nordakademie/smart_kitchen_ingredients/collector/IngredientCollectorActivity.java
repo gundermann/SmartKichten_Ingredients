@@ -5,6 +5,8 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
@@ -34,6 +36,13 @@ public class IngredientCollectorActivity extends
 		super.onResume();
 		super.fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(
 				getProgressWheel(), app.getIngredientsDbHelper(), this));
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.collection_menu, menu);
+		Log.i(TAG, "menu inflated");
+		return true;
 	}
 
 	private void initiateButtons() {

@@ -13,8 +13,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -86,13 +84,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 						"shoppingListName", currentShoppingList));
 			}
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.collection_menu, menu);
-		Log.i(TAG, "menu inflated");
-		return true;
 	}
 
 	@Override
