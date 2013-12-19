@@ -6,9 +6,10 @@
     <string name="dateTitle">Einkauf</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_shopping">Zutatenplaner: Einkaufsliste</string>
+    <string name="title_activity_shopping">Zutatenplaner: Einkaufslisten</string>
     <string name="title_activity_shoppingDateList">Zutatenplaner: Terminübersicht</string>
     <string name="title_activity_shoppingDate">Zutatenplaner: Termin anlegen</string>
+    <string name="title_activity_shoppingListIngredient">Zutatenplaner: Einkaufslistenübersicht</string>
     <string name="menuCodeScanner">Barcodescanner</string>
     <string name="menuShoppingListScanner">Einkaufsliste einscannen</string>
     <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>

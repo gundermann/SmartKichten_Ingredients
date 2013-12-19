@@ -1,12 +1,12 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -23,6 +24,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @date 15.12.2013
  * @description
  */
+@SuppressLint("ValidFragment")
 public class QuantityPickerDialog extends DialogFragment {
 	private InputMethodManager inputManager;
 	private ImageButton increaseButton;
@@ -33,9 +35,16 @@ public class QuantityPickerDialog extends DialogFragment {
 	private EditText currentNumberInput;
 	private IListElement element;
 	private QuantityPickerDialogListener dialogListener;
+	IngredientsApplication app;
 
-	public static final QuantityPickerDialog newInstance(IListElement element) {
-		QuantityPickerDialog dialog = new QuantityPickerDialog();
+	public QuantityPickerDialog(IngredientsApplication app) {
+		this.app = app;
+
+	}
+
+	public static final QuantityPickerDialog newInstance(IListElement element,
+			IngredientsApplication app) {
+		QuantityPickerDialog dialog = new QuantityPickerDialog(app);
 		dialog.setListElement(element);
 		return dialog;
 	}
@@ -118,7 +127,7 @@ public class QuantityPickerDialog extends DialogFragment {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-
+								app.informUser(R.string.addIngredientToShoppingList);
 								doOnPositive();
 								dismiss();
 							}
@@ -138,6 +147,7 @@ public class QuantityPickerDialog extends DialogFragment {
 
 	public void doOnPositive() {
 		dialogListener.onPositiveFinishedDialog(element, getCurrentValue());
+
 	}
 
 	private Integer getCurrentValue() {

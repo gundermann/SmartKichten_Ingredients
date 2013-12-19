@@ -12,10 +12,13 @@
 
     <TextView
         android:id="@+id/shoppingListName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:background="#cfff"/>
+        android:background="#cfff"
+        android:padding="7dp"
+        android:textSize="17dp"
+        android:textStyle="bold" />
 
     <LinearLayout 
         android:layout_width="fill_parent"
