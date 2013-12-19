@@ -198,9 +198,7 @@ public abstract class AbstractCollectorActivity<T> extends
 				.contains(searchString.toLowerCase(Locale.GERMAN));
 	}
 
-	public void setNewAdapter(ListAdapter adapter) {
-		elementsListView.setAdapter(adapter);
-	}
+
 
 	public void setAllElements(List<T> allElements) {
 		this.allElements = allElements;
