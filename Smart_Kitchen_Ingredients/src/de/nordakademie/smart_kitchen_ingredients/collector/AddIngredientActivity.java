@@ -6,8 +6,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
@@ -51,8 +54,11 @@ public class AddIngredientActivity extends Activity {
 		app = (IngredientsApplication) getApplication();
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
 		ingredientQuantityTV = (TextView) findViewById(R.id.ingredientAmountEdit);
+		
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-
+		SpinnerAdapter adapter = (SpinnerAdapter) new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Unit.values());
+		ingredientUnit.setAdapter(adapter);
+		
 		ingredientTitleTV.setText(ingredientTitle);
 
 		saveIngredientButton.setOnClickListener(new OnClickListener() {

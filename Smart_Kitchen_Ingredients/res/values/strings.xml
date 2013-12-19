@@ -18,7 +18,7 @@
     <string name="menuCleanShoppingList">Einkaufliste aufräumen</string>
     <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
     <string name="searchBarHint">Suche&#8230;</string>
-    <string name="newIngredientButtonText">Zutat hinzufügen</string>
+    <string name="newIngredientButtonText">Zutat erstellen</string>
     <string name="showRecipesButtonText">Rezepte anzeigen</string>
     <string name="scanerror">Keine Ergebnisse gefunden</string>
     <string name="scansuccess">Übereinstimmung gefunden</string>
@@ -31,7 +31,6 @@
     <string name="ingredientUnit">Einheit: </string>
     <string name="addIngredients">Neue Zutat erstellen</string>
     <string name="ingredientAmount">"Menge: "</string>
-    <string name="okButton">Zutat hinzufügen</string>
     <string name="chooseUnit">Einheit auswählen</string>
     <string name="quantityPreviousDefaultNumber">0</string>
     <string name="quantityCurrentDefaultNumber">1</string>
@@ -64,10 +63,4 @@
 	<string name="addedIngredientAlsoOnServer">Zutat der Liste und dem Server hinzugefügt</string>
 	<string name="addedIngredientOnListNotServer">Zutat der Liste hinzugefügt. Zutat aufgrund fehlender Verbindung nicht dem Server hinzugefügt</string>
 	
-    <string-array name="unit_array">
-        <item>g</item>
-        <item>stk</item>
-        <item>ml</item>
-    </string-array>
-
 </resources>
