@@ -62,10 +62,4 @@
 	<string name="addedIngredientAlsoOnServer">Zutat der Liste und dem Server hinzugefügt</string>
 	<string name="addedIngredientOnListNotServer">Zutat der Liste hinzugefügt. Zutat aufgrund fehlender Verbindung nicht dem Server hinzugefügt</string>
 	
-    <string-array name="unit_array">
-        <item>g</item>
-        <item>stk</item>
-        <item>ml</item>
-    </string-array>
-
 </resources>
