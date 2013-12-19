@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import de.nordakademie.smart_kitchen_ingredients.AbstractListActivity;
 import de.nordakademie.smart_kitchen_ingredients.AbstractSmartKitchenActivity;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
@@ -36,9 +37,9 @@ import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListIngred
  * @description
  */
 
-public abstract class AbstractCollectorActivity<T> extends
-		AbstractSmartKitchenActivity implements TextWatcher,
-		IAsyncTaskObserver<T>, QuantityPickerDialogListener {
+public abstract class AbstractCollectorActivity<T> extends AbstractListActivity
+		implements TextWatcher, IAsyncTaskObserver<T>,
+		QuantityPickerDialogListener {
 	protected static String TAG;
 
 	private EditText searchBar;
@@ -62,9 +63,14 @@ public abstract class AbstractCollectorActivity<T> extends
 		return elementsListView;
 	}
 
+	public void setNewAdapter(ListAdapter adapter) {
+		elementsListView.setAdapter(adapter);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_ingredient_collector);
 		if (getIntent().getExtras() != null
 				&& getIntent().getExtras().size() > 0) {
 			currentShoppingList = getIntent().getExtras().getString(
@@ -197,8 +203,6 @@ public abstract class AbstractCollectorActivity<T> extends
 		return listElement.getName().toLowerCase(Locale.GERMAN)
 				.contains(searchString.toLowerCase(Locale.GERMAN));
 	}
-
-
 
 	public void setAllElements(List<T> allElements) {
 		this.allElements = allElements;
