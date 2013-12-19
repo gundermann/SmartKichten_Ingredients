@@ -8,6 +8,7 @@ import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.localdata.AbstractData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.DateTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingListTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.StoredTable;
@@ -25,7 +26,7 @@ public abstract class AbstractSmartKitchenData extends AbstractData {
 
 	protected static String TAG = AbstractSmartKitchenData.class
 			.getSimpleName();
-	private static final int DATABASE_VERSION = 17;
+	private static final int DATABASE_VERSION = 18;
 	private static final String DATABASE_NAME = "smartkitchen.db";
 
 	public AbstractSmartKitchenData(IngredientsApplication app) {
@@ -38,6 +39,7 @@ public abstract class AbstractSmartKitchenData extends AbstractData {
 		database.execSQL(ShoppingTable.getTableCreation());
 		database.execSQL(StoredTable.getTableCreation());
 		database.execSQL(ShoppingListTable.getTableCreation());
+		database.execSQL(DateTable.getTableCreation());
 		Log.i(TAG, "shoppingDB created");
 	}
 
@@ -48,6 +50,7 @@ public abstract class AbstractSmartKitchenData extends AbstractData {
 		db.execSQL(ShoppingTable.getDrop());
 		db.execSQL(StoredTable.getDrop());
 		db.execSQL(ShoppingListTable.getDrop());
+		db.execSQL(DateTable.getDrop());
 		onCreate(db);
 	}
 

@@ -34,7 +34,8 @@ public abstract class AbstractData extends SQLiteOpenHelper {
 	}
 
 	protected void setCursor(String table, String[] selection, String where) {
-		readableDb.query(table, selection, where, null, null, null, null);
+		cursor = readableDb.query(table, selection, where, null, null, null,
+				null);
 	}
 
 	protected void setCursor(String tableName, String[] allColunms) {
