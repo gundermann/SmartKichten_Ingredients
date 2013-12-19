@@ -25,7 +25,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.tables.RecipesTable;
  * @author Kathrin Kurtz
  * 
  */
-public class CacheData extends AbstractData implements ICacheData {
+public class CacheData extends AbstractData implements ICacheDbUpdateHelper {
 
 	private static final String TAG = CacheData.class.getSimpleName();
 	private static final int DATABASE_VERSION = 3;

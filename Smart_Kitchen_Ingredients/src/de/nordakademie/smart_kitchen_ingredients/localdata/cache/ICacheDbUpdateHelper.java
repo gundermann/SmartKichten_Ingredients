@@ -11,7 +11,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  * @author Kathrin Kurtz
  * 
  */
-public interface ICacheData {
+public interface ICacheDbUpdateHelper {
 
 	/**
 	 * KEY: String Array - Value: List of String Array KEY/rezept 0=id 1=titel

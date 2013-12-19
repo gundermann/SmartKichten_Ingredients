@@ -11,7 +11,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.StoredTable;
 
 public class SmartKitchenStoredData extends AbstractSmartKitchenData implements
-		IStoredData {
+		IStoredDbHelper {
 
 	public SmartKitchenStoredData(IngredientsApplication app) {
 		super(app);

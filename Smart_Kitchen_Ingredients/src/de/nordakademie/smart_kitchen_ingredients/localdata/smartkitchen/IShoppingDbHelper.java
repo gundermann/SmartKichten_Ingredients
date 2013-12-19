@@ -12,7 +12,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
  * @author niels
  * 
  */
-public interface IShoppingData {
+public interface IShoppingDbHelper {
 
 	List<IShoppingList> getAllShoppingLists();
 

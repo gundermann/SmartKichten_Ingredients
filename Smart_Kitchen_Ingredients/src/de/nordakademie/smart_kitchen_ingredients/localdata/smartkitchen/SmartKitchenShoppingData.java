@@ -15,7 +15,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.S
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingTable;
 
 public class SmartKitchenShoppingData extends AbstractSmartKitchenData
-		implements IShoppingData {
+		implements IShoppingDbHelper {
 
 	public SmartKitchenShoppingData(IngredientsApplication app) {
 		super(app);

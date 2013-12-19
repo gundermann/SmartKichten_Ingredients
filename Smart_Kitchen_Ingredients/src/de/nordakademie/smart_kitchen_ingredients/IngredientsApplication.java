@@ -18,14 +18,14 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IngredientFacto
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IDatabaseHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IngredientDatabaseHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.RecipeDatabaseHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbUpdateHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IngredientDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.RecipeDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenDateData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IDateDbHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IShoppingData;
-import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IStoredData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IShoppingDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IStoredDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenShoppingData;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.SmartKitchenStoredData;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.DateFactory;
@@ -46,17 +46,17 @@ public class IngredientsApplication extends Application {
 	public static final String PERMISSION = "de.nordakademie.smart_kitchen_ingredients.SHOPPING_LIST_CHANGING";
 	private static final long ONE_DAY = 24 * 60 * 60 * 1000;
 	private final String TAG = IngredientsApplication.class.getSimpleName();
-	private IShoppingData shoppingDbHelper;
+	private IShoppingDbHelper shoppingDbHelper;
 	private ISmartKitchenServerHandler serverHandler;
 	private IIngredientFactory ingredientFactory;
 	private IRecipeFactory recipeFactory;
 	private IShoppingListItemFactory shoppingListItemFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
-	private ICacheData serverDataHelper;
-	private IStoredData stockDbHelper;
+	private ICacheDbUpdateHelper serverDataHelper;
+	private IStoredDbHelper stockDbHelper;
 	private IDateDbHelper dateDbHelper;
-	private IDatabaseHelper<IIngredient> ingredientDbHelper;
-	private IDatabaseHelper<IRecipe> recipeDbHelper;
+	private ICacheDbHelper<IIngredient> ingredientDbHelper;
+	private ICacheDbHelper<IRecipe> recipeDbHelper;
 	private IDateFactory dateFactory;
 	private long lastUpdate = 0;
 	private IShoppingList shoppingList;
@@ -71,8 +71,8 @@ public class IngredientsApplication extends Application {
 				new SmartKitchenServerConnector());
 		ingredientFactory = new IngredientFactory();
 		dateFactory = new DateFactory();
-		ingredientDbHelper = new IngredientDatabaseHelper(this);
-		recipeDbHelper = new RecipeDatabaseHelper(this);
+		ingredientDbHelper = new IngredientDbHelper(this);
+		recipeDbHelper = new RecipeDbHelper(this);
 		dateDbHelper = new SmartKitchenDateData(this);
 		shoppingListItemFactory = new ShoppingListItemFactory();
 		recipeFactory = new RecipeFactory();
@@ -83,7 +83,7 @@ public class IngredientsApplication extends Application {
 		Log.i(TAG, "Application started");
 	}
 
-	public IShoppingData getShoppingDbHelper() {
+	public IShoppingDbHelper getShoppingDbHelper() {
 		return shoppingDbHelper;
 	}
 
@@ -91,7 +91,7 @@ public class IngredientsApplication extends Application {
 		return shoppingList;
 	}
 
-	public ICacheData getCacheDbHelper() {
+	public ICacheDbUpdateHelper getCacheDbHelper() {
 		return serverDataHelper;
 	}
 
@@ -115,15 +115,15 @@ public class IngredientsApplication extends Application {
 		return shoppingListItemFactory;
 	}
 
-	public IStoredData getStoredDbHelper() {
+	public IStoredDbHelper getStoredDbHelper() {
 		return stockDbHelper;
 	}
 
-	public IDatabaseHelper<IIngredient> getIngredientsDbHelper() {
+	public ICacheDbHelper<IIngredient> getIngredientsDbHelper() {
 		return ingredientDbHelper;
 	}
 
-	public IDatabaseHelper<IRecipe> getRecipeDbHelper() {
+	public ICacheDbHelper<IRecipe> getRecipeDbHelper() {
 		return recipeDbHelper;
 	}
 

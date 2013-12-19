@@ -10,11 +10,11 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
  * @author niels
  * 
  */
-public class IngredientDatabaseHelper implements IDatabaseHelper<IIngredient> {
+public class IngredientDbHelper implements ICacheDbHelper<IIngredient> {
 
 	private CacheData db;
 
-	public IngredientDatabaseHelper(IngredientsApplication app) {
+	public IngredientDbHelper(IngredientsApplication app) {
 		db = new CacheData(app);
 	}
 

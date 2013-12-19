@@ -9,7 +9,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
  * @author niels
  * 
  */
-public interface IStoredData {
+public interface IStoredDbHelper {
 
 	/**
 	 * Liefert eine Liste aller Bestands-Zutaten.

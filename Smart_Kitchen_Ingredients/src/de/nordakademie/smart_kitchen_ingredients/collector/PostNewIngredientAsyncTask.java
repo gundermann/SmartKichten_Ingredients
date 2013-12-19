@@ -4,17 +4,17 @@ import java.net.UnknownHostException;
 
 import android.os.AsyncTask;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheData;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbUpdateHelper;
 import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.ISmartKitchenServerHandler;
 
 public class PostNewIngredientAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
 	private ISmartKitchenServerHandler serverHandler;
-	private ICacheData cacheDbHelper;
+	private ICacheDbUpdateHelper cacheDbHelper;
 	private IIngredient itemToPost;
 
 	public PostNewIngredientAsyncTask(IIngredient item,
-			ISmartKitchenServerHandler serverHandler, ICacheData cacheDbHelper) {
+			ISmartKitchenServerHandler serverHandler, ICacheDbUpdateHelper cacheDbHelper) {
 		itemToPost = item;
 		this.serverHandler = serverHandler;
 		this.cacheDbHelper = cacheDbHelper;
