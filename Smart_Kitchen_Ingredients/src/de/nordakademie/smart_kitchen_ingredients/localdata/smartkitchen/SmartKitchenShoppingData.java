@@ -7,11 +7,11 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.ShoppingListTable;
@@ -68,9 +68,9 @@ public class SmartKitchenShoppingData extends AbstractSmartKitchenData
 	public boolean addItem(IIngredient ingredient, int quantity,
 			String shoppingList) {
 		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
-		IShoppingListItem shoppingListItem = app.getShoppingListItemFactory()
-				.createShoppingListItem(ingredient.getName(),
-						quantity + getQuantityShopping(ingredient),
+		IShoppingListItem shoppingListItem = ShoppingListItemFactory
+				.createShoppingListItem(ingredient.getName(), quantity
+						+ getQuantityShopping(ingredient),
 						ingredient.getUnit(), false);
 		shoppingItemList.add(shoppingListItem);
 
@@ -86,12 +86,12 @@ public class SmartKitchenShoppingData extends AbstractSmartKitchenData
 	public boolean addItem(IRecipe recipe, int quantity, String shoppingList) {
 		List<IShoppingListItem> shoppingItemList = new ArrayList<IShoppingListItem>();
 		for (IIngredient ingredient : recipe.getIngredients().keySet()) {
-			IShoppingListItem shoppingListItem = app
-					.getShoppingListItemFactory().createShoppingListItem(
-							ingredient.getName(),
-							recipe.getIngredients().get(ingredient) * quantity
-									+ getQuantityShopping(ingredient),
-							ingredient.getUnit(), false);
+			IShoppingListItem shoppingListItem = ShoppingListItemFactory
+					.createShoppingListItem(ingredient.getName(), recipe
+							.getIngredients().get(ingredient)
+							* quantity
+							+ getQuantityShopping(ingredient), ingredient
+							.getUnit(), false);
 			shoppingItemList.add(shoppingListItem);
 		}
 		return insertItemsIntoDatabase(shoppingItemList, shoppingList);
@@ -142,9 +142,8 @@ public class SmartKitchenShoppingData extends AbstractSmartKitchenData
 	private IShoppingListItem getShoppingItem() {
 		Unit unit = Unit.valueOfFromShortening(cursor.getString(2));
 		boolean bought = Boolean.valueOf(cursor.getString(3));
-		IShoppingListItemFactory factory = app.getShoppingListItemFactory();
-		return factory.createShoppingListItem(cursor.getString(0),
-				cursor.getInt(1), unit, bought);
+		return ShoppingListItemFactory.createShoppingListItem(
+				cursor.getString(0), cursor.getInt(1), unit, bought);
 	}
 
 	private IShoppingList getShoppingListName() {
