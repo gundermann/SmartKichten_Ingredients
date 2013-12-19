@@ -69,6 +69,7 @@ public class ShoppingDateActivity extends Activity implements
 		setCurrentTimeOnView();
 		setCurrentDateOnView();
 		Log.i(TAG, "created");
+		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 
 	}
 

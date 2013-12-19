@@ -53,6 +53,7 @@ public class ShoppingDateListActivity extends Activity implements
 		updateDateList();
 		shoppingDateList.setOnItemClickListener(this);
 		Log.i(TAG, "datelist updated");
+		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 
 	}
 
