@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.localdata;
+package de.nordakademie.smart_kitchen_ingredients.localdata.cache;
 
 import android.app.Service;
 import android.content.Intent;

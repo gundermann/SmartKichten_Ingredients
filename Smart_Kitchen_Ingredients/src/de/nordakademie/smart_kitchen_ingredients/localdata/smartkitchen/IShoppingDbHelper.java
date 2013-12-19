@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.localdata;
+package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
  * @author niels
  * 
  */
-public interface IShoppingData {
+public interface IShoppingDbHelper {
 
 	List<IShoppingList> getAllShoppingLists();
 

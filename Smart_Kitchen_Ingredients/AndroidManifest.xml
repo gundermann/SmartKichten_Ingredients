@@ -70,7 +70,7 @@
 
         <receiver android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateAlarmReceiver" >
         </receiver>
-        <receiver android:name="de.nordakademie.smart_kitchen_ingredients.localdata.NetworkReceiver">
+        <receiver android:name="de.nordakademie.smart_kitchen_ingredients.localdata.cache.NetworkReceiver">
              <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
@@ -94,7 +94,7 @@
             android:label="@string/title_activity_shoppingListIngredient">
             </activity>
             
-        <service android:name="de.nordakademie.smart_kitchen_ingredients.localdata.CacheUpdaterService"></service>
+        <service android:name="de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheUpdaterService"></service>
     </application>
 
 </manifest>

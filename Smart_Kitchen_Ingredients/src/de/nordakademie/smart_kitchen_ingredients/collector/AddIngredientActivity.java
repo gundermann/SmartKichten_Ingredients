@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
@@ -67,16 +68,19 @@ public class AddIngredientActivity extends Activity {
 							.getSelectedItem().toString());
 
 					if (amountView.getText().toString().equals("")) {
-						showSavedOrNotInformation("Bitte Menge angeben!");
+						showSavedOrNotInformation(getString(R.string.amountNeeded));
 					} else if (amountView.getText().toString().length() > 6) {
-						showSavedOrNotInformation("Die Menge ist zu groß!");
+						showSavedOrNotInformation(getString(R.string.amountToHight));
 					} else if (title.equals("")) {
-						showSavedOrNotInformation("Bitte Bezeichnung angeben!");
+						showSavedOrNotInformation(getString(R.string.nameNeeded));
 					} else {
 						Integer amount = Integer.valueOf(amountView.getText()
 								.toString());
 						saveIngredientAndLeave(title, amount, unit);
 					}
+				}
+				else{
+					showSavedOrNotInformation(getString(R.string.ingredientOnServer));
 				}
 			}
 		});
@@ -86,14 +90,24 @@ public class AddIngredientActivity extends Activity {
 		return app.getCacheDbHelper().itemExists(title);
 	}
 
-	protected void saveIngredientAndLeave(String title, Integer amount, Unit unit) {
+	protected void saveIngredientAndLeave(String title, Integer amount,
+			Unit unit) {
 		try {
 			saveNewIngredientToDBs(title, amount, unit);
-			showSavedOrNotInformation("Zutat gespeichert");
+			testNetworkAndInformUser();
 		} finally {
 			startActivity(new Intent(getApplicationContext(),
 					IngredientCollectorActivity.class));
 			finish();
+		}
+	}
+
+	protected void testNetworkAndInformUser() {
+		if(app.isNetworkConnected()){
+			showSavedOrNotInformation(getString(R.string.addedIngredientAlsoOnServer));
+		}
+		else{
+			showSavedOrNotInformation(getString(R.string.addedIngredientOnListNotServer));
 		}
 	}
 
@@ -108,7 +122,7 @@ public class AddIngredientActivity extends Activity {
 
 	private void saveNewIngredientToDBs(String title, Integer quantity,
 			Unit unit) {
-		IShoppingListItem newItem = app.getShoppingListItemFactory()
+		IShoppingListItem newItem = ShoppingListItemFactory
 				.createShoppingListItem(title, quantity, unit, false);
 
 		fetchDataFromDb(new PostNewIngredientAsyncTask(newItem,
