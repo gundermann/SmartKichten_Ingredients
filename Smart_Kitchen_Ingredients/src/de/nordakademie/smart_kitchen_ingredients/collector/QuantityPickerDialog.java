@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnLongClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -103,7 +103,6 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 				setCurrentNumber(currentNumberInput);
 				if (event != null
 						&& event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-					Log.d("quantity", event.getKeyCode() + "");
 
 					inputManager.hideSoftInputFromWindow(
 							currentNumberInput.getWindowToken(), 0);
@@ -112,6 +111,15 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 					hideElement(currentNumberInput);
 				}
 				return false;
+			}
+		});
+
+		currentNumberInput.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				currentNumberInput.selectAll();
+				return true;
 			}
 		});
 
@@ -191,6 +199,7 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 			@Override
 			public void onClick(View v) {
 				increaseCurrentValue();
+				updateCurrentNumberInput();
 			}
 
 		});
@@ -199,8 +208,14 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 			@Override
 			public void onClick(View v) {
 				decreaseCurrentValue();
+				updateCurrentNumberInput();
 			}
+
 		});
+	}
+
+	private void updateCurrentNumberInput() {
+		currentNumberInput.setText(currentNumber.getText());
 	}
 
 	private void increaseCurrentValue() {
@@ -209,10 +224,6 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 
 	private void decreaseCurrentValue() {
 		setCurrentNumber(getCurrentValue() - 1);
-	}
-
-	private int getValueOf(TextView view) {
-		return Integer.valueOf(view.getText().toString());
 	}
 
 	@Override
