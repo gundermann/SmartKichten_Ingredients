@@ -120,7 +120,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(context, nextActivityClass));
+				startActivity(new Intent(context, nextActivityClass).putExtra(
+						"shoppingListName", currentShoppingList));
 			}
 		});
 	}

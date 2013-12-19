@@ -91,7 +91,6 @@ public class AddIngredientActivity extends Activity {
 			Unit unit) {
 		try {
 			saveNewIngredientToDBs(title, amount, unit);
-			showSavedOrNotInformation("Zutat gespeichert");
 		} finally {
 			startActivity(new Intent(getApplicationContext(),
 					IngredientCollectorActivity.class));
@@ -116,7 +115,15 @@ public class AddIngredientActivity extends Activity {
 		fetchDataFromDb(new PostNewIngredientAsyncTask(newItem,
 				app.getServerHandler(), app.getCacheDbHelper()));
 
-		app.getShoppingDbHelper().addItem(newItem, quantity,
-				currentShoppingListName);
+		if (!isItemAlreadyInDb(newItem)) {
+			app.getShoppingDbHelper().addItem(newItem, quantity,
+					currentShoppingListName);
+			app.informUser(R.string.ingredientSaved);
+		}
+
+	}
+
+	private boolean isItemAlreadyInDb(IShoppingListItem newItem) {
+		return app.getShoppingDbHelper().getShoppingItem(newItem.getName()) != null;
 	}
 }

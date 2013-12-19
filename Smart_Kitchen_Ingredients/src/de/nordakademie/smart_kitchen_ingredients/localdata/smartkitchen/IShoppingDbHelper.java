@@ -47,7 +47,7 @@ public interface IShoppingDbHelper {
 	 * @param item
 	 * @return int
 	 */
-	int updateShoppingItem(IShoppingListItem item);
+	int updateShoppingItem(IShoppingListItem item, String shoppingList);
 
 	/**
 	 * Entfernt als gekaufte markierte Artikel aus der Datenbank.
@@ -58,10 +58,12 @@ public interface IShoppingDbHelper {
 	 * Liefert einen Artikel basierend auf dessen Namen von der Einkaufsliste
 	 * zurück.
 	 * 
+	 * @param itemName
+	 * 
 	 * @param title
 	 * @return IShoppingListItem
 	 */
-	IShoppingListItem getShoppingItem(String title);
+	IShoppingListItem getShoppingItem(String itemName, String shoppingList);
 
 	boolean addItem(IShoppingList shoppingList);
 
@@ -73,5 +75,7 @@ public interface IShoppingDbHelper {
 	void deleteAllShoppingItems();
 
 	void delete(IShoppingList shoppingList);
+
+	IShoppingListItem getShoppingItem(String itemTitle);
 
 }

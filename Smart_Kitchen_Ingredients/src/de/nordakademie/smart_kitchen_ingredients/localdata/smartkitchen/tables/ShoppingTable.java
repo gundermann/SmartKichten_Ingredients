@@ -57,4 +57,8 @@ public class ShoppingTable {
 		return new String[] { QUANTITY };
 	}
 
+	public static String[] selectNameAndShoppinglist() {
+		return new String[] { NAME, SHOPPING_LIST };
+	}
+
 }

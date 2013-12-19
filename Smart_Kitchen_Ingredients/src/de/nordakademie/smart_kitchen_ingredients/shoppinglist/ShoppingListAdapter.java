@@ -70,7 +70,8 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 	}
 
 	private void updateShoppingItem(IShoppingListItem item) {
-		app.getShoppingDbHelper().updateShoppingItem(item);
+		app.getShoppingDbHelper().updateShoppingItem(item,
+				currentShoppingListName);
 	}
 
 	private void updateLayout(IShoppingListItem item) {
@@ -99,7 +100,8 @@ public class ShoppingListAdapter extends ArrayAdapter<IShoppingListItem>
 	private IShoppingListItem getItemByView(View v) {
 		String itemTitle = ((TextView) v
 				.findViewById(R.id.labelOfCheckableList)).getText().toString();
-		return app.getShoppingDbHelper().getShoppingItem(itemTitle);
+		return app.getShoppingDbHelper().getShoppingItem(itemTitle,
+				currentShoppingListName);
 	}
 
 }

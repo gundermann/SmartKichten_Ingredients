@@ -39,13 +39,8 @@ public class SmartKitchenShoppingData extends AbstractSmartKitchenData
 	}
 
 	@Override
-	public int updateShoppingItem(IShoppingListItem item) {
-		ContentValues value = ShoppingTable.getContentValuesForQuantityBought(
-				item.getQuantity(), item.isBought());
-		int updatedRows = update(ShoppingTable.TABLE_NAME, value,
-				getWhere(ShoppingTable.NAME, item.getName()));
-		Log.i(TAG, "shopping_table updated");
-		return updatedRows;
+	public int updateShoppingItem(IShoppingListItem item, String shoppinglist) {
+		return super.updateShoppingItem(item, shoppinglist);
 	}
 
 	@Override
@@ -54,12 +49,17 @@ public class SmartKitchenShoppingData extends AbstractSmartKitchenData
 	}
 
 	@Override
-	public IShoppingListItem getShoppingItem(String title) {
+	public IShoppingListItem getShoppingItem(String title, String shoppingList) {
 		openCursorResoures();
-		setCursor(ShoppingTable.TABLE_NAME, ShoppingTable.selectAllButId(),
-				getWhere(ShoppingTable.NAME, title));
-		cursor.moveToNext();
-		IShoppingListItem item = getShoppingItem();
+		setCursor(
+				ShoppingTable.TABLE_NAME,
+				ShoppingTable.selectAllButId(),
+				getWhere(ShoppingTable.selectNameAndShoppinglist(),
+						new String[] { title, shoppingList }));
+		IShoppingListItem item = null;
+		if (cursor.moveToNext()) {
+			item = getShoppingItem();
+		}
 		closeCursorResources();
 		return item;
 	}
@@ -159,5 +159,18 @@ public class SmartKitchenShoppingData extends AbstractSmartKitchenData
 		boolean success = insert(ShoppingListTable.TABLE_NAME, values);
 		Log.i(TAG, "inserted to table_shopping_list");
 		return success;
+	}
+
+	@Override
+	public IShoppingListItem getShoppingItem(String itemTitle) {
+		openCursorResoures();
+		setCursor(ShoppingTable.TABLE_NAME, ShoppingTable.selectAllButId(),
+				getWhere(ShoppingTable.NAME, itemTitle));
+		IShoppingListItem item = null;
+		if (cursor.moveToNext()) {
+			item = getShoppingItem();
+		}
+		closeCursorResources();
+		return item;
 	}
 }

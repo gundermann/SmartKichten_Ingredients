@@ -171,8 +171,8 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 			if (content.contains(shoppingItem.getName().toLowerCase(
 					Locale.GERMAN))) {
 				app.getShoppingDbHelper()
-						.getShoppingItem(shoppingItem.getName())
-						.setBought(true);
+						.getShoppingItem(shoppingItem.getName(),
+								currentShoppingListName).setBought(true);
 				return true;
 			}
 		}
