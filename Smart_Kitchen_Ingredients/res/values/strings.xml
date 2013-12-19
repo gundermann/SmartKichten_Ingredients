@@ -49,7 +49,7 @@
     <string name="ingredientInDatabase">Zutat schon vorhanden</string>
     <string name="addShoppingListDialog">Neue Einkaufsliste anlegen</string>
     <string name="eingabeShoppingListName">Bsp. ALDI</string>
-
+	<string name="addedToStock">Zutat dem Bestand hinzugefügt</string>
     <string name="userInformFieldIsEmpty">Feld muss gefüllt sein</string>
     <string name="numberHaveToBeGreaterThanZero">Mengen kleiner als 1 sind nicht möglich!</string>
     <string name="ingredientOnServer">Die Zutat ist bereits auf dem Server vorhanden!</string>
