@@ -37,25 +37,6 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 				getProgressWheel(), app.getRecipeDbHelper(), this));
 	}
 
-	// private void initiateButtons() {
-	// showIngredientsButton.setVisibility(View.VISIBLE);
-	// getElementsListView().setOnItemClickListener(new OnItemClickListener() {
-	//
-	// @Override
-	// public void onItemClick(AdapterView<?> adapterView, View view,
-	// int position, long arg3) {
-	// ShowRecipeIngredientsDialog.newInstance(
-	// findIngredientInDatabase((IRecipe) adapterView
-	// .getAdapter().getItem(position))).show(
-	// getSupportFragmentManager(), TAG);
-	//
-	// }
-	// });
-	//
-	// setNextActivityOnClick(showIngredientsButton,
-	// IngredientCollectorActivity.class);
-	// }
-
 	@Override
 	public void update(AsyncTask<Void, Void, List<IRecipe>> task) {
 		super.update(task);

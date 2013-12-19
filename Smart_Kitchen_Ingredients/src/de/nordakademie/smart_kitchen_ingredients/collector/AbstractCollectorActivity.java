@@ -49,6 +49,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	protected Button confirmShoppingList;
 	private View noResultsFound;
 	private IListElement currentElement;
+	private IngredientsApplication app;
 
 	private Context context;
 
@@ -75,6 +76,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 					"shoppingListName");
 		}
 		TAG = this.getClass().getSimpleName();
+		app = (IngredientsApplication) getApplication();
 		setContentView(R.layout.activity_ingredient_collector);
 		initiateAllViews();
 		addLayoutChangeListener();
@@ -121,7 +123,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 				currentElement = (IListElement) adapterView.getAdapter()
 						.getItem(position);
 				DialogFragment quantityDialog = QuantityPickerDialog
-						.newInstance(currentElement);
+						.newInstance(currentElement, app);
 				quantityDialog.show(getSupportFragmentManager(), TAG);
 			}
 		});

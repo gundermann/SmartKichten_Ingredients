@@ -113,10 +113,8 @@ public class IngredientsApplication extends Application {
 	}
 
 	public void updateCache() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 		if (!isUpdating && System.currentTimeMillis() - lastUpdate > ONE_DAY
-				&& netInfo != null && netInfo.isConnected()) {
+				&& isNetworkConnected()) {
 			isUpdating = true;
 			serverDataHelper
 					.insertOrUpdateAllIngredientsFromServer(serverHandler
@@ -126,6 +124,16 @@ public class IngredientsApplication extends Application {
 			lastUpdate = System.currentTimeMillis();
 			isUpdating = false;
 		}
+	}
+	
+	public boolean isNetworkConnected(){
+		Boolean connected = false;
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if(netInfo != null && netInfo.isConnected()){
+			connected = true;
+		}
+		return connected;
 	}
 
 	public void informUser(int stringId) {

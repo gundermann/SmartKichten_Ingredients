@@ -12,7 +12,7 @@ import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialog;
 
 public abstract class AbstractBuilder extends Builder {
 
-	private FragmentActivity activity;
+	private final FragmentActivity activity;
 	IngredientsApplication app;
 
 	public AbstractBuilder(FragmentActivity fragmentActivity, String title,
@@ -37,8 +37,8 @@ public abstract class AbstractBuilder extends Builder {
 		IListElement element = app.getStoredDbHelper().getStoredIngredient(
 				title);
 
-		DialogFragment quantityDialog = QuantityPickerDialog
-				.newInstance(element);
+		DialogFragment quantityDialog = QuantityPickerDialog.newInstance(
+				element, app);
 		quantityDialog.show(activity.getSupportFragmentManager(), TAG);
 	}
 }
