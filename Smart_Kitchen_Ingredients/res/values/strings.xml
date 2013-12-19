@@ -3,13 +3,13 @@
 
     <string name="setupStock">Bestand Einstellungen</string>
     <string name="confirmDateButton">Termin anlegen</string>
-    <string name="dateTitle">Einkauf</string>
+    <string name="dateTitle">Einkaufstitel</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_shopping">Zutatenplaner: Einkaufslisten</string>
-    <string name="title_activity_shoppingDateList">Zutatenplaner: Terminübersicht</string>
-    <string name="title_activity_shoppingDate">Zutatenplaner: Termin anlegen</string>
-    <string name="title_activity_shoppingListIngredient">Zutatenplaner: Einkaufslistenübersicht</string>
+    <string name="title_activity_shopping">Einkaufslisten</string>
+    <string name="title_activity_shoppingDateList">Terminübersicht</string>
+    <string name="title_activity_shoppingDate">Termin anlegen</string>
+    <string name="title_activity_shoppingListIngredient">Listenübersicht</string>
     <string name="menuCodeScanner">Barcodescanner</string>
     <string name="menuShoppingListScanner">Einkaufsliste einscannen</string>
     <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
@@ -23,10 +23,10 @@
     <string name="scanerror">Keine Ergebnisse gefunden</string>
     <string name="scansuccess">Übereinstimmung gefunden</string>
     <string name="scanfault">keine Übereinstimmung gefunden</string>
-    <string name="ingredientCollector">Zutatenplaner: Zutaten</string>
+    <string name="ingredientCollector">Zutatenübersicht</string>
     <string name="menuInsertStoredItems">Bestand</string>
     <string name="showIngredientsButtonText">Zutaten anzeigen</string>
-    <string name="title_activity_add_ingredient">Einkaufsliste: Zutat hinzufügen</string>
+    <string name="title_activity_add_ingredient">Zutat hinzufügen</string>
     <string name="ingredientName">Bezeichnung: </string>
     <string name="ingredientUnit">Einheit: </string>
     <string name="addIngredients">Neue Zutat erstellen</string>
@@ -39,7 +39,7 @@
     <string name="delteDateSure">Sind Sie sicher, dass Sie den Termin löschen wollen?</string>
     <string name="toastInsertNewShoppingDate">Feld Einkaufstitel muss gefüllt sein</string>
     <string name="deleteDateTitle">Löschen?</string>
-    <string name="recipeCollector">Einkaufsliste: Rezeptzutaten hinzufügen</string>
+    <string name="recipeCollector">Rezepteübersicht</string>
     <string name="noResultsFound">Keine Ergebnisse gefunden</string>
     <string name="developerMistake">Sorry - hier hat ein Entwickler gepfuscht!</string>
     <string name="dateTitleHint">Bezeichnung&#8230;</string>
