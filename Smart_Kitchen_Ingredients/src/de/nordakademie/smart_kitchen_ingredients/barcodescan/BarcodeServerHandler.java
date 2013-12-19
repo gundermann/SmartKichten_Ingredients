@@ -2,7 +2,6 @@ package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 import com.google.gson.JsonObject;
 
-import de.nordakademie.smart_kitchen_ingredients.onlineconnection.IServerConnector;
 import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
 /**
@@ -15,21 +14,25 @@ import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 public class BarcodeServerHandler extends ServerHandler implements
 		IBarcodeServerHandler {
 
-	private IServerConnector connector;
+	private IApiConnector connector;
 
-	public BarcodeServerHandler(IServerConnector connector) {
+	public BarcodeServerHandler(IApiConnector connector) {
 		this.connector = connector;
 	}
 
 	@Override
-	public String getItemDescription(String barcode) {
-		String response = connector.getResponseForInput(barcode);
+	public String getItemDescription(String barcode, String apikey) {
+		String response = connector.getResponseForInput(barcode, apikey);
 		return filterItemDescriptionFromResponse(response);
 	}
 
 	private String filterItemDescriptionFromResponse(String response) {
 		JsonObject json = filterJsonFromResponse(response).get(0);
 
+		// APIKEY abgelaufen
+		if (json.get("product") == null) {
+			return "";
+		}
 		return json.get("product").getAsJsonObject().get("attributes")
 				.getAsJsonObject().get("product").getAsString();
 	}

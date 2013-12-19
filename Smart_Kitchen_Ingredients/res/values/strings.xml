@@ -63,5 +63,6 @@
     <string name="addIngredientToShoppingList">Zutat der Einkaufsliste hinzugefügt</string>
     <string name="addedIngredientAlsoOnServer">Zutat der Liste und dem Server hinzugefügt</string>
     <string name="addedIngredientOnListNotServer">Zutat der Liste hinzugefügt. Zutat aufgrund fehlender Verbindung nicht dem Server hinzugefügt</string>
-
+	<string name="barcodeApiKeySetting">Apikey für eandata.com</string>
+    
 </resources>

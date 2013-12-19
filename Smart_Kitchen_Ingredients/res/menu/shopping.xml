@@ -10,5 +10,9 @@
     <item
         android:id="@+id/menu_edit_stored_items"
         android:title="@string/menuInsertStoredItems"/>
+    
+     <item
+        android:id="@+id/menu_barcode_apikey"
+        android:title="@string/barcodeApiKeySetting"/>
 
 </menu>

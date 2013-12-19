@@ -111,6 +111,8 @@
             android:screenOrientation="portrait">
             </activity>
             
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.shoppinglist.SmartKitchenIngredientsPrefsActivity"></activity>
+            
         <service android:name="de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheUpdaterService"></service>
     </application>
 
