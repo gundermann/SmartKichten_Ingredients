@@ -2,7 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen;
 
 import java.util.List;
 
-import de.nordakademie.smart_kitchen_ingredients.scheduling.IDate;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
 
 public interface IDateDbHelper {
 
