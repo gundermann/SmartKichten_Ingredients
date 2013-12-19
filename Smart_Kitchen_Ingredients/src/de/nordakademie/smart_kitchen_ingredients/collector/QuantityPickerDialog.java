@@ -6,7 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
@@ -23,7 +25,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  * @date 15.12.2013
  * @description
  */
-public class QuantityPickerDialog extends DialogFragment {
+public class QuantityPickerDialog extends DialogFragment implements TextWatcher {
 	private InputMethodManager inputManager;
 	private ImageButton increaseButton;
 	private ImageButton decreaseButton;
@@ -45,9 +47,18 @@ public class QuantityPickerDialog extends DialogFragment {
 	}
 
 	private void setCurrentNumber(int newValue) {
-		setNewValue(nextNumber, newValue + 1);
-		setNewValue(currentNumber, newValue);
-		setNewValue(previousNumber, newValue - 1);
+		if (newValue > 0) {
+			setNewValue(nextNumber, newValue + 1);
+			setNewValue(currentNumber, newValue);
+			setNewValue(previousNumber, newValue - 1);
+		} else {
+			((IngredientsApplication) getActivity().getApplication())
+					.informUser(R.string.numberHaveToBeGreaterThanZero);
+		}
+	}
+
+	private void setCurrentNumber(String number) {
+		setCurrentNumber(Integer.valueOf(number));
 	}
 
 	void setNewValue(TextView view, int newValue) {
@@ -164,6 +175,8 @@ public class QuantityPickerDialog extends DialogFragment {
 				.findViewById(R.id.quantityPickerNextNumber);
 		currentNumberInput = (EditText) view
 				.findViewById(R.id.quantityPickerCurrentQuantityInput);
+
+		currentNumberInput.addTextChangedListener(this);
 	}
 
 	private void setOnClickListener() {
@@ -189,5 +202,21 @@ public class QuantityPickerDialog extends DialogFragment {
 
 	private int getValueOf(TextView view) {
 		return Integer.valueOf(view.getText().toString());
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		if (s.length() > 0) {
+			setCurrentNumber(s.toString());
+		}
 	}
 }
