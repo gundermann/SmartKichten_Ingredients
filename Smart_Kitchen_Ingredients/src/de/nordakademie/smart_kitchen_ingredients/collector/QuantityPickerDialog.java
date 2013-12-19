@@ -58,7 +58,9 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 	}
 
 	private void setCurrentNumber(String number) {
-		setCurrentNumber(Integer.valueOf(number));
+		if (!number.trim().isEmpty()) {
+			setCurrentNumber(Integer.valueOf(number));
+		}
 	}
 
 	void setNewValue(TextView view, int newValue) {
@@ -98,7 +100,7 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				setCurrentNumber(getValueOf(currentNumberInput));
+				setCurrentNumber(currentNumberInput);
 				if (event != null
 						&& event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 					Log.d("quantity", event.getKeyCode() + "");
@@ -115,6 +117,10 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 
 		dialogListener = (QuantityPickerDialogListener) getActivity();
 		return buildDialog(view);
+	}
+
+	private void setCurrentNumber(EditText editText) {
+		setCurrentNumber(editText.getText().toString());
 	}
 
 	private Dialog buildDialog(View view) {
@@ -184,20 +190,25 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 
 			@Override
 			public void onClick(View v) {
-				setCurrentNumber(getValueOf(currentNumber) + 1);
+				increaseCurrentValue();
 			}
 
 		});
 
 		decreaseButton.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				if (getValueOf(previousNumber) > 0) {
-					setCurrentNumber(getValueOf(currentNumber) - 1);
-				}
+				decreaseCurrentValue();
 			}
 		});
+	}
+
+	private void increaseCurrentValue() {
+		setCurrentNumber(getCurrentValue() + 1);
+	}
+
+	private void decreaseCurrentValue() {
+		setCurrentNumber(getCurrentValue() - 1);
 	}
 
 	private int getValueOf(TextView view) {
@@ -215,8 +226,6 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		if (s.length() > 0) {
-			setCurrentNumber(s.toString());
-		}
+		setCurrentNumber(s.toString());
 	}
 }
