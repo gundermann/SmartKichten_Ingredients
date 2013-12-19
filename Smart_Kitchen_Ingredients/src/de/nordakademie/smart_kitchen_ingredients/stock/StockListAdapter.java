@@ -46,11 +46,13 @@ public class StockListAdapter extends ArrayAdapter<IIngredient> {
 	}
 
 	private void updateLayout(IIngredient item) {
-		// TODO Defaultminimum in Unit
 		nameTextView.setTextColor(Color.BLACK);
 		int quantity = getQuantityOfItem(item);
-		if (getQuantityOfItem(item) <= prefs.getInt(item.getUnit().toString(),
-				100)) {
+
+		// TODO quick and dirty
+		if (getQuantityOfItem(item) <= Integer.valueOf(prefs.getString(item
+				.getUnit().toString(), String.valueOf(item.getUnit()
+				.getDefaultMinimum())))) {
 			stockTextView.setTextColor(Color.RED);
 		} else {
 			stockTextView.setTextColor(Color.GREEN);

@@ -32,10 +32,10 @@ public class SmartKitchenServerConnector extends Connector implements
 			throws UnknownHostException {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(URL + "/ingredients");
-		httppost.setHeader("Content-Type", "application/json; charset=utf-8");
+		httppost.setHeader("Content-Type", "application/json");
 
 		try {
-			StringEntity entity = new StringEntity(jsonToPost);
+			StringEntity entity = new StringEntity(jsonToPost, "UTF-8");
 			httppost.setEntity(entity);
 			httpclient.execute(httppost);
 		} catch (ClientProtocolException e) {

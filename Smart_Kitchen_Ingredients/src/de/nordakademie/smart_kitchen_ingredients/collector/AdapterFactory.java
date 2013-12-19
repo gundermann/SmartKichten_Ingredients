@@ -25,8 +25,9 @@ public class AdapterFactory<T> implements IAdapterFactory<T> {
 	}
 
 	@Override
-	public ListAdapter createCheckableAdapter(IngredientsApplication application) {
-		return new ShoppingListAdapter(application);
+	public ListAdapter createCheckableAdapter(
+			IngredientsApplication application, String currentShoppingListName) {
+		return new ShoppingListAdapter(application, currentShoppingListName);
 	}
 
 	@Override
@@ -34,8 +35,8 @@ public class AdapterFactory<T> implements IAdapterFactory<T> {
 		return new StockListAdapter(application);
 	}
 
+	@Override
 	public ListAdapter createDateAdapter(IngredientsApplication application) {
 		return new DateListAdapter(application);
 	}
-
 }

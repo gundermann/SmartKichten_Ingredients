@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.localdata;
+package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
  * @author niels
  * 
  */
-public interface IStoredData {
+public interface IStoredDbHelper {
 
 	/**
 	 * Liefert eine Liste aller Bestands-Zutaten.
@@ -33,4 +33,6 @@ public interface IStoredData {
 	IIngredient getStoredIngredient(String title);
 
 	int getQuantity(IIngredient item);
+
+	void deleteStoredIngredient(String title);
 }

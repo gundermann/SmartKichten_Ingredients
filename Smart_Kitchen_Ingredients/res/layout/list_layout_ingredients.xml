@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ShoppingListIngredientsActivity" 
+    android:background="@drawable/background">
+
+    <TextView
+        android:id="@+id/shoppingListName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="#cfff"
+        android:padding="7dp"
+        android:textSize="17dp"
+        android:textStyle="bold" />
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        
+        >
+        
+    <ListView
+        android:id="@+id/shoppingList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#cfff"
+        android:paddingRight="5dp" />
+
+    <TextView android:id="@android:id/empty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="@string/emptyShoppingList" 
+    android:background="#cfff"/>
+    
+    </LinearLayout>
+    
+    <ImageButton
+        android:id="@+id/addNewShoppingItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="#cfff"
+        android:src="@android:drawable/ic_menu_add" />
+
+</LinearLayout>

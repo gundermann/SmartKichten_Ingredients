@@ -1,17 +1,48 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 public class StoredIngredientCollectorActivity extends
-		AbstractCollectorActivity<IIngredient> {
+		IngredientCollectorActivity {
+	
+	private IngredientsApplication app;
 
-	/* (non-Javadoc)
-	 * @see de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener#onPositiveFinishedDialog(int)
-	 */
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
-		// TODO Auto-generated method stub
-		
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		showRecepiesButton.setVisibility(View.GONE);
+		confirmShoppingList.setVisibility(View.GONE);
+		app = (IngredientsApplication) getApplication();
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.addNewIngredient:
+			startActivity(new Intent(getApplicationContext(),
+					AddStoredIngredientActivity.class));
+			break;
+		default:
+			break;
+		}
+		return true;
+	}
+
+	@Override
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
+		try {
+			((IngredientsApplication) getApplication()).getStoredDbHelper()
+					.insertOrUpdateIngredient((IIngredient) element, quantity);
+			app.informUser(R.string.addedToStock);
+		} catch (ClassCastException e) {
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
+		}
+	}
 }

@@ -5,23 +5,8 @@
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_today"
         android:title="@string/menuSetupShoppingDate"/>
-    <item
-        android:id="@+id/menu_qrscan"
-        android:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/menuCodeScanner"/>
-    <item
-        android:id="@+id/menu_clean_shoppingList"
-        android:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/menuCleanShoppingList"/>
-    <item
-        android:id="@+id/menu_import_shoppinglist"
-        android:icon="@android:drawable/ic_menu_camera"
-        android:title="@string/menuShoppingListScanner"/>
-    <item
-        android:id="@+id/menu_delete_shoppinglist"
-        android:title="@string/menuDeleteShoppingList"/>
+
+    
     <item
         android:id="@+id/menu_edit_stored_items"
         android:title="@string/menuInsertStoredItems"/>

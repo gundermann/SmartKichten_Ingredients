@@ -1,7 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients.scheduling;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
@@ -87,12 +90,24 @@ public class ShoppingDateListActivity extends Activity implements
 					public void onClick(DialogInterface dialog, int which) {
 						IDate date = (IDate) shoppingDateList
 								.getItemAtPosition(positionToRemove);
-						app.getDateDbHelper().remove(date);
-						updateDateList();
+						deleteDate(date);
 					}
 
 				});
 		adb.show();
 	}
 
+	private void deleteDate(IDate date) {
+		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		Intent broadcast_intent = new Intent(getApplicationContext(),
+				ShoppingDateAlarmReceiver.class);
+		int intentFlag = app.getDateDbHelper().getIntentFlagByTime(
+				date.getTimestamp());
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(
+				getApplicationContext(), 0, broadcast_intent, intentFlag);
+
+		alarmManager.cancel(pendingIntent);
+		app.getDateDbHelper().remove(date);
+		updateDateList();
+	}
 }

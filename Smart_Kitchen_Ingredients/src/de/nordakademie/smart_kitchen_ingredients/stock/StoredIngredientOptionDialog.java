@@ -1,11 +1,14 @@
 package de.nordakademie.smart_kitchen_ingredients.stock;
 
-import java.util.HashMap;
-import java.util.Map;
+/**
+ * @author Kathrin Kurtz
+ */
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
-import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialog;
 
 public class StoredIngredientOptionDialog extends AbstractBuilder {
 
@@ -19,27 +22,27 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 		setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				app.getStoredDbHelper().getStoredIngredient(titleFromList);
+				app.getStoredDbHelper().deleteStoredIngredient(titleFromList);
+				Intent intent = new Intent(app.getApplicationContext(),
+						StoredIngredientActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				app.startActivity(intent);
 			}
 
 		});
 
-		setNeutralButton("Ändern", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Map<String, String> extras = new HashMap<String, String>();
-				extras.put("ingredientTitle", titleFromList);
-				startNextActivityWithExtras(AddStoredIngredientActivity.class,
-						extras);
-			}
-		});
+		setNeutralButton("Bestand erhöhen",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						IIngredient element = app.getStoredDbHelper()
+								.getStoredIngredient(titleFromList);
+						QuantityPickerDialog dia = QuantityPickerDialog
+								.newInstance(element, app);
+						dia.show(activity.getSupportFragmentManager(),
+								"addBestand");
 
-		setNegativeButton("Nachkaufen", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				openQualityDialog(titleFromList, TAG);
-			}
-		});
+					}
+				});
 	}
-
 }

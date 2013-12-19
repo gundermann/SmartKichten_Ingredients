@@ -23,7 +23,9 @@ import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.collector.AdapterFactory;
-import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
+import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
+import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
 
 /**
  * 
@@ -33,7 +35,7 @@ import de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientAc
  */
 public class StoredIngredientActivity extends AbstractFragmentActivity
 		implements OnClickListener, OnItemLongClickListener,
-		OnSharedPreferenceChangeListener {
+		OnSharedPreferenceChangeListener, QuantityPickerDialogListener {
 
 	private static final String TAG = StoredIngredientActivity.class
 			.getSimpleName();
@@ -53,8 +55,13 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 		stockList = (ListView) findViewById(R.id.stockList);
 		stockList.setOnItemLongClickListener(this);
 
-		updateStockList();
 		Log.i(TAG, "created");
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateStockList();
 	}
 
 	@Override
@@ -85,7 +92,7 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 
 	@Override
 	public void onClick(View view) {
-		startNextActivity(AddStoredIngredientActivity.class);
+		startNextActivity(StoredIngredientCollectorActivity.class);
 	}
 
 	@Override
@@ -95,6 +102,7 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 				getTitleFromList(position), this);
 		AlertDialog dialog = builder.create();
 		dialog.show();
+		updateStockList();
 		return true;
 	}
 
@@ -102,16 +110,6 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 		String listItem = stockList.getItemAtPosition(position).toString();
 		return listItem;
 	}
-
-	// public List<String> getStoredValues() {
-	// List<String> values = new ArrayList<String>();
-	// for (IIngredient item : getStoredItems()) {
-	// values.add(item.getName() + " - "
-	// + String.valueOf() + " " + item.getUnit());
-	// }
-	// Log.i(TAG, "title of shoppingitems collected");
-	// return values;
-	// }
 
 	public List<IIngredient> getStoredItems() {
 		List<IIngredient> storedShoppingItems = new ArrayList<IIngredient>();
@@ -127,6 +125,13 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences preference,
 			String key) {
+		updateStockList();
+	}
+
+	@Override
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
+		app.getStoredDbHelper().insertOrUpdateIngredient(
+				(IIngredient) element, quantity);
 		updateStockList();
 	}
 

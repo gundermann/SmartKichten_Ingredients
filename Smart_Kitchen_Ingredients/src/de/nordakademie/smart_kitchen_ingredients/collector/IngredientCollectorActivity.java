@@ -18,18 +18,22 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
  */
 public class IngredientCollectorActivity extends
 		AbstractCollectorActivity<IIngredient> {
-	private Button showRecepiesButton;
-	private IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
+	protected Button showRecepiesButton;
+	private final IAdapterFactory<IIngredient> adapterFactory = new AdapterFactory<IIngredient>();
+	private IngredientsApplication app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (IngredientsApplication) getApplication();
+		initiateButtons();
+	}
 
-		IngredientsApplication app = (IngredientsApplication) getApplication();
-
+	@Override
+	protected void onResume() {
+		super.onResume();
 		super.fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(
 				getProgressWheel(), app.getIngredientsDbHelper(), this));
-		initiateButtons();
 	}
 
 	private void initiateButtons() {
@@ -54,12 +58,21 @@ public class IngredientCollectorActivity extends
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
+			IngredientsApplication app = ((IngredientsApplication) getApplication());
+			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
+					.getExplicitItem(element.getName());
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IIngredient) getCurrentElement(), quantity);
+			.addItem(ingredientToAdd, quantity, currentShoppingList);
+			app.informUser(R.string.addIngredientToShoppingList);
+
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
+		} catch (Exception e) {
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
 	}
 }

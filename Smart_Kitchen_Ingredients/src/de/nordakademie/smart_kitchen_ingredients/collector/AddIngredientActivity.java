@@ -1,18 +1,21 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.net.UnknownHostException;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.ShoppingListItemFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 
@@ -26,10 +29,10 @@ public class AddIngredientActivity extends Activity {
 	IngredientsApplication app;
 	String ingredientTitle;
 	Button saveIngredientButton;
-	Button quitButton;
 	TextView ingredientTitleTV;
 	TextView ingredientQuantityTV;
 	Spinner ingredientUnit;
+	private String currentShoppingListName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,29 +40,26 @@ public class AddIngredientActivity extends Activity {
 		setContentView(R.layout.activity_add_ingredient);
 		app = (IngredientsApplication) this.getApplication();
 
-		quitButton = (Button) findViewById(R.id.quitButton);
 		saveIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);
 
-		if (getIntent().getExtras() != null) {
-			ingredientTitle = getIntent().getExtras().get("ingredientTitle")
-					.toString();
+		if (getIntent().getExtras() != null
+				&& getIntent().getExtras().size() > 0) {
+			ingredientTitle = getIntent().getExtras().getString(
+					"ingredientTitle");
+			currentShoppingListName = getIntent().getExtras().getString(
+					"shoppingListName");
+
 		}
 
 		app = (IngredientsApplication) getApplication();
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
 		ingredientQuantityTV = (TextView) findViewById(R.id.ingredientAmountEdit);
+		
 		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
-
+		SpinnerAdapter adapter = (SpinnerAdapter) new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Unit.values());
+		ingredientUnit.setAdapter(adapter);
+		
 		ingredientTitleTV.setText(ingredientTitle);
-
-		quitButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(getApplicationContext(),
-						IngredientCollectorActivity.class));
-				finish();
-			}
-		});
 
 		saveIngredientButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -74,16 +74,18 @@ public class AddIngredientActivity extends Activity {
 							.getSelectedItem().toString());
 
 					if (amountView.getText().toString().equals("")) {
-						showSavedOrNotInformation("Bitte Menge angeben!");
+						app.informUser(R.string.amountNeeded);
 					} else if (amountView.getText().toString().length() > 6) {
-						showSavedOrNotInformation("Die Menge ist zu groß!");
+						app.informUser(R.string.amountToHight);
 					} else if (title.equals("")) {
-						showSavedOrNotInformation("Bitte Bezeichnung angeben!");
+						app.informUser(R.string.nameNeeded);
 					} else {
 						Integer amount = Integer.valueOf(amountView.getText()
 								.toString());
 						saveIngredientAndLeave(title, amount, unit);
 					}
+				} else {
+					app.informUser(R.string.ingredientOnServer);
 				}
 			}
 		});
@@ -93,10 +95,11 @@ public class AddIngredientActivity extends Activity {
 		return app.getCacheDbHelper().itemExists(title);
 	}
 
-	private void saveIngredientAndLeave(String title, Integer amount, Unit unit) {
+	protected void saveIngredientAndLeave(String title, Integer amount,
+			Unit unit) {
 		try {
+			testNetworkAndInformUser();
 			saveNewIngredientToDBs(title, amount, unit);
-			showSavedOrNotInformation("Zutat gespeichert");
 		} finally {
 			startActivity(new Intent(getApplicationContext(),
 					IngredientCollectorActivity.class));
@@ -104,22 +107,35 @@ public class AddIngredientActivity extends Activity {
 		}
 	}
 
-	private void showSavedOrNotInformation(String info) {
-		Toast toast = Toast.makeText(app, info, Toast.LENGTH_LONG);
-		toast.show();
+	protected void testNetworkAndInformUser() {
+		if (app.isNetworkConnected()) {
+			app.informUser(R.string.addedIngredientAlsoOnServer);
+		} else {
+			app.informUser(R.string.addedIngredientOnListNotServer);
+		}
+	}
+
+	protected void fetchDataFromDb(AsyncTask<Void, Void, Boolean> updateDataTask) {
+		updateDataTask.execute();
 	}
 
 	private void saveNewIngredientToDBs(String title, Integer quantity,
 			Unit unit) {
-		IShoppingListItem newItem = app.getShoppingListItemFactory()
-				.createShoppingListItem(title, unit, false);
-		try {
-			app.getServerHandler().postIngredientToServer(newItem);
-			app.getCacheDbHelper().insertOrUpdateAllIngredientsFromServer(
-					app.getServerHandler().getIngredientListFromServer());
-		} catch (UnknownHostException e) {
+		IShoppingListItem newItem = ShoppingListItemFactory
+				.createShoppingListItem(title, quantity, unit, false);
 
+		fetchDataFromDb(new PostNewIngredientAsyncTask(newItem,
+				app.getServerHandler(), app.getCacheDbHelper()));
+
+		if (!isItemAlreadyInDb(newItem)) {
+			app.getShoppingDbHelper().addItem(newItem, quantity,
+					currentShoppingListName);
+			//app.informUser(R.string.ingredientSaved);
 		}
-		app.getShoppingDbHelper().addItem(newItem, quantity);
+
+	}
+
+	private boolean isItemAlreadyInDb(IShoppingListItem newItem) {
+		return app.getShoppingDbHelper().getShoppingItem(newItem.getName()) != null;
 	}
 }

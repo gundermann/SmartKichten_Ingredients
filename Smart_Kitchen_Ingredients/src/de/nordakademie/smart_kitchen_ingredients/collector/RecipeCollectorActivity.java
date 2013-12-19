@@ -4,12 +4,15 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 
 /**
@@ -19,22 +22,41 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
  */
 public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> {
 	private Button showIngredientsButton;
-	private IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
+	private final IAdapterFactory<IRecipe> adapterFactory = new AdapterFactory<IRecipe>();
+	private IngredientsApplication app;
+	private ListView elementsListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		IngredientsApplication app = (IngredientsApplication) getApplication();
-		super.fetchDataFromDb(new FetchDataAsyncTask<IRecipe>(
-				getProgressWheel(), app.getRecipeDbHelper(), this));
-		initiateButtons();
+		app = (IngredientsApplication) getApplication();
+		showIngredientsButton = (Button) findViewById(R.id.showIngredientsButton);
+		elementsListView = getElementsListView();
+		showIngredientsButton.setVisibility(View.GONE);
+		confirmShoppingList.setVisibility(View.GONE);
+
+		elementsListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View arg1,
+					int position, long arg3) {
+
+				IRecipe findIngredientInDatabase = findIngredientInDatabase((IRecipe) adapterView
+						.getAdapter().getItem(position));
+
+				DialogFragment showIngredientsDialog = ShowRecipeIngredientsDialog
+						.newInstance(findIngredientInDatabase, app);
+
+				showIngredientsDialog.show(getSupportFragmentManager(), TAG);
+			}
+		});
 	}
 
-	private void initiateButtons() {
-		showIngredientsButton = (Button) findViewById(R.id.showIngredientsButton);
-		showIngredientsButton.setVisibility(View.VISIBLE);
-		setNextActivityOnClick(showIngredientsButton,
-				IngredientCollectorActivity.class);
+	@Override
+	protected void onResume() {
+		super.onResume();
+		super.fetchDataFromDb(new FetchDataAsyncTask<IRecipe>(
+				getProgressWheel(), app.getRecipeDbHelper(), this));
 	}
 
 	@Override
@@ -52,12 +74,19 @@ public class RecipeCollectorActivity extends AbstractCollectorActivity<IRecipe> 
 	}
 
 	@Override
-	public void onPositiveFinishedDialog(int quantity) {
+	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
+			IRecipe recipeToAdd = findIngredientInDatabase(element);
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem((IRecipe) getCurrentElement(), quantity);
+
+			.addItem(recipeToAdd, quantity, currentShoppingList);
 		} catch (ClassCastException e) {
-			informUser(R.string.developerMistake);
+			((IngredientsApplication) getApplication())
+					.informUser(R.string.developerMistake);
 		}
+	}
+
+	private IRecipe findIngredientInDatabase(IListElement element) {
+		return app.getRecipeDbHelper().getExplicitItem(element.getName());
 	}
 }

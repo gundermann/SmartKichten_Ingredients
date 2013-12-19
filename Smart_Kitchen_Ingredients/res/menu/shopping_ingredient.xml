@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <item
+        android:id="@+id/menu_qrscan"
+        android:title="@string/menuCodeScanner"/>
+    <item
+        android:id="@+id/menu_clean_shoppingList"
+        android:title="@string/menuCleanShoppingList"/>
+
+    <item
+        android:id="@+id/menu_edit_stored_items"
+        android:title="@string/menuInsertStoredItems"/>
+
+</menu>
