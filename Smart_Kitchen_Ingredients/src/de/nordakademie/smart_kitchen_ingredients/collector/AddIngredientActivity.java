@@ -94,7 +94,12 @@ public class AddIngredientActivity extends Activity {
 			Unit unit) {
 		try {
 			saveNewIngredientToDBs(title, amount, unit);
-			showSavedOrNotInformation("Zutat gespeichert");
+			if(app.isNetworkConnected()){
+				showSavedOrNotInformation(getString(R.string.addedIngredientAlsoOnServer));
+			}
+			else{
+				showSavedOrNotInformation(getString(R.string.addedIngredientOnListNotServer));
+			}
 		} finally {
 			startActivity(new Intent(getApplicationContext(),
 					IngredientCollectorActivity.class));
