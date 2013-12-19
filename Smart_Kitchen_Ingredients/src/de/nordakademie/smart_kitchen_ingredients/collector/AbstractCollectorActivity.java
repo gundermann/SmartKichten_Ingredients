@@ -13,6 +13,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -43,7 +46,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	private List<T> allElements = new ArrayList<T>();
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
-	protected Button addNewIngredient;
 	protected Button confirmShoppingList;
 	private View noResultsFound;
 	private IListElement currentElement;
@@ -83,20 +85,31 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			@Override
 			public void onClick(View view) {
 				startActivity(new Intent(context, ShoppingListActivity.class));
-
 			}
 		});
-		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
-		addNewIngredient.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(getApplicationContext(),
-						AddIngredientActivity.class).putExtra(
-						"shoppingListName", currentShoppingList).putExtra(
-						"ingredientTitle", searchBar.getText().toString()));
-			}
-		});
+	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.collection_menu, menu);
+		Log.i(TAG, "menu inflated");
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.addNewIngredient:
+			startActivity(new Intent(getApplicationContext(),
+					AddIngredientActivity.class).putExtra("shoppingListName",
+					currentShoppingList).putExtra("ingredientTitle",
+					searchBar.getText().toString()));
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void makeListEntriesClickable() {
@@ -147,7 +160,6 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		searchBar.addTextChangedListener(this);
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
-		addNewIngredient = (Button) findViewById(R.id.addNewIngredientButton);
 		noResultsFound = findViewById(R.id.noResultsFoundView);
 
 	}

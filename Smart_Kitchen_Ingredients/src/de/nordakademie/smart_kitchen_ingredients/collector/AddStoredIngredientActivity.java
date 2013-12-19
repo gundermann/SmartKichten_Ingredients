@@ -16,16 +16,17 @@ public class AddStoredIngredientActivity extends AddIngredientActivity {
 	@Override
 	protected void saveIngredientAndLeave(String title, Integer amount,
 			Unit unit) {
-		try {
-			saveNewIngredientToDBs(title, amount, unit);
-		} finally {
+		if (saveNewIngredientToDBs(title, amount, unit)) {
+			app.informUser(R.string.ingredientSaved);
 			startActivity(new Intent(getApplicationContext(),
 					StoredIngredientActivity.class));
 			finish();
+		} else {
+			app.informUser(R.string.ingredientInDatabase);
 		}
 	}
 
-	private void saveNewIngredientToDBs(String title, Integer quantity,
+	private boolean saveNewIngredientToDBs(String title, Integer quantity,
 			Unit unit) {
 		IIngredient newItem = IngredientFactory.createIngredient(title, unit);
 
@@ -34,11 +35,13 @@ public class AddStoredIngredientActivity extends AddIngredientActivity {
 
 		if (!isItemAlreadyInDb(newItem)) {
 			app.getStoredDbHelper().insertOrUpdateIngredient(newItem, quantity);
-			app.informUser(R.string.ingredientSaved);
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	private boolean isItemAlreadyInDb(IIngredient newItem) {
-		return app.getStoredDbHelper().getStoredIngredient(newItem.getName()) != null;
+		return app.getCacheDbHelper().itemExists(newItem.getName());
 	}
 }

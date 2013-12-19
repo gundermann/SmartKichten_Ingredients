@@ -80,11 +80,13 @@
 
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.AddIngredientActivity"
-            android:label="@string/title_activity_add_ingredient" >
+            android:label="@string/title_activity_add_ingredient" 
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.collector.AddStoredIngredientActivity"
-            android:label="@string/title_activity_add_ingredient" >
+            android:label="@string/title_activity_add_ingredient" 
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name="de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity"
