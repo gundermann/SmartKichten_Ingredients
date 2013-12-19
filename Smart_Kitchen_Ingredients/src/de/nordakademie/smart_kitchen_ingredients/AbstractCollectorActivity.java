@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.collector;
+package de.nordakademie.smart_kitchen_ingredients;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +24,13 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListIngredientsActivity;
+import de.nordakademie.smart_kitchen_ingredients.collector.AddIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.collector.IAsyncTaskObserver;
+import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
+import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialog;
+import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
+import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListIngredientsActivity;
 
 /**
  * @author frederic.oppermann
@@ -225,6 +229,14 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	protected void testNetworkAndInformUser() {
+		if (app.isNetworkConnected()) {
+			app.informUser(R.string.addedIngredientAlsoOnServer);
+		} else {
+			app.informUser(R.string.addedIngredientOnListNotServer);
 		}
 	}
 }

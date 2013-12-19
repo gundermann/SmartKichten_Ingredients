@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
+package de.nordakademie.smart_kitchen_ingredients.shopping;
 
 import java.util.List;
 
@@ -18,14 +18,13 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
 import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
-import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialog;
-import de.nordakademie.smart_kitchen_ingredients.dialog.InsertNameDialogListener;
-import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateListActivity;
-import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateOverviewActivity;
+import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
 /**
  * 
@@ -133,10 +132,10 @@ public class AllShoppingListOverviewActivity extends AbstractActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_shoppingdate:
-			startNextActivity(ShoppingDateListActivity.class);
+			startNextActivity(ShoppingDateOverviewActivity.class);
 			break;
 		case R.id.menu_edit_stored_items:
-			startNextActivity(StoredIngredientActivity.class);
+			startNextActivity(StockOverviewActivity.class);
 			break;
 		case R.id.menu_barcode_apikey:
 			startActivity(new Intent(getApplicationContext(),

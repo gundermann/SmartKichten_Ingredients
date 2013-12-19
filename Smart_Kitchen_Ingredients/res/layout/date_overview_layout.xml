@@ -7,8 +7,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ShoppingListIngredientsActivity"
-    android:background="@drawable/background" >
+    tools:context=".ShoppingListIngredientsActivity" 
+    android:background="@drawable/background">
+
+   
 
     <LinearLayout 
         android:layout_width="fill_parent"
@@ -19,20 +21,26 @@
         >
         
     <ListView
-        android:id="@+id/stockList"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-    />
+        android:id="@+id/shoppingList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#cfff"
+        android:paddingRight="5dp" />
+
     <TextView android:id="@android:id/empty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="@string/emptyShoppingList" />
+    android:text="@string/emptyShoppingList" 
+    android:background="#cfff"/>
     
     </LinearLayout>
     
     <ImageButton
-        android:id="@+id/addNewStoredItem"
+        android:id="@+id/addNewShoppingItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_add"/>
+        android:layout_marginTop="3dp"
+        android:background="#cfff"
+        android:src="@android:drawable/ic_menu_add" />
+
 </LinearLayout>

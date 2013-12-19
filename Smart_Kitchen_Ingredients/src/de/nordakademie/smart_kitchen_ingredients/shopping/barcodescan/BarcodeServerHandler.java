@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.barcodescan;
+package de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan;
 
 import com.google.gson.JsonObject;
 

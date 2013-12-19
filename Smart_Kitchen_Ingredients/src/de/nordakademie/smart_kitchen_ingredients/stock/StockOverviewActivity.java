@@ -19,12 +19,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
 import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
 import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
-import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.stock.collector.StoredIngredientCollectorActivity;
 
 /**
  * 
@@ -32,12 +33,9 @@ import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientColle
  * @author niels
  * 
  */
-public class StoredIngredientActivity extends AbstractFragmentActivity
-		implements OnClickListener, OnItemLongClickListener,
+public class StockOverviewActivity extends AbstractActivity implements
+		OnClickListener, OnItemLongClickListener,
 		OnSharedPreferenceChangeListener, QuantityPickerDialogListener {
-
-	private static final String TAG = StoredIngredientActivity.class
-			.getSimpleName();
 
 	ListView stockList;
 	SharedPreferences prefs;
@@ -46,15 +44,18 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.stock_layout);
+		setContentView(R.layout.stock_overview_layout);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
+		initElements();
+		Log.i(TAG, "created");
+	}
+
+	private void initElements() {
 		addStoredIngredientButton = (ImageButton) findViewById(R.id.addNewStoredItem);
 		addStoredIngredientButton.setOnClickListener(this);
 		stockList = (ListView) findViewById(R.id.stockList);
 		stockList.setOnItemLongClickListener(this);
-
-		Log.i(TAG, "created");
 	}
 
 	@Override
@@ -83,7 +84,6 @@ public class StoredIngredientActivity extends AbstractFragmentActivity
 	}
 
 	private void updateStockList() {
-
 		stockList.setAdapter(AdapterFactory.createStoreAdapter(app));
 		Log.i(TAG, "shoppinglist updated");
 	}

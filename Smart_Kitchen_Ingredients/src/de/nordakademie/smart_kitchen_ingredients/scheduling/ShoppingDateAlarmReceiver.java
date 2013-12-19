@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.AllShoppingListOverviewActivity;
+import de.nordakademie.smart_kitchen_ingredients.shopping.AllShoppingListOverviewActivity;
 
 /**
  * Der Receiver wirft eine Notification je nachdem, wann die App an den Einkauf

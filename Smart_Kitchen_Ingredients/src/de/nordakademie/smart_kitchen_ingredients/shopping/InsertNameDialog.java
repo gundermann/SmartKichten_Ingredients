@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.nordakademie.smart_kitchen_ingredients.dialog;
+package de.nordakademie.smart_kitchen_ingredients.shopping;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

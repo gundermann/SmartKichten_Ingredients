@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
+package de.nordakademie.smart_kitchen_ingredients.shopping;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

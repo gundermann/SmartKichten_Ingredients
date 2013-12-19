@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
+package de.nordakademie.smart_kitchen_ingredients.shopping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +24,14 @@ import android.widget.TextView;
 import com.google.zxing.client.android.IntentIntegrator;
 import com.google.zxing.client.android.IntentResult;
 
+import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
 import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
-import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan.CheckBarcodeAysncTask;
+import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
 /**
  * 
@@ -136,7 +138,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 			scanIntegrator.initiateScan();
 			break;
 		case R.id.menu_edit_stored_items:
-			startNextActivity(StoredIngredientActivity.class);
+			startNextActivity(StockOverviewActivity.class);
 			break;
 		default:
 			break;

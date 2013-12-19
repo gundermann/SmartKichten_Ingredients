@@ -1,6 +1,5 @@
 package de.nordakademie.smart_kitchen_ingredients.scheduling;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -14,11 +13,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
 import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
-import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
 
 /**
  * 
@@ -26,34 +24,25 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StoredIngredientActivity;
  * 
  */
 
-public class ShoppingDateListActivity extends Activity implements
+public class ShoppingDateOverviewActivity extends AbstractActivity implements
 		OnClickListener, OnItemClickListener {
-
-	private static final String TAG = StoredIngredientActivity.class
-			.getSimpleName();
 
 	private ListView shoppingDateList;
 	private ImageButton addShoppingDate;
 
-	private IngredientsApplication app;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.all_shopping_list_overview_layout);
+		setContentView(R.layout.date_overview_layout);
+		initElemts();
+		updateDateList();
+	}
 
+	private void initElemts() {
 		shoppingDateList = (ListView) findViewById(R.id.shoppingList);
 		addShoppingDate = (ImageButton) findViewById(R.id.addNewShoppingItem);
-
 		addShoppingDate.setOnClickListener(this);
-
-		app = (IngredientsApplication) getApplication();
-
-		updateDateList();
 		shoppingDateList.setOnItemClickListener(this);
-		Log.i(TAG, "datelist updated");
-		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
-
 	}
 
 	@Override
@@ -64,6 +53,7 @@ public class ShoppingDateListActivity extends Activity implements
 
 	private void updateDateList() {
 		shoppingDateList.setAdapter(AdapterFactory.createDateAdapter(app));
+		Log.i(TAG, "datelist updated");
 	}
 
 	@Override
@@ -77,7 +67,7 @@ public class ShoppingDateListActivity extends Activity implements
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(
-				ShoppingDateListActivity.this);
+				ShoppingDateOverviewActivity.this);
 		adb.setTitle(R.string.deleteDateTitle);
 		adb.setMessage(R.string.delteDateSure);
 		final int positionToRemove = position;

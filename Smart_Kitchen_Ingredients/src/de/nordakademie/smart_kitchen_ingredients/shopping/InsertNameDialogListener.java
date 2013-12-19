@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.nordakademie.smart_kitchen_ingredients.dialog;
+package de.nordakademie.smart_kitchen_ingredients.shopping;
 
 /**
  * @author frederic.oppermann

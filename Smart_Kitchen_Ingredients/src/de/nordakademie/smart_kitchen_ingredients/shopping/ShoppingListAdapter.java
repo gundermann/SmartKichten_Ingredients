@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
+package de.nordakademie.smart_kitchen_ingredients.shopping;
 
 import java.util.List;
 import java.util.TreeSet;

@@ -10,16 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ShoppingListIngredientsActivity" >
 
-    <TextView
-        android:id="@+id/shoppingListName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:background="#cfff"
-        android:padding="7dp"
-        android:textSize="17dp"
-        android:textStyle="bold" />
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -27,7 +17,7 @@
         android:orientation="vertical" >
 
         <ListView
-            android:id="@+id/shoppingList"
+            android:id="@+id/stockList"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="#cfff"
@@ -37,12 +27,11 @@
             android:id="@android:id/empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#cfff"
             android:text="@string/emptyShoppingList" />
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/addNewShoppingItem"
+        android:id="@+id/addNewStoredItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"

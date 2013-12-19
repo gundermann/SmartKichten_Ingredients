@@ -1,12 +1,12 @@
-package de.nordakademie.smart_kitchen_ingredients.shoppinglist;
+package de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan;
 
 import java.util.List;
 
 import android.os.AsyncTask;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IShoppingDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListIngredientsActivity;
 
 public class CheckBarcodeAysncTask extends
 		AsyncTask<String, IngredientsApplication, String> {

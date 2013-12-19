@@ -3,13 +3,16 @@ package de.nordakademie.smart_kitchen_ingredients;
 import java.util.List;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.SpinnerAdapter;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.collector.CollectorAdapter;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.DateListAdapter;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.ShoppingListAdapter;
+import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockListAdapter;
 
 /**
@@ -54,4 +57,10 @@ public class AdapterFactory {
 		return new CollectorAdapter<IRecipe>(applicationContext, entryView,
 				entryView, elements);
 	}
+
+	public static SpinnerAdapter createUnitAdapter(Context applicationContext,
+			int entryView, Unit[] elements) {
+		return new ArrayAdapter<Unit>(applicationContext, entryView, elements);
+	}
+
 }

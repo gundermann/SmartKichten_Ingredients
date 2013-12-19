@@ -12,9 +12,6 @@ import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialog;
 
 public class StoredIngredientOptionDialog extends AbstractBuilder {
 
-	private static final String TAG = StoredIngredientOptionDialog.class
-			.getSimpleName();
-
 	public StoredIngredientOptionDialog(final String titleFromList,
 			final FragmentActivity activity) {
 		super(activity, titleFromList, true);
@@ -24,7 +21,7 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 			public void onClick(DialogInterface dialog, int which) {
 				app.getStoredDbHelper().deleteStoredIngredient(titleFromList);
 				Intent intent = new Intent(app.getApplicationContext(),
-						StoredIngredientActivity.class);
+						StockOverviewActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				app.startActivity(intent);
 			}

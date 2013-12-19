@@ -23,7 +23,7 @@ public class DateListAdapter extends ArrayAdapter<IDate> {
 	private TextView dateTextView;
 
 	public DateListAdapter(IngredientsApplication application) {
-		super(application.getApplicationContext(), R.layout.stock_layout,
+		super(application.getApplicationContext(), R.layout.stock_overview_layout,
 				R.id.labelOfStockList);
 		app = application;
 		setupItems();
