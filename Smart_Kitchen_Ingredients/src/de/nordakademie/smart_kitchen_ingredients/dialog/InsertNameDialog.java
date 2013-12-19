@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
@@ -37,22 +38,41 @@ public class InsertNameDialog extends DialogFragment {
 				getActivity());
 
 		dialogBuilder.setTitle(R.string.addShoppingListDialog).setView(view)
-				.setPositiveButton(android.R.string.ok, new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if (!inputField.getText().toString().equals("")) {
-							Log.d(TAG, inputField.getText().toString());
-							dialogListener.onPositiveFinishedDialog(inputField
-									.getText().toString());
-						} else {
-							((IngredientsApplication) getActivity()
-									.getApplication())
-									.informUser(R.string.userInformFieldIsEmpty);
-
-						}
-					}
-				});
+				.setPositiveButton(android.R.string.ok, null); // clickListener
+																// is added in
+																// onShow() to
+																// prevent
+																// dialog
+																// dismiss on
+																// errors.
 		return dialogBuilder.create();
 	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		AlertDialog dialog = (AlertDialog) getDialog();
+		if (dialog != null) {
+			Button positiveButton = (Button) dialog
+					.getButton(Dialog.BUTTON_POSITIVE);
+			positiveButton.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (!inputField.getText().toString().equals("")) {
+						Log.d(TAG, inputField.getText().toString());
+						dialogListener.onPositiveFinishedDialog(inputField
+								.getText().toString());
+						dismiss();
+					} else {
+						((IngredientsApplication) getActivity()
+								.getApplication())
+								.informUser(R.string.userInformFieldIsEmpty);
+
+					}
+				}
+			});
+		}
+	}
+
 }
