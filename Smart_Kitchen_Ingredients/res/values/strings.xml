@@ -3,7 +3,7 @@
 
     <string name="setupStock">Bestand Einstellungen</string>
     <string name="confirmDateButton">Termin anlegen</string>
-    <string name="dateTitle">Einkauf</string>
+    <string name="dateTitle">Einkaufstitel</string>
     <string name="app_name">Ingredients</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_shopping">Zutatenplaner: Einkaufslisten</string>
