@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
         android:hint="@string/searchBarHint"
+        android:textColor="#000"
         android:lines="1"
         android:scrollHorizontally="true" />
 

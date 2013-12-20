@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -31,8 +32,8 @@ public class ShoppingListIngredientCollectorActivity extends
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
+	protected void onStart() {
+		super.onStart();
 		fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(getProgressWheel(),
 				app.getIngredientsDbHelper(), this));
 	}
@@ -42,6 +43,20 @@ public class ShoppingListIngredientCollectorActivity extends
 		getMenuInflater().inflate(R.menu.collection_menu, menu);
 		Log.i(TAG, "menu inflated");
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.addNewIngredient:
+			AddShoppinglistNewIngredientDialog.newInstance(app,
+					currentShoppingList).show(getSupportFragmentManager(), TAG);
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -55,8 +70,9 @@ public class ShoppingListIngredientCollectorActivity extends
 			IngredientsApplication app = ((IngredientsApplication) getApplication());
 			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
 					.getExplicitItem(element.getName());
-			((IngredientsApplication) getApplication()).getShoppingDbHelper()
-					.addItem(ingredientToAdd, quantity, currentShoppingList);
+			((IngredientsApplication) getApplication())
+					.getShoppingListDbHelper().addItem(ingredientToAdd,
+							quantity, currentShoppingList);
 			app.informUser(R.string.addIngredientToShoppingList);
 
 		} catch (ClassCastException e) {

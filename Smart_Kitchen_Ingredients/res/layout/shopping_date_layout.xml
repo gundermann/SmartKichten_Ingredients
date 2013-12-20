@@ -23,42 +23,37 @@
 
         <EditText
             android:id="@+id/chooseDateTitle"
-            android:hint="@string/dateTitleHint"
             android:layout_width="124dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="10dp"
             android:layout_weight="0.39"
             android:background="#cfff"
-            android:ems="10"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
-      		android:maxLength="30" />
-
+            android:ems="10"
+            android:hint="@string/dateTitleHint"
+            android:maxLength="30" />
     </LinearLayout>
-    
-    <DatePicker 
+
+    <DatePicker
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:calendarViewShown="false"
         android:layout_gravity="center"
-        />
+        android:calendarViewShown="false" />
 
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center" />
 
     <Button
         android:id="@+id/confirmButton"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#cfff"
-        android:padding="5dp"
         android:text="@string/confirmDateButton"
-        android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+        android:textColor="#000" />
 
 </LinearLayout>

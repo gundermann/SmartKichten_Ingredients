@@ -72,7 +72,7 @@ public class IngredientsApplication extends Application {
 		Log.i(TAG, "Application started");
 	}
 
-	public IShoppingDbHelper getShoppingDbHelper() {
+	public IShoppingDbHelper getShoppingListDbHelper() {
 		return shoppingDbHelper;
 	}
 

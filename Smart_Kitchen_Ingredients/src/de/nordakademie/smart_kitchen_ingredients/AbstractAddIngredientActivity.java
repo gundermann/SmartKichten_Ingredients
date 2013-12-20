@@ -7,7 +7,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
@@ -23,7 +22,7 @@ public abstract class AbstractAddIngredientActivity extends AbstractActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_ingredient_layout);
+		setContentView(R.layout.add_ingredient_dialog_layout);
 
 		saveIngredientButton = (Button) findViewById(R.id.submitNewIngredientButton);
 
@@ -37,9 +36,11 @@ public abstract class AbstractAddIngredientActivity extends AbstractActivity {
 		}
 
 		ingredientTitleTV = (TextView) findViewById(R.id.ingredientNameEdit);
-		ingredientQuantityTV = (TextView) findViewById(R.id.ingredientAmountEdit);
+		ingredientQuantityTV = (TextView) findViewById(R.id.amountLinearLayout)
+				.findViewById(R.id.ingredientAmountEdit);
 
-		ingredientUnit = (Spinner) findViewById(R.id.ingredientUnitSpinner);
+		ingredientUnit = (Spinner) findViewById(R.id.amountLinearLayout)
+				.findViewById(R.id.ingredientUnitSpinner);
 		ingredientUnit.setAdapter(AdapterFactory.createUnitAdapter(
 				app.getApplicationContext(),
 				android.R.layout.simple_spinner_item, Unit.values()));

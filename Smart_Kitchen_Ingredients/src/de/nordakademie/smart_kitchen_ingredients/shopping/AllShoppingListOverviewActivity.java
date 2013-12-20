@@ -19,6 +19,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateOverviewActivity;
+import de.nordakademie.smart_kitchen_ingredients.shoppinglist.SmartKitchenIngredientsPrefsActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
@@ -48,7 +49,8 @@ public class AllShoppingListOverviewActivity extends
 	}
 
 	private void delteShoppingList(IShoppingList shoppingLists) {
-		app.getShoppingDbHelper().delete(shoppingLists);
+		app.getShoppingListDbHelper().delete(shoppingLists);
+
 	}
 
 	@Override
@@ -78,9 +80,9 @@ public class AllShoppingListOverviewActivity extends
 
 	@Override
 	public void onPositiveFinishedDialog(String name) {
-		app.getShoppingDbHelper().addItem(new ShoppingList(name));
 
 		// TODO
+		app.getShoppingListDbHelper().addItem(new ShoppingList(name));
 		startActivity(new Intent(getApplicationContext(),
 				SingleShoppingListActivity.class).putExtra("shoppingListName",
 				name));
@@ -126,6 +128,6 @@ public class AllShoppingListOverviewActivity extends
 
 	@Override
 	protected List<IShoppingList> getElements() {
-		return app.getShoppingDbHelper().getAllShoppingLists();
+		return app.getShoppingListDbHelper().getAllShoppingLists();
 	}
 }

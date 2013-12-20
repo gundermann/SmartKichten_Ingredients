@@ -95,7 +95,7 @@ public class SingleShoppingListActivity extends
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clean_shoppingList:
-			app.getShoppingDbHelper().cleanShoppingIngredients();
+			app.getShoppingListDbHelper().cleanShoppingIngredients();
 			updateList();
 			break;
 		case R.id.menu_qrscan:
@@ -128,7 +128,7 @@ public class SingleShoppingListActivity extends
 						"E1C9A73C52A822FB");
 				new CheckBarcodeAysncTask(scanningResult.getContents(),
 						app.getBarcodeEvaluator(), getElements(),
-						currentShoppingListName, app.getShoppingDbHelper(),
+						currentShoppingListName, app.getShoppingListDbHelper(),
 						apikey, this).execute();
 			}
 		} catch (NullPointerException npe) {
@@ -141,7 +141,7 @@ public class SingleShoppingListActivity extends
 		for (IShoppingListItem shoppingItem : getElements()) {
 			if (content.contains(shoppingItem.getName().toLowerCase(
 					Locale.GERMAN))) {
-				app.getShoppingDbHelper()
+				app.getShoppingListDbHelper()
 						.getShoppingItem(shoppingItem.getName(),
 								currentShoppingListName).setBought(true);
 				success = true;
@@ -165,7 +165,7 @@ public class SingleShoppingListActivity extends
 	protected List<IShoppingListItem> getElements() {
 		List<IShoppingListItem> shoppingItems = new ArrayList<IShoppingListItem>();
 		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
-		ingredients.addAll(app.getShoppingDbHelper().getAllShoppingItems(
+		ingredients.addAll(app.getShoppingListDbHelper().getAllShoppingItems(
 				currentShoppingListName));
 		for (IShoppingListItem item : ingredients) {
 			shoppingItems.add(item);

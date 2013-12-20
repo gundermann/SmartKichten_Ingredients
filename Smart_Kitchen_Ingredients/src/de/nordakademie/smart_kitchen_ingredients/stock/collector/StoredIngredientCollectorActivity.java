@@ -1,6 +1,5 @@
 package de.nordakademie.smart_kitchen_ingredients.stock.collector;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,8 +26,8 @@ public class StoredIngredientCollectorActivity extends
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
+	protected void onStart() {
+		super.onStart();
 		fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(getProgressWheel(),
 				app.getIngredientsDbHelper(), this));
 	}
@@ -44,8 +43,8 @@ public class StoredIngredientCollectorActivity extends
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.addNewIngredient:
-			startActivity(new Intent(getApplicationContext(),
-					AddStoredIngredientActivity.class));
+			AddStoredNewIngredientDialog.newInstance(app).show(
+					getSupportFragmentManager(), TAG);
 			break;
 		default:
 			break;
