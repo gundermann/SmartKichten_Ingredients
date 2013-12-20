@@ -1,5 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
+/**
+ * 
+ * @author Frederic Oppermann
+ *
+ */
+
 public class Date implements IDate, Comparable<IDate> {
 
 	private int intentFlag;
