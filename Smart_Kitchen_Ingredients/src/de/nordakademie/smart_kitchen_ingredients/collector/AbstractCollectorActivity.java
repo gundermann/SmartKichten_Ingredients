@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients;
+package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,13 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
+import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialog;
+import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialogListener;
+import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.R.id;
+import de.nordakademie.smart_kitchen_ingredients.R.string;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 import de.nordakademie.smart_kitchen_ingredients.tasks.IAsyncTaskObserver;
 

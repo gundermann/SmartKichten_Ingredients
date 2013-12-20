@@ -26,6 +26,7 @@
         <ListView
             android:id="@+id/elementsList"
             android:layout_width="fill_parent"
+             android:background="#cfff"
             android:layout_height="0dp" 
             android:layout_weight="1"/>
 

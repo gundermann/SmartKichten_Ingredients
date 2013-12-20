@@ -19,7 +19,6 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateOverviewActivity;
-import de.nordakademie.smart_kitchen_ingredients.shoppinglist.SmartKitchenIngredientsPrefsActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
@@ -70,8 +69,7 @@ public class AllShoppingListOverviewActivity extends
 			startNextActivity(StockOverviewActivity.class);
 			break;
 		case R.id.menu_barcode_apikey:
-			startActivity(new Intent(getApplicationContext(),
-					SmartKitchenIngredientsPrefsActivity.class));
+			startNextActivity(SmartKitchenIngredientsPrefsActivity.class);
 		default:
 			break;
 		}

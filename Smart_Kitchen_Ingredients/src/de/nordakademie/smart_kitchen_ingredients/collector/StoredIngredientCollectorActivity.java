@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.stock.collector;
+package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
-import de.nordakademie.smart_kitchen_ingredients.AbstractCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;

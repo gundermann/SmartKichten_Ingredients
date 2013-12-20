@@ -59,7 +59,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="de.nordakademie.smart_kitchen_ingredients.stock.collector.StoredIngredientCollectorActivity"
+            android:name="de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity"
             android:label="@string/title_activity_add_ingredient"
             android:screenOrientation="portrait" >
         </activity>

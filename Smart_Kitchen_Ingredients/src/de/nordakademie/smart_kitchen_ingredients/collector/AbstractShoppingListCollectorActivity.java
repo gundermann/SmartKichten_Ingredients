@@ -3,7 +3,6 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import de.nordakademie.smart_kitchen_ingredients.AbstractCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 public abstract class AbstractShoppingListCollectorActivity<T> extends

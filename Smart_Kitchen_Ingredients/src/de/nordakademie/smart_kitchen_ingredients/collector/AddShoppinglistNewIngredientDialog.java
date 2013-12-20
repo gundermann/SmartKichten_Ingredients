@@ -1,6 +1,5 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import de.nordakademie.smart_kitchen_ingredients.AbstractAddNewIngredientDialog;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
