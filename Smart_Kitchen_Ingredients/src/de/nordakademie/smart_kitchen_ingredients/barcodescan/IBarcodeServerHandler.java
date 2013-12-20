@@ -2,7 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 /**
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public interface IBarcodeServerHandler {
