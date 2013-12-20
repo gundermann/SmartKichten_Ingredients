@@ -17,7 +17,7 @@ public class SmartKitchenServerConnectorTestHelper {
 		when(connector.getResponseForInput("recepies")).thenReturn(
 				recipeReponse);
 
-		String ingredientResponse = "{\"name\":\"Spinat\",\"unit\":\"g\",\"_id\":\"kljsdlfsdi833\"}, "
+		String ingredientResponse = "{\"title\":\"Spinat\",\"unit\":\"g\",\"_id\":\"kljsdlfsdi833\"}, "
 				+ "{\"title\":\"Ei\",\"unit\":\"stk\",\"_id\":\"kljsdlfsdi832\"} ";
 		when(connector.getResponseForInput("ingredients")).thenReturn(
 				ingredientResponse);

@@ -51,12 +51,12 @@ public class ServerHandlerImplTest {
 
 		assertTrue(firstIngredient[0].equals("kljsdlfsdi833"));
 		assertTrue(firstIngredient[1].equals("Spinat"));
-		assertTrue(firstIngredient[2].equals("g"));
+		assertTrue(firstIngredient[2].equals("Gramm"));
 		assertTrue(firstIngredient[3].equals("500"));
 
 		assertTrue(secondIngredient[0].equals("kljsdlfsdi832"));
 		assertTrue(secondIngredient[1].equals("Ei"));
-		assertTrue(secondIngredient[2].equals("stk"));
+		assertTrue(secondIngredient[2].equals("Stueck"));
 		assertTrue(secondIngredient[3].equals("2"));
 	}
 
