@@ -73,20 +73,20 @@ public class SingleShoppingListActivity extends
 				IngredientsApplication.CHANGING);
 		registerReceiver(notifyShoppingdataChange, broadcastIntentFilter,
 				IngredientsApplication.PERMISSION, null);
-		Log.i(TAG, "broadcastreceiver registed");
+		Log.i(tag, "broadcastreceiver registed");
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		unregisterReceiver(notifyShoppingdataChange);
-		Log.i(TAG, "broadcastreceiver unregisted");
+		Log.i(tag, "broadcastreceiver unregisted");
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.shopping_ingredient, menu);
-		Log.i(TAG, "menu inflated");
+		Log.i(tag, "menu inflated");
 		return true;
 	}
 

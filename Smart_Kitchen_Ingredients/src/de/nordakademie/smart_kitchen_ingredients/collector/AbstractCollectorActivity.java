@@ -69,7 +69,7 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 	protected void openQuantityDialog(int position) {
 		DialogFragment quantityDialog = QuantityPickerDialog.newInstance(
 				(IListElement) elementsToShow.get(position), app);
-		quantityDialog.show(getSupportFragmentManager(), TAG);
+		quantityDialog.show(getSupportFragmentManager(), tag);
 	}
 
 	protected void initiateAllViews() {

@@ -54,7 +54,7 @@ public class ShoppingDateActivity extends AbstractActivity implements
 		confirmDate.setOnClickListener(this);
 		initTimeOnView();
 		initDateOnView();
-		Log.i(TAG, "created");
+		Log.i(tag, "created");
 	}
 
 	public boolean dateTitleIsEmpty() {

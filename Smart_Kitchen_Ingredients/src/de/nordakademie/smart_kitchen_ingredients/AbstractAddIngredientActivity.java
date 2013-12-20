@@ -14,11 +14,11 @@ import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
 public abstract class AbstractAddIngredientActivity extends AbstractActivity {
 
-	String ingredientTitle;
-	Button saveIngredientButton;
-	TextView ingredientTitleTV;
-	TextView ingredientQuantityTV;
-	Spinner ingredientUnit;
+	protected String ingredientTitle;
+	protected Button saveIngredientButton;
+	protected TextView ingredientTitleTV;
+	protected TextView ingredientQuantityTV;
+	protected Spinner ingredientUnit;
 	private String currentShoppingListName;
 
 	@Override

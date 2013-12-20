@@ -64,7 +64,7 @@ public class ShoppingListRecipeCollectorActivity extends
 		IRecipe findIngredientInDatabase = findIngredientInDatabase(getElementsToShow()
 				.get(position));
 		ShowRecipeIngredientsDialog.newInstance(findIngredientInDatabase, app)
-				.show(getSupportFragmentManager(), TAG);
+				.show(getSupportFragmentManager(), tag);
 	}
 
 	@Override

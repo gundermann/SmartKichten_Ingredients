@@ -43,7 +43,7 @@ public class StockOverviewActivity extends
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.stock_menu, menu);
-		Log.i(TAG, "menu inflated");
+		Log.i(tag, "menu inflated");
 		return true;
 	}
 

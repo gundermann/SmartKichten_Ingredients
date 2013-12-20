@@ -36,7 +36,7 @@ public class StoredIngredientCollectorActivity extends
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.collection_menu, menu);
-		Log.i(TAG, "menu inflated");
+		Log.i(tag, "menu inflated");
 		return true;
 	}
 
@@ -45,7 +45,7 @@ public class StoredIngredientCollectorActivity extends
 		switch (item.getItemId()) {
 		case R.id.addNewIngredient:
 			AddStoredNewIngredientDialog.newInstance(app).show(
-					getSupportFragmentManager(), TAG);
+					getSupportFragmentManager(), tag);
 			break;
 		default:
 			break;

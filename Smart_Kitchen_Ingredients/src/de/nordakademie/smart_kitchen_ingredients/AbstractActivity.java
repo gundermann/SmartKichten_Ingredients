@@ -36,13 +36,13 @@ import android.widget.Toast;
 public abstract class AbstractActivity extends FragmentActivity {
 
 	protected IngredientsApplication app;
-	protected static String TAG;
+	protected static String tag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (IngredientsApplication) getApplication();
-		TAG = this.getClass().getSimpleName();
+		tag = this.getClass().getSimpleName();
 		Log.d("SmartKitchenActivity", this.getClass().getSimpleName());
 	}
 

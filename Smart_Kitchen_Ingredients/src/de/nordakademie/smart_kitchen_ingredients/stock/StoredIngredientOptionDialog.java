@@ -30,7 +30,7 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 
 		});
 
-		setNeutralButton("Bestand erh�hen",
+		setNeutralButton("Bestand erhöhen",
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

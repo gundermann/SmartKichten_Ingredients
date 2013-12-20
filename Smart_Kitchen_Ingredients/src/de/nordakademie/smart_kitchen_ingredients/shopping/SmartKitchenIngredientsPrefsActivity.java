@@ -4,9 +4,7 @@ package de.nordakademie.smart_kitchen_ingredients.shopping;
  */
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
 import android.text.InputType;
 import de.nordakademie.smart_kitchen_ingredients.R;
 

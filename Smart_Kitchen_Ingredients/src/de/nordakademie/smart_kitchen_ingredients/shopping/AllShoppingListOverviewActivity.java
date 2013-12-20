@@ -36,13 +36,13 @@ public class AllShoppingListOverviewActivity extends
 		super.onCreate(savedInstanceState);
 		initElements();
 		getList().setOnItemClickListener(this);
-		Log.i(TAG, "created");
+		Log.i(tag, "created");
 	}
 
 	@Override
 	public void onClick(View v) {
 		DialogFragment dialog = new InsertNameDialog(app);
-		dialog.show(getSupportFragmentManager(), TAG);
+		dialog.show(getSupportFragmentManager(), tag);
 	}
 
 	private void delteShoppingList(IShoppingList shoppingLists) {
@@ -53,7 +53,7 @@ public class AllShoppingListOverviewActivity extends
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.shopping, menu);
-		Log.i(TAG, "menu inflated");
+		Log.i(tag, "menu inflated");
 		return true;
 	}
 

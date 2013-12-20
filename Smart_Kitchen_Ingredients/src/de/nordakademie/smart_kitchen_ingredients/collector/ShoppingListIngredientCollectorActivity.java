@@ -49,7 +49,7 @@ public class ShoppingListIngredientCollectorActivity extends
 		switch (item.getItemId()) {
 		case R.id.addNewIngredient:
 			AddShoppinglistNewIngredientDialog.newInstance(app,
-					currentShoppingList).show(getSupportFragmentManager(), TAG);
+					currentShoppingList).show(getSupportFragmentManager(), tag);
 			break;
 
 		default:
