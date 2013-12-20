@@ -9,7 +9,7 @@ public class SmartKitchenServerConnectorTestHelper {
 	public static ISmartKichtenServerConnector createConnectorMock() {
 		ISmartKichtenServerConnector connector = mock(ISmartKichtenServerConnector.class);
 
-		String recipeReponse = " {\"title\":\"Spinat mit Ei\",\"ingredients\":["
+		String recipeReponse = " {\"name\":\"Spinat mit Ei\",\"ingredients\":["
 				+ "{\"title\":\"Spinat\",\"amount\": 500,\"unit\":\"g\",\"_id\":\"kljsdlfsdi833\"}, "
 				+ "{\"title\":\"Ei\",\"amount\": 2,\"unit\":\"stk\",\"_id\":\"kljsdlfsdi832\"}"
 				+ "],\"_id\":\"123\"}";
@@ -17,7 +17,7 @@ public class SmartKitchenServerConnectorTestHelper {
 		when(connector.getResponseForInput("recepies")).thenReturn(
 				recipeReponse);
 
-		String ingredientResponse = "{\"title\":\"Spinat\",\"unit\":\"g\",\"_id\":\"kljsdlfsdi833\"}, "
+		String ingredientResponse = "{\"name\":\"Spinat\",\"unit\":\"g\",\"_id\":\"kljsdlfsdi833\"}, "
 				+ "{\"title\":\"Ei\",\"unit\":\"stk\",\"_id\":\"kljsdlfsdi832\"} ";
 		when(connector.getResponseForInput("ingredients")).thenReturn(
 				ingredientResponse);
