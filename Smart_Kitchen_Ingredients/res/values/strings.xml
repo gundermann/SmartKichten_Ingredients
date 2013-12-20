@@ -66,5 +66,6 @@
 	<string name="barcodeApiKeySetting">Apikey für eandata.com</string>
 	<string name="enterAmountMoreThanNull">Die Menge muss größer 0 sein.</string>
     <string name="deleteButton">Löschen</string>
+    <string name="noApiKey">Sie müssen in den Optionen im Hauptmenü erst einen gültigen ApiKey eingeben, um dieses Feature nutzen zu können!</string>
 	
 </resources>

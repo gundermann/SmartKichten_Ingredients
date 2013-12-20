@@ -98,8 +98,13 @@ public class SingleShoppingListActivity extends
 			updateList();
 			break;
 		case R.id.menu_qrscan:
+			if(!isApiKeyCorrect()){
+				app.informUser(R.string.noApiKey);
+			}
+			else{
 			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 			scanIntegrator.initiateScan();
+			}
 			break;
 		case R.id.menu_edit_stored_items:
 			startNextActivity(StockOverviewActivity.class);
@@ -108,6 +113,15 @@ public class SingleShoppingListActivity extends
 			break;
 		}
 		return true;
+	}
+
+	private boolean isApiKeyCorrect() {
+		Boolean correct = true;
+		String apiKey = prefs.getString("barcodeApiKey", null);
+		if(apiKey == null){
+			correct = false;
+		}
+		return correct;
 	}
 
 	@Override
@@ -129,6 +143,7 @@ public class SingleShoppingListActivity extends
 						app.getBarcodeEvaluator(), getElements(),
 						currentShoppingListName, app.getShoppingListDbHelper(),
 						apikey, this).execute();
+				
 			}
 		} catch (NullPointerException npe) {
 			makeLongToast(R.string.scanerror);
