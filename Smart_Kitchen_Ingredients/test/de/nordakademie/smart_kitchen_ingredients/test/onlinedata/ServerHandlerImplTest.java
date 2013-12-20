@@ -16,7 +16,7 @@ import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitche
 
 public class ServerHandlerImplTest {
 
-	SmartKitchenServerHandler serverHandler;
+	private SmartKitchenServerHandler serverHandler;
 
 	@Before
 	public void setUp() throws Exception {
