@@ -15,13 +15,18 @@ public class ShoppingList implements IShoppingList, IListElement {
 	}
 
 	@Override
-	public String getElementUnit() {
+	public String getElementUnitShort() {
 		return null;
 	}
 
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public String getElementUnitLong() {
+		return null;
 	}
 
 }

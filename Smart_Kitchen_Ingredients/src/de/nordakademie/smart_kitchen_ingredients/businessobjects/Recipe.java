@@ -47,8 +47,13 @@ public class Recipe implements IRecipe, Comparable<IRecipe> {
 	}
 
 	@Override
-	public String getElementUnit() {
+	public String getElementUnitShort() {
 		return "Personen";
+	}
+
+	@Override
+	public String getElementUnitLong() {
+		return getElementUnitShort();
 	}
 
 }

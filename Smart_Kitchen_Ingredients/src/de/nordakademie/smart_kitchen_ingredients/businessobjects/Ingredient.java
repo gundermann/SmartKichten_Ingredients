@@ -32,12 +32,17 @@ public class Ingredient implements IIngredient, Comparable<IIngredient> {
 	}
 
 	@Override
-	public String getElementUnit() {
+	public String getElementUnitShort() {
 		return unit.toString();
 	}
 
 	@Override
 	public Unit getUnit() {
 		return unit;
+	}
+
+	@Override
+	public String getElementUnitLong() {
+		return unit.toLongString();
 	}
 }

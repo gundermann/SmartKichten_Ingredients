@@ -8,5 +8,7 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 public interface IListElement {
 	String getName();
 
-	String getElementUnit();
+	String getElementUnitShort();
+
+	String getElementUnitLong();
 }

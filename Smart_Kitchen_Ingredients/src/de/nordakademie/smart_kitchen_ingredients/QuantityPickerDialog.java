@@ -142,7 +142,7 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 				getActivity());
 		dialogBuilder
-				.setTitle(element.getElementUnit())
+				.setTitle(element.getElementUnitLong())
 				.setView(view)
 				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {

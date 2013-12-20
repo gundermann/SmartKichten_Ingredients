@@ -5,17 +5,14 @@
     <string name="confirmDateButton">Termin anlegen</string>
     <string name="dateTitle">Einkaufstitel</string>
     <string name="app_name">Ingredients</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_shopping">Einkaufslisten</string>
     <string name="title_activity_shoppingDateList">Terminübersicht</string>
     <string name="newIngredientAmountHint">Menge&#8230;</string>
     <string name="title_activity_shoppingDate">Termin anlegen</string>
     <string name="title_activity_shoppingListIngredient">Listenübersicht</string>
     <string name="menuCodeScanner">Barcodescanner</string>
-    <string name="menuShoppingListScanner">Einkaufsliste einscannen</string>
     <string name="emptyList">Keine Einträge vorhanden</string>
     <string name="menuSetupShoppingDate">Termin</string>
-    <string name="menuDeleteShoppingList">Einkaufliste löschen</string>
     <string name="menuCleanShoppingList">Einkaufliste aufräumen</string>
     <string name="changeShoppingDataPermissionLabel">Zugriff auf die Shopping-Daten</string>
     <string name="searchBarHint">Suche&#8230;</string>
@@ -29,7 +26,6 @@
     <string name="showIngredientsButtonText">Zutaten anzeigen</string>
     <string name="title_activity_add_ingredient">Zutat hinzufügen</string>
     <string name="ingredientName">Bezeichnung: </string>
-    <string name="ingredientUnit">Einheit: </string>
     <string name="addIngredients">Neue Zutat erstellen</string>
     <string name="ingredientAmount">"Menge: "</string>
     <string name="chooseUnit">Einheit auswählen</string>
@@ -45,9 +41,6 @@
     <string name="developerMistake">Sorry - hier hat ein Entwickler gepfuscht!</string>
     <string name="dateTitleHint">Bezeichnung&#8230;</string>
     <string name="newIngredientHint">Name&#8230;</string>
-    <string name="menuBackToMainPackage">Startseite</string>
-    <string name="confirmShoppingListAdd">Eingabe bestätigen</string>
-    <string name="ingredientInDatabase">Zutat schon vorhanden</string>
     <string name="addShoppingListDialog">Neue Einkaufsliste anlegen</string>
     <string name="eingabeShoppingListName">Bsp. ALDI</string>
 	<string name="addedToStock">Zutat dem Bestand hinzugefügt</string>
@@ -67,5 +60,9 @@
 	<string name="enterAmountMoreThanNull">Die Menge muss größer 0 sein.</string>
     <string name="deleteButton">Löschen</string>
     <string name="noApiKey">Sie müssen in den Optionen im Hauptmenü erst einen gültigen ApiKey eingeben, um dieses Feature nutzen zu können!</string>
+    <string name="increaseValueDescription">Erhöht die Anzahl</string>
+    <string name="decreaseValueDescription">Verringert die Anzahl</string>
+    <string name="addIngredientButtonDescription">Öffnet einen Dialog, zum Hinzufügen neuer Zutaten</string>
+    
 	
 </resources>
