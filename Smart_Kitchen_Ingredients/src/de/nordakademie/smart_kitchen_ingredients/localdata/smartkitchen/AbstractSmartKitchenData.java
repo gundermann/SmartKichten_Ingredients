@@ -17,7 +17,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.S
  * Verarbeitung der Datenbankanfragen bzgl. der Einkaufsliste und der
  * Bestehenden Zutaten.
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public abstract class AbstractSmartKitchenData extends AbstractData {

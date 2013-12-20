@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen;
-
+/**
+ * @author Niels Gundermann
+ */
 import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
