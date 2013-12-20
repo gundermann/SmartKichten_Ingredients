@@ -35,7 +35,6 @@ public class AllShoppingListOverviewActivity extends
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.all_shopping_list_overview_layout);
 		initElements();
 		getList().setOnItemClickListener(this);
 		Log.i(TAG, "created");

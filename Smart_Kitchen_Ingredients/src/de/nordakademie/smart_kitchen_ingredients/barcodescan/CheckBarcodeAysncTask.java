@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan;
+package de.nordakademie.smart_kitchen_ingredients.barcodescan;
 
 import java.util.List;
 
