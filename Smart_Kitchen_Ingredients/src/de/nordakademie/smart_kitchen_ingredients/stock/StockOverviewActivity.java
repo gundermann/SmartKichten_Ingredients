@@ -20,11 +20,11 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
-import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
+import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
-import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
+import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.stock.collector.StoredIngredientCollectorActivity;
 
 /**

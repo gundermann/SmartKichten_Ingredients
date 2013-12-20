@@ -5,11 +5,11 @@ package de.nordakademie.smart_kitchen_ingredients.stock.collector;
  **/
 
 import android.content.Intent;
-import de.nordakademie.smart_kitchen_ingredients.IngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.AbstractAddIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.PostNewIngredientAsyncTask;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
-import de.nordakademie.smart_kitchen_ingredients.collector.AbstractAddIngredientActivity;
-import de.nordakademie.smart_kitchen_ingredients.collector.PostNewIngredientAsyncTask;
+import de.nordakademie.smart_kitchen_ingredients.factories.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
 public class AddStoredIngredientActivity extends AbstractAddIngredientActivity {

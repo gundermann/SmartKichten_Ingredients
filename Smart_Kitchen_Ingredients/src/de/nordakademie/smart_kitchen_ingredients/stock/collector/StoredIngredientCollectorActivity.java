@@ -4,23 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import de.nordakademie.smart_kitchen_ingredients.AbstractCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
-import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 
 public class StoredIngredientCollectorActivity extends
-		IngredientCollectorActivity {
-	
-	private IngredientsApplication app;
+		AbstractCollectorActivity<IIngredient> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		showRecepiesButton.setVisibility(View.GONE);
-		confirmShoppingList.setVisibility(View.GONE);
-		app = (IngredientsApplication) getApplication();
+		setContentView(R.layout.stock_ingredient_collector_layout);
+		initElements();
 	}
 
 	@Override
@@ -47,4 +45,11 @@ public class StoredIngredientCollectorActivity extends
 					.informUser(R.string.developerMistake);
 		}
 	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
+		openQuantityDialog(position);
+	}
+
 }

@@ -5,10 +5,10 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.util.Log;
-import de.nordakademie.smart_kitchen_ingredients.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.factories.IngredientFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.StoredTable;
 
 public class SmartKitchenStoredData extends AbstractSmartKitchenData implements

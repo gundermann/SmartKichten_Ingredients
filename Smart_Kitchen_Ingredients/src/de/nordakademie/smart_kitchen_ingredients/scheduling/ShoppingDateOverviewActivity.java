@@ -14,9 +14,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
-import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
+import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
 /**
  * 

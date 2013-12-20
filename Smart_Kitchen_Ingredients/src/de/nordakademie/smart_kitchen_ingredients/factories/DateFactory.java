@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients;
+package de.nordakademie.smart_kitchen_ingredients.factories;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Date;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;

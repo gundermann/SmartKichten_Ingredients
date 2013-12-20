@@ -1,6 +1,5 @@
 package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 
-import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
 
 /**
  * 

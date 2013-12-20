@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.collector;
+package de.nordakademie.smart_kitchen_ingredients;
 
 import java.net.UnknownHostException;
 
@@ -14,7 +14,8 @@ public class PostNewIngredientAsyncTask extends AsyncTask<Void, Void, Boolean> {
 	private IIngredient itemToPost;
 
 	public PostNewIngredientAsyncTask(IIngredient item,
-			ISmartKitchenServerHandler serverHandler, ICacheDbUpdateHelper cacheDbHelper) {
+			ISmartKitchenServerHandler serverHandler,
+			ICacheDbUpdateHelper cacheDbHelper) {
 		itemToPost = item;
 		this.serverHandler = serverHandler;
 		this.cacheDbHelper = cacheDbHelper;

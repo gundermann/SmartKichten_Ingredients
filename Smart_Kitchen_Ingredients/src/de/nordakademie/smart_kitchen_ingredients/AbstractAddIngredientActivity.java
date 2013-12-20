@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.collector;
+package de.nordakademie.smart_kitchen_ingredients;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,10 +7,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
-import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
 public abstract class AbstractAddIngredientActivity extends AbstractActivity {
 

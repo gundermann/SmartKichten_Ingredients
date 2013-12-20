@@ -12,10 +12,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AbstractCollectorActivity" >
 
-   
-
-   
-
     <EditText
         android:id="@+id/searchBarInput"
         android:layout_width="fill_parent"
@@ -25,7 +21,11 @@
         android:lines="1"
         android:scrollHorizontally="true" />
 
-     
+   <LinearLayout 
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:orientation="vertical">
         
     <ListView
         android:id="@+id/elementsList"
@@ -47,11 +47,6 @@
         android:layout_gravity="center"
         android:text="@string/noResultsFound"
         android:visibility="gone" />
-
-    <Button
-        android:id="@+id/changeCollectorButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/showRecipesButtonText" />
+    </LinearLayout>
 
 </LinearLayout>

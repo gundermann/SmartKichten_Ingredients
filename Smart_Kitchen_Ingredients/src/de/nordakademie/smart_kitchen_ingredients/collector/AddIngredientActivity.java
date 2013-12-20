@@ -1,9 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import android.content.Intent;
-import de.nordakademie.smart_kitchen_ingredients.ShoppingListItemFactory;
+import de.nordakademie.smart_kitchen_ingredients.AbstractAddIngredientActivity;
+import de.nordakademie.smart_kitchen_ingredients.PostNewIngredientAsyncTask;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
+import de.nordakademie.smart_kitchen_ingredients.factories.ShoppingListItemFactory;
 
 /**
  * 
@@ -36,6 +38,6 @@ public class AddIngredientActivity extends AbstractAddIngredientActivity {
 	@Override
 	protected void startPrevActivity() {
 		startActivity(new Intent(getApplicationContext(),
-				IngredientCollectorActivity.class));
+				ShoppingListIngredientCollectorActivity.class));
 	}
 }

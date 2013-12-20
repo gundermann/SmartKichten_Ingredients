@@ -6,9 +6,9 @@ import java.util.List;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import de.nordakademie.smart_kitchen_ingredients.DateFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
+import de.nordakademie.smart_kitchen_ingredients.factories.DateFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables.DateTable;
 
 public class SmartKitchenDateData extends AbstractSmartKitchenData implements

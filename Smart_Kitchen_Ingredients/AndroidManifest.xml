@@ -47,13 +47,13 @@
             	  android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity"
+            android:name="de.nordakademie.smart_kitchen_ingredients.collector.ShoppingListIngredientCollectorActivity"
             android:label="@string/ingredientCollector" 
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="de.nordakademie.smart_kitchen_ingredients.collector.RecipeCollectorActivity"
+            android:name="de.nordakademie.smart_kitchen_ingredients.collector.ShoppingListRecipeCollectorActivity"
             android:label="@string/recipeCollector" 
             android:launchMode="singleTask"
             android:screenOrientation="portrait">

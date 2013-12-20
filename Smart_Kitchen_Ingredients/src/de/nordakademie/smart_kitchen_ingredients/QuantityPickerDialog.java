@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients.collector;
+package de.nordakademie.smart_kitchen_ingredients;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,8 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 import android.view.KeyEvent;
 import android.view.View.OnLongClickListener;
 

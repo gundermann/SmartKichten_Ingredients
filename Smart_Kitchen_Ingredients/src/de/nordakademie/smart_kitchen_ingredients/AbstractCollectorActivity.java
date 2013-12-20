@@ -5,32 +5,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 import de.nordakademie.smart_kitchen_ingredients.collector.AddIngredientActivity;
-import de.nordakademie.smart_kitchen_ingredients.collector.IAsyncTaskObserver;
-import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
-import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialog;
-import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialogListener;
-import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListIngredientsActivity;
+import de.nordakademie.smart_kitchen_ingredients.tasks.IAsyncTaskObserver;
 
 /**
  * @author frederic.oppermann
@@ -38,30 +28,30 @@ import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListIngredient
  * @description
  */
 
-public abstract class AbstractCollectorActivity<T> extends FragmentActivity
+public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 		implements TextWatcher, IAsyncTaskObserver<T>,
-		QuantityPickerDialogListener {
-	protected static String TAG;
+		QuantityPickerDialogListener, OnItemClickListener {
 
 	private EditText searchBar;
 	private ListView elementsListView;
 	private List<T> allElements = new ArrayList<T>();
 	private List<T> elementsToShow = new ArrayList<T>();
 	private ProgressBar progressWheel;
-	protected Button confirmShoppingList;
 	private View noResultsFound;
-	private IngredientsApplication app;
-
-	private Context context;
-
 	protected String currentShoppingList;
 
-	public List<T> getElementsToShow() {
+	protected List<T> getElementsToShow() {
 		return elementsToShow;
 	}
 
 	protected ListView getElementsListView() {
 		return elementsListView;
+	}
+
+	protected void initElements() {
+		initiateAllViews();
+		// addLayoutChangeListener();
+		makeListEntriesClickable();
 	}
 
 	@Override
@@ -72,22 +62,7 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			currentShoppingList = getIntent().getExtras().getString(
 					"shoppingListName");
 		}
-		TAG = this.getClass().getSimpleName();
-		app = (IngredientsApplication) getApplication();
-		setContentView(R.layout.ingredient_collector_layout);
-		initiateAllViews();
-		addLayoutChangeListener();
-		makeListEntriesClickable();
-		context = getApplicationContext();
-		confirmShoppingList = (Button) findViewById(R.id.confirmShoppingList);
-		confirmShoppingList.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(context,
-						ShoppingListIngredientsActivity.class).putExtra(
-						"shoppingListName", currentShoppingList));
-			}
-		});
+
 	}
 
 	@Override
@@ -107,54 +82,50 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	}
 
 	private void makeListEntriesClickable() {
-		elementsListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view,
-					int position, long arg3) {
-				DialogFragment quantityDialog = QuantityPickerDialog
-						.newInstance((IListElement) adapterView.getAdapter()
-								.getItem(position), app);
-				quantityDialog.show(getSupportFragmentManager(), TAG);
-			}
-		});
+		elementsListView.setOnItemClickListener(this);
 	}
 
-	protected void setNextActivityOnClick(View view,
-			final Class<?> nextActivityClass) {
-		view.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(context, nextActivityClass).putExtra(
-						"shoppingListName", currentShoppingList));
-			}
-		});
+	protected void openQuantityDialog(int position) {
+		DialogFragment quantityDialog = QuantityPickerDialog.newInstance(
+				(IListElement) elementsToShow.get(position), app);
+		quantityDialog.show(getSupportFragmentManager(), TAG);
 	}
 
-	private void addLayoutChangeListener() {
-		final View view = findViewById(R.id.activity_ingredient_collector);
-		view.getViewTreeObserver().addOnGlobalLayoutListener(
-				new OnGlobalLayoutListener() {
+	// protected void setNextActivityOnClick(View view,
+	// final Class<?> nextActivityClass) {
+	// view.setOnClickListener(new OnClickListener() {
+	//
+	// @Override
+	// public void onClick(View v) {
+	// startActivity(new Intent(getApplicationContext(),
+	// nextActivityClass).putExtra("shoppingListName",
+	// currentShoppingList));
+	// }
+	// });
+	// }
 
-					@SuppressWarnings("deprecation")
-					@Override
-					public void onGlobalLayout() {
-						view.getViewTreeObserver()
-								.removeGlobalOnLayoutListener(this);
+	// private void addLayoutChangeListener() {
+	// final View view = findViewById(R.id.activity_ingredient_collector);
+	// view.getViewTreeObserver().addOnGlobalLayoutListener(
+	// new OnGlobalLayoutListener() {
+	//
+	// @SuppressWarnings("deprecation")
+	// @Override
+	// public void onGlobalLayout() {
+	// view.getViewTreeObserver()
+	// .removeGlobalOnLayoutListener(this);
+	//
+	// }
+	// });
+	// }
 
-					}
-				});
-	}
-
-	private void initiateAllViews() {
-		elementsListView = (ListView) findViewById(R.id.elementsList);
+	protected void initiateAllViews() {
 		searchBar = (EditText) findViewById(R.id.searchBarInput);
+		elementsListView = (ListView) findViewById(R.id.elementsList);
 		searchBar.addTextChangedListener(this);
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
 		noResultsFound = findViewById(R.id.noResultsFoundView);
-
 	}
 
 	protected void fetchDataFromDb(AsyncTask<Void, Void, List<T>> fetchDataTask) {
@@ -166,13 +137,12 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	}
 
 	@Override
-	public void afterTextChanged(Editable s) {
-		noResultsFound.setVisibility(View.GONE);
-
+	public void afterTextChanged(Editable searchText) {
 		List<IListElement> elementsInList = new ArrayList<IListElement>();
 		try {
 			for (IListElement element : (List<IListElement>) allElements) {
-				if (ingredientNameMatchSearchString(element)) {
+				if (ingredientNameMatchSearchString(element,
+						searchText.toString())) {
 					elementsInList.add(element);
 				}
 			}
@@ -199,8 +169,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 	}
 
-	private boolean ingredientNameMatchSearchString(IListElement listElement) {
-		String searchString = searchBar.getText().toString();
+	private boolean ingredientNameMatchSearchString(IListElement listElement,
+			String searchString) {
 		return listElement.getName().toLowerCase(Locale.GERMAN)
 				.contains(searchString.toLowerCase(Locale.GERMAN));
 	}
@@ -224,10 +194,8 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			afterTextChanged(((EditText) findViewById(R.id.searchBarInput))
 					.getText());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -239,4 +207,5 @@ public abstract class AbstractCollectorActivity<T> extends FragmentActivity
 			app.informUser(R.string.addedIngredientOnListNotServer);
 		}
 	}
+
 }

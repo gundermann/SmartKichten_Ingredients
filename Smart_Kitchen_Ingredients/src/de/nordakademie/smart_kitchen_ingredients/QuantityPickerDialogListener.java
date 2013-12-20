@@ -1,7 +1,9 @@
 /**
  * 
  */
-package de.nordakademie.smart_kitchen_ingredients.collector;
+package de.nordakademie.smart_kitchen_ingredients;
+
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 
 /**
  * @author frederic.oppermann

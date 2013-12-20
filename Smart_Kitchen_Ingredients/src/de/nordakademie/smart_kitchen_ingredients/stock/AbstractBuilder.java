@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
-import de.nordakademie.smart_kitchen_ingredients.collector.IListElement;
-import de.nordakademie.smart_kitchen_ingredients.collector.QuantityPickerDialog;
+import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialog;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 
 public abstract class AbstractBuilder extends Builder {
 

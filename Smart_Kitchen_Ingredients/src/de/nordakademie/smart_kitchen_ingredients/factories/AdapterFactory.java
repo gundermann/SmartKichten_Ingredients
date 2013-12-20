@@ -1,4 +1,4 @@
-package de.nordakademie.smart_kitchen_ingredients;
+package de.nordakademie.smart_kitchen_ingredients.factories;
 
 import java.util.List;
 
@@ -6,11 +6,12 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.SpinnerAdapter;
+import de.nordakademie.smart_kitchen_ingredients.CollectorAdapter;
+import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
-import de.nordakademie.smart_kitchen_ingredients.collector.CollectorAdapter;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.DateListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockListAdapter;

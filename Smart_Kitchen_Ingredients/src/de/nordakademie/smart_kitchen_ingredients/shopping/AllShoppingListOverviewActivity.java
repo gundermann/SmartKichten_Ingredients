@@ -19,10 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
-import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
+import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateOverviewActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 

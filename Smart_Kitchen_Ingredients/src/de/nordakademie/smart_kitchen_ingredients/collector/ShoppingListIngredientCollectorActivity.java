@@ -2,34 +2,34 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
-import de.nordakademie.smart_kitchen_ingredients.AbstractCollectorActivity;
-import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
+import android.widget.AdapterView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
+import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
+import de.nordakademie.smart_kitchen_ingredients.tasks.FetchDataAsyncTask;
 
 /**
  * @author frederic.oppermann
  * @date 16.12.2013
  * @description
  */
-public class IngredientCollectorActivity extends
-		AbstractCollectorActivity<IIngredient> {
-	protected Button showRecepiesButton;
-	private IngredientsApplication app;
+public class ShoppingListIngredientCollectorActivity extends
+		AbstractShoppingListCollectorActivity<IIngredient> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (IngredientsApplication) getApplication();
-		initiateButtons();
+		setContentView(R.layout.ingredient_collector_layout);
+		initElements();
 	}
 
 	@Override
@@ -44,13 +44,6 @@ public class IngredientCollectorActivity extends
 		getMenuInflater().inflate(R.menu.collection_menu, menu);
 		Log.i(TAG, "menu inflated");
 		return true;
-	}
-
-	private void initiateButtons() {
-		showRecepiesButton = (Button) findViewById(R.id.showRecipesButton);
-		showRecepiesButton.setVisibility(View.VISIBLE);
-		setNextActivityOnClick(showRecepiesButton,
-				RecipeCollectorActivity.class);
 	}
 
 	@Override
@@ -86,5 +79,18 @@ public class IngredientCollectorActivity extends
 			((IngredientsApplication) getApplication())
 					.informUser(R.string.developerMistake);
 		}
+	}
+
+	@Override
+	protected void startNextActivity() {
+		startActivity(new Intent(getApplicationContext(),
+				ShoppingListRecipeCollectorActivity.class).putExtra(
+				"shoppingListName", currentShoppingList));
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
+		openQuantityDialog(position);
 	}
 }

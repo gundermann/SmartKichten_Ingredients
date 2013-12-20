@@ -12,10 +12,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AbstractCollectorActivity" >
 
-   
-
-   
-
     <EditText
         android:id="@+id/searchBarInput"
         android:layout_width="fill_parent"
@@ -25,33 +21,38 @@
         android:lines="1"
         android:scrollHorizontally="true" />
 
-     
-        
-    <ListView
-        android:id="@+id/elementsList"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        />
-    <ProgressBar
-        android:id="@+id/collectorProgressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" 
-        />
-     <TextView
-        android:id="@+id/noResultsFoundView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"
-        android:text="@string/noResultsFound"
-        android:visibility="gone" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/elementsList"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <ProgressBar
+            android:id="@+id/collectorProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/noResultsFoundView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:text="@string/noResultsFound"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/changeCollectorButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/showRecipesButtonText" />
+        android:text="@string/showIngredientsButtonText" />
 
 </LinearLayout>

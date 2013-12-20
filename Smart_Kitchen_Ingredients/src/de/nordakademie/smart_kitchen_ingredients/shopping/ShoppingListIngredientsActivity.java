@@ -25,11 +25,11 @@ import com.google.zxing.client.android.IntentIntegrator;
 import com.google.zxing.client.android.IntentResult;
 
 import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
-import de.nordakademie.smart_kitchen_ingredients.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
-import de.nordakademie.smart_kitchen_ingredients.collector.IngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.collector.ShoppingListIngredientCollectorActivity;
+import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan.CheckBarcodeAysncTask;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
@@ -149,7 +149,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 	@Override
 	public void onClick(View view) {
 		startActivity(new Intent(getApplicationContext(),
-				IngredientCollectorActivity.class).putExtra("shoppingListName",
+				ShoppingListIngredientCollectorActivity.class).putExtra("shoppingListName",
 				currentShoppingListName));
 	}
 
