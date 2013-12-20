@@ -26,10 +26,10 @@ import com.google.zxing.client.android.IntentResult;
 
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.barcodescan.CheckBarcodeAysncTask;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.collector.ShoppingListIngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
-import de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan.CheckBarcodeAysncTask;
 import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
@@ -125,7 +125,7 @@ public class SingleShoppingListActivity extends
 		try {
 			if (app.isNetworkConnected()) {
 				String apikey = prefs.getString("barcodeApiKey",
-						"E1C9A73C52A822FB");
+						"592DAB9E52B41E37");
 				new CheckBarcodeAysncTask(scanningResult.getContents(),
 						app.getBarcodeEvaluator(), getElements(),
 						currentShoppingListName, app.getShoppingListDbHelper(),

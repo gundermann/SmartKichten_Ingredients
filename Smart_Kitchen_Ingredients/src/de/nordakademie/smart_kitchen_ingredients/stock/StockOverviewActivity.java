@@ -37,7 +37,6 @@ public class StockOverviewActivity extends AbstractListActivity<IIngredient>
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.stock_overview_layout);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		initElements();

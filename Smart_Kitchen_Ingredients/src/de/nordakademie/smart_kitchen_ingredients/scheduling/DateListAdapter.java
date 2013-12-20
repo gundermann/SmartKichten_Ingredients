@@ -23,8 +23,8 @@ public class DateListAdapter extends ArrayAdapter<IDate> {
 	private TextView dateTextView;
 
 	public DateListAdapter(IngredientsApplication application) {
-		super(application.getApplicationContext(), R.layout.stock_overview_layout,
-				R.id.labelOfStockList);
+		super(application.getApplicationContext(), R.layout.overview_layout,
+				R.id.labelOfList);
 		app = application;
 		setupItems();
 	}
@@ -34,11 +34,11 @@ public class DateListAdapter extends ArrayAdapter<IDate> {
 		LayoutInflater inflater = (LayoutInflater) app.getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		View rowView = inflater.inflate(R.layout.stored_rowlayout, parent,
+		View rowView = inflater.inflate(R.layout.ingredients_with_amount_and_unit_rowlayout, parent,
 				false);
 		dateTextView = (TextView) rowView
-				.findViewById(R.id.labelOfAmountFromList);
-		nameTextView = (TextView) rowView.findViewById(R.id.labelOfStockList);
+				.findViewById(R.id.labelOfAmountAndUnitFromList);
+		nameTextView = (TextView) rowView.findViewById(R.id.labelOfList);
 		updateLayout(getItem(position));
 
 		return rowView;

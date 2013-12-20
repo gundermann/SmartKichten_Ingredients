@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan.BarcodeServerHandler;
-import de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan.IApiConnector;
-import de.nordakademie.smart_kitchen_ingredients.shopping.barcodescan.IBarcodeServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerHandler;
+import de.nordakademie.smart_kitchen_ingredients.barcodescan.IApiConnector;
+import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerHandler;
 
 public class BarcodeEvaluatorTest {
 

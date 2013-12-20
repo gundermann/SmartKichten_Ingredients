@@ -33,6 +33,7 @@
         android:id="@+id/collectorProgressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
+        android:background="#cfff"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:visibility="gone" />
@@ -41,8 +42,10 @@
         android:id="@+id/noResultsFoundView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
+        android:background="#cfff"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:textColor="#000"
         android:text="@string/noResultsFound"
         android:visibility="gone" />
 
@@ -52,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:background="#cfff"
+        android:textColor="#000"
         android:text="@string/showRecipesButtonText" />
 
 </LinearLayout>

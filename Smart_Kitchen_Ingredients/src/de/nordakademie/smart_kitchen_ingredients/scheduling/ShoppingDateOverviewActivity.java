@@ -28,7 +28,6 @@ public class ShoppingDateOverviewActivity extends AbstractListActivity<IDate>
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.date_overview_layout);
 		initElements();
 	}
 

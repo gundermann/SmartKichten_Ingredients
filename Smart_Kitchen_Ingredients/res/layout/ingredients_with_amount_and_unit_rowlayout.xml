@@ -6,7 +6,7 @@
     android:orientation="horizontal" >
     
     <TextView
-        android:id="@+id/labelOfStockList"
+        android:id="@+id/labelOfList"
         android:layout_width="0dp"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
     </TextView>
 
     <TextView
-        android:id="@+id/labelOfAmountFromList"
+        android:id="@+id/labelOfAmountAndUnitFromList"
         android:layout_width="wrap_content"
         android:layout_gravity="center_vertical"
         android:textSize="20sp"

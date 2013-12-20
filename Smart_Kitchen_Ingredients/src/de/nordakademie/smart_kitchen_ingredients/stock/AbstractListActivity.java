@@ -3,6 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.stock;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -26,6 +27,12 @@ public abstract class AbstractListActivity<T> extends AbstractActivity
 		list = (ListView) findViewById(R.id.list);
 		list.setOnItemLongClickListener(this);
 		setupList();
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.overview_layout);
 	}
 
 	@Override
