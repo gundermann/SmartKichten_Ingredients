@@ -24,7 +24,7 @@ public class StockListAdapter extends ArrayAdapter<IIngredient> {
 	private TextView stockTextView;
 
 	public StockListAdapter(IngredientsApplication application) {
-		super(application, R.layout.stored_rowlayout, R.id.labelOfStockList);
+		super(application, R.layout.ingredients_with_amount_and_unit_rowlayout, R.id.labelOfList);
 		prefs = PreferenceManager.getDefaultSharedPreferences(application);
 		app = application;
 		setupItems();
@@ -35,11 +35,11 @@ public class StockListAdapter extends ArrayAdapter<IIngredient> {
 		LayoutInflater inflater = (LayoutInflater) app.getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		View rowView = inflater.inflate(R.layout.stored_rowlayout, parent,
+		View rowView = inflater.inflate(R.layout.ingredients_with_amount_and_unit_rowlayout, parent,
 				false);
 		stockTextView = (TextView) rowView
-				.findViewById(R.id.labelOfAmountFromList);
-		nameTextView = (TextView) rowView.findViewById(R.id.labelOfStockList);
+				.findViewById(R.id.labelOfAmountAndUnitFromList);
+		nameTextView = (TextView) rowView.findViewById(R.id.labelOfList);
 		updateLayout(getItem(position));
 
 		return rowView;

@@ -4,24 +4,21 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialog;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
+import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
 /**
  * @author frederic.oppermann
@@ -55,26 +52,14 @@ public class ShowRecipeIngredientsDialog extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 				getActivity());
-		TableLayout tableView = new TableLayout(getActivity());
+		ListView listview = new ListView(app.getApplicationContext());
+		// TableLayout tableView = new TableLayout(getActivity());
 		Map<IIngredient, Integer> ingredients = recipe.getIngredients();
 
+		listview.setAdapter(AdapterFactory.createRecipeIngredientAdapter(app,
+				ingredients));
 		ScrollView scrollView = new ScrollView(getActivity());
-
-		for (Entry<IIngredient, Integer> ingredient : ingredients.entrySet()) {
-			TableRow row = new TableRow(getActivity());
-			TextView ingredientName = new TextView(getActivity());
-			TextView ingredientQuantity = new TextView(getActivity());
-
-			ingredientName.setTextColor(Color.WHITE);
-			ingredientQuantity.setTextColor(Color.WHITE);
-			ingredientName.setText(ingredient.getKey().getName());
-			ingredientQuantity.setText(String.valueOf(ingredient.getValue()));
-			row.addView(ingredientName);
-			row.addView(ingredientQuantity);
-			tableView.addView(row);
-		}
-
-		scrollView.addView(tableView);
+		scrollView.addView(listview);
 		dialogBuilder
 				.setView(scrollView)
 				.setPositiveButton(android.R.string.ok, new OnClickListener() {
@@ -83,7 +68,6 @@ public class ShowRecipeIngredientsDialog extends DialogFragment {
 					public void onClick(DialogInterface dialog, int which) {
 						QuantityPickerDialog.newInstance(recipe, app).show(
 								getFragmentManager(), getTag());
-
 					}
 				})
 				.setNegativeButton(android.R.string.cancel,
