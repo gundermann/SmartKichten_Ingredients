@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -153,12 +152,6 @@ public class SingleShoppingListActivity extends
 		} else {
 			app.informUser(R.string.scanfault);
 		}
-	}
-
-	@Override
-	protected AlertDialog getDialog(int position) {
-		// TODO anders abstrahieren
-		return null;
 	}
 
 	@Override

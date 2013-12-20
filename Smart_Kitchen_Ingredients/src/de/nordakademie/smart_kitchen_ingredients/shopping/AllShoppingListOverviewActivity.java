@@ -19,7 +19,6 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateOverviewActivity;
-import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
 /**
@@ -29,7 +28,7 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
  */
 
 public class AllShoppingListOverviewActivity extends
-		AbstractListActivity<IShoppingList> implements
+		AbstractDeletableListActivity<IShoppingList> implements
 		InsertNameDialogListener, OnItemClickListener {
 
 	@Override

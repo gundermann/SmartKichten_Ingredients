@@ -21,6 +21,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientCollectorActivity;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
+import de.nordakademie.smart_kitchen_ingredients.shopping.AbstractDeletableListActivity;
 
 /**
  * 
@@ -28,9 +29,9 @@ import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
  * @author niels
  * 
  */
-public class StockOverviewActivity extends AbstractListActivity<IIngredient>
-		implements OnSharedPreferenceChangeListener,
-		QuantityPickerDialogListener {
+public class StockOverviewActivity extends
+		AbstractDeletableListActivity<IIngredient> implements
+		OnSharedPreferenceChangeListener, QuantityPickerDialogListener {
 
 	SharedPreferences prefs;
 

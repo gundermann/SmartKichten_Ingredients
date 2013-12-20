@@ -3,8 +3,6 @@
  */
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,10 +11,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialog;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
@@ -54,16 +50,11 @@ public class ShowRecipeIngredientsDialog extends DialogFragment {
 				getActivity());
 		ListView listview = new ListView(app.getApplicationContext());
 		listview.setMinimumHeight(STYLE_NORMAL);
-		// TableLayout tableView = new TableLayout(getActivity());
-		Map<IIngredient, Integer> ingredients = recipe.getIngredients();
 
 		listview.setAdapter(AdapterFactory.createRecipeIngredientAdapter(app,
-				ingredients));
-		ScrollView scrollView = new ScrollView(getActivity());
-		scrollView.addView(listview);
-		scrollView.setMinimumHeight(STYLE_NORMAL);
+				recipe.getIngredients()));
 		dialogBuilder
-				.setView(scrollView)
+				.setView(listview)
 				.setPositiveButton(android.R.string.ok, new OnClickListener() {
 
 					@Override

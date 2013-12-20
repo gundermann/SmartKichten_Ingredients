@@ -14,7 +14,7 @@ import android.widget.ListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IDate;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
-import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
+import de.nordakademie.smart_kitchen_ingredients.shopping.AbstractDeletableListActivity;
 
 /**
  * 
@@ -22,8 +22,8 @@ import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
  * 
  */
 
-public class ShoppingDateOverviewActivity extends AbstractListActivity<IDate>
-		implements OnClickListener {
+public class ShoppingDateOverviewActivity extends
+		AbstractDeletableListActivity<IDate> implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
