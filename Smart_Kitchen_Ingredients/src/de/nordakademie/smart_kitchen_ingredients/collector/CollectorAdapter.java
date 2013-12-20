@@ -6,8 +6,6 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 import java.util.List;
 
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.R.id;
-import de.nordakademie.smart_kitchen_ingredients.R.layout;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,9 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /**
- * @author frederic.oppermann
+ * @author Frederic Oppermann
  * @date 16.12.2013
- * @description
  */
 public class CollectorAdapter<T> extends ArrayAdapter<T> {
 

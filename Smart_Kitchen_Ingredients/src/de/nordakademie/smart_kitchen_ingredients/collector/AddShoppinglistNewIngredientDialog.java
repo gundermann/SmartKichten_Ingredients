@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
-
+/**
+ * @author Frederic Oppermann
+ */
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
