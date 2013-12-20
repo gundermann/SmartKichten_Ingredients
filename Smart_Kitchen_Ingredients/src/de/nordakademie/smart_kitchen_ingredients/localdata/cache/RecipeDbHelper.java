@@ -1,5 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.cache;
 
+/**
+ * @author Kathrin Kurtz
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,9 +38,6 @@ public class RecipeDbHelper extends AbstractCacheData implements
 			recipeMap.put(cursor.getString(0), cursor.getString(1));
 		}
 		for (String id : recipeMap.keySet()) {
-			// TODO sehr inperformant --> nur Rezeptnamen der AsyncTask
-			// zurückliefern. Ist abgeschlossen --> Refactoring im
-			// IDatabaseHelper nötig
 			IRecipeFactory recipeFactory = app.getRecipeFactory();
 			recipes.add(recipeFactory.createRecipe(recipeMap.get(id), null));
 		}

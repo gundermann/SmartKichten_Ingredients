@@ -1,5 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.cache;
 
+/**
+ * 
+ * @author Kathrin Kurtz
+ *
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;

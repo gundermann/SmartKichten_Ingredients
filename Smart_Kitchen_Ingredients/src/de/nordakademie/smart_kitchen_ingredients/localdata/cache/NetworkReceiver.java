@@ -1,5 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.cache;
 
+/**
+ * @author Niels Gundermann
+ */
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

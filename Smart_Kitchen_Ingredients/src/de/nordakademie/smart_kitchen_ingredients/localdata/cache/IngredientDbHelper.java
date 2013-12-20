@@ -11,7 +11,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.Ingredie
 
 /**
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public class IngredientDbHelper extends AbstractCacheData implements

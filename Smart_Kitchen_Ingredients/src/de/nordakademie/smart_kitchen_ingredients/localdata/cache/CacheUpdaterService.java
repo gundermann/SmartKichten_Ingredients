@@ -1,10 +1,15 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.cache;
 
+/**
+ * 
+ * @author Kathrin Kurtz
+ *
+ */
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 
 public class CacheUpdaterService extends Service {
 
@@ -13,12 +18,6 @@ public class CacheUpdaterService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		IngredientsApplication app = (IngredientsApplication) getApplication();
-		// new FetchDataAsyncTask<IIngredient>(null,
-		// app.getIngredientsDbHelper(),
-		// this).execute();
-		// new FetchDataAsyncTask<IRecipe>(null, app.getRecipeDbHelper(), this)
-		// .execute();
 		Log.i(TAG, "onCreate");
 	}
 
@@ -46,15 +45,4 @@ public class CacheUpdaterService extends Service {
 		return super.onUnbind(intent);
 
 	}
-
-	// @Override
-	// public void update(AsyncTask<Void, Void, List<IIngredient>> task) {
-	//
-	// }
-	//
-	// @Override
-	// public void update(AsyncTask<Void, Void, List<IRecipe>> task) {
-	//
-	// }
-
 }
