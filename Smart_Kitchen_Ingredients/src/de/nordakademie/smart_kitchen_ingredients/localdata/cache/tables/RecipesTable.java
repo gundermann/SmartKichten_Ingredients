@@ -1,5 +1,11 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables;
 
+/**
+ * 
+ * @author Kathrin Kurtz
+ *
+ */
+
 import android.content.ContentValues;
 
 public class RecipesTable {

@@ -10,6 +10,10 @@ public interface IShoppingListItem extends IIngredient {
 
 	int getQuantity();
 
+	/**
+	 * Information ob Item auf Einkaufsliste abgehackt
+	 * @return boolean
+	 */
 	boolean isBought();
 
 	void setBought(boolean bought);

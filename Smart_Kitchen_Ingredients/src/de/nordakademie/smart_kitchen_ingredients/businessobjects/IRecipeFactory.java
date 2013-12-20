@@ -8,6 +8,13 @@ import java.util.Map;
  * 
  */
 public interface IRecipeFactory {
+	
+	/**
+	 * Erstellt ein neues Rezept.
+	 * @param titleRecipe
+	 * @param ingredients
+	 * @return IRecipe
+	 */
 
 	IRecipe createRecipe(String titleRecipe,
 			Map<IIngredient, Integer> ingredients);

@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables;
-
+/**
+ * @author Niels Gundermann
+ */
 import android.content.ContentValues;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 
