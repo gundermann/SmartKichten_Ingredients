@@ -20,9 +20,9 @@ public abstract class AbstractShoppingListCollectorActivity<T> extends
 
 	@Override
 	public void onClick(View view) {
-		startNextActivity();
+		switchCollectorActivity();
 	}
 
-	protected abstract void startNextActivity();
+	protected abstract void switchCollectorActivity();
 
 }

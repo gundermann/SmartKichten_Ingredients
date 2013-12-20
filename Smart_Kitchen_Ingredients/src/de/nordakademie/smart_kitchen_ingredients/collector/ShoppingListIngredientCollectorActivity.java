@@ -1,15 +1,13 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.util.List;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
@@ -35,8 +33,8 @@ public class ShoppingListIngredientCollectorActivity extends
 	@Override
 	protected void onResume() {
 		super.onResume();
-		super.fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(
-				getProgressWheel(), app.getIngredientsDbHelper(), this));
+		fetchDataFromDb(new FetchDataAsyncTask<IIngredient>(getProgressWheel(),
+				app.getIngredientsDbHelper(), this));
 	}
 
 	@Override
@@ -47,19 +45,8 @@ public class ShoppingListIngredientCollectorActivity extends
 	}
 
 	@Override
-	public void update(AsyncTask<Void, Void, List<IIngredient>> task) {
-		super.update(task);
-		setNewAdapter(AdapterFactory.createIngredientCollectorAdapter(
-				getApplicationContext(), R.layout.list_view_entry,
-				getElementsToShow()));
-	}
-
-	@Override
 	public void afterTextChanged(Editable s) {
 		super.afterTextChanged(s);
-		setNewAdapter(AdapterFactory.createIngredientCollectorAdapter(
-				getApplicationContext(), R.layout.list_view_entry,
-				getElementsToShow()));
 	}
 
 	@Override
@@ -82,7 +69,7 @@ public class ShoppingListIngredientCollectorActivity extends
 	}
 
 	@Override
-	protected void startNextActivity() {
+	protected void switchCollectorActivity() {
 		startActivity(new Intent(getApplicationContext(),
 				ShoppingListRecipeCollectorActivity.class).putExtra(
 				"shoppingListName", currentShoppingList));
@@ -92,5 +79,12 @@ public class ShoppingListIngredientCollectorActivity extends
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		openQuantityDialog(position);
+	}
+
+	@Override
+	protected ListAdapter getAdapter() {
+		return AdapterFactory.createIngredientCollectorAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElementsToShow());
 	}
 }

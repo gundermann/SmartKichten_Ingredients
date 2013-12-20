@@ -30,7 +30,8 @@
     <ListView
         android:id="@+id/elementsList"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         />
     <ProgressBar
         android:id="@+id/collectorProgressBar"
@@ -38,13 +39,15 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:visibility="gone" 
         />
      <TextView
         android:id="@+id/noResultsFoundView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:text="@string/noResultsFound"
         android:visibility="gone" />
 

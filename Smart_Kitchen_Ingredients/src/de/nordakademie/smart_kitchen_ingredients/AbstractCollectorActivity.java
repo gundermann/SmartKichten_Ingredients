@@ -44,13 +44,8 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 		return elementsToShow;
 	}
 
-	protected ListView getElementsListView() {
-		return elementsListView;
-	}
-
 	protected void initElements() {
 		initiateAllViews();
-		// addLayoutChangeListener();
 		makeListEntriesClickable();
 	}
 
@@ -91,34 +86,6 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 		quantityDialog.show(getSupportFragmentManager(), TAG);
 	}
 
-	// protected void setNextActivityOnClick(View view,
-	// final Class<?> nextActivityClass) {
-	// view.setOnClickListener(new OnClickListener() {
-	//
-	// @Override
-	// public void onClick(View v) {
-	// startActivity(new Intent(getApplicationContext(),
-	// nextActivityClass).putExtra("shoppingListName",
-	// currentShoppingList));
-	// }
-	// });
-	// }
-
-	// private void addLayoutChangeListener() {
-	// final View view = findViewById(R.id.activity_ingredient_collector);
-	// view.getViewTreeObserver().addOnGlobalLayoutListener(
-	// new OnGlobalLayoutListener() {
-	//
-	// @SuppressWarnings("deprecation")
-	// @Override
-	// public void onGlobalLayout() {
-	// view.getViewTreeObserver()
-	// .removeGlobalOnLayoutListener(this);
-	//
-	// }
-	// });
-	// }
-
 	protected void initiateAllViews() {
 		searchBar = (EditText) findViewById(R.id.searchBarInput);
 		elementsListView = (ListView) findViewById(R.id.elementsList);
@@ -152,6 +119,7 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 			((IngredientsApplication) getApplication())
 					.informUser(R.string.developerMistake);
 		}
+		elementsListView.setAdapter(getAdapter());
 	}
 
 	private void informUserWhenNoResults(List<IListElement> elementsInList) {
@@ -175,18 +143,10 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 				.contains(searchString.toLowerCase(Locale.GERMAN));
 	}
 
-	public void setNewAdapter(ListAdapter adapter) {
-		elementsListView.setAdapter(adapter);
-	}
-
-	public void setAllElements(List<T> allElements) {
-		this.allElements = allElements;
-	}
-
 	@Override
 	public void update(AsyncTask<Void, Void, List<T>> task) {
 		try {
-			setAllElements(task.get());
+			this.allElements = task.get();
 			if (allElements.isEmpty()) {
 				((IngredientsApplication) getApplication())
 						.informUser(R.string.noNetworkConnection);
@@ -198,7 +158,10 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+		elementsListView.setAdapter(getAdapter());
 	}
+
+	protected abstract ListAdapter getAdapter();
 
 	protected void testNetworkAndInformUser() {
 		if (app.isNetworkConnected()) {

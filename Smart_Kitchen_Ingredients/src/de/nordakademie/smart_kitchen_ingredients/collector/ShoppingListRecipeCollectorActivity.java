@@ -1,13 +1,10 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import java.util.List;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
@@ -28,13 +25,6 @@ public class ShoppingListRecipeCollectorActivity extends
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recipe_collector_layout);
 		initElements();
-		// elementsListView = getElementsListView();
-		// elementsListView.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> adapterView, View arg1,
-
-		// });
 	}
 
 	@Override
@@ -45,28 +35,13 @@ public class ShoppingListRecipeCollectorActivity extends
 	}
 
 	@Override
-	public void update(AsyncTask<Void, Void, List<IRecipe>> task) {
-		super.update(task);
-		setNewAdapter(AdapterFactory.createRecipeCollectorAdapter(
-				getApplicationContext(), R.layout.list_view_entry,
-				getElementsToShow()));
-	}
-
-	@Override
-	public void afterTextChanged(Editable s) {
-		super.afterTextChanged(s);
-		setNewAdapter(AdapterFactory.createRecipeCollectorAdapter(
-				getApplicationContext(), R.layout.list_view_entry,
-				getElementsToShow()));
-	}
-
-	@Override
 	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
 			IRecipe recipeToAdd = findIngredientInDatabase(element);
 			((IngredientsApplication) getApplication()).getShoppingDbHelper()
 
 			.addItem(recipeToAdd, quantity, currentShoppingList);
+			app.informUser(R.string.addIngredientFromRecipeToShoppingList);
 		} catch (ClassCastException e) {
 			((IngredientsApplication) getApplication())
 					.informUser(R.string.developerMistake);
@@ -78,7 +53,7 @@ public class ShoppingListRecipeCollectorActivity extends
 	}
 
 	@Override
-	protected void startNextActivity() {
+	protected void switchCollectorActivity() {
 		startActivity(new Intent(getApplicationContext(),
 				ShoppingListIngredientCollectorActivity.class).putExtra(
 				"shoppingListName", currentShoppingList));
@@ -91,5 +66,12 @@ public class ShoppingListRecipeCollectorActivity extends
 				.get(position));
 		ShowRecipeIngredientsDialog.newInstance(findIngredientInDatabase, app)
 				.show(getSupportFragmentManager(), TAG);
+	}
+
+	@Override
+	protected ListAdapter getAdapter() {
+		return AdapterFactory.createRecipeCollectorAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElementsToShow());
 	}
 }
