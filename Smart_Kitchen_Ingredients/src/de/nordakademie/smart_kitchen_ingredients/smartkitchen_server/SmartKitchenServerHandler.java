@@ -7,11 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
 /**
@@ -40,7 +46,7 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 				.getResponseForInput(INGREDIENTS));
 
 		List<String[]> ingredientList = getIngredientsFromJsonList(jsonFromResponse);
-
+		
 		return removeNullValues(ingredientList);
 	}
 
@@ -59,19 +65,43 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 		Map<String[], List<String[]>> recipeList = new HashMap<String[], List<String[]>>();
 		List<JsonObject> jsonFromResponse = filterJsonFromResponse(connector
 				.getResponseForInput(RECIPES));
-
-		for (JsonObject json : jsonFromResponse) {
-			String[] key = getRecipeKey(json);
-			Type listType = new TypeToken<List<JsonObject>>() {
-			}.getType();
-			List<JsonObject> jsonIngredientList = jsonParser.fromJson(
-					json.get("ingredients"), listType);
-
-			List<String[]> value = getIngredientsFromJsonList(jsonIngredientList);
-
+		
+		for (JsonObject singleRecipeJson : jsonFromResponse) {
+			
+			String[] key = getRecipeKey(singleRecipeJson);
+			JsonElement allIngredientsForOneRecipe = singleRecipeJson.get("ingredients");
+			
+			List<String[]> value = new ArrayList<String[]>();
+			
+			int i = 0;
+			while(allIngredientsForOneRecipe.getAsJsonArray().size() > i){
+				String[] currentIngredientArray = new String[4]; 
+				JsonElement singleIngredient = allIngredientsForOneRecipe.
+						getAsJsonArray().get(i);
+				String id = ((JsonObject) singleIngredient).get("_id").toString();
+				currentIngredientArray[0] = id.substring(1, id.length()-1);
+				
+				String title = ((JsonObject) singleIngredient).get("title").toString();
+				currentIngredientArray[1] = title.substring(1, title.length()-1);
+				
+				String unitString = ((JsonObject) singleIngredient).get("unit").toString();
+				String shortUnitString = unitString.substring(1, unitString.length() - 1);
+				Unit unit = Unit.valueOfFromShortening(shortUnitString);			
+				currentIngredientArray[2] = unit.toLongString();
+				
+				String amount = ((JsonObject) singleIngredient).get("amount").toString();
+				currentIngredientArray[3] = amount;
+				i++;
+				value.add(currentIngredientArray);
+			}
+			
 			recipeList.put(key, value);
 		}
 		return recipeList;
+	}
+
+	private Unit getCorrectUnitName(JsonElement singleIngredient) {
+		return Unit.valueOfFromShortening(((JsonObject) singleIngredient).get("unit").toString());
 	}
 
 	private List<String[]> getIngredientsFromJsonList(
