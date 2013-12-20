@@ -10,23 +10,34 @@ public enum Unit {
 
 	Gramm, Kilogramm, Milliliter, Liter, Stueck;
 
+	private static final int DEFAULT_MINIMUM_PIECE = 5;
+	private static final int LITRE = 3;
+	private static final int DEFAULT_MINIMUM_MILILITRE = 300;
+	private static final int DEFAULT_MINIMUM_KILOGRAMM = 2;
+	private static final int DEFAULT_MINIMUM_GRAMM = 100;
+	private static final String SHORT_PIECE = "stk";
+	private static final String SHORT_LITRES = "l";
+	private static final String SHORT_MILILITRES = "ml";
+	private static final String SHORT_KILOGRAMM = "kg";
+	private static final String SHORT_GRAMM = "g";
+
 	public String getUnitShortening(Unit unit) {
 		String shortUnit = "";
 		switch (unit) {
 		case Gramm:
-			shortUnit = "g";
+			shortUnit = SHORT_GRAMM;
 			break;
 		case Kilogramm:
-			shortUnit = "kg";
+			shortUnit = SHORT_KILOGRAMM;
 			break;
 		case Milliliter:
-			shortUnit = "ml";
+			shortUnit = SHORT_MILILITRES;
 			break;
 		case Liter:
-			shortUnit = "l";
+			shortUnit = SHORT_LITRES;
 			break;
 		case Stueck:
-			shortUnit = "stk";
+			shortUnit = SHORT_PIECE;
 			break;
 		default:
 			break;
@@ -41,15 +52,15 @@ public enum Unit {
 
 	public String toLongString() {
 		String unitString = this.toString();
-		if (unitString.equals("g")) {
+		if (unitString.equals(SHORT_GRAMM)) {
 			return "Gramm";
-		} else if (unitString.equals("kg")) {
+		} else if (unitString.equals(SHORT_KILOGRAMM)) {
 			return "Kilogramm";
-		} else if (unitString.equals("ml")) {
+		} else if (unitString.equals(SHORT_MILILITRES)) {
 			return "Milliliter";
-		} else if (unitString.equals("l")) {
+		} else if (unitString.equals(SHORT_LITRES)) {
 			return "Liter";
-		} else if (unitString.equals("stk")) {
+		} else if (unitString.equals(SHORT_PIECE)) {
 			return "Stueck";
 		} else {
 			return unitString;
@@ -60,19 +71,19 @@ public enum Unit {
 		int defaultMinimun = 0;
 		switch (this) {
 		case Gramm:
-			defaultMinimun = 100;
+			defaultMinimun = DEFAULT_MINIMUM_GRAMM;
 			break;
 		case Kilogramm:
-			defaultMinimun = 2;
+			defaultMinimun = DEFAULT_MINIMUM_KILOGRAMM;
 			break;
 		case Milliliter:
-			defaultMinimun = 300;
+			defaultMinimun = DEFAULT_MINIMUM_MILILITRE;
 			break;
 		case Liter:
-			defaultMinimun = 3;
+			defaultMinimun = LITRE;
 			break;
 		case Stueck:
-			defaultMinimun = 5;
+			defaultMinimun = DEFAULT_MINIMUM_PIECE;
 			break;
 		default:
 			break;
@@ -81,15 +92,15 @@ public enum Unit {
 	}
 
 	public static Unit valueOfFromShortening(String unitString) {
-		if (unitString.equals("g")) {
+		if (unitString.equals(SHORT_GRAMM)) {
 			return Gramm;
-		} else if (unitString.equals("kg")) {
+		} else if (unitString.equals(SHORT_KILOGRAMM)) {
 			return Kilogramm;
-		} else if (unitString.equals("ml")) {
+		} else if (unitString.equals(SHORT_MILILITRES)) {
 			return Milliliter;
-		} else if (unitString.equals("l")) {
+		} else if (unitString.equals(SHORT_LITRES)) {
 			return Liter;
-		} else if (unitString.equals("stk")) {
+		} else if (unitString.equals(SHORT_PIECE)) {
 			return Stueck;
 		} else {
 			return Unit.valueOf(unitString);

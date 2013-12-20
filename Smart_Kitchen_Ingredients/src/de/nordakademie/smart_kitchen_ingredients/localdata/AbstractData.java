@@ -1,6 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata;
+
 /**
- * @author Frederic Oppermann
+ * @author Niels Gundermann
  */
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -12,7 +13,7 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 
 public abstract class AbstractData extends SQLiteOpenHelper {
 
-	SQLiteDatabase readableDb;
+	protected SQLiteDatabase readableDb;
 
 	protected Cursor cursor;
 

@@ -1,6 +1,6 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.tables;
 /**
- * @author Niels Gundermann
+ * @author Kathrin Kurtz
  */
 import android.content.ContentValues;
 

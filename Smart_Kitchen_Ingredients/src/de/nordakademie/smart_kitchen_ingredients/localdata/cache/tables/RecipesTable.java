@@ -10,6 +10,7 @@ import android.content.ContentValues;
 
 public class RecipesTable {
 
+	private static final String PRIMARY_KEY = " text primary key not null, ";
 	public static final String TABLE_NAME = "recipes_table";
 	public static final String ID = "id";
 	public static final String TITLE = "title";
@@ -23,7 +24,7 @@ public class RecipesTable {
 	public static final String getTableCreation() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("create table ").append(TABLE_NAME).append(" (").append(ID)
-				.append(" text primary key not null, ").append(TITLE)
+				.append(PRIMARY_KEY).append(TITLE)
 				.append(" text)");
 		return sb.toString();
 	}
