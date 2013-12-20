@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
 /**
@@ -77,16 +78,30 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 				String[] currentIngredientArray = new String[4]; 
 				JsonElement singleIngredient = allIngredientsForOneRecipe.
 						getAsJsonArray().get(i);
-				currentIngredientArray[0] = ((JsonObject) singleIngredient).get("_id").toString();
-				currentIngredientArray[1] = ((JsonObject) singleIngredient).get("title").toString();
-				currentIngredientArray[2] = ((JsonObject) singleIngredient).get("unit").toString();
-				currentIngredientArray[3] = ((JsonObject) singleIngredient).get("amount").toString();
+				String id = ((JsonObject) singleIngredient).get("_id").toString();
+				currentIngredientArray[0] = id.substring(1, id.length()-1);
+				
+				String title = ((JsonObject) singleIngredient).get("title").toString();
+				currentIngredientArray[1] = title.substring(1, title.length()-1);
+				
+				String unitString = ((JsonObject) singleIngredient).get("unit").toString();
+				String shortUnitString = unitString.substring(1, unitString.length() - 1);
+				Unit unit = Unit.valueOfFromShortening(shortUnitString);			
+				currentIngredientArray[2] = unit.toLongString();
+				
+				String amount = ((JsonObject) singleIngredient).get("amount").toString();
+				currentIngredientArray[3] = amount;
 				i++;
 				value.add(currentIngredientArray);
 			}
+			
 			recipeList.put(key, value);
 		}
 		return recipeList;
+	}
+
+	private Unit getCorrectUnitName(JsonElement singleIngredient) {
+		return Unit.valueOfFromShortening(((JsonObject) singleIngredient).get("unit").toString());
 	}
 
 	private List<String[]> getIngredientsFromJsonList(

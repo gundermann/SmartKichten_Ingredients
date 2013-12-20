@@ -38,6 +38,23 @@ public enum Unit {
 	public String toString() {
 		return getUnitShortening(this);
 	}
+	
+	public String toLongString(){
+		String unitString = this.toString();
+		if (unitString.equals("g")) {
+			return "Gramm";
+		} else if (unitString.equals("kg")) {
+			return "Kilogramm";
+		} else if (unitString.equals("ml")) {
+			return "Milliliter";
+		} else if (unitString.equals("l")) {
+			return "Liter";
+		} else if (unitString.equals("stk")) {
+			return "Stueck";
+		} else {
+			return unitString;
+		}
+	}
 
 	public int getDefaultMinimum() {
 		int defaultMinimun = 0;
