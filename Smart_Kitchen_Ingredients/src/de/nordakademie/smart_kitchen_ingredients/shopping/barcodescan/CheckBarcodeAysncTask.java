@@ -6,14 +6,14 @@ import android.os.AsyncTask;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IShoppingDbHelper;
-import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListIngredientsActivity;
+import de.nordakademie.smart_kitchen_ingredients.shopping.SingleShoppingListActivity;
 
 public class CheckBarcodeAysncTask extends
 		AsyncTask<String, IngredientsApplication, String> {
 
 	String barcode;
 	IBarcodeServerHandler barcodeServerHandler;
-	private ShoppingListIngredientsActivity observer;
+	private SingleShoppingListActivity observer;
 	private String apikey;
 
 	public CheckBarcodeAysncTask(String barcode,
@@ -21,7 +21,7 @@ public class CheckBarcodeAysncTask extends
 			List<IShoppingListItem> shoppingItems,
 			String currentShoppingListName, IShoppingDbHelper shoppingDbHelper,
 			String apikey,
-			ShoppingListIngredientsActivity shoppingListIngredientsActivity) {
+			SingleShoppingListActivity shoppingListIngredientsActivity) {
 		this.barcode = barcode;
 		this.barcodeServerHandler = barcodeServerHandler;
 		observer = shoppingListIngredientsActivity;

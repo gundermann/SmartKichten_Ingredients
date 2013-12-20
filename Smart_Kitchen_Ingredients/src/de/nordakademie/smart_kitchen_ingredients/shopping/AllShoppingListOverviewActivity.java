@@ -11,19 +11,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
-import android.widget.ListView;
-import de.nordakademie.smart_kitchen_ingredients.AbstractActivity;
 import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.ShoppingList;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.scheduling.ShoppingDateOverviewActivity;
+import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
 /**
@@ -32,38 +28,17 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
  * 
  */
 
-public class AllShoppingListOverviewActivity extends AbstractActivity implements
-		OnClickListener, OnItemClickListener, InsertNameDialogListener,
-		OnItemLongClickListener {
-
-	private static String TAG = AllShoppingListOverviewActivity.class
-			.getSimpleName();
-	private ListView shoppingListsView;
-	private ImageButton btAddNewShoppingList;
+public class AllShoppingListOverviewActivity extends
+		AbstractListActivity<IShoppingList> implements
+		InsertNameDialogListener, OnItemClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.all_shopping_list_overview_layout);
-
-		btAddNewShoppingList = (ImageButton) findViewById(R.id.addNewShoppingItem);
-		btAddNewShoppingList.setOnClickListener(this);
-		shoppingListsView = (ListView) findViewById(R.id.shoppingList);
-
-		ListAdapter adapter = AdapterFactory.createShoppingListAdapter(
-				getApplicationContext(), R.layout.list_view_entry,
-				getShoppingLists());
-
-		shoppingListsView.setAdapter(adapter);
-		shoppingListsView.setOnItemClickListener(this);
-
-		shoppingListsView.setOnItemLongClickListener(this);
+		initElements();
+		getList().setOnItemClickListener(this);
 		Log.i(TAG, "created");
-
-	}
-
-	private List<IShoppingList> getShoppingLists() {
-		return app.getShoppingDbHelper().getAllShoppingLists();
 	}
 
 	@Override
@@ -72,53 +47,8 @@ public class AllShoppingListOverviewActivity extends AbstractActivity implements
 		dialog.show(getSupportFragmentManager(), TAG);
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		updateShoppingList();
-	};
-
-	private void updateShoppingList() {
-		shoppingListsView.setAdapter(AdapterFactory.createShoppingListAdapter(
-				app, android.R.layout.simple_list_item_1, getShoppingLists()));
-		Log.i(TAG, "shoppinglist updated");
-	}
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> adapterView, View view,
-			int position, long id) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(
-				AllShoppingListOverviewActivity.this);
-		adb.setTitle(R.string.deleteShoppingListTitle);
-		adb.setMessage(R.string.deleteShoppingListSure);
-		final int positionToRemove = position;
-		adb.setNegativeButton(android.R.string.cancel, null);
-		adb.setPositiveButton(android.R.string.ok,
-				new AlertDialog.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						IShoppingList shoppingLists = (IShoppingList) shoppingListsView
-								.getItemAtPosition(positionToRemove);
-						delteShoppingList(shoppingLists);
-						updateShoppingList();
-					}
-				});
-		adb.show();
-		return true;
-	}
-
 	private void delteShoppingList(IShoppingList shoppingLists) {
 		app.getShoppingDbHelper().delete(shoppingLists);
-
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> adapterView, View view,
-			int position, long id) {
-		startActivity(new Intent(getApplicationContext(),
-				ShoppingListIngredientsActivity.class).putExtra(
-				"shoppingListName", ((IShoppingList) shoppingListsView
-						.getItemAtPosition(position)).getName()));
 	}
 
 	@Override
@@ -149,9 +79,53 @@ public class AllShoppingListOverviewActivity extends AbstractActivity implements
 	@Override
 	public void onPositiveFinishedDialog(String name) {
 		app.getShoppingDbHelper().addItem(new ShoppingList(name));
+
+		// TODO
 		startActivity(new Intent(getApplicationContext(),
-				ShoppingListIngredientsActivity.class).putExtra(
-				"shoppingListName", name));
+				SingleShoppingListActivity.class).putExtra("shoppingListName",
+				name));
 	}
 
+	@Override
+	protected AlertDialog getDialog(final int position) {
+		AlertDialog.Builder dialog = new AlertDialog.Builder(
+				AllShoppingListOverviewActivity.this);
+		dialog.setTitle(R.string.deleteShoppingListTitle);
+		dialog.setMessage(R.string.deleteShoppingListSure);
+		dialog.setNegativeButton(android.R.string.cancel, null);
+		dialog.setPositiveButton(android.R.string.ok,
+				new AlertDialog.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						IShoppingList shoppingLists = (IShoppingList) getList()
+								.getItemAtPosition(position);
+						delteShoppingList(shoppingLists);
+						updateList();
+					}
+				});
+		return dialog.create();
+	}
+
+	@Override
+	protected ListAdapter getAdapter() {
+		return AdapterFactory.createShoppingListAdapter(
+				getApplicationContext(), R.layout.list_view_entry,
+				getElements());
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
+
+		// TODO
+		startActivity(new Intent(getApplicationContext(),
+				SingleShoppingListActivity.class).putExtra("shoppingListName",
+				((IShoppingList) getList().getItemAtPosition(position))
+						.getName()));
+	}
+
+	@Override
+	protected List<IShoppingList> getElements() {
+		return app.getShoppingDbHelper().getAllShoppingLists();
+	}
 }

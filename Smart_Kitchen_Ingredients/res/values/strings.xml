@@ -12,7 +12,7 @@
     <string name="title_activity_shoppingListIngredient">Listenübersicht</string>
     <string name="menuCodeScanner">Barcodescanner</string>
     <string name="menuShoppingListScanner">Einkaufsliste einscannen</string>
-    <string name="emptyShoppingList">Fügen Sie neue Zutaten in die Einkaufsliste ein.</string>
+    <string name="emptyList">Keine Einträge vorhanden</string>
     <string name="menuSetupShoppingDate">Termin</string>
     <string name="menuDeleteShoppingList">Einkaufliste löschen</string>
     <string name="menuCleanShoppingList">Einkaufliste aufräumen</string>

@@ -125,6 +125,10 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 	private void informUserWhenNoResults(List<IListElement> elementsInList) {
 		if (elementsInList.isEmpty()) {
 			noResultsFound.setVisibility(View.VISIBLE);
+			elementsListView.setVisibility(View.GONE);
+		} else {
+			noResultsFound.setVisibility(View.GONE);
+			elementsListView.setVisibility(View.VISIBLE);
 		}
 	}
 

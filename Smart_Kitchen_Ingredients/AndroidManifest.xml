@@ -99,7 +99,7 @@
             android:label="@string/title_activity_shoppingDateList" 
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name="de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListIngredientsActivity"
+        <activity android:name="de.nordakademie.smart_kitchen_ingredients.shopping.SingleShoppingListActivity"
             android:label="@string/title_activity_shoppingListIngredient"
             android:screenOrientation="portrait">
             </activity>

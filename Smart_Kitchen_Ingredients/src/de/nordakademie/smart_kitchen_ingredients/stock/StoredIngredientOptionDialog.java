@@ -16,7 +16,7 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 			final FragmentActivity activity) {
 		super(activity, titleFromList, true);
 
-		setPositiveButton("LÃ¶schen", new DialogInterface.OnClickListener() {
+		setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				app.getStoredDbHelper().deleteStoredIngredient(titleFromList);
@@ -28,7 +28,7 @@ public class StoredIngredientOptionDialog extends AbstractBuilder {
 
 		});
 
-		setNeutralButton("Bestand erhÃ¶hen",
+		setNeutralButton("Bestand erhöhen",
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
