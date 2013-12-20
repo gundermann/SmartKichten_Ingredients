@@ -19,40 +19,40 @@
         android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
         android:hint="@string/searchBarHint"
         android:lines="1"
-        android:textColor="#000"
-        android:scrollHorizontally="true" />
+        android:scrollHorizontally="true"
+        android:textColor="#000" />
 
+    <ListView
+        android:id="@+id/elementsList"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#cfff" />
 
-        <ListView
-            android:id="@+id/elementsList"
-            android:layout_width="fill_parent"
-             android:background="#cfff"
-            android:layout_height="0dp" 
-            android:layout_weight="1"/>
+    <ProgressBar
+        android:id="@+id/collectorProgressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:visibility="gone" />
 
-        <ProgressBar
-            android:id="@+id/collectorProgressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp" 
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/noResultsFoundView"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp" 
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="@string/noResultsFound"
-            android:visibility="gone" />
+    <TextView
+        android:id="@+id/noResultsFoundView"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="@string/noResultsFound"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/changeCollectorButton"
         android:layout_width="fill_parent"
-        android:textColor="#000"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="#cfff"
         android:text="@string/showIngredientsButtonText" />
 
 </LinearLayout>
