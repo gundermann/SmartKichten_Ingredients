@@ -78,4 +78,21 @@ public enum Unit {
 			return Unit.valueOf(unitString);
 		}
 	}
+
+	public String toLongString() {
+		String unitString = this.toString();
+		if (unitString.equals("g")) {
+			return "Gramm";
+		} else if (unitString.equals("kg")) {
+			return "Kilogramm";
+		} else if (unitString.equals("ml")) {
+			return "Milliliter";
+		} else if (unitString.equals("l")) {
+			return "Liter";
+		} else if (unitString.equals("stk")) {
+			return "Stueck";
+		} else {
+			return unitString;
+		}
+	}
 }
