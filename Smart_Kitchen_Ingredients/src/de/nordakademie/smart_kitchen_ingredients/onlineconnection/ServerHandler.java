@@ -3,8 +3,6 @@ package de.nordakademie.smart_kitchen_ingredients.onlineconnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 

@@ -1,11 +1,9 @@
 package de.nordakademie.smart_kitchen_ingredients.shopping;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,16 +13,22 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 /**
  * @author Frederic Oppermann
  */
-@SuppressLint("ValidFragment")
 public class InsertNameDialog extends DialogFragment {
 	private static final String TAG = InsertNameDialog.class.getSimpleName();
 
 	private EditText inputField;
 	private IInsertNameDialogListener dialogListener;
-	protected IngredientsApplication app;
+	private IngredientsApplication app;
 
-	public InsertNameDialog(IngredientsApplication app) {
+	public static InsertNameDialog newInstance(IngredientsApplication app) {
+		InsertNameDialog dialog = new InsertNameDialog();
+		dialog.setApplication(app);
+		return dialog;
+	}
+
+	private void setApplication(IngredientsApplication app) {
 		this.app = app;
+
 	}
 
 	@Override
@@ -55,14 +59,11 @@ public class InsertNameDialog extends DialogFragment {
 				@Override
 				public void onClick(View v) {
 					if (!inputField.getText().toString().equals("")) {
-						Log.d(TAG, inputField.getText().toString());
 						dialogListener.onPositiveFinishedDialog(inputField
 								.getText().toString());
 						dismiss();
 					} else {
-						((IngredientsApplication) getActivity()
-								.getApplication())
-								.informUser(R.string.userInformFieldIsEmpty);
+						app.informUser(R.string.userInformFieldIsEmpty);
 
 					}
 				}

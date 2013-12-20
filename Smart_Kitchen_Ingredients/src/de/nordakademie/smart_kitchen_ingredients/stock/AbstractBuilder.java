@@ -15,7 +15,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 public abstract class AbstractBuilder extends Builder {
 
 	private final FragmentActivity activity;
-	IngredientsApplication app;
+	protected IngredientsApplication app;
 
 	public AbstractBuilder(FragmentActivity fragmentActivity, String title,
 			boolean cancelable) {

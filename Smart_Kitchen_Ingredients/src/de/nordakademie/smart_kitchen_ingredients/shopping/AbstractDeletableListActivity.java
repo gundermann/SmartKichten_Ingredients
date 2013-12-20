@@ -8,7 +8,7 @@ import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
 
 /**
  * 
- * @author niels gundermann
+ * @author frederic oppermann
  * 
  * @param <T>
  */

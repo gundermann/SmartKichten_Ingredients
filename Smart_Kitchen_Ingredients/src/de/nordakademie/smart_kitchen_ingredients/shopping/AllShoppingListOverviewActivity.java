@@ -41,7 +41,7 @@ public class AllShoppingListOverviewActivity extends
 
 	@Override
 	public void onClick(View v) {
-		DialogFragment dialog = new InsertNameDialog(app);
+		DialogFragment dialog = InsertNameDialog.newInstance(app);
 		dialog.show(getSupportFragmentManager(), tag);
 	}
 

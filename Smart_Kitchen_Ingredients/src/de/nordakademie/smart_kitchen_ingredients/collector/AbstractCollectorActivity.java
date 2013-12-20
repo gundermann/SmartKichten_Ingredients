@@ -102,8 +102,7 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 			informUserWhenNoResults(elementsInList);
 			elementsToShow = (List<T>) elementsInList;
 		} catch (ClassCastException e) {
-			((IngredientsApplication) getApplication())
-					.informUser(R.string.developerMistake);
+			app.informUser(R.string.developerMistake);
 		}
 		elementsListView.setAdapter(getAdapter());
 	}

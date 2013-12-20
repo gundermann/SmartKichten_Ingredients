@@ -8,17 +8,16 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnLongClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import de.nordakademie.smart_kitchen_ingredients.R;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
-import android.view.KeyEvent;
-import android.view.View.OnLongClickListener;
 
 /**
  * @author Frederic Oppermann
@@ -33,8 +32,7 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 	private EditText currentNumberInput;
 	private IListElement element;
 	private QuantityPickerDialogListener dialogListener;
-	IngredientsApplication app;
-
+	private IngredientsApplication app;
 
 	public static final QuantityPickerDialog newInstance(IListElement element,
 			IngredientsApplication app) {
@@ -43,10 +41,10 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 		dialog.setListElement(element);
 		return dialog;
 	}
-	
+
 	public void setApplication(IngredientsApplication app) {
 		this.app = app;
-		
+
 	}
 
 	public void setListElement(IListElement element) {
