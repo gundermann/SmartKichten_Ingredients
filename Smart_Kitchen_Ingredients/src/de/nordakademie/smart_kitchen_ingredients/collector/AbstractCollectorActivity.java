@@ -21,13 +21,11 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialog;
 import de.nordakademie.smart_kitchen_ingredients.QuantityPickerDialogListener;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.R.id;
-import de.nordakademie.smart_kitchen_ingredients.R.string;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 import de.nordakademie.smart_kitchen_ingredients.tasks.IAsyncTaskObserver;
 
 /**
- * @author frederic.oppermann
+ * @author Frederic Oppermann
  * @date 09.12.2013
  * @description
  */

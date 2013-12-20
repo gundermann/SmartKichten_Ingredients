@@ -17,9 +17,8 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
 /**
- * @author frederic.oppermann
+ * @author Frederic Oppermann
  * @date 18.12.2013
- * @description
  */
 @SuppressLint("ValidFragment")
 public class ShowRecipeIngredientsDialog extends DialogFragment {
@@ -50,7 +49,6 @@ public class ShowRecipeIngredientsDialog extends DialogFragment {
 				getActivity());
 		ListView listview = new ListView(app.getApplicationContext());
 		listview.setMinimumHeight(STYLE_NORMAL);
-
 		listview.setAdapter(AdapterFactory.createRecipeIngredientAdapter(app,
 				recipe.getIngredients()));
 		dialogBuilder

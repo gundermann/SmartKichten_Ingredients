@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
  * Allgemeine Verbindung zu einem Server. Ist in der Lage einen Stream in einen
  * String zu convertieren.
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public abstract class Connector {

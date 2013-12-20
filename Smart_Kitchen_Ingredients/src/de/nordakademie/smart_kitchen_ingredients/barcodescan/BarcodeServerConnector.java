@@ -14,7 +14,7 @@ import de.nordakademie.smart_kitchen_ingredients.onlineconnection.Connector;
  * Stellt die Verbindung zu einem Server her, der eine API für Barcodes
  * anbietet.
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public class BarcodeServerConnector extends Connector implements IApiConnector {
@@ -29,13 +29,6 @@ public class BarcodeServerConnector extends Connector implements IApiConnector {
 			StringBuilder sb = new StringBuilder();
 			sb.append(URL).append("?v=3&keycode=").append(apikey)
 					.append("&mode=json&find=").append(barcode);
-
-			// URIBuilder von Apache hat nicht mehr Funktioniert
-			// URIBuilder uriBuilder = new URIBuilder(URL);
-			// uriBuilder.addParameter("v", "3");
-			// uriBuilder.addParameter("keycode", APIKEY);
-			// uriBuilder.addParameter("mode", "json");
-			// uriBuilder.addParameter("find", barcode);
 
 			final HttpGet get = new HttpGet(sb.toString());
 

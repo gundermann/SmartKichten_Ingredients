@@ -6,6 +6,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
 
+/**
+ * 
+ * @author niels gundermann
+ * 
+ * @param <T>
+ */
 public abstract class AbstractDeletableListActivity<T> extends
 		AbstractListActivity<T> implements OnItemLongClickListener {
 

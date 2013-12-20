@@ -11,7 +11,7 @@ import com.google.gson.JsonParser;
 /**
  * Allgemeine Verarbeitung einer Serverantwort.
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public abstract class ServerHandler {

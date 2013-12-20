@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
-
+/**
+ * @author Kathrin Kurtz
+ */
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.AsyncTask;
@@ -14,9 +16,6 @@ import android.widget.TextView;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.PostNewIngredientAsyncTask;
 import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.R.id;
-import de.nordakademie.smart_kitchen_ingredients.R.layout;
-import de.nordakademie.smart_kitchen_ingredients.R.string;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;

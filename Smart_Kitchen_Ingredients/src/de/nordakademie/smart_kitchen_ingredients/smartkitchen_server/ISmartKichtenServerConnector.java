@@ -6,7 +6,7 @@ import de.nordakademie.smart_kitchen_ingredients.onlineconnection.IServerConnect
 
 /**
  * 
- * @author niels
+ * @author Kathrin Kurtz
  * 
  */
 public interface ISmartKichtenServerConnector extends IServerConnector {

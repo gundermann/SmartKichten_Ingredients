@@ -7,7 +7,7 @@ import java.util.Map;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 /**
- * @author Niels Gundermann
+ * @author Kathrin Kurtz
  */
 public interface ISmartKitchenServerHandler {
 

@@ -7,7 +7,9 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListItem;
 import de.nordakademie.smart_kitchen_ingredients.localdata.smartkitchen.IShoppingDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.shopping.SingleShoppingListActivity;
-
+/**
+ * @author Niels Gundermann
+ */
 public class CheckBarcodeAysncTask extends
 		AsyncTask<String, IngredientsApplication, String> {
 

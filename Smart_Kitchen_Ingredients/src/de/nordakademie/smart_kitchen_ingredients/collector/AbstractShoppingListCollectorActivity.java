@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
-
+/**
+ * @author Frederic Oppermann
+ */
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;

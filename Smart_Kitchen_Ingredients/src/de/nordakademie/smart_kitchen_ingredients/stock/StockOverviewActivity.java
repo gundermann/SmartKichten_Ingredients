@@ -24,10 +24,7 @@ import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 import de.nordakademie.smart_kitchen_ingredients.shopping.AbstractDeletableListActivity;
 
 /**
- * 
- * 
- * @author niels
- * 
+ * @author Niels Gundermann
  */
 public class StockOverviewActivity extends
 		AbstractDeletableListActivity<IIngredient> implements

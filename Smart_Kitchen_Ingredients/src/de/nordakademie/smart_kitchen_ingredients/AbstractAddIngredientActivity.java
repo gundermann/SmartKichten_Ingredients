@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients;
-
+/**
+ * @author Kathrin Kurtz
+ */
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;

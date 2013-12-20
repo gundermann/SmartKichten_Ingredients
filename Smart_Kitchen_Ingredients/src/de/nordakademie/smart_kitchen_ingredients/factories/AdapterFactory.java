@@ -19,9 +19,8 @@ import de.nordakademie.smart_kitchen_ingredients.shopping.ShoppingListAdapter;
 import de.nordakademie.smart_kitchen_ingredients.stock.StockListAdapter;
 
 /**
- * @author frederic.oppermann
+ * @author Frederic Oppermann
  * @date 16.12.2013
- * @description
  * @param <T>
  */
 public class AdapterFactory {

@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients;
-
+/**
+ * @author Kathrin Kurtz
+ */
 import java.net.UnknownHostException;
 
 import android.os.AsyncTask;

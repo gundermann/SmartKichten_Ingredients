@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
-
+/**
+ * @author Kathrin Kurtz
+ */
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;

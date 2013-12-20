@@ -65,5 +65,6 @@
     <string name="addedIngredientOnListNotServer">Zutat der Liste hinzugefügt. Zutat aufgrund fehlender Verbindung nicht dem Server hinzugefügt</string>
 	<string name="barcodeApiKeySetting">Apikey für eandata.com</string>
 	<string name="enterAmountMoreThanNull">Die Menge muss größer 0 sein.</string>
-    
+    <string name="deleteButton">Löschen</string>
+	
 </resources>

@@ -5,9 +5,8 @@ import java.util.List;
 import android.os.AsyncTask;
 
 /**
-* @author frederic.oppermann
+* @author Frederic Oppermann
 * @date 16.12.2013
-* @description
 * @param <T>
 */
 public interface IAsyncTaskObserver<T> {

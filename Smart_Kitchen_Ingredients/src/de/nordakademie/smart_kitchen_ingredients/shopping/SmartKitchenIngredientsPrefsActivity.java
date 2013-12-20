@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.shopping;
-
+/**
+ * @author Frederic Oppermann
+ */
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;

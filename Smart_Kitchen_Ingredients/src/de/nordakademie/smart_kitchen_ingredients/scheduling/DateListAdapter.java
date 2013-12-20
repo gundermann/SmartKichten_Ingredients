@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.scheduling;
-
+/**
+ * @author Frauke Trautmann
+ */
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;

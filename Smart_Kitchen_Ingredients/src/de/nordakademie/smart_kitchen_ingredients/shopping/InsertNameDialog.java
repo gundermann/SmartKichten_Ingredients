@@ -1,13 +1,8 @@
-/**
- * 
- */
 package de.nordakademie.smart_kitchen_ingredients.shopping;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -18,16 +13,14 @@ import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
- * @author frederic.oppermann
- * @date 18.12.2013
- * @description
+ * @author Frederic Oppermann
  */
 @SuppressLint("ValidFragment")
 public class InsertNameDialog extends DialogFragment {
 	private final static String TAG = InsertNameDialog.class.getSimpleName();
 
 	private EditText inputField;
-	private InsertNameDialogListener dialogListener;
+	private IInsertNameDialogListener dialogListener;
 	IngredientsApplication app;
 
 	public InsertNameDialog(IngredientsApplication app) {
@@ -38,15 +31,13 @@ public class InsertNameDialog extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		View view = getActivity().getLayoutInflater().inflate(
 				R.layout.minimal_dialog_layout, null);
-		dialogListener = (InsertNameDialogListener) getActivity();
+		dialogListener = (IInsertNameDialogListener) getActivity();
 		inputField = (EditText) view.findViewById(R.id.dialogInput);
 
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 				getActivity());
 
 		dialogBuilder.setTitle(R.string.addShoppingListDialog).setView(view)
-		// clickListeneris added in onShow() to prevent dialog dismiss on
-		// errors.
 				.setPositiveButton(android.R.string.ok, null);
 
 		return dialogBuilder.create();

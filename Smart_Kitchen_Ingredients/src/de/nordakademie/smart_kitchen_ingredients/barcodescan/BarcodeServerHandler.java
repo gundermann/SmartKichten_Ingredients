@@ -5,10 +5,10 @@ import com.google.gson.JsonObject;
 import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
 /**
- * Verarbeitung der Requests und Responses an und vom Server für die
+ * Verarbeitung der Requests und Responses an und vom Server fï¿½r die
  * Barcode-Erkennung.
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public class BarcodeServerHandler extends ServerHandler implements

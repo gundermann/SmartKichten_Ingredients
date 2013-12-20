@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.stock;
-
+/**
+ * @author Kathrin Kurtz
+ */
 import java.util.List;
 import java.util.TreeSet;
 

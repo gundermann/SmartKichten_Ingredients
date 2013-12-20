@@ -29,7 +29,7 @@ import de.nordakademie.smart_kitchen_ingredients.smartkitchen_server.SmartKitche
 /**
  * Die allgemeine Application, die alle Datenbankhelper enthällt.
  * 
- * @author niels
+ * @author Frauke Trautmann
  * 
  */
 public class IngredientsApplication extends Application {
