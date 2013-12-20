@@ -21,9 +21,7 @@ import android.view.KeyEvent;
 import android.view.View.OnLongClickListener;
 
 /**
- * @author frederic.oppermann
- * @date 15.12.2013
- * @description
+ * @author Kathrin Kurtz
  */
 public class QuantityPickerDialog extends DialogFragment implements TextWatcher {
 	private InputMethodManager inputManager;
@@ -38,7 +36,6 @@ public class QuantityPickerDialog extends DialogFragment implements TextWatcher 
 	IngredientsApplication app;
 
 
-	// TODO no parcable used -> Kanonen auf Spatzen
 	public static final QuantityPickerDialog newInstance(IListElement element,
 			IngredientsApplication app) {
 		QuantityPickerDialog dialog = new QuantityPickerDialog();

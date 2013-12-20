@@ -2,7 +2,7 @@ package de.nordakademie.smart_kitchen_ingredients.onlineconnection;
 
 /**
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public interface IServerConnector {

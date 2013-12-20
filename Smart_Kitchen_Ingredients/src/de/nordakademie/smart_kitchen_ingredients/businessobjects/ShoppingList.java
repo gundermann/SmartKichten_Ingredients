@@ -16,7 +16,6 @@ public class ShoppingList implements IShoppingList, IListElement {
 
 	@Override
 	public String getElementUnit() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -157,7 +157,6 @@ public class SingleShoppingListActivity extends
 
 	@Override
 	protected AlertDialog getDialog(int position) {
-		// TODO anders abstrahieren
 		return null;
 	}
 

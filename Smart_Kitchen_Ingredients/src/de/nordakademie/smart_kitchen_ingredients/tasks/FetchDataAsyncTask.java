@@ -11,9 +11,8 @@ import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IAbstractCacheDbHelper;
 
 /**
- * @author frederic.oppermann
+ * @author Frederic Oppermann
  * @date 14.12.2013
- * @description
  */
 public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 

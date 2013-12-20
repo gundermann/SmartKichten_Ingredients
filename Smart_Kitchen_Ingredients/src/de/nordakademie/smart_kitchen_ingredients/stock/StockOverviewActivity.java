@@ -23,10 +23,7 @@ import de.nordakademie.smart_kitchen_ingredients.collector.StoredIngredientColle
 import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 
 /**
- * 
- * 
- * @author niels
- * 
+ * @author Niels Gundermann
  */
 public class StockOverviewActivity extends AbstractListActivity<IIngredient>
 		implements OnSharedPreferenceChangeListener,

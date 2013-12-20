@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.stock;
-
+/**
+ * @author Frauke Trautmann
+ */
 import java.util.Map;
 
 import android.app.AlertDialog.Builder;

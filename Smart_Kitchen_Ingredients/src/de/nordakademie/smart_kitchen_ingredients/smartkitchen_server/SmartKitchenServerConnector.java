@@ -19,7 +19,7 @@ import de.nordakademie.smart_kitchen_ingredients.onlineconnection.Connector;
 /**
  * Stellt die Verbindung zum zur Verfügung gestellten Server her.
  * 
- * @author Niels Gundermann
+ * @author Kathrin Kurtz
  */
 public class SmartKitchenServerConnector extends Connector implements
 		ISmartKichtenServerConnector {

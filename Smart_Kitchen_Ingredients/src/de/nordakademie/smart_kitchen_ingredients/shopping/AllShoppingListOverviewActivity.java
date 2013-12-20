@@ -30,7 +30,7 @@ import de.nordakademie.smart_kitchen_ingredients.stock.StockOverviewActivity;
 
 public class AllShoppingListOverviewActivity extends
 		AbstractListActivity<IShoppingList> implements
-		InsertNameDialogListener, OnItemClickListener {
+		IInsertNameDialogListener, OnItemClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +77,6 @@ public class AllShoppingListOverviewActivity extends
 
 	@Override
 	public void onPositiveFinishedDialog(String name) {
-
-		// TODO
 		app.getShoppingListDbHelper().addItem(new ShoppingList(name));
 		startActivity(new Intent(getApplicationContext(),
 				SingleShoppingListActivity.class).putExtra("shoppingListName",
@@ -115,8 +113,6 @@ public class AllShoppingListOverviewActivity extends
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
-
-		// TODO
 		startActivity(new Intent(getApplicationContext(),
 				SingleShoppingListActivity.class).putExtra("shoppingListName",
 				((IShoppingList) getList().getItemAtPosition(position))

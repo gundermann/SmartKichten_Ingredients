@@ -1,22 +1,16 @@
 package de.nordakademie.smart_kitchen_ingredients.smartkitchen_server;
 
-import java.lang.reflect.Type;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.Ingredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
 
@@ -24,7 +18,7 @@ import de.nordakademie.smart_kitchen_ingredients.onlineconnection.ServerHandler;
  * Verarbeitung der Requests und Responses an und von dem zur Verfügung
  * gestellten Server.
  * 
- * @author Niels Gundermann
+ * @author Kathrin Kurtz
  */
 public class SmartKitchenServerHandler extends ServerHandler implements
 		ISmartKitchenServerHandler {
@@ -98,10 +92,6 @@ public class SmartKitchenServerHandler extends ServerHandler implements
 			recipeList.put(key, value);
 		}
 		return recipeList;
-	}
-
-	private Unit getCorrectUnitName(JsonElement singleIngredient) {
-		return Unit.valueOfFromShortening(((JsonObject) singleIngredient).get("unit").toString());
 	}
 
 	private List<String[]> getIngredientsFromJsonList(
