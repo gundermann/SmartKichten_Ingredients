@@ -6,7 +6,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 
 /**
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public interface IStoredDbHelper {
@@ -14,7 +14,7 @@ public interface IStoredDbHelper {
 	/**
 	 * Liefert eine Liste aller Bestands-Zutaten.
 	 * 
-	 * @return
+	 * @return List<IIngredient>
 	 */
 	List<IIngredient> getAllStoredIngredients();
 

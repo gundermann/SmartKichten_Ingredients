@@ -1,5 +1,7 @@
 package de.nordakademie.smart_kitchen_ingredients.localdata;
-
+/**
+ * @author Frederic Oppermann
+ */
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;

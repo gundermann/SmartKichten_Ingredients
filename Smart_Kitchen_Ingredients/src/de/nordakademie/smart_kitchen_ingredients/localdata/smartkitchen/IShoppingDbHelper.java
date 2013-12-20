@@ -9,7 +9,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingListIt
 
 /**
  * 
- * @author niels
+ * @author Niels Gundermann
  * 
  */
 public interface IShoppingDbHelper {
