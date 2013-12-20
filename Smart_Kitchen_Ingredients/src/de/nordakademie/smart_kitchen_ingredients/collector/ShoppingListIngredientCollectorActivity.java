@@ -3,7 +3,6 @@ package de.nordakademie.smart_kitchen_ingredients.collector;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +22,8 @@ import de.nordakademie.smart_kitchen_ingredients.tasks.FetchDataAsyncTask;
 public class ShoppingListIngredientCollectorActivity extends
 		AbstractShoppingListCollectorActivity<IIngredient> {
 
+	private static final String INTENT_KEY_CURRENT_SHOPPING_LIST = "shoppingListName";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +41,6 @@ public class ShoppingListIngredientCollectorActivity extends
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.collection_menu, menu);
-		Log.i(TAG, "menu inflated");
 		return true;
 	}
 
@@ -66,20 +66,16 @@ public class ShoppingListIngredientCollectorActivity extends
 	@Override
 	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
-			IngredientsApplication app = ((IngredientsApplication) getApplication());
 			IIngredient ingredientToAdd = app.getIngredientsDbHelper()
 					.getExplicitItem(element.getName());
-			((IngredientsApplication) getApplication())
-					.getShoppingListDbHelper().addItem(ingredientToAdd,
-							quantity, currentShoppingList);
+			app.getShoppingListDbHelper().addItem(ingredientToAdd, quantity,
+					currentShoppingList);
 			app.informUser(R.string.addIngredientToShoppingList);
 
 		} catch (ClassCastException e) {
-			((IngredientsApplication) getApplication())
-					.informUser(R.string.developerMistake);
+			app.informUser(R.string.developerMistake);
 		} catch (Exception e) {
-			((IngredientsApplication) getApplication())
-					.informUser(R.string.developerMistake);
+			app.informUser(R.string.developerMistake);
 		}
 	}
 
@@ -87,7 +83,7 @@ public class ShoppingListIngredientCollectorActivity extends
 	protected void switchCollectorActivity() {
 		startActivity(new Intent(getApplicationContext(),
 				ShoppingListRecipeCollectorActivity.class).putExtra(
-				"shoppingListName", currentShoppingList));
+				INTENT_KEY_CURRENT_SHOPPING_LIST, currentShoppingList));
 	}
 
 	@Override

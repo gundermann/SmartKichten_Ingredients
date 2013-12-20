@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.nordakademie.smart_kitchen_ingredients.tasks;
 
 import java.util.List;
@@ -13,6 +10,8 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbHelper;
 /**
  * @author Frederic Oppermann
  * @date 14.12.2013
+ * @description: This AsyncTask fetches data for a list in background and show a
+ *               progress wheel while execution
  */
 public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 

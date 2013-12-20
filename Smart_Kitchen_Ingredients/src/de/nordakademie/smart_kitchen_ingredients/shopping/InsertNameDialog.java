@@ -17,11 +17,11 @@ import de.nordakademie.smart_kitchen_ingredients.R;
  */
 @SuppressLint("ValidFragment")
 public class InsertNameDialog extends DialogFragment {
-	private final static String TAG = InsertNameDialog.class.getSimpleName();
+	private static final String TAG = InsertNameDialog.class.getSimpleName();
 
 	private EditText inputField;
 	private IInsertNameDialogListener dialogListener;
-	IngredientsApplication app;
+	protected IngredientsApplication app;
 
 	public InsertNameDialog(IngredientsApplication app) {
 		this.app = app;

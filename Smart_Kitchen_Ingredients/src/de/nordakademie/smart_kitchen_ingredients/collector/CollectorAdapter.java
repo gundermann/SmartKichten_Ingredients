@@ -1,34 +1,27 @@
-/**
- * 
- */
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
 import java.util.List;
 
-import de.nordakademie.smart_kitchen_ingredients.R;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import de.nordakademie.smart_kitchen_ingredients.R;
+import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 
 /**
  * @author Frederic Oppermann
  * @date 16.12.2013
+ * @description: implementation of an ArrayAdapter. Do always use the getName()
+ *               and not toString() method to display item in a list.
  */
 public class CollectorAdapter<T> extends ArrayAdapter<T> {
 
 	private List<T> items;
 	private Context context;
 
-	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 * @param items
-	 */
 	public CollectorAdapter(Context context, int resource,
 			int textViewResourceId, List<T> items) {
 		super(context, resource, textViewResourceId, items);

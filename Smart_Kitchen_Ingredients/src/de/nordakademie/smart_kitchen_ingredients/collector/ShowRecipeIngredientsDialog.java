@@ -3,7 +3,6 @@
  */
 package de.nordakademie.smart_kitchen_ingredients.collector;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -20,26 +19,24 @@ import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
  * @author Frederic Oppermann
  * @date 18.12.2013
  */
-@SuppressLint("ValidFragment")
 public class ShowRecipeIngredientsDialog extends DialogFragment {
 	private IRecipe recipe;
-	@SuppressLint("ValidFragment")
-	private final IngredientsApplication app;
+	private IngredientsApplication app;
 
-	public ShowRecipeIngredientsDialog(IngredientsApplication app) {
-		this.app = app;
-	}
-
-	@SuppressLint("ValidFragment")
 	public static ShowRecipeIngredientsDialog newInstance(IRecipe recipe,
 			IngredientsApplication app) {
-		ShowRecipeIngredientsDialog dialog = new ShowRecipeIngredientsDialog(
-				app);
+		ShowRecipeIngredientsDialog dialog = new ShowRecipeIngredientsDialog();
+		dialog.setApplication(app);
 		dialog.setRecipe(recipe);
 		return dialog;
 	}
 
-	public void setRecipe(IRecipe recipe) {
+	private void setApplication(IngredientsApplication app) {
+		this.app = app;
+
+	}
+
+	private void setRecipe(IRecipe recipe) {
 		this.recipe = recipe;
 	}
 

@@ -25,7 +25,7 @@ public class IngredientsTable {
 		return sb.toString();
 	}
 
-	public final static String getTableCreation() {
+	public static final String getTableCreation() {
 		StringBuilder sb = new StringBuilder();
 		return sb.append(CREATE_TABLE).append(TABLE_NAME).append(" (")
 				.append(ID).append(TEXT_PRIMARY_KEY).append(NAME)
