@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -76,9 +79,9 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 		searchBar = (EditText) findViewById(R.id.searchBarInput);
 		elementsListView = (ListView) findViewById(R.id.elementsList);
 		searchBar.addTextChangedListener(this);
+		noResultsFound = findViewById(R.id.noResultsFoundView);
 		progressWheel = (ProgressBar) this
 				.findViewById(R.id.collectorProgressBar);
-		noResultsFound = findViewById(R.id.noResultsFoundView);
 	}
 
 	protected void fetchDataFromDb(AsyncTask<Void, Void, List<T>> fetchDataTask) {
