@@ -10,8 +10,8 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbHelper;
 /**
  * @author Frederic Oppermann
  * @date 14.12.2013
- * @description: This AsyncTask fetches data for a list in background and show a
- *               progress wheel while execution
+ * @description: asynctask zum lesen der daten aus der datenbank. blendet das
+ *               progresswheel ein, wenn die daten geladen werden
  */
 public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 

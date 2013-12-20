@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -30,7 +27,8 @@ import de.nordakademie.smart_kitchen_ingredients.tasks.IAsyncTaskObserver;
 /**
  * @author Frederic Oppermann
  * @date 09.12.2013
- * @description
+ * @description abstrakte klasse, welche wiederkehrende aufgaben der
+ *              Zutatenliste und Rezeptliste beinhaltet.
  */
 
 public abstract class AbstractCollectorActivity<T> extends AbstractActivity

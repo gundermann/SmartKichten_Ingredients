@@ -21,6 +21,8 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 
 /**
  * @author Frederic Oppermann
+ * @description dialog, der die auswahl der gewünschten menge eines rezeptes /
+ *              einer zutat ermöglicht
  */
 public class QuantityPickerDialog extends DialogFragment implements TextWatcher {
 	private InputMethodManager inputManager;

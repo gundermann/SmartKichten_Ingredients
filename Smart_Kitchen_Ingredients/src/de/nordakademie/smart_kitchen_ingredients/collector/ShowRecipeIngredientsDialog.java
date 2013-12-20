@@ -18,6 +18,8 @@ import de.nordakademie.smart_kitchen_ingredients.factories.AdapterFactory;
 /**
  * @author Frederic Oppermann
  * @date 18.12.2013
+ * @description dieser dialog zeigt alle zutaten an, die für das rezept
+ *              gebraucht werden, welches ausgewählt wurde
  */
 public class ShowRecipeIngredientsDialog extends DialogFragment {
 	private IRecipe recipe;

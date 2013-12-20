@@ -1,6 +1,8 @@
 package de.nordakademie.smart_kitchen_ingredients.collector;
+
 /**
  * @author Frederic Oppermann
+ * @description ein Dialog, der das anlegen einer neuen zutat ermöglicht
  */
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;

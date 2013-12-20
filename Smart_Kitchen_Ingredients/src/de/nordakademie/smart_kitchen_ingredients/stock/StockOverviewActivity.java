@@ -25,6 +25,8 @@ import de.nordakademie.smart_kitchen_ingredients.shopping.AbstractDeletableListA
 
 /**
  * @author frederic oppermann
+ * @description diese activity zeigt eine liste mit den sich aktuell im bestand
+ *              befindlichen zutaten an
  */
 public class StockOverviewActivity extends
 		AbstractDeletableListActivity<IIngredient> implements

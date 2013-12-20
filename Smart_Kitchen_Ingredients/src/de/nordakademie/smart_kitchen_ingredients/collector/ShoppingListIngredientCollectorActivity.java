@@ -17,6 +17,7 @@ import de.nordakademie.smart_kitchen_ingredients.tasks.FetchDataAsyncTask;
 /**
  * @author Frederic Oppermann
  * @date 16.12.2013
+ * @description stellt die inhalte einer konkreten shoppinglist dar.
  */
 public class ShoppingListIngredientCollectorActivity extends
 		AbstractShoppingListCollectorActivity<IIngredient> {

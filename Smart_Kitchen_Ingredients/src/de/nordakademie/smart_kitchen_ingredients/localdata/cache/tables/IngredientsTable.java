@@ -3,7 +3,7 @@ package de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables;
 /**
  * 
  * @author Frederic Oppermann
- *
+ * @description die Tabelle, in der die Zutaten gespeichert werden.
  */
 
 import android.content.ContentValues;

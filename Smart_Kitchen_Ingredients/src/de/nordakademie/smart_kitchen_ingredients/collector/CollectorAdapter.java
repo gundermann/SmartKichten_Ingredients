@@ -14,8 +14,9 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
 /**
  * @author Frederic Oppermann
  * @date 16.12.2013
- * @description: implementation of an ArrayAdapter. Do always use the getName()
- *               and not toString() method to display item in a list.
+ * @description: implementiert einen neuen ArrayAdapter, um sicherzustellen,
+ *               dass immer die getName() Methode des Listenelementes
+ *               aufgerufen wird.
  */
 public class CollectorAdapter<T> extends ArrayAdapter<T> {
 

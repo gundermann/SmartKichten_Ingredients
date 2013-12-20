@@ -15,6 +15,7 @@ import de.nordakademie.smart_kitchen_ingredients.tasks.FetchDataAsyncTask;
 /**
  * @author Frederic Oppermann
  * @date 16.12.2013
+ * @description diese activity zeigt alle verfügbaren rezepte an
  */
 public class ShoppingListRecipeCollectorActivity extends
 		AbstractShoppingListCollectorActivity<IRecipe> {
@@ -37,9 +38,10 @@ public class ShoppingListRecipeCollectorActivity extends
 	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
 			IRecipe recipeToAdd = findIngredientInDatabase(element);
-			((IngredientsApplication) getApplication()).getShoppingListDbHelper()
+			((IngredientsApplication) getApplication())
+					.getShoppingListDbHelper()
 
-			.addItem(recipeToAdd, quantity, currentShoppingList);
+					.addItem(recipeToAdd, quantity, currentShoppingList);
 			app.informUser(R.string.addIngredientFromRecipeToShoppingList);
 		} catch (ClassCastException e) {
 			((IngredientsApplication) getApplication())

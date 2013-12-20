@@ -11,6 +11,8 @@ import de.nordakademie.smart_kitchen_ingredients.stock.AbstractListActivity;
  * @author frederic oppermann
  * 
  * @param <T>
+ * @description stellt grundlegende funktionalitäten zum löschen von listen
+ *              einträgen zur verfügung
  */
 public abstract class AbstractDeletableListActivity<T> extends
 		AbstractListActivity<T> implements OnItemLongClickListener {

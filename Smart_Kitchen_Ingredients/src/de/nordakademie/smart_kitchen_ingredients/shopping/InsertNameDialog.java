@@ -12,6 +12,7 @@ import de.nordakademie.smart_kitchen_ingredients.R;
 
 /**
  * @author Frederic Oppermann
+ * @description der Dialog, der zum Eingeben eines Namens auffordert.
  */
 public class InsertNameDialog extends DialogFragment {
 	private static final String TAG = InsertNameDialog.class.getSimpleName();

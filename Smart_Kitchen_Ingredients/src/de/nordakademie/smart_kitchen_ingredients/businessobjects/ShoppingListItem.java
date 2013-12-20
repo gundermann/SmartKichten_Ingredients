@@ -3,7 +3,8 @@ package de.nordakademie.smart_kitchen_ingredients.businessobjects;
 /**
  * 
  * @author Frederic Oppermann
- * 
+ * @description stellt ein Item auf dem Einkaufszettel dar, welches als gekauft
+ *              markiert werden kann. Beinhaltet eine Mengenangabe.
  */
 
 public class ShoppingListItem extends Ingredient implements IShoppingListItem {
