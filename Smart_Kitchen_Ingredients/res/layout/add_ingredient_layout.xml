@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -14,48 +13,55 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ingredientName" />
+        android:text="@string/ingredientName"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/ingredientNameEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
         android:ems="10"
         android:hint="@string/newIngredientHint"
-        android:inputType="text" 
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜüöäß1234567890"
-        android:maxLength="30" >
-
+        android:inputType="text"
+        android:maxLength="30"
+        android:textSize="20sp" >
     </EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/ingredientUnit" />
+        android:text="@string/ingredientAmount"
+        android:textSize="20sp" />
 
-    <Spinner
-        android:id="@+id/ingredientUnitSpinner"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/amountLinearLayout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:prompt="@string/chooseUnit" />
+        android:orientation="horizontal" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ingredientAmount" />
+        <EditText
+            android:id="@+id/ingredientAmountEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:digits="0123456789"
+            android:ems="10"
+            android:hint="@string/newIngredientAmountHint"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/ingredientAmountEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:digits="0123456789"
-        android:ems="10"
-        android:inputType="number"
-        android:maxLength="6"/>
+        <Spinner
+            android:id="@+id/ingredientUnitSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:prompt="@string/chooseUnit"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/submitNewIngredientButton"

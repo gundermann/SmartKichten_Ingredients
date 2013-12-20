@@ -5,13 +5,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -19,7 +17,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IListElement;
-import de.nordakademie.smart_kitchen_ingredients.collector.AddIngredientActivity;
 import de.nordakademie.smart_kitchen_ingredients.tasks.IAsyncTaskObserver;
 
 /**
@@ -58,22 +55,6 @@ public abstract class AbstractCollectorActivity<T> extends AbstractActivity
 					"shoppingListName");
 		}
 
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.addNewIngredient:
-			startActivity(new Intent(getApplicationContext(),
-					AddIngredientActivity.class).putExtra("shoppingListName",
-					currentShoppingList).putExtra("ingredientTitle",
-					searchBar.getText().toString()));
-			break;
-
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	private void makeListEntriesClickable() {

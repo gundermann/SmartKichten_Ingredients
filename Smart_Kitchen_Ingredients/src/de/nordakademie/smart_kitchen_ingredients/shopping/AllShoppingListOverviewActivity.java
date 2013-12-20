@@ -63,7 +63,7 @@ public class AllShoppingListOverviewActivity extends AbstractActivity implements
 	}
 
 	private List<IShoppingList> getShoppingLists() {
-		return app.getShoppingDbHelper().getAllShoppingLists();
+		return app.getShoppingListDbHelper().getAllShoppingLists();
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class AllShoppingListOverviewActivity extends AbstractActivity implements
 	}
 
 	private void delteShoppingList(IShoppingList shoppingLists) {
-		app.getShoppingDbHelper().delete(shoppingLists);
+		app.getShoppingListDbHelper().delete(shoppingLists);
 
 	}
 
@@ -148,7 +148,7 @@ public class AllShoppingListOverviewActivity extends AbstractActivity implements
 
 	@Override
 	public void onPositiveFinishedDialog(String name) {
-		app.getShoppingDbHelper().addItem(new ShoppingList(name));
+		app.getShoppingListDbHelper().addItem(new ShoppingList(name));
 		startActivity(new Intent(getApplicationContext(),
 				ShoppingListIngredientsActivity.class).putExtra(
 				"shoppingListName", name));

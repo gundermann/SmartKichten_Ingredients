@@ -105,7 +105,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 	private List<IShoppingListItem> getShoppingItems() {
 		List<IShoppingListItem> shoppingItems = new ArrayList<IShoppingListItem>();
 		TreeSet<IShoppingListItem> ingredients = new TreeSet<IShoppingListItem>();
-		ingredients.addAll(app.getShoppingDbHelper().getAllShoppingItems(
+		ingredients.addAll(app.getShoppingListDbHelper().getAllShoppingItems(
 				currentShoppingListName));
 		for (IShoppingListItem item : ingredients) {
 			shoppingItems.add(item);
@@ -130,7 +130,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clean_shoppingList:
-			app.getShoppingDbHelper().cleanShoppingIngredients();
+			app.getShoppingListDbHelper().cleanShoppingIngredients();
 			updateShoppingIngredientsList();
 			break;
 		case R.id.menu_qrscan:
@@ -163,7 +163,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 						"E1C9A73C52A822FB");
 				new CheckBarcodeAysncTask(scanningResult.getContents(),
 						app.getBarcodeEvaluator(), getShoppingItems(),
-						currentShoppingListName, app.getShoppingDbHelper(),
+						currentShoppingListName, app.getShoppingListDbHelper(),
 						apikey, this).execute();
 			}
 		} catch (NullPointerException npe) {
@@ -176,7 +176,7 @@ public class ShoppingListIngredientsActivity extends AbstractActivity implements
 		for (IShoppingListItem shoppingItem : getShoppingItems()) {
 			if (content.contains(shoppingItem.getName().toLowerCase(
 					Locale.GERMAN))) {
-				app.getShoppingDbHelper()
+				app.getShoppingListDbHelper()
 						.getShoppingItem(shoppingItem.getName(),
 								currentShoppingListName).setBought(true);
 				success = true;

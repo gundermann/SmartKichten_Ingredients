@@ -38,7 +38,7 @@ public class ShoppingListRecipeCollectorActivity extends
 	public void onPositiveFinishedDialog(IListElement element, int quantity) {
 		try {
 			IRecipe recipeToAdd = findIngredientInDatabase(element);
-			((IngredientsApplication) getApplication()).getShoppingDbHelper()
+			((IngredientsApplication) getApplication()).getShoppingListDbHelper()
 
 			.addItem(recipeToAdd, quantity, currentShoppingList);
 			app.informUser(R.string.addIngredientFromRecipeToShoppingList);
