@@ -15,7 +15,7 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.Ingredie
  * 
  */
 public class IngredientDbHelper extends AbstractCacheData implements
-		IAbstractCacheDbHelper<IIngredient> {
+		ICacheDbHelper<IIngredient> {
 
 	public IngredientDbHelper(IngredientsApplication app) {
 		super(app);

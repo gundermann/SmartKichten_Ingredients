@@ -53,6 +53,7 @@ public class ShowRecipeIngredientsDialog extends DialogFragment {
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 				getActivity());
 		ListView listview = new ListView(app.getApplicationContext());
+		listview.setMinimumHeight(STYLE_NORMAL);
 		// TableLayout tableView = new TableLayout(getActivity());
 		Map<IIngredient, Integer> ingredients = recipe.getIngredients();
 
@@ -60,6 +61,7 @@ public class ShowRecipeIngredientsDialog extends DialogFragment {
 				ingredients));
 		ScrollView scrollView = new ScrollView(getActivity());
 		scrollView.addView(listview);
+		scrollView.setMinimumHeight(STYLE_NORMAL);
 		dialogBuilder
 				.setView(scrollView)
 				.setPositiveButton(android.R.string.ok, new OnClickListener() {

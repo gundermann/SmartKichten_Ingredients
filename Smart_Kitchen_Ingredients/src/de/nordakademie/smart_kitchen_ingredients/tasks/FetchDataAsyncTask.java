@@ -8,7 +8,7 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IAbstractCacheDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbHelper;
 
 /**
  * @author frederic.oppermann
@@ -18,11 +18,11 @@ import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IAbstractCacheD
 public class FetchDataAsyncTask<T> extends AsyncTask<Void, Void, List<T>> {
 
 	private ProgressBar progressWheel;
-	private IAbstractCacheDbHelper<T> databseAccessHelper;
+	private ICacheDbHelper<T> databseAccessHelper;
 	private IAsyncTaskObserver<T> observer;
 
 	public FetchDataAsyncTask(ProgressBar progressWheel,
-			IAbstractCacheDbHelper<T> databseAccessHelper,
+			ICacheDbHelper<T> databseAccessHelper,
 			IAsyncTaskObserver<T> observer) {
 		this.progressWheel = progressWheel;
 		this.databseAccessHelper = databseAccessHelper;

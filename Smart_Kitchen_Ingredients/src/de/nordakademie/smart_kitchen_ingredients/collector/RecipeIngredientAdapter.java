@@ -22,8 +22,8 @@ public class RecipeIngredientAdapter extends ArrayAdapter<IIngredient> {
 
 	public RecipeIngredientAdapter(IngredientsApplication app,
 			Map<IIngredient, Integer> entrySet) {
-		super(app, R.layout.ingredients_with_amount_and_unit_rowlayout,
-				R.id.labelOfList);
+		super(app, android.R.layout.select_dialog_multichoice,
+				R.layout.ingredients_with_amount_and_unit_rowlayout);
 		this.app = app;
 		this.entrySet = entrySet;
 		setupItems();

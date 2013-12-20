@@ -10,11 +10,9 @@ import de.nordakademie.smart_kitchen_ingredients.barcodescan.BarcodeServerHandle
 import de.nordakademie.smart_kitchen_ingredients.barcodescan.IBarcodeServerHandler;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IShoppingList;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.CacheUpdateDbHelper;
-import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IAbstractCacheDbHelper;
+import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.ICacheDbUpdateHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.IngredientDbHelper;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.RecipeDbHelper;
@@ -42,15 +40,14 @@ public class IngredientsApplication extends Application {
 	private final String TAG = IngredientsApplication.class.getSimpleName();
 	private IShoppingDbHelper shoppingDbHelper;
 	private ISmartKitchenServerHandler serverHandler;
-	private IRecipeFactory recipeFactory;
 	private IBarcodeServerHandler barcodeEvaluator;
 	private ICacheDbUpdateHelper serverDataHelper;
 	private IStoredDbHelper stockDbHelper;
 	private IDateDbHelper dateDbHelper;
-	private IAbstractCacheDbHelper<IIngredient> ingredientDbHelper;
-	private IAbstractCacheDbHelper<IRecipe> recipeDbHelper;
-	private long lastUpdate = 0;
+	private ICacheDbHelper<IIngredient> ingredientDbHelper;
+	private ICacheDbHelper<IRecipe> recipeDbHelper;
 	private IShoppingList shoppingList;
+	private long lastUpdate = 0;
 	private boolean isUpdating = false;
 
 	@Override
@@ -64,7 +61,6 @@ public class IngredientsApplication extends Application {
 		ingredientDbHelper = new IngredientDbHelper(this);
 		recipeDbHelper = new RecipeDbHelper(this);
 		dateDbHelper = new SmartKitchenDateData(this);
-		recipeFactory = new RecipeFactory();
 		barcodeEvaluator = new BarcodeServerHandler(
 				new BarcodeServerConnector());
 		stockDbHelper = new SmartKitchenStoredData(this);
@@ -88,10 +84,6 @@ public class IngredientsApplication extends Application {
 		return serverHandler;
 	}
 
-	public IRecipeFactory getRecipeFactory() {
-		return recipeFactory;
-	}
-
 	public IBarcodeServerHandler getBarcodeEvaluator() {
 		return barcodeEvaluator;
 	}
@@ -100,11 +92,11 @@ public class IngredientsApplication extends Application {
 		return stockDbHelper;
 	}
 
-	public IAbstractCacheDbHelper<IIngredient> getIngredientsDbHelper() {
+	public ICacheDbHelper<IIngredient> getIngredientsDbHelper() {
 		return ingredientDbHelper;
 	}
 
-	public IAbstractCacheDbHelper<IRecipe> getRecipeDbHelper() {
+	public ICacheDbHelper<IRecipe> getRecipeDbHelper() {
 		return recipeDbHelper;
 	}
 
@@ -125,12 +117,12 @@ public class IngredientsApplication extends Application {
 			isUpdating = false;
 		}
 	}
-	
-	public boolean isNetworkConnected(){
+
+	public boolean isNetworkConnected() {
 		Boolean connected = false;
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if(netInfo != null && netInfo.isConnected()){
+		if (netInfo != null && netInfo.isConnected()) {
 			connected = true;
 		}
 		return connected;

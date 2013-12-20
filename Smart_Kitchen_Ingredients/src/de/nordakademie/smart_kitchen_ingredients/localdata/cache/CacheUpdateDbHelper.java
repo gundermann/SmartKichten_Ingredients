@@ -19,6 +19,7 @@ import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.factories.IngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.factories.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.IngredientsTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.IngredientsToRecipeTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.RecipesTable;
@@ -48,8 +49,8 @@ public class CacheUpdateDbHelper extends AbstractCacheData implements
 				currentIngredientList.put(ingredient,
 						Integer.valueOf(currentRecipeIngredient[3]));
 			}
-			recipeList.add(app.getRecipeFactory().createRecipe(
-					currentRecipe[1], currentIngredientList));
+			recipeList.add(RecipeFactory.createRecipe(currentRecipe[1],
+					currentIngredientList));
 		}
 
 		return recipeList;

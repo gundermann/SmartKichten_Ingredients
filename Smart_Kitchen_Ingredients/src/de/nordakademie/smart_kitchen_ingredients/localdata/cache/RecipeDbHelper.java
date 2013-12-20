@@ -12,15 +12,15 @@ import java.util.Map;
 import de.nordakademie.smart_kitchen_ingredients.IngredientsApplication;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IIngredient;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipe;
-import de.nordakademie.smart_kitchen_ingredients.businessobjects.IRecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.businessobjects.Unit;
 import de.nordakademie.smart_kitchen_ingredients.factories.IngredientFactory;
+import de.nordakademie.smart_kitchen_ingredients.factories.RecipeFactory;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.IngredientsTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.IngredientsToRecipeTable;
 import de.nordakademie.smart_kitchen_ingredients.localdata.cache.tables.RecipesTable;
 
 public class RecipeDbHelper extends AbstractCacheData implements
-		IAbstractCacheDbHelper<IRecipe> {
+		ICacheDbHelper<IRecipe> {
 
 	public RecipeDbHelper(IngredientsApplication app) {
 		super(app);
@@ -38,8 +38,7 @@ public class RecipeDbHelper extends AbstractCacheData implements
 			recipeMap.put(cursor.getString(0), cursor.getString(1));
 		}
 		for (String id : recipeMap.keySet()) {
-			IRecipeFactory recipeFactory = app.getRecipeFactory();
-			recipes.add(recipeFactory.createRecipe(recipeMap.get(id), null));
+			recipes.add(RecipeFactory.createRecipe(recipeMap.get(id), null));
 		}
 		closeCursorResources();
 		return recipes;
@@ -51,7 +50,7 @@ public class RecipeDbHelper extends AbstractCacheData implements
 		setCursor(RecipesTable.TABLE_NAME, RecipesTable.selectAllColunms(),
 				getWhere(RecipesTable.TITLE, title));
 		cursor.moveToNext();
-		IRecipe recipe = app.getRecipeFactory().createRecipe(title,
+		IRecipe recipe = RecipeFactory.createRecipe(title,
 				getIngredientsForRecipeID(cursor.getString(0)));
 		closeCursorResources();
 		return recipe;
